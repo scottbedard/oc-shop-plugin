@@ -15,6 +15,13 @@ class Product extends Model
     public $table = 'bedard_shop_products';
 
     /**
+     * @var array Default attributes
+     */
+    public $attributes = [
+        'price' => 0,
+    ];
+
+    /**
      * @var array Guarded fields
      */
     protected $guarded = ['*'];
@@ -24,6 +31,7 @@ class Product extends Model
      */
     protected $fillable = [
         'name',
+        'price',
         'slug',
     ];
 
@@ -37,6 +45,7 @@ class Product extends Model
      */
     public $rules = [
         'name' => 'required',
+        'price' => 'required|numeric|min:0',
         'slug' => 'required|unique:bedard_shop_products',
     ];
 }

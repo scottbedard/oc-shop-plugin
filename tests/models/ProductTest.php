@@ -9,22 +9,32 @@ class ProductTest extends \PluginTestCase
 
     public function test_name_is_required()
     {
-        $product = Factory::fill(new Product, ['name' => null]);
         $this->setExpectedException(\October\Rain\Database\ModelException::class);
-        $product->validate();
+        Factory::fill(new Product, null, ['name'])->validate();
+    }
+
+    public function test_price_is_required()
+    {
+        $this->setExpectedException(\October\Rain\Database\ModelException::class);
+        Factory::fill(new Product, null, ['price'])->validate();
+    }
+
+    public function test_price_must_be_a_positive_number()
+    {
+        $this->setExpectedException(\October\Rain\Database\ModelException::class);
+        Factory::fill(new Product, ['price' => -1])->validate();
     }
 
     public function test_slug_is_required()
     {
-        $product = Factory::fill(new Product, ['slug' => null]);
         $this->setExpectedException(\October\Rain\Database\ModelException::class);
-        $product->validate();
+        Factory::fill(new Product, null, ['slug'])->validate();
     }
 
     public function test_slug_must_be_unique()
     {
-        $product = Factory::create(new Product);
         $this->setExpectedException(\October\Rain\Database\ModelException::class);
-        $duplicate = Factory::create(new Product, ['slug' => $product->slug]);
+        $product = Factory::create(new Product);
+        Factory::create(new Product, ['slug' => $product->slug]);
     }
 }

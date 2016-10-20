@@ -25,7 +25,10 @@ return [
         'controller' => 'Products',
         'form' => [
             'create_title' => 'Create Product',
+            'name' => 'Name',
             'preview_title' => 'Preview Product',
+            'price' => 'Price',
+            'slug' => 'Slug',
             'update_title' => 'Update Product',
         ],
         'list' => [
