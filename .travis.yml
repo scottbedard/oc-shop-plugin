@@ -25,8 +25,7 @@ before_script:
   - composer update
 
 script:
-  - mkdir -p build/logs
-  - php vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+  - php vendor/bin/phpunit --coverage-clover=coverage.xml
 
-after_script:
-  - php vendor/bin/coveralls -v
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
