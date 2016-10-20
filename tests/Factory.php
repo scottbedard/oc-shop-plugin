@@ -13,9 +13,9 @@ class Factory
      * @param  array    $data   Data to fill model with
      * @return Model
      */
-    public static function create(Model $model, array $data = [])
+    public static function create(Model $model, $data = [], $without = [])
     {
-        $model = self::fill($model, $data);
+        $model = self::fill($model, $data, $without);
         $model->save();
 
         return $model;
@@ -28,13 +28,21 @@ class Factory
      * @param  array    $data   Data to fill the model with
      * @return Model
      */
-    public static function fill(Model $model, array $data = [])
+    public static function fill(Model $model, $data = [], $without = [])
     {
+        if (!is_array($data)) {
+            $data = [];
+        }
+
         switch (get_class($model)) {
             case "Bedard\Shop\Models\Product": $data = self::getProductData($data);
         }
 
         $model->fill($data);
+
+        foreach ($without as $key) {
+            unset($model->attributes[$key]);
+        }
 
         return $model;
     }
