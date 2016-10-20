@@ -25,6 +25,7 @@ return [
         'form' => [
             'create_title' => 'Create Category',
             'name' => 'Name',
+            'parent' => 'Parent Category',
             'preview_title' => 'Preview Category',
             'slug' => 'Slug',
             'update_title' => 'Update Category',

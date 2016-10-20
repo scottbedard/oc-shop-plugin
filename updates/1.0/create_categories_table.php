@@ -11,6 +11,7 @@ class CreateCategoriesTable extends Migration
         Schema::create('bedard_shop_categories', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
+            $table->integer('parent_id')->unsigned()->nullable()->index();
             $table->string('name')->default('');
             $table->string('slug')->default('')->unique();
             $table->timestamps();

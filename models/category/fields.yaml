@@ -3,6 +3,22 @@
 # ===================================
 
 fields:
-    id:
-        label: ID
-        disabled: true
+
+    name:
+        label: bedard.shop::lang.categories.form.name
+        span: left
+
+    slug:
+        label: bedard.shop::lang.categories.form.slug
+        span: right
+        preset:
+            field: name
+            type: slug
+
+secondaryTabs:
+    stretch: true
+    fields:
+
+        parent_id:
+            label: bedard.shop::lang.categories.form.parent
+            type: dropdown
