@@ -7,6 +7,16 @@ class CategoryTest extends \PluginTestCase
 {
     protected $refreshPlugins = ['Bedard.Shop'];
 
+    public function test_category_doesnt_show_invalid_parents_in_dropdown()
+    {
+        $parent = Factory::create(new Category);
+        $child = Factory::create(new Category, ['parent_id' => $parent->id]);
+
+        $this->assertEquals([$parent->id, $child->id], array_keys(Factory::fill(new Category)->getParentIdOptions()));
+        $this->assertEquals([$parent->id], array_keys($child->getParentIdOptions()));
+        $this->assertEquals([], array_keys($parent->getParentIdOptions()));
+    }
+
     public function test_category_name_is_required()
     {
         $this->setExpectedException(\October\Rain\Database\ModelException::class);

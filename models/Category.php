@@ -40,7 +40,14 @@ class Category extends Model
         'slug' => 'required|unique:bedard_shop_categories',
     ];
 
-    public static function getChildIds($categories, $parent)
+    /**
+     * Find the child ids of a parent category
+     *
+     * @param  \October\Rain\Database\Collection    $categories
+     * @param  \Bedard\Shop\Models\Category|int     $parent
+     * @return array
+     */
+    public static function getChildIds(\October\Rain\Database\Collection $categories, $parent)
     {
         if (gettype($parent) === 'object') {
             $parent = $parent->id;
@@ -64,13 +71,19 @@ class Category extends Model
      */
     public function getParentIdOptions()
     {
-        return self::get()->lists('name', 'id');
+        // If this category does not exist, anyone may be the parent
+        if (! $this->exists) {
+            return self::lists('name', 'id');
+        }
+
+        // Otherwise, only show valid potential parents
+        return self::where('id', '<>', $this->id)->isNotChildOf($this->id)->lists('name', 'id');
     }
 
     /**
      * Query categories that are children of another category.
      *
-     * @param  \October\Rain\Database\Builder       $query
+     * @param  \October\Rain\Database\Builder   $query
      * @param  \Bedard\Shop\Models\Category|int $parent
      * @return \October\Rain\Database\Builder
      */
@@ -84,7 +97,7 @@ class Category extends Model
     /**
      * Query categories that are not children of another category.
      *
-     * @param  \October\Rain\Database\Builder       $query
+     * @param  \October\Rain\Database\Builder   $query
      * @param  \Bedard\Shop\Models\Category|int $parent
      * @return \October\Rain\Database\Builder
      */
