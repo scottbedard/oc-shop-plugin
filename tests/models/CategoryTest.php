@@ -28,7 +28,8 @@ class CategoryTest extends \PluginTestCase
         $this->assertEquals([], Category::getChildIds($categories, $orphan));
     }
 
-    public function test_category_scopeIsChildOf_and_scopeIsNotChildOf() {
+    public function test_category_scopeIsChildOf_and_scopeIsNotChildOf()
+    {
         $parent = Factory::create(new Category);
         $child = Factory::create(new Category, ['parent_id' => $parent->id]);
         $grandchild = Factory::create(new Category, ['parent_id' => $child->id]);
