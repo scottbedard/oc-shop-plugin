@@ -1,12 +1,14 @@
 <?php namespace Bedard\Shop\Tests;
 
+use Bedard\Shop\Models\Product;
 
 class ProductTest extends \PluginTestCase
 {
     protected $refreshPlugins = ['Bedard.Shop'];
 
-    public function test_true_is_true()
+    public function test_create()
     {
-        $this->assertTrue(true);
+        $product = Product::create();
+        $this->assertEquals(1, Product::all()->count());
     }
 }
