@@ -35,6 +35,7 @@ class Factory
         }
 
         switch (get_class($model)) {
+            case "Bedard\Shop\Models\Category": $data = self::getCategoryData($data);
             case "Bedard\Shop\Models\Product": $data = self::getProductData($data);
         }
 
@@ -48,7 +49,23 @@ class Factory
     }
 
     /**
-     * Get product data
+     * Category
+     *
+     * @param  array $data
+     * @return array
+     */
+    public static function getCategoryData(array $data = [])
+    {
+        $faker = Faker\Factory::create();
+
+        return array_merge([
+            'name' => $faker->words(3, true),
+            'slug' => $faker->slug,
+        ], $data);
+    }
+
+    /**
+     * Product
      *
      * @param  array $data
      * @return array

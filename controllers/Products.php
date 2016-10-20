@@ -10,12 +10,12 @@ class Products extends Controller
 {
     public $formConfig = 'config_form.yaml';
 
+    public $listConfig = 'config_list.yaml';
+
     public $implement = [
         'Backend.Behaviors.FormController',
         'Backend.Behaviors.ListController',
     ];
-
-    public $listConfig = 'config_list.yaml';
 
     public $registerPermissions = [
         'bedard.shop.products.manage',
