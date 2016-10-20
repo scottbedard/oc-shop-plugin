@@ -8,7 +8,7 @@ class CreateProductsTable extends Migration
 {
     public function up()
     {
-        Schema::create('bedard_shop_products', function(Blueprint $table) {
+        Schema::create('bedard_shop_products', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->timestamps();

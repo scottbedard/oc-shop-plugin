@@ -4,11 +4,10 @@ use Backend;
 use System\Classes\PluginBase;
 
 /**
- * Shop Plugin Information File
+ * Shop Plugin Information File.
  */
 class Plugin extends PluginBase
 {
-
     /**
      * Returns information about this plugin.
      *
@@ -64,5 +63,4 @@ class Plugin extends PluginBase
             ],
         ];
     }
-
 }
