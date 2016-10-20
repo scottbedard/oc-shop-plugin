@@ -41,7 +41,7 @@ class Category extends Model
     ];
 
     /**
-     * Find the child ids of a parent category
+     * Find the child ids of a parent category.
      *
      * @param  \October\Rain\Database\Collection    $categories
      * @param  \Bedard\Shop\Models\Category|int     $parent
