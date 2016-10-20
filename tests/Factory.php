@@ -1,13 +1,12 @@
 <?php namespace Bedard\Shop\Tests;
 
-use Exception;
 use Faker;
 use Model;
 
 class Factory
 {
     /**
-     * Create a model and save it to the database
+     * Create a model and save it to the database.
      *
      * @param  Model    $model  Model to create
      * @param  array    $data   Data to fill model with
@@ -22,7 +21,7 @@ class Factory
     }
 
     /**
-     * Create a model and fill it with data
+     * Create a model and fill it with data.
      *
      * @param  Model    $model  Model to fill
      * @param  array    $data   Data to fill the model with
@@ -30,7 +29,7 @@ class Factory
      */
     public static function fill(Model $model, $data = [], $without = [])
     {
-        if (!is_array($data)) {
+        if (! is_array($data)) {
             $data = [];
         }
 
@@ -49,7 +48,7 @@ class Factory
     }
 
     /**
-     * Category
+     * Category.
      *
      * @param  array $data
      * @return array
@@ -65,12 +64,13 @@ class Factory
     }
 
     /**
-     * Product
+     * Product.
      *
      * @param  array $data
      * @return array
      */
-    public static function getProductData(array $data = []) {
+    public static function getProductData(array $data = [])
+    {
         $faker = Faker\Factory::create();
 
         return array_merge([

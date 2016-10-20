@@ -3,7 +3,7 @@
 use Model;
 
 /**
- * Category Model
+ * Category Model.
  */
 class Category extends Model
 {
@@ -40,7 +40,8 @@ class Category extends Model
         'slug' => 'required|unique:bedard_shop_categories',
     ];
 
-    public static function getChildIds($categories, $parent) {
+    public static function getChildIds($categories, $parent)
+    {
         if (gettype($parent) === 'object') {
             $parent = $parent->id;
         }
@@ -57,38 +58,40 @@ class Category extends Model
     }
 
     /**
-     * Get options for the parent form field
+     * Get options for the parent form field.
      *
      * @return array
      */
-    public function getParentIdOptions() {
+    public function getParentIdOptions()
+    {
         return self::get()->lists('name', 'id');
     }
 
     /**
-     * Query categories that are children of another category
+     * Query categories that are children of another category.
      *
      * @param  \October\Rain\Database\Builder       $query
-     * @param  \Bedard\Shop\Models\Category|integer $parent
+     * @param  \Bedard\Shop\Models\Category|int $parent
      * @return \October\Rain\Database\Builder
      */
     public function scopeIsChildOf($query, $parent)
     {
         $categories = self::select('id', 'parent_id')->get();
+
         return $query->whereIn('id', self::getChildIds($categories, $parent));
     }
 
     /**
-     * Query categories that are not children of another category
+     * Query categories that are not children of another category.
      *
      * @param  \October\Rain\Database\Builder       $query
-     * @param  \Bedard\Shop\Models\Category|integer $parent
+     * @param  \Bedard\Shop\Models\Category|int $parent
      * @return \October\Rain\Database\Builder
      */
     public function scopeIsNotChildOf($query, $parent)
     {
         $categories = self::select('id', 'parent_id')->get();
+
         return $query->whereNotIn('id', self::getChildIds($categories, $parent));
     }
-
 }
