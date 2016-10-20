@@ -35,7 +35,7 @@ class Plugin extends PluginBase
                 'icon'        => 'icon-shopping-cart',
                 'label'       => 'bedard.shop::lang.plugin.navigation.shop',
                 'order'       => 500,
-                'permissions' => ['bedard.shop.products.*'],
+                'permissions' => ['bedard.shop.*'],
                 'url'         => Backend::url('bedard/shop/products'),
                 'sideMenu' => [
                     'products' => [
