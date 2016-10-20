@@ -34,8 +34,8 @@ class Factory
         }
 
         switch (get_class($model)) {
-            case "Bedard\Shop\Models\Category": $data = self::getCategoryData($data);
-            case "Bedard\Shop\Models\Product": $data = self::getProductData($data);
+            case "Bedard\Shop\Models\Category": $data = self::getCategoryData($data); break;
+            case "Bedard\Shop\Models\Product": $data = self::getProductData($data); break;
         }
 
         $model->fill($data);
