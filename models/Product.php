@@ -7,6 +7,8 @@ use Model;
  */
 class Product extends Model
 {
+    use \October\Rain\Database\Traits\Validation;
+
     /**
      * @var string The database table used by the model.
      */
@@ -20,18 +22,21 @@ class Product extends Model
     /**
      * @var array Fillable fields
      */
-    protected $fillable = [];
+    protected $fillable = [
+        'name',
+        'slug',
+    ];
 
     /**
      * @var array Relations
      */
-    public $hasOne = [];
-    public $hasMany = [];
     public $belongsTo = [];
-    public $belongsToMany = [];
-    public $morphTo = [];
-    public $morphOne = [];
-    public $morphMany = [];
-    public $attachOne = [];
-    public $attachMany = [];
+
+    /**
+     * @var array Validation
+     */
+    public $rules = [
+        'name' => 'required',
+        'slug' => 'required|unique:bedard_shop_products',
+    ];
 }
