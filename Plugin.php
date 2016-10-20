@@ -17,61 +17,10 @@ class Plugin extends PluginBase
     public function pluginDetails()
     {
         return [
-            'name'        => 'Shop',
-            'description' => 'No description provided yet...',
-            'author'      => 'Bedard',
-            'icon'        => 'icon-leaf'
-        ];
-    }
-
-    /**
-     * Register method, called when the plugin is first registered.
-     *
-     * @return void
-     */
-    public function register()
-    {
-
-    }
-
-    /**
-     * Boot method, called right before the request route.
-     *
-     * @return array
-     */
-    public function boot()
-    {
-
-    }
-
-    /**
-     * Registers any front-end components implemented in this plugin.
-     *
-     * @return array
-     */
-    public function registerComponents()
-    {
-        return []; // Remove this line to activate
-
-        return [
-            'Bedard\Shop\Components\MyComponent' => 'myComponent',
-        ];
-    }
-
-    /**
-     * Registers any back-end permissions used by this plugin.
-     *
-     * @return array
-     */
-    public function registerPermissions()
-    {
-        return []; // Remove this line to activate
-
-        return [
-            'bedard.shop.some_permission' => [
-                'tab' => 'Shop',
-                'label' => 'Some permission'
-            ],
+            'name'        => 'bedard.shop::lang.plugin.details.name',
+            'description' => 'bedard.shop::lang.plugin.details.description',
+            'author'      => 'Scott Bedard',
+            'icon'        => 'icon-shopping-cart',
         ];
     }
 
@@ -82,15 +31,36 @@ class Plugin extends PluginBase
      */
     public function registerNavigation()
     {
-        return []; // Remove this line to activate
-
         return [
             'shop' => [
-                'label'       => 'Shop',
-                'url'         => Backend::url('bedard/shop/mycontroller'),
-                'icon'        => 'icon-leaf',
-                'permissions' => ['bedard.shop.*'],
+                'icon'        => 'icon-shopping-cart',
+                'label'       => 'bedard.shop::lang.plugin.navigation.shop',
                 'order'       => 500,
+                'permissions' => ['bedard.shop.products.*'],
+                'url'         => Backend::url('bedard/shop/products'),
+                'sideMenu' => [
+                    'products' => [
+                        'label'         => 'bedard.shop::lang.products.controller',
+                        'icon'          => 'icon-cubes',
+                        'url'           => Backend::url('bedard/shop/products'),
+                        'permissions'   => ['bedard.shop.products.*'],
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * Registers any back-end permissions used by this plugin.
+     *
+     * @return array
+     */
+    public function registerPermissions()
+    {
+        return [
+            'bedard.shop.products.manage' => [
+                'label' => 'bedard.shop::lang.plugin.permissions.products',
+                'tab' => 'bedard.shop::lang.plugin.details.name',
             ],
         ];
     }

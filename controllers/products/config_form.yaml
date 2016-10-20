@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: bedard.shop::lang.products.model
+
+# Model Form Field configuration
+form: $/bedard/shop/models/product/fields.yaml
+
+# Model Class name
+modelClass: Bedard\Shop\Models\Product
+
+# Default redirect location
+defaultRedirect: bedard/shop/products
+
+# Create page
+create:
+    title: bedard.shop::lang.products.form.create_title
+    redirect: bedard/shop/products/update/:id
+    redirectClose: bedard/shop/products
+
+# Update page
+update:
+    title: bedard.shop::lang.products.form.update_title
+    redirect: bedard/shop/products
+    redirectClose: bedard/shop/products
+
+# Preview page
+preview:
+    title: bedard.shop::lang.products.form.preview_title
