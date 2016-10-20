@@ -1,0 +1,19 @@
+{
+    "name": "scottbedard/oc-shop-plugin",
+    "description": "An ecommerce platform for October CMS.",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Bedard\\Shop\\Tests\\": "tests/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.8.*@dev",
+        "fzaninotto/faker": "1.5.*",
+        "satooshi/php-coveralls": "~1.0"
+    },
+    "require": {
+        "php": ">=5.5.0",
+        "owl/list-delete": "~1.0@dev"
+    }
+}
