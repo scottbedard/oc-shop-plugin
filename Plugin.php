@@ -38,8 +38,14 @@ class Plugin extends PluginBase
                 'permissions' => ['bedard.shop.*'],
                 'url'         => Backend::url('bedard/shop/products'),
                 'sideMenu' => [
+                    'categories' => [
+                        'label'         => 'bedard.shop::lang.categories.plural',
+                        'icon'          => 'icon-folder-o',
+                        'url'           => Backend::url('bedard/shop/categories'),
+                        'permissions'   => ['bedard.shop.categories.*'],
+                    ],
                     'products' => [
-                        'label'         => 'bedard.shop::lang.products.controller',
+                        'label'         => 'bedard.shop::lang.products.plural',
                         'icon'          => 'icon-cubes',
                         'url'           => Backend::url('bedard/shop/products'),
                         'permissions'   => ['bedard.shop.products.*'],

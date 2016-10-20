@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: bedard.shop::lang.categories.singular
+
+# Model Form Field configuration
+form: $/bedard/shop/models/category/fields.yaml
+
+# Model Class name
+modelClass: Bedard\Shop\Models\Category
+
+# Default redirect location
+defaultRedirect: bedard/shop/categories
+
+# Create page
+create:
+    title: bedard.shop::lang.categories.form.create_title
+    redirect: bedard/shop/categories/update/:id
+    redirectClose: bedard/shop/categories
+
+# Update page
+update:
+    title: bedard.shop::lang.products.form.update_title
+    redirect: bedard/shop/categories
+    redirectClose: bedard/shop/categories
+
+# Preview page
+preview:
+    title: bedard.shop::lang.products.form.preview_title

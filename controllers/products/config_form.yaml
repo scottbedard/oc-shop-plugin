@@ -3,7 +3,7 @@
 # ===================================
 
 # Record name
-name: bedard.shop::lang.products.model
+name: bedard.shop::lang.products.singular
 
 # Model Form Field configuration
 form: $/bedard/shop/models/product/fields.yaml

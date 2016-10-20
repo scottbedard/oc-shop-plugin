@@ -19,10 +19,28 @@ return [
     ],
 
     //
+    // Categories
+    //
+    'categories' => [
+        'form' => [
+            'create_title' => 'Create Category',
+            'name' => 'Name',
+            'preview_title' => 'Preview Category',
+            'slug' => 'Slug',
+            'update_title' => 'Update Category',
+        ],
+        'list' => [
+            'create_button' => 'Create Category',
+            'title' => 'Manage Categories',
+        ],
+        'plural' => 'Categories',
+        'singular' => 'Category',
+    ],
+
+    //
     // Products
     //
     'products' => [
-        'controller' => 'Products',
         'form' => [
             'create_title' => 'Create Product',
             'name' => 'Name',
@@ -35,6 +53,7 @@ return [
             'create_button' => 'Create Product',
             'title' => 'Manage Products',
         ],
-        'model' => 'Product',
+        'plural' => 'Products',
+        'singular' => 'Product',
     ],
 ];
