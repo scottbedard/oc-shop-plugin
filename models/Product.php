@@ -3,11 +3,10 @@
 use Model;
 
 /**
- * Product Model
+ * Product Model.
  */
 class Product extends Model
 {
-
     /**
      * @var string The database table used by the model.
      */
@@ -35,5 +34,4 @@ class Product extends Model
     public $morphMany = [];
     public $attachOne = [];
     public $attachMany = [];
-
 }
