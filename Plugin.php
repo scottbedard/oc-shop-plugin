@@ -1,9 +1,6 @@
 <?php namespace Bedard\Shop;
 
-use App;
 use Backend;
-use Event;
-use Request;
 use System\Classes\PluginBase;
 
 /**
