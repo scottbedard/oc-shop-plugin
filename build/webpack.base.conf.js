@@ -7,8 +7,8 @@ module.exports = {
     },
     output: {
         filename: '[name].js',
-        path: path.join(__dirname, '../assets/js'),
-        publicPath: '/plugins/bedard/shop/assets/js',
+        path: path.join(__dirname, '../assets/dist'),
+        publicPath: '/plugins/bedard/shop/assets/dist',
     },
     resolve: {
         extensions: ['.js', '.vue'],

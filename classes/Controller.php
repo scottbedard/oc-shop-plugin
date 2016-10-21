@@ -8,6 +8,6 @@ class Controller extends BaseController
     {
         parent::__construct();
 
-        $this->addJs('/plugins/bedard/shop/assets/js/vendor.js');
+        $this->addJs('/plugins/bedard/shop/assets/dist/vendor.js');
     }
 }

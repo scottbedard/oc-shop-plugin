@@ -12,7 +12,7 @@ var spinner = ora('building production assets...');
 spinner.start();
 
 // remove the old assets
-var assetsPath = path.resolve(__dirname, '../assets/js');
+var assetsPath = path.resolve(__dirname, '../assets/dist');
 rm('-rf', assetsPath)
 mkdir('-p', assetsPath)
 
