@@ -26,6 +26,6 @@ class Categories extends Controller
         parent::__construct();
 
         BackendMenu::setContext('Bedard.Shop', 'shop', 'categories');
-        $this->addJs("/plugins/bedard/shop/assets/treesort.js");
+        $this->addJs("/plugins/bedard/shop/assets/js/treesort.js");
     }
 }

@@ -6,8 +6,8 @@ module.exports = {
     },
     output: {
         filename: '[name].js',
-        path: path.join(__dirname, '../assets'),
-        publicPath: '/plugins/bedard/shop/assets/',
+        path: path.join(__dirname, '../assets/js'),
+        publicPath: '/plugins/bedard/shop/assets/js/',
     },
     module: {
         loaders: [

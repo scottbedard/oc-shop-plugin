@@ -16,6 +16,8 @@ var devMiddleware = require('webpack-dev-middleware')(compiler, {
     },
 });
 
+var hotMiddleware = require('webpack-hot-middleware')(compiler);
+
 Object.keys(proxyTable).forEach(function (context) {
     var options = proxyTable[context];
     if (typeof options === 'string') {
@@ -25,7 +27,20 @@ Object.keys(proxyTable).forEach(function (context) {
     app.use(proxyMiddleware(context, options));
 });
 
+var filter = function (pathname) {
+    return pathname.match(/^(?!\/__webpack).*$/) && pathname.indexOf('bedard/shop/assets') === -1;
+};
+
+app.use(proxyMiddleware(filter, { target: 'http://www.beeasyboards.dev' }));
+
+// app.use(proxyMiddleware([
+//     '!__webpack_*',
+//     '*(backend|plugins|modules)/**/*'
+// ], { target: 'http://beeasyboards.dev' }));
+
 app.use(devMiddleware);
+
+app.use(hotMiddleware);
 
 var port = 8080;
 module.exports = app.listen(port, function (err) {

@@ -22,6 +22,7 @@
     "cross-env": "^3.0.0",
     "css-loader": "^0.25.0",
     "express": "^4.13.3",
+    "eventsource-polyfill": "^0.9.6",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
     "html-webpack-plugin": "^2.8.1",
