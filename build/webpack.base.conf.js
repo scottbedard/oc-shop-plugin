@@ -7,7 +7,10 @@ module.exports = {
     output: {
         filename: '[name].js',
         path: path.join(__dirname, '../assets/js'),
-        publicPath: '/plugins/bedard/shop/assets/js/',
+        publicPath: '/plugins/bedard/shop/assets/js',
+    },
+    resolve: {
+        extensions: ['.js', '.vue'],
     },
     module: {
         loaders: [
@@ -22,4 +25,12 @@ module.exports = {
             },
         ],
     },
+    // vue: {
+    //     // loaders: utils.cssLoaders({ sourceMap: useCssSourceMap }),
+    //     postcss: [
+    //         require('autoprefixer')({
+    //             browsers: ['last 10 versions']
+    //         }),
+    //     ],
+    // },
 };
