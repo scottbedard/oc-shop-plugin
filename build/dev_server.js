@@ -1,3 +1,4 @@
+var chalk = require('chalk');
 var express = require('express');
 var fs = require('fs');
 var path = require('path');
@@ -5,12 +6,15 @@ var proxyMiddleware = require('http-proxy-middleware');
 var webpack = require('webpack');
 var webpackConfig = require('./webpack.dev.conf');
 
-// before we do anything, make sure the dev environment has been properly configured
 try {
+    // before we do anything, make sure the dev environment has been properly configured
     fs.statSync(path.resolve(__dirname, '../.october_proxy')).isFile();
 } catch (e) {
-    console.error('    Error: An .october_proxy file must be created to use the dev server.');
-    process.exit(1);
+    console.log(chalk.red('  Error:') + ' An .october_proxy file must be created to use the dev server.');
+    console.log();
+    console.log(chalk.gray('  See the docs for more information on this error.'));
+    console.log(chalk.gray('  https://github.com/scottbedard/oc-shop-plugin#local-development'));
+    process.exit();
 }
 
 var app = express();
