@@ -1,7 +1,7 @@
 <?php namespace Bedard\Shop\Controllers;
 
 use BackendMenu;
-use Backend\Classes\Controller;
+use Bedard\Shop\Classes\Controller;
 
 /**
  * Products Back-end Controller.

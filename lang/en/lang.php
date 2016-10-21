@@ -32,6 +32,7 @@ return [
         ],
         'list' => [
             'create_button' => 'Create Category',
+            'reorder_button' => 'Reorder Categories',
             'title' => 'Manage Categories',
         ],
         'plural' => 'Categories',

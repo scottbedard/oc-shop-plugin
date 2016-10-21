@@ -1,7 +1,7 @@
 <?php namespace Bedard\Shop\Controllers;
 
 use BackendMenu;
-use Backend\Classes\Controller;
+use Bedard\Shop\Classes\Controller;
 
 /**
  * Categories Back-end Controller.
@@ -26,5 +26,6 @@ class Categories extends Controller
         parent::__construct();
 
         BackendMenu::setContext('Bedard.Shop', 'shop', 'categories');
+        $this->addJs("/plugins/bedard/shop/assets/treesort.js");
     }
 }
