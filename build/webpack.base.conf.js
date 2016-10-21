@@ -30,7 +30,10 @@ module.exports = {
                 test: /\.vue$/,
                 loader: 'vue',
                 options: {
-                    loaders: utils.cssLoaders({ sourceMap: true }),
+                    loaders: utils.cssLoaders({
+                        sourceMap: true,
+                        extract: false,
+                    }),
                     postcss: [
                         require('autoprefixer')({
                             browsers: ['last 10 versions']

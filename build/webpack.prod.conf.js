@@ -1,3 +1,4 @@
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var merge = require('webpack-merge');
 var path = require('path');
 var utils = require('./utils');
@@ -6,20 +7,6 @@ var webpack = require('webpack');
 
 module.exports = merge(webpackBaseConfig, {
     devtool: '#source-map',
-    module: {
-        rules: [
-            {
-                test: /\.vue$/,
-                loader: 'vue',
-                options: {
-                    loaders: utils.cssLoaders({
-                        sourceMap: true,
-                        extract: true
-                    })
-                },
-            },
-        ],
-    },
     plugins: [
         new webpack.DefinePlugin({
             'process.env': {
@@ -29,6 +16,9 @@ module.exports = merge(webpackBaseConfig, {
 
         // minify javascript
         new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false }}),
+
+        // @todo: extract css chunks into their own files
+        // new ExtractTextPlugin("style.css"),
 
         // extract node_module dependencies into their own bundle
         new webpack.optimize.CommonsChunkPlugin({
