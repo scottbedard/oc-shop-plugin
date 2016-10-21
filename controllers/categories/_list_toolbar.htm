@@ -5,9 +5,11 @@
         <?= e(trans('bedard.shop::lang.categories.list.create_button')) ?>
     </a>
 
-    <?= e(trans('bedard.shop::lang.categories.list.reorder_button')) ?>
-    <a class="btn btn-default oc-icon-sitemap" data-bedard-shop="categories-treesort">
-        <!-- Vue component -->
-        Reorder Categories
+    <!-- Treesort component -->
+    <a
+        class="btn btn-default oc-icon-sitemap"
+        data-bedard-shop="categories-treesort"
+        href="#">
+        <?= e(trans('bedard.shop::lang.categories.list.reorder_button')) ?>
     </a>
 </div>

@@ -1,9 +1,6 @@
 <template>
-    <a
-        href="#"
-        class="btn btn-default oc-icon-sitemap"
-        @click.prevent="onClick">
-        Reorder Categories
+    <a href="#" @click.prevent="onClick">
+        <slot><!-- a language string is automatically inserted here --></slot>
     </a>
 </template>
 
