@@ -1,3 +1,4 @@
 /vendor/
 /node_modules/
 .october_proxy
+npm-debug.log
