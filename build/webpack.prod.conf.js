@@ -1,10 +1,25 @@
 var merge = require('webpack-merge');
 var path = require('path');
+var utils = require('./utils');
 var webpackBaseConfig = require('./webpack.base.conf');
 var webpack = require('webpack');
 
 module.exports = merge(webpackBaseConfig, {
     devtool: '#source-map',
+    module: {
+        rules: [
+            {
+                test: /\.vue$/,
+                loader: 'vue',
+                options: {
+                    loaders: utils.cssLoaders({
+                        sourceMap: true,
+                        extract: true
+                    })
+                },
+            },
+        ],
+    },
     plugins: [
         new webpack.DefinePlugin({
             'process.env': {

@@ -1,4 +1,5 @@
 var path = require("path");
+var utils = require("./utils");
 
 module.exports = {
     entry: {
@@ -24,13 +25,19 @@ module.exports = {
                 exclude: /node_modules/
             },
         ],
+        rules: [
+            {
+                test: /\.vue$/,
+                loader: 'vue',
+                options: {
+                    loaders: utils.cssLoaders({ sourceMap: true }),
+                    postcss: [
+                        require('autoprefixer')({
+                            browsers: ['last 10 versions']
+                        }),
+                    ],
+                },
+            },
+        ],
     },
-    // vue: {
-    //     // loaders: utils.cssLoaders({ sourceMap: useCssSourceMap }),
-    //     postcss: [
-    //         require('autoprefixer')({
-    //             browsers: ['last 10 versions']
-    //         }),
-    //     ],
-    // },
 };
