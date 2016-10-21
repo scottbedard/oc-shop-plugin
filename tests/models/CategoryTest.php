@@ -32,10 +32,10 @@ class CategoryTest extends \PluginTestCase
         $orphan = Factory::create(new Category, ['parent_id' => 0]);
 
         $categories = Category::all();
-        $this->assertEquals([2, 3, 4], Category::getChildIds($categories, $grandparent));
-        $this->assertEquals([3, 4], Category::getChildIds($categories, $parent));
-        $this->assertEquals([4], Category::getChildIds($categories, $child));
-        $this->assertEquals([], Category::getChildIds($categories, $orphan));
+        $this->assertEquals([2, 3, 4], Category::getChildIds($grandparent));
+        $this->assertEquals([3, 4], Category::getChildIds($parent));
+        $this->assertEquals([4], Category::getChildIds($child));
+        $this->assertEquals([], Category::getChildIds($orphan));
     }
 
     public function test_category_scopeIsChildOf_and_scopeIsNotChildOf()

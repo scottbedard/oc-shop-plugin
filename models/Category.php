@@ -43,21 +43,28 @@ class Category extends Model
     /**
      * Find the child ids of a parent category.
      *
-     * @param  \October\Rain\Database\Collection    $categories
      * @param  \Bedard\Shop\Models\Category|int     $parent
+     * @param  \October\Rain\Database\Collection    $categories
      * @return array
      */
-    public static function getChildIds(\October\Rain\Database\Collection $categories, $parent)
+    public static function getChildIds($parent, \October\Rain\Database\Collection $categories = null)
     {
         if (gettype($parent) === 'object') {
             $parent = $parent->id;
+        }
+
+        if ($categories === null) {
+            $categories = self::whereNotNull('parent_id')
+                ->where('id', '<>', $parent)
+                ->select('id', 'parent_id')
+                ->get();
         }
 
         $children = [];
         foreach ($categories as $category) {
             if ($category->parent_id == $parent) {
                 $children[] = $category->id;
-                $children = array_merge($children, self::getChildIds($categories, $category->id));
+                $children = array_merge($children, self::getChildIds($category->id, $categories));
             }
         }
 
@@ -89,9 +96,7 @@ class Category extends Model
      */
     public function scopeIsChildOf($query, $parent)
     {
-        $categories = self::select('id', 'parent_id')->get();
-
-        return $query->whereIn('id', self::getChildIds($categories, $parent));
+        return $query->whereIn('id', self::getChildIds($parent));
     }
 
     /**
@@ -103,8 +108,6 @@ class Category extends Model
      */
     public function scopeIsNotChildOf($query, $parent)
     {
-        $categories = self::select('id', 'parent_id')->get();
-
-        return $query->whereNotIn('id', self::getChildIds($categories, $parent));
+        return $query->whereNotIn('id', self::getChildIds($parent));
     }
 }
