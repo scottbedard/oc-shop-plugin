@@ -9,5 +9,6 @@ class Controller extends BaseController
         parent::__construct();
 
         $this->addJs('/plugins/bedard/shop/assets/dist/vendor.js');
+        $this->addJs('/plugins/bedard/shop/assets/dist/main.js');
     }
 }

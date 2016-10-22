@@ -30,11 +30,16 @@ var devMiddleware = require('webpack-dev-middleware')(compiler, {
 
 var hotMiddleware = require('webpack-hot-middleware')(compiler);
 
-// proxy our shared bundle to prevent annoying 404 errors
-app.use(proxyMiddleware('**/bedard/shop/assets/js/{manifest,vendor}.js', { target: '/' }));
+// proxy our vendor assets to void.js to silence annoying 404 errors
+var octoberProxy = fs.readFileSync(path.resolve(__dirname, '../.october_proxy'), 'utf8');
+app.use(proxyMiddleware('/plugins/bedard/shop/assets/dist/vendor.js', {
+    target: octoberProxy,
+    pathRewrite: function () {
+        return '/plugins/bedard/shop/assets/js/void.js';
+    },
+}));
 
 // and proxy everything else we don't need to our October site
-var octoberProxy = fs.readFileSync(path.resolve(__dirname, '../.october_proxy'), 'utf8');
 app.use(proxyMiddleware(function(pathname) {
     return pathname.indexOf('__webpack') === -1 && pathname.indexOf('bedard/shop/assets') === -1;
 }, { target: octoberProxy }));

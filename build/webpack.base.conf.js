@@ -3,6 +3,7 @@ var utils = require("./utils");
 
 module.exports = {
     entry: {
+        main: path.resolve(__dirname, '../assets/js/main.js'),
         treesort: path.resolve(__dirname, '../controllers/categories/treesort/index.js'),
     },
     output: {

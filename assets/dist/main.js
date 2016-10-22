@@ -1,0 +1,1 @@
+webpackJsonp([1],{4:function(o,n){"use strict";console.log("Hello from the main javascript entry point!")}},[4]);
