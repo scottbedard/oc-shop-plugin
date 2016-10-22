@@ -5,8 +5,8 @@
         $('[data-bedard-shop="category-reorder-modal"]').mountReorderComponent({
             categories: <?= $categories->toJson() ?>,
             lang: <?= $this->getLangJson([
-                'bedard.shop::lang.categories.list',
-                'backend::lang.form' => ['apply', 'cancel'],
+                'categories@bedard.shop::lang.categories' => ['list'],
+                'form@backend::lang.form' => ['apply', 'cancel'],
             ]) ?>
         });
     });

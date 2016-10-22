@@ -1,25 +1,35 @@
+<style lang="scss" scoped>
+    a {
+        cursor: move;
+        color: #aaa;
+    }
+
+    ol {
+        margin-left: 6px !important;
+        padding-left: 18px !important;
+    }
+
+    li {
+        line-height: 24px;
+    }
+</style>
+
 <template>
     <li>
-        {{ category.name }}
-        <v-reorder-list @sort="onSort">
+        <a href="#" @click.prevent class="move oc-icon-bars"></a>
+        <span>{{ category.name }}</span>
+        <ol>
             <v-reorder-item
                 v-for="category in childCategories"
                 :category="category"
-                :categories="categories"
-                @sort="onSort">
+                :categories="categories">
             </v-reorder-item>
-            <li></li>
-        </v-reorder-list>
+        </ol>
     </li>
 </template>
 
 <script>
-    import ReorderListComponent from './reorder_list';
-
     export default {
-        components: {
-            'v-reorder-list': ReorderListComponent,
-        },
         computed: {
             childCategories() {
                 return this.categories.filter(category => category.parent_id === this.category.id);

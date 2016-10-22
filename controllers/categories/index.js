@@ -5,7 +5,6 @@ import ReorderComponent from './components/reorder';
 Vue.use(Sortable);
 
 $.fn.mountReorderComponent = function({ categories, lang }) {
-
     new Vue({
         el: $(this)[0],
         components: { 'v-reorder': ReorderComponent },
