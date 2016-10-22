@@ -1,0 +1,10 @@
+<div data-bedard-shop="category-reorder-modal"></div>
+
+<script>
+    $(function() {
+        $('[data-bedard-shop="category-reorder-modal"]').mountReorderComponent({
+            categories: <?= $categories->toJson() ?>,
+            lang: <?= json_encode(trans('bedard.shop::lang.categories.list')) ?>
+        });
+    });
+</script>

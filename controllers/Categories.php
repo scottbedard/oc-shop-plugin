@@ -2,6 +2,7 @@
 
 use BackendMenu;
 use Bedard\Shop\Classes\Controller;
+use Bedard\Shop\Models\Category;
 
 /**
  * Categories Back-end Controller.
@@ -26,6 +27,15 @@ class Categories extends Controller
         parent::__construct();
 
         BackendMenu::setContext('Bedard.Shop', 'shop', 'categories');
-        $this->addJs('/plugins/bedard/shop/assets/dist/treesort.js');
+        $this->addJs('/plugins/bedard/shop/assets/dist/categories.js');
+    }
+
+    public function onReorder()
+    {
+        $categories = Category::all();
+
+        return $this->makePartial('$/bedard/shop/controllers/categories/_reorder.htm', [
+            'categories' => $categories,
+        ]);
     }
 }
