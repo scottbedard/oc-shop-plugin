@@ -5,11 +5,26 @@
         <?= e(trans('bedard.shop::lang.categories.list.create_button')) ?>
     </a>
 
-    <a
+    <button
+        class="btn btn-default oc-icon-trash-o"
+        disabled="disabled"
+        onclick="$(this).data('request-data', {
+            checked: $('.control-list').listWidget('getChecked')
+        })"
+        data-request="onDelete"
+        data-request-confirm="<?= e(trans('backend::lang.list.delete_selected_confirm')) ?>"
+        data-trigger-action="enable"
+        data-trigger=".control-list input[type=checkbox]"
+        data-trigger-condition="checked"
+        data-request-success="$(this).prop('disabled', false)"
+        data-stripe-load-indicator>
+        <?= e(trans('backend::lang.list.delete_selected')) ?>
+    </button>
+
+    <button
         data-control="popup"
         data-handler="onReorder"
-        href="javascript:;"
         class="btn btn-default oc-icon-sitemap">
         <?= e(trans('bedard.shop::lang.categories.list.reorder_button')) ?>
-    </a>
+    </button>
 </div>
