@@ -30,9 +30,12 @@ class Controller extends BaseController
                 $key = $value;
             }
 
-            $lang[$key] = $isFiltered
-                ? array_intersect_key(Lang::get($key), array_flip($value))
-                : Lang::get($key);
+            $alias = explode('@', $key);
+            $languageString = $alias[count($alias) - 1];
+
+            $lang[$alias[0]] = $isFiltered
+                ? array_intersect_key(Lang::get($languageString), array_flip($value))
+                : Lang::get($languageString);
         }
 
         return json_encode($lang);
