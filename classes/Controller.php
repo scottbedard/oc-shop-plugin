@@ -26,7 +26,7 @@ class Controller extends BaseController
         foreach ($keys as $key => $value) {
             $isFiltered = gettype($value) === 'array';
 
-            if (!$isFiltered) {
+            if (! $isFiltered) {
                 $key = $value;
             }
 
