@@ -5,12 +5,12 @@
     }
 
     ol {
-        margin-left: 6px !important;
+        margin-left: 5px !important;
         padding-left: 18px !important;
     }
 
     li {
-        line-height: 24px;
+        line-height: 32px;
     }
 </style>
 
