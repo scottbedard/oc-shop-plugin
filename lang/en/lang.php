@@ -33,6 +33,7 @@ return [
         'list' => [
             'create_button' => 'Create Category',
             'reorder_button' => 'Reorder Categories',
+            'reorder_empty' => 'There are no categories to reorder.',
             'title' => 'Manage Categories',
         ],
         'plural' => 'Categories',

@@ -8,7 +8,8 @@
             <div
                 class="control-treelist"
                 data-control="treelist"
-                data-handle="a">
+                data-handle="a"
+                v-if="categories.length">
                 <ol>
                     <v-reorder-item
                         v-for="category in rootCategories"
@@ -17,12 +18,15 @@
                     </v-reorder-item>
                 </ol>
             </div>
+            <p v-else>
+                {{ lang.categories.list.reorder_empty }}
+            </p>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">
                 {{ lang.form.cancel }}
             </button>
-            <button type="button" class="btn btn-primary" data-dismiss="modal">
+            <button type="button" class="btn btn-primary" data-dismiss="modal" v-if="categories.length">
                 {{ lang.form.apply }}
             </button>
         </div>
