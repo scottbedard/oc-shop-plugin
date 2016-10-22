@@ -4,7 +4,10 @@
     $(function() {
         $('[data-bedard-shop="category-reorder-modal"]').mountReorderComponent({
             categories: <?= $categories->toJson() ?>,
-            lang: <?= json_encode(trans('bedard.shop::lang.categories.list')) ?>
+            lang: <?= $this->getLangJson([
+                'bedard.shop::lang.categories.list',
+                'backend::lang.form' => ['apply', 'cancel'],
+            ]) ?>
         });
     });
 </script>
