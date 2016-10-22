@@ -1,5 +1,8 @@
 import Vue from 'vue';
+import Sortable from 'vue-sortable';
 import ReorderComponent from './components/reorder';
+
+Vue.use(Sortable);
 
 $.fn.mountReorderComponent = function({ categories, lang }) {
 
