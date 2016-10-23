@@ -64,7 +64,7 @@ class Category extends Model
     ];
 
     /**
-     * Before save
+     * Before save.
      *
      * @return void
      */
@@ -121,7 +121,7 @@ class Category extends Model
     }
 
     /**
-     * Set the plain text description_html
+     * Set the plain text description_html.
      *
      * @return void
      */
