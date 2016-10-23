@@ -1,5 +1,6 @@
 <?php namespace Bedard\Shop\Models;
 
+use Lang;
 use Model;
 
 /**
@@ -71,6 +72,7 @@ class Category extends Model
     public function beforeSave()
     {
         $this->setPlainDescription();
+        $this->setNullParentId();
     }
 
     /**
@@ -111,13 +113,25 @@ class Category extends Model
      */
     public function getParentIdOptions()
     {
-        // If this category does not exist, anyone may be the parent
-        if (! $this->exists) {
-            return self::lists('name', 'id');
-        }
+        $options = $this->exists
+            ? self::where('id', '<>', $this->id)->isNotChildOf($this->id)->orderBy('name')->lists('name', 'id')
+            : self::orderBy('name')->lists('name', 'id');
 
-        // Otherwise, only show valid potential parents
-        return self::where('id', '<>', $this->id)->isNotChildOf($this->id)->lists('name', 'id');
+        array_unshift($options, '<em>' . Lang::get('bedard.shop::lang.categories.form.no_parent') . '</em>');
+
+        return $options;
+    }
+
+    /**
+     * Convert falsey parent id values to null
+     *
+     * @return void
+     */
+    public function setNullParentId()
+    {
+        if (! $this->parent_id) {
+            $this->parent_id = null;
+        }
     }
 
     /**

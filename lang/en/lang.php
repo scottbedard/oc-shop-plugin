@@ -28,6 +28,7 @@ return [
             'is_active' => 'Category is active',
             'is_visible' => 'Show category in navigation',
             'name' => 'Name',
+            'no_parent' => 'No parent',
             'tab_settings' => 'Settings',
             'parent' => 'Parent Category',
             'preview_title' => 'Preview Category',

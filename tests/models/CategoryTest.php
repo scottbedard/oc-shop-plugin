@@ -12,9 +12,9 @@ class CategoryTest extends \PluginTestCase
         $parent = Factory::create(new Category);
         $child = Factory::create(new Category, ['parent_id' => $parent->id]);
 
-        $this->assertEquals([$parent->id, $child->id], array_keys(Factory::fill(new Category)->getParentIdOptions()));
-        $this->assertEquals([$parent->id], array_keys($child->getParentIdOptions()));
-        $this->assertEquals([], array_keys($parent->getParentIdOptions()));
+        $this->assertEquals([0, $parent->id, $child->id], array_keys(Factory::fill(new Category)->getParentIdOptions()));
+        $this->assertEquals([0, $parent->id], array_keys($child->getParentIdOptions()));
+        $this->assertEquals([0], array_keys($parent->getParentIdOptions()));
     }
 
     public function test_category_name_is_required()
@@ -85,5 +85,14 @@ class CategoryTest extends \PluginTestCase
     {
         $foo = Factory::create(new Category, ['description_html' => '<strong>Hello</strong>']);
         $this->assertEquals('Hello', $foo->description_plain);
+    }
+
+    public function test_it_sets_orphan_category_parent_ids_to_null()
+    {
+        $child = Factory::create(new Category, ['parent_id' => 1]);
+        $orphan = Factory::create(new Category, ['parent_id' => 0]);
+
+        $this->assertEquals(1, $child->parent_id);
+        $this->assertEquals(null, $orphan->parent_id);
     }
 }
