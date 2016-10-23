@@ -3,6 +3,10 @@
 use BackendMenu;
 use Bedard\Shop\Classes\Controller;
 use Bedard\Shop\Models\Category;
+use Exception;
+use Lang;
+use Log;
+use Response;
 
 /**
  * Categories Back-end Controller.
@@ -31,12 +35,33 @@ class Categories extends Controller
         $this->addJs('/plugins/bedard/shop/assets/dist/categories.js');
     }
 
-    public function onReorder()
+    /**
+     * Launch the reorder popup
+     *
+     * @return string
+     */
+    public function onReorderClicked()
     {
         $categories = Category::all();
 
         return $this->makePartial('$/bedard/shop/controllers/categories/_reorder.htm', [
             'categories' => $categories,
         ]);
+    }
+
+    /**
+     * Reorder the categories
+     *
+     * @return Response
+     */
+    public function reorder()
+    {
+        try {
+            Category::updateMany(input('categories'));
+            return Response::make(Lang::get('bedard.shop::lang.categories.list.reorder_success'));
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return Response::make(Lang::get('bedard.shop::lang.categories.list.reorder_failure'), 500);
+        }
     }
 }

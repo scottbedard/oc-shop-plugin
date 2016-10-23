@@ -12,6 +12,7 @@ class CreateCategoriesTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('parent_id')->unsigned()->nullable()->index();
+            $table->integer('sort_order')->default(0)->unsigned();
             $table->string('name')->default('');
             $table->string('slug')->default('')->unique();
             $table->timestamps();

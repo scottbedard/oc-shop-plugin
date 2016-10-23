@@ -3,7 +3,6 @@ var utils = require("./utils");
 
 module.exports = {
     entry: {
-        main: path.resolve(__dirname, '../assets/js/main.js'),
         categories: path.resolve(__dirname, '../controllers/categories/index.js'),
     },
     output: {
@@ -49,6 +48,22 @@ module.exports = {
                 test: /\.js$/,
                 loader: 'babel',
                 exclude: /node_modules/
+            },
+            {
+                test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+                loader: 'url',
+                query: {
+                    limit: 10000,
+                    name: path.resolve(__dirname, '../assets/img/[name].[ext]'),
+                },
+            },
+            {
+                test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+                loader: 'url',
+                query: {
+                    limit: 10000,
+                    name: path.resolve(__dirname, '../assets/fonts/[name].[ext]'),
+                },
             },
         ],
     },

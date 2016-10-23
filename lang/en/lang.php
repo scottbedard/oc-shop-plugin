@@ -34,6 +34,8 @@ return [
             'create_button' => 'Create Category',
             'reorder_button' => 'Reorder Categories',
             'reorder_empty' => 'There are no categories to reorder.',
+            'reorder_failure' => 'An error occured while attempting to reorder categories.',
+            'reorder_success' => 'Successfully reordered categories.',
             'title' => 'Manage Categories',
         ],
         'plural' => 'Categories',

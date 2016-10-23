@@ -4,10 +4,12 @@
     $(function() {
         $('[data-bedard-shop="category-reorder-modal"]').mountReorderComponent({
             categories: <?= $categories->toJson() ?>,
+            endpoint: '<?= Backend::url("bedard/shop/categories/reorder") ?>',
             lang: <?= $this->getLangJson([
                 'categories@bedard.shop::lang.categories' => ['list'],
-                'form@backend::lang.form' => ['apply', 'cancel'],
-            ]) ?>
+                'form@backend::lang.form' => ['apply', 'cancel', 'saving'],
+            ]) ?>,
+            token: '<?= csrf_token() ?>',
         });
     });
 </script>

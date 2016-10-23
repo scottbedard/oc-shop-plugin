@@ -88,6 +88,21 @@ class Category extends Model
     }
 
     /**
+     * Itterate over categories and update them with the given values
+     *
+     * @param  array    $data
+     * @return void
+     */
+    public static function updateMany(array $categories)
+    {
+        foreach ($categories as $category) {
+            $id = $category['id'];
+            unset($category['id']);
+            Category::whereId($id)->update($category);
+        }
+    }
+
+    /**
      * Query categories that are children of another category.
      *
      * @param  \October\Rain\Database\Builder   $query

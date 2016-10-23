@@ -63,4 +63,21 @@ class CategoryTest extends \PluginTestCase
         $category = Factory::create(new Category);
         Factory::create(new Category, ['slug' => $category->slug]);
     }
+
+    public function test_categories_can_be_reordered_in_bulk()
+    {
+        $foo = Factory::create(new Category);
+        $bar = Factory::create(new Category, ['parent_id' => $foo->id]);
+        $baz = Factory::create(new Category, ['parent_id' => $bar->id]);
+
+        $this->assertEquals(0, Category::isChildOf($baz)->count());
+
+        Category::updateMany([
+            ['id' => $foo->id, 'parent_id' => $bar->id],
+            ['id' => $bar->id, 'parent_id' => $baz->id],
+            ['id' => $baz->id, 'parent_id' => null],
+        ]);
+
+        $this->assertEquals(2, Category::isChildOf($baz)->count());
+    }
 }

@@ -15,10 +15,10 @@
 </style>
 
 <template>
-    <li>
+    <li :data-id="category.id">
         <a href="#" @click.prevent class="move oc-icon-bars"></a>
         <span>{{ category.name }}</span>
-        <ol>
+        <ol :data-parent-id="category.id">
             <v-reorder-item
                 v-for="category in childCategories"
                 :category="category"
