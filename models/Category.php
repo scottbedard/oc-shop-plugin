@@ -88,7 +88,7 @@ class Category extends Model
     }
 
     /**
-     * Itterate over categories and update them with the given values
+     * Itterate over categories and update them with the given values.
      *
      * @param  array    $data
      * @return void
@@ -98,7 +98,7 @@ class Category extends Model
         foreach ($categories as $category) {
             $id = $category['id'];
             unset($category['id']);
-            Category::whereId($id)->update($category);
+            self::whereId($id)->update($category);
         }
     }
 
