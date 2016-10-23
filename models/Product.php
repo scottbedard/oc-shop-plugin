@@ -38,7 +38,12 @@ class Product extends Model
     /**
      * @var array Relations
      */
-    public $belongsTo = [];
+    public $belongsToMany = [
+        'categories' => [
+            'Bedard\Shop\Models\Category',
+            'table' => 'bedard_shop_category_product',
+        ],
+    ];
 
     /**
      * @var array Validation

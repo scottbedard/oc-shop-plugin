@@ -18,6 +18,9 @@ fields:
 secondaryTabs:
     stretch: true
     fields:
+        categories:
+            label: bedard.shop::lang.categories.plural
+            type: relation
 
         price:
             label: bedard.shop::lang.products.form.price

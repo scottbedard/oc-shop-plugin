@@ -56,6 +56,13 @@ class Category extends Model
         'parent' => 'Bedard\Shop\Models\Category',
     ];
 
+    public $belongsToMany = [
+        'products' => [
+            'Bedard\Shop\Models\Product',
+            'table' => 'bedard_shop_category_product',
+        ],
+    ];
+
     /**
      * @var array Validation
      */
