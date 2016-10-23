@@ -36,7 +36,7 @@ class Categories extends Controller
     }
 
     /**
-     * Launch the reorder popup
+     * Launch the reorder popup.
      *
      * @return string
      */
@@ -50,7 +50,7 @@ class Categories extends Controller
     }
 
     /**
-     * Reorder the categories
+     * Reorder the categories.
      *
      * @return Response
      */
@@ -58,9 +58,11 @@ class Categories extends Controller
     {
         try {
             Category::updateMany(input('categories'));
+
             return Response::make(Lang::get('bedard.shop::lang.categories.list.reorder_success'));
         } catch (Exception $e) {
             Log::error($e->getMessage());
+
             return Response::make(Lang::get('bedard.shop::lang.categories.list.reorder_failure'), 500);
         }
     }
