@@ -80,4 +80,10 @@ class CategoryTest extends \PluginTestCase
 
         $this->assertEquals(2, Category::isChildOf($baz)->count());
     }
+
+    public function test_it_strips_tags_from_description_html_before_save()
+    {
+        $foo = Factory::create(new Category, ['description_html' => '<strong>Hello</strong>']);
+        $this->assertEquals('Hello', $foo->description_plain);
+    }
 }

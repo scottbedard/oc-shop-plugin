@@ -15,11 +15,34 @@ class Category extends Model
     public $table = 'bedard_shop_categories';
 
     /**
+     * @var array Default attributes
+     */
+    public $attributes = [
+        'description_html' => '',
+        'description_plain' => '',
+    ];
+
+    /**
+     * @var array Attribute casting
+     */
+    protected $casts = [
+        'is_active' => 'boolean',
+        'is_visible' => 'boolean',
+    ];
+
+    /**
      * @var array Guarded fields
      */
     protected $guarded = ['*'];
 
+    /**
+     * @var array Fillable fields
+     */
     protected $fillable = [
+        'is_active',
+        'is_visible',
+        'description_html',
+        'description_plain',
         'name',
         'parent_id',
         'slug',
@@ -39,6 +62,16 @@ class Category extends Model
         'name' => 'required',
         'slug' => 'required|unique:bedard_shop_categories',
     ];
+
+    /**
+     * Before save
+     *
+     * @return void
+     */
+    public function beforeSave()
+    {
+        $this->setPlainDescription();
+    }
 
     /**
      * Find the child ids of a parent category.
@@ -85,6 +118,16 @@ class Category extends Model
 
         // Otherwise, only show valid potential parents
         return self::where('id', '<>', $this->id)->isNotChildOf($this->id)->lists('name', 'id');
+    }
+
+    /**
+     * Set the plain text description_html
+     *
+     * @return void
+     */
+    public function setPlainDescription()
+    {
+        $this->description_plain = strip_tags($this->description_html);
     }
 
     /**

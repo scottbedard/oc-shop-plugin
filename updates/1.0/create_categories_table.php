@@ -15,6 +15,10 @@ class CreateCategoriesTable extends Migration
             $table->integer('sort_order')->default(0)->unsigned();
             $table->string('name')->default('');
             $table->string('slug')->default('')->unique();
+            $table->text('description_plain');
+            $table->text('description_html');
+            $table->boolean('is_active')->default(false);
+            $table->boolean('is_visible')->default(false);
             $table->timestamps();
         });
     }

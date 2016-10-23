@@ -15,10 +15,29 @@ fields:
             field: name
             type: slug
 
-secondaryTabs:
+tabs:
     stretch: true
     fields:
 
         parent_id:
             label: bedard.shop::lang.categories.form.parent
+            tab: bedard.shop::lang.categories.form.tab_settings
             type: dropdown
+            span: left
+
+        is_active:
+            label: bedard.shop::lang.categories.form.is_active
+            tab: bedard.shop::lang.categories.form.tab_settings
+            type: checkbox
+            span: right
+
+        is_visible:
+            label: bedard.shop::lang.categories.form.is_visible
+            tab: bedard.shop::lang.categories.form.tab_settings
+            type: checkbox
+            span: right
+
+        description_html:
+            tab: bedard.shop::lang.categories.form.tab_settings
+            label: bedard.shop::lang.categories.form.description
+            type: richeditor

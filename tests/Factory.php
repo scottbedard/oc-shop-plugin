@@ -1,6 +1,7 @@
 <?php namespace Bedard\Shop\Tests;
 
 use Faker;
+use Faker\Provider\Lorem;
 use Model;
 
 class Factory
@@ -58,6 +59,9 @@ class Factory
         $faker = Faker\Factory::create();
 
         return array_merge([
+            'description_html' => '<p>' . Lorem::paragraph() . '</p>',
+            'is_active' => true,
+            'is_visible' => true,
             'name' => $faker->words(3, true),
             'slug' => $faker->slug,
         ], $data);

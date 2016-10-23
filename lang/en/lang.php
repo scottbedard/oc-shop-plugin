@@ -24,7 +24,11 @@ return [
     'categories' => [
         'form' => [
             'create_title' => 'Create Category',
+            'description' => 'Description',
+            'is_active' => 'Category is active',
+            'is_visible' => 'Show category in navigation',
             'name' => 'Name',
+            'tab_settings' => 'Settings',
             'parent' => 'Parent Category',
             'preview_title' => 'Preview Category',
             'slug' => 'Slug',
@@ -33,6 +37,8 @@ return [
         'list' => [
             'create_button' => 'Create Category',
             'reorder_button' => 'Reorder Categories',
+            'name' => 'Name',
+            'slug' => 'Slug',
             'reorder_empty' => 'There are no categories to reorder.',
             'reorder_failure' => 'An error occured while attempting to reorder categories.',
             'reorder_success' => 'Successfully reordered categories.',
