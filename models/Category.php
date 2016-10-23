@@ -117,13 +117,13 @@ class Category extends Model
             ? self::where('id', '<>', $this->id)->isNotChildOf($this->id)->orderBy('name')->lists('name', 'id')
             : self::orderBy('name')->lists('name', 'id');
 
-        array_unshift($options, '<em>' . Lang::get('bedard.shop::lang.categories.form.no_parent') . '</em>');
+        array_unshift($options, '<em>'.Lang::get('bedard.shop::lang.categories.form.no_parent').'</em>');
 
         return $options;
     }
 
     /**
-     * Convert falsey parent id values to null
+     * Convert falsey parent id values to null.
      *
      * @return void
      */
