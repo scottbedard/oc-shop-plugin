@@ -17,3 +17,9 @@ To fire up the dev server, run the following command.
 ```bash
 $ npm run dev
 ```
+
+Production assets can be built with the following command.
+
+```bash
+$ npm run build
+```
