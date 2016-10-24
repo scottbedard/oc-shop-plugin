@@ -1,11 +1,24 @@
-# oc-shop-plugin
+<center>
+  # oc-shop-plugin
+  
+  ### An ecommerce platform for October CMS.
+  
+  [![Build Status](https://travis-ci.org/scottbedard/oc-shop-plugin.svg?branch=master)](https://travis-ci.org/scottbedard/oc-shop-plugin)
+  [![Coverage Status](https://coveralls.io/repos/github/scottbedard/oc-shop-plugin/badge.svg?branch=master)](https://coveralls.io/github/scottbedard/oc-shop-plugin?branch=master)
+  [![Style CI](https://styleci.io/repos/47805210/shield?style=flat)](https://styleci.io/repos/47805210)
+  [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/scottbedard/oc-shop-plugin/blob/master/LICENSE)
+</center>
 
-[![Build Status](https://travis-ci.org/scottbedard/oc-shop-plugin.svg?branch=master)](https://travis-ci.org/scottbedard/oc-shop-plugin)
-[![Coverage Status](https://coveralls.io/repos/github/scottbedard/oc-shop-plugin/badge.svg?branch=master)](https://coveralls.io/github/scottbedard/oc-shop-plugin?branch=master)
-[![Style CI](https://styleci.io/repos/47805210/shield?style=flat)](https://styleci.io/repos/47805210)
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/scottbedard/oc-shop-plugin/blob/master/LICENSE)
+---
 
-This repository is a work in progress, and is not ready for use by anyone.
+<a name="about"></a>
+### About this project
+
+> **Warning:** This repository is a work in progress, and is not ready for use by anyone.
+
+This repository has undergone a number of complete rewrites. It is my hope that this version will be the one to finally make it to the October marketplace as a free plugin. To achieve this, I am scaling back the scope and complexity of this plugin with one goal in mind; to create a core set of reliable and well tested features. Once this is done, I will consider re-implementing some of the more advanced features that other versions had.
+
+To see the progress being made toward the first release, check out the [1.0 milestone](https://github.com/scottbedard/oc-shop-plugin/milestone/1).
 
 <a name="local-development"></a>
 ### Local development
