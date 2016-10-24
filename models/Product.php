@@ -80,7 +80,7 @@ class Product extends Model
      */
     public function getCategoriesListOptions()
     {
-        return Category::orderBy('name', 'asc')->lists('name', 'id');
+        return Category::orderBy('name')->lists('name', 'id');
     }
 
     /**
