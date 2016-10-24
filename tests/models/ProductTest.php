@@ -52,7 +52,8 @@ class ProductTest extends \PluginTestCase
             $cat2->id => $cat2->name,
         ], $product->getCategoriesListOptions());
 
-        $product->categories()->sync([$cat1->id]);
+        $product->categoriesList = [$cat1->id];
+        $product->save();
 
         $this->assertEquals([$cat1->id], $product->categoriesList);
     }
