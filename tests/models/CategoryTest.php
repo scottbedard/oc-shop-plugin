@@ -23,19 +23,27 @@ class CategoryTest extends \PluginTestCase
         Factory::fill(new Category, null, ['name'])->validate();
     }
 
-    public function test_category_getChildIds()
+    public function test_category_getChildIds_and_getParentIds()
     {
         $grandparent = Factory::create(new Category);
         $parent = Factory::create(new Category, ['parent_id' => $grandparent->id]);
         $child = Factory::create(new Category, ['parent_id' => $parent->id]);
         $grandchild = Factory::create(new Category, ['parent_id' => $child->id]);
-        $orphan = Factory::create(new Category, ['parent_id' => 0]);
+        $orphan = Factory::create(new Category, ['parent_id' => null]);
 
-        $categories = Category::all();
+        // // getChildIds
         $this->assertEquals([2, 3, 4], Category::getChildIds($grandparent));
         $this->assertEquals([3, 4], Category::getChildIds($parent));
         $this->assertEquals([4], Category::getChildIds($child));
+        $this->assertEquals([], Category::getChildIds($grandchild));
         $this->assertEquals([], Category::getChildIds($orphan));
+
+        // getParentIds
+        $this->assertEquals([$child->id, $parent->id, $grandparent->id], Category::getParentIds($grandchild));
+        $this->assertEquals([$parent->id, $grandparent->id], Category::getParentIds($child));
+        $this->assertEquals([$grandparent->id], Category::getParentIds($parent));
+        $this->assertEquals([], Category::getParentIds($grandparent));
+        $this->assertEquals([], Category::getParentIds($orphan));
     }
 
     public function test_category_scopeIsChildOf_and_scopeIsNotChildOf()
@@ -49,6 +57,19 @@ class CategoryTest extends \PluginTestCase
 
         $notChildren = Category::isNotChildOf($child)->get();
         $this->assertEquals([$parent->id, $child->id], $notChildren->lists('id'));
+    }
+
+    public function test_category_scopeIsParentOf_and_scopeIsNotParentOf()
+    {
+        $parent = Factory::create(new Category);
+        $child = Factory::create(new Category, ['parent_id' => $parent->id]);
+        $grandchild = Factory::create(new Category, ['parent_id' => $child->id]);
+
+        $parents = Category::isParentOf($child)->get();
+        $this->assertEquals([$parent->id], $parents->lists('id'));
+
+        $notParents = Category::isNotParentOf($child)->get();
+        $this->assertEquals([$child->id, $grandchild->id], $notParents->lists('id'));
     }
 
     public function test_category_slug_is_required()

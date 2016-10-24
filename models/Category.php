@@ -113,6 +113,32 @@ class Category extends Model
         return $children;
     }
 
+    public static function getParentIds($child, \October\Rain\Database\Collection $categories = null)
+    {
+        if (gettype($child) === 'object') {
+            $child = $child->id;
+        }
+
+        if ($categories === null) {
+            $categories = self::select('id', 'parent_id')->get();
+        }
+
+        $parents = [];
+        $category = $categories->filter(function($model) use ($child) {
+            return $model->id === $child;
+        })->first();
+
+        while ($category && $category->parent_id) {
+            $parents[] = $category->parent_id;
+            $category = $categories->filter(function($model) use ($category) {
+                return $model->id === $category->parent_id;
+            })->first();
+
+        }
+
+        return $parents;
+    }
+
     /**
      * Get options for the parent form field.
      *
@@ -142,6 +168,54 @@ class Category extends Model
     }
 
     /**
+     * Query categories that are children of another category.
+     *
+     * @param  \October\Rain\Database\Builder   $query
+     * @param  \Bedard\Shop\Models\Category|int $parent
+     * @return \October\Rain\Database\Builder
+     */
+    public function scopeIsChildOf($query, $parent)
+    {
+        return $query->whereIn('id', self::getChildIds($parent));
+    }
+
+    /**
+     * Query categories that are not children of another category.
+     *
+     * @param  \October\Rain\Database\Builder   $query
+     * @param  \Bedard\Shop\Models\Category|int $parent
+     * @return \October\Rain\Database\Builder
+     */
+    public function scopeIsNotChildOf($query, $parent)
+    {
+        return $query->whereNotIn('id', self::getChildIds($parent));
+    }
+
+    /**
+     * Query categories that are a parent of another category.
+     *
+     * @param  \October\Rain\Database\Builder   $query
+     * @param  \Bedard\Shop\Models\Category|int $parent
+     * @return \October\Rain\Database\Builder
+     */
+    public function scopeIsParentOf($query, $child)
+    {
+        return $query->whereIn('id', self::getParentIds($child));
+    }
+
+    /**
+     * Query categories that are not a parent of another category.
+     *
+     * @param  \October\Rain\Database\Builder   $query
+     * @param  \Bedard\Shop\Models\Category|int $parent
+     * @return \October\Rain\Database\Builder
+     */
+    public function scopeIsNotParentOf($query, $child)
+    {
+        return $query->whereNotIn('id', self::getParentIds($child));
+    }
+
+    /**
      * Set the plain text description_html.
      *
      * @return void
@@ -164,29 +238,5 @@ class Category extends Model
             unset($category['id']);
             self::whereId($id)->update($category);
         }
-    }
-
-    /**
-     * Query categories that are children of another category.
-     *
-     * @param  \October\Rain\Database\Builder   $query
-     * @param  \Bedard\Shop\Models\Category|int $parent
-     * @return \October\Rain\Database\Builder
-     */
-    public function scopeIsChildOf($query, $parent)
-    {
-        return $query->whereIn('id', self::getChildIds($parent));
-    }
-
-    /**
-     * Query categories that are not children of another category.
-     *
-     * @param  \October\Rain\Database\Builder   $query
-     * @param  \Bedard\Shop\Models\Category|int $parent
-     * @return \October\Rain\Database\Builder
-     */
-    public function scopeIsNotChildOf($query, $parent)
-    {
-        return $query->whereNotIn('id', self::getChildIds($parent));
     }
 }
