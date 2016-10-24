@@ -1,4 +1,4 @@
-<p align="center"><b>oc-shop-plugin</b></p>
+<h3 align="center">oc-shop-plugin</h3>
 <p align="center">An ecomerce platform for October CMS.</p>
 <p align="center">
   <a href="https://travis-ci.org/scottbedard/oc-shop-plugin"><img src="https://travis-ci.org/scottbedard/oc-shop-plugin.svg?branch=master" alt="Build Status"></a>
