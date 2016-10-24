@@ -1,13 +1,13 @@
-<center>
-  # oc-shop-plugin
+<p align="center">
+  <h1>oc-shop-plugin<h1>
   
-  ### An ecommerce platform for October CMS.
+  <h3>An ecommerce platform for October CMS.<h3>
   
-  [![Build Status](https://travis-ci.org/scottbedard/oc-shop-plugin.svg?branch=master)](https://travis-ci.org/scottbedard/oc-shop-plugin)
-  [![Coverage Status](https://coveralls.io/repos/github/scottbedard/oc-shop-plugin/badge.svg?branch=master)](https://coveralls.io/github/scottbedard/oc-shop-plugin?branch=master)
-  [![Style CI](https://styleci.io/repos/47805210/shield?style=flat)](https://styleci.io/repos/47805210)
-  [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/scottbedard/oc-shop-plugin/blob/master/LICENSE)
-</center>
+  <a href="https://travis-ci.org/scottbedard/oc-shop-plugin"><img src="https://travis-ci.org/scottbedard/oc-shop-plugin.svg?branch=master" alt="Build Status"></a>
+  <a href="https://coveralls.io/github/scottbedard/oc-shop-plugin?branch=master"><img src="https://coveralls.io/repos/github/scottbedard/oc-shop-plugin/badge.svg?branch=master" alt="Coverage Status"></a>
+  <a href="https://styleci.io/repos/47805210"><img src="https://styleci.io/repos/47805210/shield?style=flat" alt="Style CI"></a>
+  <a href="https://github.com/scottbedard/oc-shop-plugin/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
+</p>
 
 ---
 
