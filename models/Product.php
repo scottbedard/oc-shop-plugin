@@ -101,6 +101,9 @@ class Product extends Model
     public function saveCategoryRelationships()
     {
         $categoryIds = $this->getOriginalPurgeValue('categoriesList');
-        $this->categories()->sync($categoryIds);
+
+        if (is_array($categoryIds)) {
+            $this->categories()->sync($categoryIds);
+        }
     }
 }
