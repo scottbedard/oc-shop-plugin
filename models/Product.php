@@ -1,6 +1,5 @@
 <?php namespace Bedard\Shop\Models;
 
-use Bedard\Shop\Models\Category;
 use Model;
 
 /**
@@ -65,7 +64,7 @@ class Product extends Model
     ];
 
     /**
-     * After save
+     * After save.
      *
      * @return void
      */
@@ -75,7 +74,7 @@ class Product extends Model
     }
 
     /**
-     * Get the categories options
+     * Get the categories options.
      *
      * @return array
      */
@@ -85,16 +84,17 @@ class Product extends Model
     }
 
     /**
-     * Get the categories that are directly related to this product
+     * Get the categories that are directly related to this product.
      *
      * @return void
      */
-    public function getCategoriesListAttribute() {
+    public function getCategoriesListAttribute()
+    {
         return $this->categories()->lists('id');
     }
 
     /**
-     * Sync the categories checkboxlist with the category relationship
+     * Sync the categories checkboxlist with the category relationship.
      *
      * @return void
      */
