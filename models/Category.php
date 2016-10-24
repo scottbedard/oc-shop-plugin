@@ -155,18 +155,6 @@ class Category extends Model
     }
 
     /**
-     * Convert falsey parent id values to null.
-     *
-     * @return void
-     */
-    public function setNullParentId()
-    {
-        if (! $this->parent_id) {
-            $this->parent_id = null;
-        }
-    }
-
-    /**
      * Query categories that are children of another category.
      *
      * @param  \October\Rain\Database\Builder   $query
@@ -212,6 +200,18 @@ class Category extends Model
     public function scopeIsNotParentOf($query, $child)
     {
         return $query->whereNotIn('id', self::getParentIds($child));
+    }
+
+    /**
+     * Convert falsey parent id values to null.
+     *
+     * @return void
+     */
+    public function setNullParentId()
+    {
+        if (! $this->parent_id) {
+            $this->parent_id = null;
+        }
     }
 
     /**
