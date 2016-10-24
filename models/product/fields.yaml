@@ -18,9 +18,9 @@ fields:
 secondaryTabs:
     stretch: true
     fields:
-        categories:
+        categoriesList:
             label: bedard.shop::lang.categories.plural
-            type: relation
+            type: checkboxlist
 
         price:
             label: bedard.shop::lang.products.form.price
