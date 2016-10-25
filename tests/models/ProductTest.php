@@ -3,7 +3,6 @@
 use Bedard\Shop\Models\Category;
 use Bedard\Shop\Models\Product;
 use Bedard\Shop\Tests\Factory;
-use DB;
 
 class ProductTest extends \PluginTestCase
 {
@@ -67,7 +66,7 @@ class ProductTest extends \PluginTestCase
         $shirt->categoriesList = [$shirts->id];
         $shirt->save();
 
-        $this->assertEquals([$clothes->id, $shirts->id], Category::whereHas('products', function($product) use ($shirt) {
+        $this->assertEquals([$clothes->id, $shirts->id], Category::whereHas('products', function ($product) use ($shirt) {
             return $product->where('id', $shirt->id);
         })->lists('id'));
     }
