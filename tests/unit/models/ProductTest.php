@@ -79,7 +79,7 @@ class ProductTest extends PluginTestCase
         $child = Factory::create(new Category, ['parent_id' => $parent1->id]);
 
         $product = Factory::create(new Product);
-        $product->categories()->sync([ $child->id ]);
+        $product->categories()->sync([$child->id]);
         $product->syncInheritedCategories();
 
         $this->assertTrue($parent1->products()->where('id', $product->id)->exists());
