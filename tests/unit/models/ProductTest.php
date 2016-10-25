@@ -3,8 +3,9 @@
 use Bedard\Shop\Models\Category;
 use Bedard\Shop\Models\Product;
 use Bedard\Shop\Tests\Factory;
+use Bedard\Shop\Tests\PluginTestCase;
 
-class ProductTest extends \PluginTestCase
+class ProductTest extends PluginTestCase
 {
     protected $refreshPlugins = ['Bedard.Shop'];
 
@@ -45,9 +46,9 @@ class ProductTest extends \PluginTestCase
         $cat2 = Factory::create(new Category, ['name' => 'cat2']);
         $product = Factory::create(new Product);
 
-        $this->assertEquals([], $product->categoriesList);
+        $this->assertArrayEquals([], $product->categoriesList);
 
-        $this->assertEquals([
+        $this->assertArrayEquals([
             $cat1->id => $cat1->name,
             $cat2->id => $cat2->name,
         ], $product->getCategoriesListOptions());
@@ -55,7 +56,7 @@ class ProductTest extends \PluginTestCase
         $product->categoriesList = [$cat1->id];
         $product->save();
 
-        $this->assertEquals([$cat1->id], $product->categoriesList);
+        $this->assertArrayEquals([$cat1->id], $product->categoriesList);
     }
 
     public function test_saving_a_product_sets_inherited_category_relationships()
@@ -66,7 +67,7 @@ class ProductTest extends \PluginTestCase
         $shirt->categoriesList = [$shirts->id];
         $shirt->save();
 
-        $this->assertEquals([$clothes->id, $shirts->id], Category::whereHas('products', function ($product) use ($shirt) {
+        $this->assertArrayEquals([$clothes->id, $shirts->id], Category::whereHas('products', function ($product) use ($shirt) {
             return $product->where('id', $shirt->id);
         })->lists('id'));
     }
