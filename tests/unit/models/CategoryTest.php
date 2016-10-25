@@ -1,4 +1,4 @@
-<?php namespace Bedard\Shop\Tests\Models;
+<?php namespace Bedard\Shop\Tests\Unit\Models;
 
 use Bedard\Shop\Models\Category;
 use Bedard\Shop\Tests\Factory;
