@@ -181,7 +181,7 @@ class Category extends Model
      * Query categories that are a parent of another category.
      *
      * @param  \October\Rain\Database\Builder   $query
-     * @param  \Bedard\Shop\Models\Category|int $parent
+     * @param  int                              $child
      * @return \October\Rain\Database\Builder
      */
     public function scopeIsParentOf($query, $child)
@@ -193,7 +193,7 @@ class Category extends Model
      * Query categories that are not a parent of another category.
      *
      * @param  \October\Rain\Database\Builder   $query
-     * @param  \Bedard\Shop\Models\Category|int $parent
+     * @param  int                              $child
      * @return \October\Rain\Database\Builder
      */
     public function scopeIsNotParentOf($query, $child)
@@ -226,7 +226,7 @@ class Category extends Model
     /**
      * Itterate over categories and update them with the given values.
      *
-     * @param  array    $data
+     * @param  array    $categories
      * @return void
      */
     public static function updateMany(array $categories)
