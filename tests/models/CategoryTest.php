@@ -32,18 +32,28 @@ class CategoryTest extends \PluginTestCase
         $orphan = Factory::create(new Category, ['parent_id' => null]);
 
         // // getChildIds
-        $this->assertEquals([2, 3, 4], Category::getChildIds($grandparent));
-        $this->assertEquals([3, 4], Category::getChildIds($parent));
-        $this->assertEquals([4], Category::getChildIds($child));
-        $this->assertEquals([], Category::getChildIds($grandchild));
-        $this->assertEquals([], Category::getChildIds($orphan));
+        $this->assertEquals([2, 3, 4], Category::getChildIds($grandparent->id));
+        $this->assertEquals([3, 4], Category::getChildIds($parent->id));
+        $this->assertEquals([4], Category::getChildIds($child->id));
+        $this->assertEquals([], Category::getChildIds($grandchild->id));
+        $this->assertEquals([], Category::getChildIds($orphan->id));
 
         // getParentIds
-        $this->assertEquals([$child->id, $parent->id, $grandparent->id], Category::getParentIds($grandchild));
-        $this->assertEquals([$parent->id, $grandparent->id], Category::getParentIds($child));
-        $this->assertEquals([$grandparent->id], Category::getParentIds($parent));
-        $this->assertEquals([], Category::getParentIds($grandparent));
-        $this->assertEquals([], Category::getParentIds($orphan));
+        $this->assertEquals([$child->id, $parent->id, $grandparent->id], Category::getParentIds($grandchild->id));
+        $this->assertEquals([$parent->id, $grandparent->id], Category::getParentIds($child->id));
+        $this->assertEquals([$grandparent->id], Category::getParentIds($parent->id));
+        $this->assertEquals([], Category::getParentIds($grandparent->id));
+        $this->assertEquals([], Category::getParentIds($orphan->id));
+    }
+
+    public function test_getParentIds_can_accept_an_array_of_ids()
+    {
+        $parent1 = Factory::create(new Category);
+        $parent2 = Factory::create(new Category);
+        $child1 = Factory::create(new Category, ['parent_id' => $parent1->id]);
+        $child2 = Factory::create(new Category, ['parent_id' => $parent2->id]);
+
+        $this->assertEquals([$parent1->id, $parent2->id], Category::getParentIds([$child1->id, $child2->id]));
     }
 
     public function test_category_scopeIsChildOf_and_scopeIsNotChildOf()
@@ -52,10 +62,10 @@ class CategoryTest extends \PluginTestCase
         $child = Factory::create(new Category, ['parent_id' => $parent->id]);
         $grandchild = Factory::create(new Category, ['parent_id' => $child->id]);
 
-        $children = Category::isChildOf($parent)->get();
+        $children = Category::isChildOf($parent->id)->get();
         $this->assertEquals([$child->id, $grandchild->id], $children->lists('id'));
 
-        $notChildren = Category::isNotChildOf($child)->get();
+        $notChildren = Category::isNotChildOf($child->id)->get();
         $this->assertEquals([$parent->id, $child->id], $notChildren->lists('id'));
     }
 
@@ -65,10 +75,10 @@ class CategoryTest extends \PluginTestCase
         $child = Factory::create(new Category, ['parent_id' => $parent->id]);
         $grandchild = Factory::create(new Category, ['parent_id' => $child->id]);
 
-        $parents = Category::isParentOf($child)->get();
+        $parents = Category::isParentOf($child->id)->get();
         $this->assertEquals([$parent->id], $parents->lists('id'));
 
-        $notParents = Category::isNotParentOf($child)->get();
+        $notParents = Category::isNotParentOf($child->id)->get();
         $this->assertEquals([$child->id, $grandchild->id], $notParents->lists('id'));
     }
 
@@ -91,7 +101,7 @@ class CategoryTest extends \PluginTestCase
         $bar = Factory::create(new Category, ['parent_id' => $foo->id]);
         $baz = Factory::create(new Category, ['parent_id' => $bar->id]);
 
-        $this->assertEquals(0, Category::isChildOf($baz)->count());
+        $this->assertEquals(0, Category::isChildOf($baz->id)->count());
 
         Category::updateMany([
             ['id' => $foo->id, 'parent_id' => $bar->id],
@@ -99,7 +109,7 @@ class CategoryTest extends \PluginTestCase
             ['id' => $baz->id, 'parent_id' => null],
         ]);
 
-        $this->assertEquals(2, Category::isChildOf($baz)->count());
+        $this->assertEquals(2, Category::isChildOf($baz->id)->count());
     }
 
     public function test_it_strips_tags_from_description_html_before_save()

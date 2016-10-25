@@ -91,10 +91,6 @@ class Category extends Model
      */
     public static function getChildIds($parent, \October\Rain\Database\Collection $categories = null)
     {
-        if (gettype($parent) === 'object') {
-            $parent = $parent->id;
-        }
-
         if ($categories === null) {
             $categories = self::whereNotNull('parent_id')
                 ->where('id', '<>', $parent)
@@ -113,10 +109,10 @@ class Category extends Model
         return $children;
     }
 
-    public static function getParentIds($child, \October\Rain\Database\Collection $categories = null)
+    public static function getParentIds($children, \October\Rain\Database\Collection $categories = null)
     {
-        if (gettype($child) === 'object') {
-            $child = $child->id;
+        if (! is_array($children)) {
+            $children = [$children];
         }
 
         if ($categories === null) {
@@ -124,18 +120,20 @@ class Category extends Model
         }
 
         $parents = [];
-        $category = $categories->filter(function ($model) use ($child) {
-            return $model->id === $child;
-        })->first();
-
-        while ($category && $category->parent_id) {
-            $parents[] = $category->parent_id;
-            $category = $categories->filter(function ($model) use ($category) {
-                return $model->id === $category->parent_id;
+        foreach ($children as $child) {
+            $category = $categories->filter(function ($model) use ($child) {
+                return $model->id === $child;
             })->first();
+
+            while ($category && $category->parent_id) {
+                $parents[] = $category->parent_id;
+                $category = $categories->filter(function ($model) use ($category) {
+                    return $model->id === $category->parent_id;
+                })->first();
+            }
         }
 
-        return $parents;
+        return array_unique($parents);
     }
 
     /**

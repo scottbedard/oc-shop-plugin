@@ -3,6 +3,7 @@
 use Bedard\Shop\Models\Category;
 use Bedard\Shop\Models\Product;
 use Bedard\Shop\Tests\Factory;
+use DB;
 
 class ProductTest extends \PluginTestCase
 {
@@ -56,5 +57,18 @@ class ProductTest extends \PluginTestCase
         $product->save();
 
         $this->assertEquals([$cat1->id], $product->categoriesList);
+    }
+
+    public function test_saving_a_product_sets_inherited_category_relationships()
+    {
+        $clothes = Factory::create(new Category);
+        $shirts = Factory::create(new Category, ['parent_id' => $clothes->id]);
+        $shirt = Factory::fill(new Product);
+        $shirt->categoriesList = [$shirts->id];
+        $shirt->save();
+
+        $this->assertEquals([$clothes->id, $shirts->id], Category::whereHas('products', function($product) use ($shirt) {
+            return $product->where('id', $shirt->id);
+        })->lists('id'));
     }
 }

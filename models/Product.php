@@ -104,6 +104,10 @@ class Product extends Model
 
         if (is_array($categoryIds)) {
             $this->categories()->sync($categoryIds);
+
+            foreach (Category::isParentOf($categoryIds)->lists('id') as $parentId) {
+                $this->categories()->attach($parentId, ['is_inherited' => true]);
+            }
         }
     }
 }
