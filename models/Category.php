@@ -122,13 +122,13 @@ class Category extends Model
         $parents = [];
         foreach ($children as $child) {
             $category = $categories->filter(function ($model) use ($child) {
-                return $model->id === $child;
+                return $model->id == $child;
             })->first();
 
             while ($category && $category->parent_id) {
                 $parents[] = $category->parent_id;
                 $category = $categories->filter(function ($model) use ($category) {
-                    return $model->id === $category->parent_id;
+                    return $model->id == $category->parent_id;
                 })->first();
             }
         }
