@@ -151,7 +151,10 @@ class Product extends Model
             // This is written as an ugly one-liner because PHPUnit refuses to
             // acknowledge that the lines in this closure are ever executed
             // in PHP 5.x, even though tests would fail if they weren't.
-            Queue::push(function ($job) use ($id) { self::findOrFail($id)->syncInheritedCategories(); $job->delete(); });
+            Queue::push(function ($job) use ($id) {
+                self::findOrFail($id)->syncInheritedCategories();
+                $job->delete();
+            });
         }
     }
 
