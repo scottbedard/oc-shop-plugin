@@ -92,4 +92,21 @@ class ProductTest extends PluginTestCase
         $this->assertFalse($parent1->products()->where('id', $product->id)->exists());
         $this->assertTrue($parent2->products()->where('id', $product->id)->exists());
     }
+
+    public function test_syncing_all_products_with_inherited_categories()
+    {
+        $parent1 = Factory::create(new Category);
+        $parent2 = Factory::create(new Category);
+        $child1 = Factory::create(new Category, ['parent_id' => $parent1->id]);
+        $child2 = Factory::create(new Category, ['parent_id' => $parent2->id]);
+        $product1 = Factory::create(new Product);
+        $product2 = Factory::create(new Product);
+        $product1->categories()->sync([$child1->id]);
+        $product2->categories()->sync([$child2->id]);
+
+        Product::syncAllInheritedCategories();
+
+        $this->assertTrue($parent1->products()->where('id', $product1->id)->exists());
+        $this->assertTrue($parent2->products()->where('id', $product2->id)->exists());
+    }
 }
