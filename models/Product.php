@@ -76,7 +76,7 @@ class Product extends Model
     }
 
     /**
-     * Attach a product to it's inherited categories
+     * Attach a product to it's inherited categories.
      *
      * @param  array|null $categoryIds
      * @return void
@@ -93,7 +93,7 @@ class Product extends Model
     }
 
     /**
-     * Detach a product from it's inherited categories
+     * Detach a product from it's inherited categories.
      *
      * @return void
      */
@@ -141,14 +141,14 @@ class Product extends Model
     }
 
     /**
-     * Sync the inherited categories of all products
+     * Sync the inherited categories of all products.
      *
      * @return void
      */
     public static function syncAllInheritedCategories()
     {
-        foreach (Product::lists('id') as $id) {
-            Queue::push(function($job) use ($id) {
+        foreach (self::lists('id') as $id) {
+            Queue::push(function ($job) use ($id) {
                 $product = Product::findOrFail($id);
                 $product->syncInheritedCategories();
             });
@@ -156,7 +156,7 @@ class Product extends Model
     }
 
     /**
-     * Sync a product with it's inherited categories
+     * Sync a product with it's inherited categories.
      *
      * @param  array|null $categoryIds
      * @return void
