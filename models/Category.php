@@ -60,6 +60,7 @@ class Category extends Model
         'products' => [
             'Bedard\Shop\Models\Product',
             'table' => 'bedard_shop_category_product',
+            'pivot' => ['is_inherited'],
         ],
     ];
 

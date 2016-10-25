@@ -71,4 +71,25 @@ class ProductTest extends PluginTestCase
             return $product->where('id', $shirt->id);
         })->lists('id'));
     }
+
+    public function test_products_sync_their_inherited_categories()
+    {
+        $parent1 = Factory::create(new Category);
+        $parent2 = Factory::create(new Category);
+        $child = Factory::create(new Category, ['parent_id' => $parent1->id]);
+
+        $product = Factory::create(new Product);
+        $product->categories()->sync([ $child->id ]);
+        $product->syncInheritedCategories();
+
+        $this->assertTrue($parent1->products()->where('id', $product->id)->exists());
+        $this->assertFalse($parent2->products()->where('id', $product->id)->exists());
+
+        $child->parent_id = $parent2->id;
+        $child->save();
+        $product->syncInheritedCategories();
+
+        $this->assertFalse($parent1->products()->where('id', $product->id)->exists());
+        $this->assertTrue($parent2->products()->where('id', $product->id)->exists());
+    }
 }

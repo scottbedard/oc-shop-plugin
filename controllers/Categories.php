@@ -3,6 +3,7 @@
 use BackendMenu;
 use Bedard\Shop\Classes\Controller;
 use Bedard\Shop\Models\Category;
+use Bedard\Shop\Models\Product;
 use Exception;
 use Lang;
 use Log;
@@ -58,12 +59,15 @@ class Categories extends Controller
     {
         try {
             Category::updateMany(input('categories'));
+            Product::syncAllInheritedCategories();
+            $success = Lang::get('bedard.shop::lang.categories.list.reorder_success');
 
-            return Response::make(Lang::get('bedard.shop::lang.categories.list.reorder_success'));
+            return Response::make($success);
         } catch (Exception $e) {
             Log::error($e->getMessage());
+            $failure = Lang::get('bedard.shop::lang.categories.list.reorder_failure');
 
-            return Response::make(Lang::get('bedard.shop::lang.categories.list.reorder_failure'), 500);
+            return Response::make($failure, 500);
         }
     }
 }
