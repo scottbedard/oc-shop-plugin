@@ -3,6 +3,7 @@
 <p align="center">
   <a href="https://travis-ci.org/scottbedard/oc-shop-plugin"><img src="https://travis-ci.org/scottbedard/oc-shop-plugin.svg?branch=master" alt="Build Status"></a>
   <a href="https://coveralls.io/github/scottbedard/oc-shop-plugin?branch=master"><img src="https://coveralls.io/repos/github/scottbedard/oc-shop-plugin/badge.svg?branch=master" alt="Coverage Status"></a>
+  <a href="https://scrutinizer-ci.com/g/scottbedard/oc-shop-plugin/"><img src="https://img.shields.io/scrutinizer/g/scottbedard/oc-shop-plugin.svg" alt="Scrutinizer"></a>
   <a href="https://styleci.io/repos/47805210"><img src="https://styleci.io/repos/47805210/shield?style=flat" alt="Style CI"></a>
   <a href="https://github.com/scottbedard/oc-shop-plugin/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
 </p>
