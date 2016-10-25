@@ -149,8 +149,8 @@ class Product extends Model
     {
         foreach (self::lists('id') as $id) {
             Queue::push(function ($job) use ($id) {
-                $product = Product::findOrFail($id);
-                $product->syncInheritedCategories();
+                Product::findOrFail($id)->syncInheritedCategories();
+                $job->delete();
             });
         }
     }
