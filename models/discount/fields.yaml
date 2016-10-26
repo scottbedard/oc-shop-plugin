@@ -36,7 +36,7 @@ fields:
         span: left
 
     is_percentage:
-        label: bedard.shop::lang.discount.method
+        label: bedard.shop::lang.discounts.form.method
         type: radio
         options:
             1: bedard.shop::lang.discounts.form.method_percentage
