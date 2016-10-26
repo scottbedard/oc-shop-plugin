@@ -1,10 +1,7 @@
 require('assets/js/boot');
 
 import Vue from 'vue';
-import Sortable from 'vue-sortable';
 import ReorderComponent from './components/reorder';
-
-Vue.use(Sortable);
 
 $.fn.mountReorderComponent = function({ categories, endpoint, lang, token }) {
     // include the csrf token in the headers

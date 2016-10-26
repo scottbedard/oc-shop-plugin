@@ -27,6 +27,7 @@ class Discounts extends Controller
         parent::__construct();
 
         BackendMenu::setContext('Bedard.Shop', 'shop', 'discounts');
+        $this->addJs('/plugins/bedard/shop/assets/dist/discounts.js');
     }
 
     /**

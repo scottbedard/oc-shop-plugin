@@ -1,10 +1,10 @@
 <?php if ($value === 0): ?>
-    <i class="icon-times"></i>
+    <i class="icon-times color-red"></i>
     <?= e(trans('bedard.shop::lang.discounts.list.status_expired')); ?>
 <?php elseif ($value === 1): ?>
-    <i class="icon-check"></i>
+    <i class="icon-check color-green"></i>
     <?= e(trans('bedard.shop::lang.discounts.list.status_active')); ?>
 <?php else: ?>
-    <i class="icon-calendar"></i>
+    <i class="icon-calendar color-blue"></i>
     <?= e(trans('bedard.shop::lang.discounts.list.status_upcoming')); ?>
 <?php endif; ?>

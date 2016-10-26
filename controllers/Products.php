@@ -27,5 +27,6 @@ class Products extends Controller
         parent::__construct();
 
         BackendMenu::setContext('Bedard.Shop', 'shop', 'products');
+        $this->addJs('/plugins/bedard/shop/assets/dist/products.js');
     }
 }

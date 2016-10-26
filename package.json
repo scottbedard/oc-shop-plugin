@@ -43,7 +43,6 @@
     "url-loader": "^0.5.7",
     "vue-loader": "^9.7.0",
     "vue-resource": "^1.0.3",
-    "vue-sortable": "github:sagalbot/vue-sortable#pull/13/head",
     "vue-style-loader": "^1.0.0",
     "webpack": "^2.1.0-beta.25",
     "webpack-dev-middleware": "^1.8.3",

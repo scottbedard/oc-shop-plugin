@@ -4,6 +4,8 @@ var utils = require("./utils");
 module.exports = {
     entry: {
         categories: path.resolve(__dirname, '../controllers/categories/index.js'),
+        discounts: path.resolve(__dirname, '../controllers/discounts/index.js'),
+        products: path.resolve(__dirname, '../controllers/products/index.js'),
     },
     output: {
         filename: '[name].js',
