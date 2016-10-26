@@ -5,6 +5,8 @@
 columns:
     name:
         label: bedard.shop::lang.categories.list.name
+        searchable: true
 
     slug:
         label: bedard.shop::lang.categories.list.slug
+        searchable: true
