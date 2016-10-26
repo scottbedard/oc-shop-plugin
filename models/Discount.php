@@ -49,6 +49,7 @@ class Discount extends Model
      * @var array Fillable fields
      */
     protected $fillable = [
+        'amount',
         'amount_exact',
         'amount_percentage',
         'end_at',
@@ -78,6 +79,8 @@ class Discount extends Model
         'end_at' => 'date',
         'name' => 'required',
         'start_at' => 'date',
+        'amount_exact' => 'numeric|min:0',
+        'amount_percentage' => 'integer|min:0',
     ];
 
     /**
@@ -91,6 +94,16 @@ class Discount extends Model
     }
 
     /**
+     * Before save.
+     *
+     * @return void
+     */
+    public function beforeSave()
+    {
+        $this->setAmount();
+    }
+
+    /**
      * Filter form fields.
      *
      * @param  object   $fields
@@ -100,6 +113,16 @@ class Discount extends Model
     {
         $fields->amount_exact->hidden = $this->is_percentage;
         $fields->amount_percentage->hidden = ! $this->is_percentage;
+    }
+
+    public function setAmount()
+    {
+        $exact = $this->getOriginalPurgeValue('amount_exact');
+        $percentage = $this->getOriginalPurgeValue('amount_percentage');
+
+        $this->amount = $this->is_percentage
+            ? $percentage
+            : $exact;
     }
 
     /**

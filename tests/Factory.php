@@ -80,6 +80,8 @@ class Factory
         $faker = Faker\Factory::create();
 
         return array_merge([
+            'amount_exact' => 0,
+            'amount_percentage' => 0,
             'name' => $faker->words(3, true),
             'start_at' => Carbon::today(),
             'end_at' => Carbon::today()->addDays(5),
