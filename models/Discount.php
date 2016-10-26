@@ -118,7 +118,7 @@ class Discount extends Model
     }
 
     /**
-     * This exists to makes statuses sortable by assigning them a value
+     * This exists to makes statuses sortable by assigning them a value.
      *
      * Expired  0
      * Running  1
@@ -130,21 +130,21 @@ class Discount extends Model
     public function scopeSelectStatus($query)
     {
         $grammar = $query->getQuery()->getGrammar();
-        $start_at = $grammar->wrap($this->table . '.start_at');
-        $end_at = $grammar->wrap($this->table . '.end_at');
+        $start_at = $grammar->wrap($this->table.'.start_at');
+        $end_at = $grammar->wrap($this->table.'.end_at');
         $now = Carbon::now();
 
-        $subquery = "CASE " .
-            "WHEN ({$end_at} IS NOT NULL AND {$end_at} < '{$now}') THEN 0 " .
-            "WHEN ({$start_at} IS NOT NULL AND {$start_at} > '{$now}') THEN 2 " .
-            "ELSE 1 " .
-        "END";
+        $subquery = 'CASE '.
+            "WHEN ({$end_at} IS NOT NULL AND {$end_at} < '{$now}') THEN 0 ".
+            "WHEN ({$start_at} IS NOT NULL AND {$start_at} > '{$now}') THEN 2 ".
+            'ELSE 1 '.
+        'END';
 
         return $query->selectSubquery($subquery, 'status');
     }
 
     /**
-     * Set the discount amount
+     * Set the discount amount.
      *
      * @return  void
      */

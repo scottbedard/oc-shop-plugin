@@ -3,10 +3,10 @@
 use DB;
 use October\Rain\Database\Builder;
 
-trait Subqueryable {
-
+trait Subqueryable
+{
     /**
-     * Select from a subquery
+     * Select from a subquery.
      *
      * @param  \October\Rain\Database\Builder
      * @return \October\Rain\Database\Builder
@@ -14,7 +14,7 @@ trait Subqueryable {
     public function scopeSelectSubquery($query, $subquery, $as)
     {
         if (empty($query->getQuery()->columns)) {
-            $query->select($this->getTable() . '.*');
+            $query->select($this->getTable().'.*');
         }
 
         return $subquery instanceof Builder
@@ -38,13 +38,13 @@ trait Subqueryable {
      */
     public function scopeJoinSubquery($query, $subquery, $alias, $left, $operator, $right, $join = 'join')
     {
-        $self = $this->getTable() . '.*';
-        if (!in_array($self, $query->getQuery()->columns)) {
+        $self = $this->getTable().'.*';
+        if (! in_array($self, $query->getQuery()->columns)) {
             $query->addSelect($self);
         }
 
         $subquery = $subquery->getQuery();
-        $raw = DB::raw('(' . $subquery->toSql() . ') ' . $alias);
+        $raw = DB::raw('('.$subquery->toSql().') '.$alias);
 
         return $query->$join($raw, $left, $operator, $right)->mergeBindings($subquery);
     }
