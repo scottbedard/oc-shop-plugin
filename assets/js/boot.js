@@ -1,3 +1,5 @@
+require('../scss/core');
+
 import Vue from 'vue';
 
 //

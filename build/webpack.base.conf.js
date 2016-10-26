@@ -11,7 +11,7 @@ module.exports = {
         publicPath: '/plugins/bedard/shop/assets/dist',
     },
     resolve: {
-        extensions: ['.js', '.vue'],
+        extensions: ['.js', '.scss', '.vue'],
         alias: {
             'assets': path.resolve(__dirname, '../assets'),
         },
@@ -64,6 +64,10 @@ module.exports = {
                     limit: 10000,
                     name: path.resolve(__dirname, '../assets/fonts/[name].[ext]'),
                 },
+            },
+            {
+                test: /\.scss$/,
+                loaders: ['style', 'css', 'sass'],
             },
         ],
     },
