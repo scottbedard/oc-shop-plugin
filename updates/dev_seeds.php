@@ -18,15 +18,9 @@ class DevSeeder extends Seeder
 
     protected function seedCategories()
     {
-        $clothes = Factory::create(new Category, ['name' => 'Clothes', 'slug' => 'clothes']);
-        Factory::create(new Category, ['name' => 'Shirts', 'slug' => 'shirts', 'parent_id' => $clothes->id]);
-        Factory::create(new Category, ['name' => 'Pants', 'slug' => 'pants', 'parent_id' => $clothes->id]);
-        Factory::create(new Category, ['name' => 'Shoes', 'slug' => 'shoes', 'parent_id' => $clothes->id]);
-        $electronics = Factory::create(new Category, ['name' => 'Electronics', 'slug' => 'electronics']);
-        Factory::create(new Category, ['name' => 'Phones', 'slug' => 'phones', 'parent_id' => $electronics->id]);
-        $computers = Factory::create(new Category, ['name' => 'Computers', 'slug' => 'computers', 'parent_id' => $electronics->id]);
-        Factory::create(new Category, ['name' => 'Mac', 'slug' => 'mac', 'parent_id' => $computers->id]);
-        Factory::create(new Category, ['name' => 'PC', 'slug' => 'pc', 'parent_id' => $computers->id]);
-        Factory::create(new Category, ['name' => 'Televisions', 'slug' => 'televisions', 'parent_id' => $electronics->id]);
+        $parent1 = Factory::create(new Category, ['name' => 'Parent 1', 'slug' => 'parent-1']);
+        $parent2 = Factory::create(new Category, ['name' => 'Parent 2', 'slug' => 'parent-2']);
+        $child1 = Factory::create(new Category, ['name' => 'Child 1', 'slug' => 'child-1', 'parent_id' => $parent1->id]);
+        $child2 = Factory::create(new Category, ['name' => 'Child 2', 'slug' => 'child-2', 'parent_id' => $parent2->id]);
     }
 }
