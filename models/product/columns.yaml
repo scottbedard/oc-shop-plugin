@@ -3,6 +3,8 @@
 # ===================================
 
 columns:
-    id:
-        label: ID
-        searchable: true
+    name:
+        label: bedard.shop::lang.products.list.name
+
+    slug:
+        label: bedard.shop::lang.products.list.slug

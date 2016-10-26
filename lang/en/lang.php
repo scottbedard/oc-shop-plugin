@@ -63,6 +63,8 @@ return [
         ],
         'list' => [
             'create_button' => 'Create Product',
+            'name' => 'Name',
+            'slug' => 'Slug',
             'title' => 'Manage Products',
         ],
         'plural' => 'Products',
