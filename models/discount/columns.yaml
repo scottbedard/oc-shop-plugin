@@ -3,6 +3,16 @@
 # ===================================
 
 columns:
-    id:
-        label: ID
+    name:
+        label: bedard.shop::lang.discounts.list.name
         searchable: true
+
+    start_at:
+        label: bedard.shop::lang.discounts.list.start_at
+        type: partial
+        path: $/bedard/shop/models/discount/_column_start_at.htm
+
+    end_at:
+        label: bedard.shop::lang.discounts.list.end_at
+        type: partial
+        path: $/bedard/shop/models/discount/_column_end_at.htm
