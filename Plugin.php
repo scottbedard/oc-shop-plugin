@@ -24,7 +24,7 @@ class Plugin extends PluginBase
     }
 
     /**
-     * Register form widgets
+     * Register form widgets.
      *
      * @return array
      */
@@ -33,7 +33,7 @@ class Plugin extends PluginBase
         return [
             'Owl\FormWidgets\Knob\Widget' => [
                 'label' => 'Knob',
-                'code'  => 'owl-knob'
+                'code'  => 'owl-knob',
             ],
         ];
     }

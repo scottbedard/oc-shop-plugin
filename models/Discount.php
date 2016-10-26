@@ -43,7 +43,7 @@ class Discount extends Model
     public $attachMany = [];
 
     /**
-     * Filter form fields
+     * Filter form fields.
      *
      * @param  object   $fields
      * @return void
@@ -51,6 +51,6 @@ class Discount extends Model
     public function filterFields($fields)
     {
         $fields->amount_exact->hidden = $this->is_percentage;
-        $fields->amount_percentage->hidden = !$this->is_percentage;
+        $fields->amount_percentage->hidden = ! $this->is_percentage;
     }
 }
