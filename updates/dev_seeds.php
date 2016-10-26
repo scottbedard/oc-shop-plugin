@@ -31,7 +31,7 @@ class DevSeeder extends Seeder
         $categories = Category::count();
 
         for ($i = 0; $i < $count; $i++) {
-            $product = Factory::create(new Product, ['name' => 'Product ' . $i, 'slug' => 'product-' . $i]);
+            $product = Factory::create(new Product, ['name' => 'Product '.$i, 'slug' => 'product-'.$i]);
             $product->categories()->sync([rand(1, $categories)]);
         }
     }
