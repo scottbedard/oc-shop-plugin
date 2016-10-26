@@ -1,5 +1,6 @@
 <?php namespace Bedard\Shop\Tests;
 
+use Carbon\Carbon;
 use Faker;
 use Faker\Provider\Lorem;
 use Model;
@@ -36,6 +37,7 @@ class Factory
 
         switch (get_class($model)) {
             case "Bedard\Shop\Models\Category": $data = self::getCategoryData($data); break;
+            case "Bedard\Shop\Models\Discount": $data = self::getDiscountData($data); break;
             case "Bedard\Shop\Models\Product": $data = self::getProductData($data); break;
         }
 
@@ -64,6 +66,23 @@ class Factory
             'is_visible' => true,
             'name' => $faker->words(3, true),
             'slug' => $faker->slug,
+        ], $data);
+    }
+
+    /**
+     * Discount.
+     *
+     * @param   array $data
+     * @return  array
+     */
+    public static function getDiscountData(array $data = [])
+    {
+        $faker = Faker\Factory::create();
+
+        return array_merge([
+            'name' => $faker->words(3, true),
+            'start_at' => Carbon::today(),
+            'end_at' => Carbon::today()->addDays(5),
         ], $data);
     }
 
