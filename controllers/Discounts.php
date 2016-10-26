@@ -4,7 +4,7 @@ use BackendMenu;
 use Bedard\Shop\Classes\Controller;
 
 /**
- * Discounts Back-end Controller
+ * Discounts Back-end Controller.
  */
 class Discounts extends Controller
 {
