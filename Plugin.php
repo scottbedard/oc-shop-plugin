@@ -38,17 +38,23 @@ class Plugin extends PluginBase
                 'permissions' => ['bedard.shop.*'],
                 'url'         => Backend::url('bedard/shop/products'),
                 'sideMenu' => [
+                    'products' => [
+                        'label'         => 'bedard.shop::lang.products.plural',
+                        'icon'          => 'icon-cubes',
+                        'url'           => Backend::url('bedard/shop/products'),
+                        'permissions'   => ['bedard.shop.products.*'],
+                    ],
                     'categories' => [
                         'label'         => 'bedard.shop::lang.categories.plural',
                         'icon'          => 'icon-folder-o',
                         'url'           => Backend::url('bedard/shop/categories'),
                         'permissions'   => ['bedard.shop.categories.*'],
                     ],
-                    'products' => [
-                        'label'         => 'bedard.shop::lang.products.plural',
-                        'icon'          => 'icon-cubes',
-                        'url'           => Backend::url('bedard/shop/products'),
-                        'permissions'   => ['bedard.shop.products.*'],
+                    'discounts' => [
+                        'label'         => 'bedard.shop::lang.discounts.plural',
+                        'icon'          => 'icon-clock-o',
+                        'url'           => Backend::url('bedard/shop/discounts'),
+                        'permissions'   => ['bedard.shop.discounts.*'],
                     ],
                 ],
             ],
@@ -63,6 +69,14 @@ class Plugin extends PluginBase
     public function registerPermissions()
     {
         return [
+            'bedard.shop.categories.manage' => [
+                'label' => 'bedard.shop::lang.plugin.permissions.categories',
+                'tab' => 'bedard.shop::lang.plugin.details.name',
+            ],
+            'bedard.shop.discounts.manage' => [
+                'label' => 'bedard.shop::lang.plugin.permissions.discounts',
+                'tab' => 'bedard.shop::lang.plugin.details.name',
+            ],
             'bedard.shop.products.manage' => [
                 'label' => 'bedard.shop::lang.plugin.permissions.products',
                 'tab' => 'bedard.shop::lang.plugin.details.name',

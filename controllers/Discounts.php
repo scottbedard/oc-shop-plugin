@@ -4,9 +4,9 @@ use BackendMenu;
 use Bedard\Shop\Classes\Controller;
 
 /**
- * Products Back-end Controller.
+ * Discounts Back-end Controller
  */
-class Products extends Controller
+class Discounts extends Controller
 {
     public $formConfig = 'config_form.yaml';
 
@@ -19,13 +19,13 @@ class Products extends Controller
     ];
 
     public $registerPermissions = [
-        'bedard.shop.products.manage',
+        'bedard.shop.discounts.manage',
     ];
 
     public function __construct()
     {
         parent::__construct();
 
-        BackendMenu::setContext('Bedard.Shop', 'shop', 'products');
+        BackendMenu::setContext('Bedard.Shop', 'shop', 'discounts');
     }
 }

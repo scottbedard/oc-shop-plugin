@@ -14,6 +14,8 @@ return [
             'shop' => 'Shop',
         ],
         'permissions' => [
+            'categories' => 'Manage Categories',
+            'discounts' => 'Manage Discounts',
             'products' => 'Manage Products',
         ],
     ],
@@ -47,6 +49,20 @@ return [
         ],
         'plural' => 'Categories',
         'singular' => 'Category',
+    ],
+
+    //
+    // Discounts
+    //
+    'discounts' =>  [
+        'form' => [
+        ],
+        'list' => [
+            'create_button' => 'Create Discount',
+            'title' => 'Manage Discounts',
+        ],
+        'plural' => 'Discounts',
+        'singular' => 'Discount',
     ],
 
     //
