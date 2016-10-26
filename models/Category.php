@@ -1,6 +1,5 @@
 <?php namespace Bedard\Shop\Models;
 
-use Bedard\Shop\Models\Product;
 use Lang;
 use Model;
 
@@ -74,7 +73,7 @@ class Category extends Model
     ];
 
     /**
-     * After save
+     * After save.
      *
      * @return void
      */
@@ -235,7 +234,7 @@ class Category extends Model
     }
 
     /**
-     * If the parent id has changed, resync all products
+     * If the parent id has changed, resync all products.
      *
      * @return void
      */
