@@ -28,4 +28,15 @@ class Discounts extends Controller
 
         BackendMenu::setContext('Bedard.Shop', 'shop', 'discounts');
     }
+
+    /**
+     * Extend the list query.
+     *
+     * @param  \Illuminate\Database\Query\Builder $query
+     * @return \Illuminate\Database\Query\Builder
+     */
+    public function listExtendQuery($query)
+    {
+        $query->selectStatus();
+    }
 }

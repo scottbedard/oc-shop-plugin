@@ -16,3 +16,8 @@ columns:
         label: bedard.shop::lang.discounts.list.end_at
         type: partial
         path: $/bedard/shop/models/discount/_column_end_at.htm
+
+    status:
+        label: bedard.shop::lang.discounts.list.status
+        type: partial
+        path: $/bedard/shop/models/discount/_column_status.htm

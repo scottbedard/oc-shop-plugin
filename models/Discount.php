@@ -1,5 +1,6 @@
 <?php namespace Bedard\Shop\Models;
 
+use Carbon\Carbon;
 use Flash;
 use Lang;
 use Model;
@@ -10,7 +11,8 @@ use October\Rain\Database\ModelException;
  */
 class Discount extends Model
 {
-    use \October\Rain\Database\Traits\Purgeable,
+    use \Bedard\Shop\Traits\Subqueryable,
+        \October\Rain\Database\Traits\Purgeable,
         \October\Rain\Database\Traits\Validation;
 
     /**
@@ -115,6 +117,37 @@ class Discount extends Model
         $fields->amount_percentage->hidden = ! $this->is_percentage;
     }
 
+    /**
+     * This exists to makes statuses sortable by assigning them a value
+     *
+     * Expired  0
+     * Running  1
+     * Upcoming 2
+     *
+     * @param  \October\Rain\Database\Builder   $query
+     * @return \October\Rain\Database\Builder
+     */
+    public function scopeSelectStatus($query)
+    {
+        $grammar = $query->getQuery()->getGrammar();
+        $start_at = $grammar->wrap($this->table . '.start_at');
+        $end_at = $grammar->wrap($this->table . '.end_at');
+        $now = Carbon::now();
+
+        $subquery = "CASE " .
+            "WHEN ({$end_at} IS NOT NULL AND {$end_at} < '{$now}') THEN 0 " .
+            "WHEN ({$start_at} IS NOT NULL AND {$start_at} > '{$now}') THEN 2 " .
+            "ELSE 1 " .
+        "END";
+
+        return $query->selectSubquery($subquery, 'status');
+    }
+
+    /**
+     * Set the discount amount
+     *
+     * @return  void
+     */
     public function setAmount()
     {
         $exact = $this->getOriginalPurgeValue('amount_exact');
