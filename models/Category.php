@@ -1,5 +1,6 @@
 <?php namespace Bedard\Shop\Models;
 
+use Bedard\Shop\Models\Product;
 use Lang;
 use Model;
 
@@ -71,6 +72,16 @@ class Category extends Model
         'name' => 'required',
         'slug' => 'required|unique:bedard_shop_categories',
     ];
+
+    /**
+     * After save
+     *
+     * @return void
+     */
+    public function afterSave()
+    {
+        $this->syncInheritedProducts();
+    }
 
     /**
      * Before save.
@@ -221,6 +232,18 @@ class Category extends Model
     public function setPlainDescription()
     {
         $this->description_plain = strip_tags($this->description_html);
+    }
+
+    /**
+     * If the parent id has changed, resync all products
+     *
+     * @return void
+     */
+    public function syncInheritedProducts()
+    {
+        if ($this->isDirty('parent_id')) {
+            Product::syncAllInheritedCategories();
+        }
     }
 
     /**

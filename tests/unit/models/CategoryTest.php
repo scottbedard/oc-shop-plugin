@@ -1,6 +1,7 @@
 <?php namespace Bedard\Shop\Tests\Unit\Models;
 
 use Bedard\Shop\Models\Category;
+use Bedard\Shop\Models\Product;
 use Bedard\Shop\Tests\Factory;
 use Bedard\Shop\Tests\PluginTestCase;
 
@@ -126,5 +127,22 @@ class CategoryTest extends PluginTestCase
 
         $this->assertEquals(1, $child->parent_id);
         $this->assertEquals(null, $orphan->parent_id);
+    }
+
+    public function test_changing_the_parent_id_syncs_all_products()
+    {
+        $parent1 = Factory::create(new Category);
+        $parent2 = Factory::create(new Category);
+        $child = Factory::create(new Category, ['parent_id' => $parent1->id]);
+        $product = Factory::create(new Product);
+        $product->categories()->sync([$child->id]);
+        $product->syncInheritedCategories();
+
+        $this->assertTrue($parent1->products()->where('id', $product->id)->exists());
+        $this->assertFalse($parent2->products()->where('id', $product->id)->exists());
+        $child->parent_id = $parent2->id;
+        $child->save();
+        $this->assertFalse($parent1->products()->where('id', $product->id)->exists());
+        $this->assertTrue($parent2->products()->where('id', $product->id)->exists());
     }
 }
