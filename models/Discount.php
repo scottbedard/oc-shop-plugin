@@ -103,7 +103,7 @@ class Discount extends Model
     }
 
     /**
-     * Ensure the start and end dates are valid
+     * Ensure the start and end dates are valid.
      *
      * @return void
      */
