@@ -14,6 +14,7 @@
     },
     "require": {
         "php": ">=5.5.0",
-        "owl/list-delete": "~1.0@dev"
+        "owl/list-delete": "~1.0@dev",
+        "owl/knob": "~1.0@dev"
     }
 }

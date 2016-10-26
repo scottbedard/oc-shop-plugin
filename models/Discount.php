@@ -13,6 +13,13 @@ class Discount extends Model
     public $table = 'bedard_shop_discounts';
 
     /**
+     * @var array Default attributes
+     */
+    public $attributes = [
+        'is_percentage' => true,
+    ];
+
+    /**
      * @var array Guarded fields
      */
     protected $guarded = ['*'];
@@ -34,4 +41,16 @@ class Discount extends Model
     public $morphMany = [];
     public $attachOne = [];
     public $attachMany = [];
+
+    /**
+     * Filter form fields
+     *
+     * @param  object   $fields
+     * @return void
+     */
+    public function filterFields($fields)
+    {
+        $fields->amount_exact->hidden = $this->is_percentage;
+        $fields->amount_percentage->hidden = !$this->is_percentage;
+    }
 }

@@ -24,6 +24,21 @@ class Plugin extends PluginBase
     }
 
     /**
+     * Register form widgets
+     *
+     * @return array
+     */
+    public function registerFormWidgets()
+    {
+        return [
+            'Owl\FormWidgets\Knob\Widget' => [
+                'label' => 'Knob',
+                'code'  => 'owl-knob'
+            ],
+        ];
+    }
+
+    /**
      * Registers back-end navigation items for this plugin.
      *
      * @return array

@@ -3,6 +3,42 @@
 # ===================================
 
 fields:
-    id:
-        label: ID
-        disabled: true
+    name:
+        label: bedard.shop::lang.discounts.form.name
+
+    start_at:
+        label: bedard.shop::lang.discounts.form.start_at
+        type: datepicker
+        span: left
+
+    end_at:
+        label: bedard.shop::lang.discounts.form.end_at
+        type: datepicker
+        span: right
+
+    amount_percentage:
+        dependsOn: is_percentage
+        knobLabel: bedard.shop::lang.discounts.form.amount
+        knobComment: bedard.shop::lang.discounts.form.amount_percentage
+        type: owl-knob
+        angleOffset: -115
+        angleArc: 230
+        fgColor: 95B753
+        inputColor: 666
+        width: 81
+        span: left
+
+    amount_exact:
+        dependsOn: is_percentage
+        label: bedard.shop::lang.discounts.form.amount
+        comment: bedard.shop::lang.discounts.form.amount_exact
+        placeholder: "0.00"
+        span: left
+
+    is_percentage:
+        label: bedard.shop::lang.discount.method
+        type: radio
+        options:
+            1: bedard.shop::lang.discounts.form.method_percentage
+            0: bedard.shop::lang.discounts.form.method_exact
+        span: right

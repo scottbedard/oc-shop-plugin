@@ -4,9 +4,57 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7c2b32196b6818dfcc9aa3b9c15ef4b5",
-    "content-hash": "3b566f9ad78d422b17f04dde8b408159",
+    "hash": "f31db99bc28ba39b75beeab307957030",
+    "content-hash": "b5530a480323093fb17fd6c72feca913",
     "packages": [
+        {
+            "name": "owl/knob",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/october-widgets/knob.git",
+                "reference": "22d5e7586d2cff30e388679ce1ab3975a7c1e48c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/october-widgets/knob/zipball/22d5e7586d2cff30e388679ce1ab3975a7c1e48c",
+                "reference": "22d5e7586d2cff30e388679ce1ab3975a7c1e48c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Owl\\FormWidgets\\Knob\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Scott Bedard",
+                    "email": "scottbedard90@gmail.com"
+                }
+            ],
+            "description": "Knob widget for OctoberCMS.",
+            "homepage": "http://github.com/october-widgets",
+            "keywords": [
+                "knob",
+                "october",
+                "october cms",
+                "owl"
+            ],
+            "time": "2015-06-30 03:23:46"
+        },
         {
             "name": "owl/list-delete",
             "version": "dev-master",
@@ -1805,6 +1853,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "owl/list-delete": 20,
+        "owl/knob": 20,
         "phpunit/phpunit": 20
     },
     "prefer-stable": false,

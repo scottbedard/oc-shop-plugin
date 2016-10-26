@@ -56,6 +56,15 @@ return [
     //
     'discounts' =>  [
         'form' => [
+            'amount' => 'Discount amount',
+            'amount_exact' => 'The exact amount to reduce prices by.',
+            'amount_percentage' => 'The percentage to reduce prices by.',
+            'method' => 'Discount method',
+            'method_exact' => 'Exact amount',
+            'method_percentage' => 'Percentage',
+            'end_at' => 'End date',
+            'name' => 'name',
+            'start_at' => 'Start date',
         ],
         'list' => [
             'create_button' => 'Create Discount',
