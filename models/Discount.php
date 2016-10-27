@@ -1,6 +1,5 @@
 <?php namespace Bedard\Shop\Models;
 
-use Bedard\Shop\Models\Price;
 use Carbon\Carbon;
 use Flash;
 use Lang;
@@ -159,7 +158,7 @@ class Discount extends Model
         $id = $this->id;
         $productIds = $this->getProductIds();
 
-        Queue::push(function($job) use ($id, $productIds) {
+        Queue::push(function ($job) use ($id, $productIds) {
             $discount = Discount::findOrFail($id);
             $discount->prices()->delete();
 
