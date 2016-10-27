@@ -43,18 +43,18 @@ class DevSeeder extends Seeder
 
     protected function seedDiscounts()
     {
-        $expired = Factory::create(new Discount, [
+        Factory::create(new Discount, [
             'name' => 'Expired',
             'end_at' => Carbon::yesterday(),
         ]);
 
-        $active = Factory::create(new Discount, [
+        Factory::create(new Discount, [
             'name' => 'Active',
             'start_at' => Carbon::yesterday(),
             'end_at' => Carbon::tomorrow(),
         ]);
 
-        $upcoming = Factory::create(new Discount, [
+        Factory::create(new Discount, [
             'name' => 'Upcoming',
             'start_at' => Carbon::tomorrow(),
         ]);
