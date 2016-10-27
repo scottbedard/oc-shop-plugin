@@ -99,7 +99,7 @@ class Factory
 
         return array_merge([
             'name' => $faker->words(3, true),
-            'price' => rand(1, 100) + (rand(0, 100) / 100),
+            'base_price' => rand(1, 100) + (rand(0, 100) / 100),
             'slug' => $faker->slug,
         ], $data);
     }

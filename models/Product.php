@@ -21,7 +21,7 @@ class Product extends Model
      * @var array Default attributes
      */
     public $attributes = [
-        'price' => 0,
+        'base_price' => 0,
     ];
 
     /**
@@ -34,7 +34,7 @@ class Product extends Model
      */
     protected $fillable = [
         'name',
-        'price',
+        'base_price',
         'slug',
     ];
 
@@ -63,6 +63,7 @@ class Product extends Model
     public $hasMany = [
         'prices' => [
             'Bedard\Shop\Models\Price',
+            'delete' => true,
         ],
     ];
 
@@ -71,7 +72,7 @@ class Product extends Model
      */
     public $rules = [
         'name' => 'required',
-        'price' => 'required|numeric|min:0',
+        'base_price' => 'required|numeric|min:0',
         'slug' => 'required|unique:bedard_shop_products',
     ];
 
@@ -82,6 +83,7 @@ class Product extends Model
      */
     public function afterSave()
     {
+        $this->saveBasePrice();
         $this->saveCategoryRelationships();
     }
 
@@ -133,6 +135,19 @@ class Product extends Model
     public function getCategoriesListAttribute()
     {
         return $this->categories()->lists('id');
+    }
+
+    /**
+     * Update of create the related base price model.
+     *
+     * @return void
+     */
+    public function saveBasePrice()
+    {
+        Price::updateOrCreate(
+            ['product_id' => $this->id, 'discount_id' => null],
+            ['price' => $this->base_price]
+        );
     }
 
     /**

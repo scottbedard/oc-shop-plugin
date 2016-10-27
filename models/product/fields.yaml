@@ -22,5 +22,5 @@ secondaryTabs:
             label: bedard.shop::lang.categories.plural
             type: checkboxlist
 
-        price:
-            label: bedard.shop::lang.products.form.price
+        base_price:
+            label: bedard.shop::lang.products.form.base_price

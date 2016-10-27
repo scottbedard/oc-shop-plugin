@@ -93,7 +93,7 @@ return [
             'create_title' => 'Create Product',
             'name' => 'Name',
             'preview_title' => 'Preview Product',
-            'price' => 'Price',
+            'base_price' => 'Base price',
             'slug' => 'Slug',
             'update_title' => 'Update Product',
         ],

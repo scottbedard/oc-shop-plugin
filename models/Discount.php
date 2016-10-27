@@ -85,6 +85,7 @@ class Discount extends Model
     public $hasMany = [
         'prices' => [
             'Bedard\Shop\Models\Price',
+            'delete' => true,
         ],
     ];
 

@@ -1,6 +1,7 @@
 <?php namespace Bedard\Shop\Tests\Unit\Models;
 
 use Bedard\Shop\Models\Category;
+use Bedard\Shop\Models\Price;
 use Bedard\Shop\Models\Product;
 use Bedard\Shop\Tests\Factory;
 use Bedard\Shop\Tests\PluginTestCase;
@@ -15,16 +16,16 @@ class ProductTest extends PluginTestCase
         Factory::fill(new Product, null, ['name'])->validate();
     }
 
-    public function test_product_price_is_required()
+    public function test_product_base_price_is_required()
     {
         $this->setExpectedException(\October\Rain\Database\ModelException::class);
-        Factory::fill(new Product, null, ['price'])->validate();
+        Factory::fill(new Product, null, ['base_price'])->validate();
     }
 
-    public function test_product_price_must_be_a_positive_number()
+    public function test_product_base_price_must_be_a_positive_number()
     {
         $this->setExpectedException(\October\Rain\Database\ModelException::class);
-        Factory::fill(new Product, ['price' => -1])->validate();
+        Factory::fill(new Product, ['base_price' => -1])->validate();
     }
 
     public function test_product_slug_is_required()
@@ -108,5 +109,11 @@ class ProductTest extends PluginTestCase
 
         $this->assertTrue($parent1->products()->where('id', $product1->id)->exists());
         $this->assertTrue($parent2->products()->where('id', $product2->id)->exists());
+    }
+
+    public function test_products_save_their_base_price()
+    {
+        $product = Factory::create(new Product);
+        $this->assertEquals(1, Price::where('product_id', $product->id)->where('price', $product->base_price)->count());
     }
 }

@@ -20,18 +20,23 @@ class Price extends Model
     /**
      * @var array Fillable fields
      */
-    protected $fillable = [];
+    protected $fillable = [
+        'discount_id',
+        'end_at',
+        'price',
+        'product_id',
+        'start_at',
+    ];
 
     /**
      * @var array Relations
      */
-    public $hasOne = [];
-    public $hasMany = [];
-    public $belongsTo = [];
-    public $belongsToMany = [];
-    public $morphTo = [];
-    public $morphOne = [];
-    public $morphMany = [];
-    public $attachOne = [];
-    public $attachMany = [];
+    public $belongsTo = [
+        'discount' => [
+            'Bedard\Shop\Models\Discount',
+        ],
+        'product' => [
+            'Bedard\Shop\Models\Product',
+        ],
+    ];
 }
