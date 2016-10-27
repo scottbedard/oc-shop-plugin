@@ -118,6 +118,20 @@ class Discount extends Model
     }
 
     /**
+     * Query discounts that are not expired.
+     *
+     * @param  [type] $query [description]
+     * @return [type]        [description]
+     */
+    public function scopeIsNotExpired($query)
+    {
+        return $query->where(function($discount) {
+            return $discount->whereNull('end_at')
+                ->orWhere('end_at', '>', (string) Carbon::now());
+        });
+    }
+
+    /**
      * This exists to makes statuses sortable by assigning them a value.
      *
      * Expired  0

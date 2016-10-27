@@ -5,6 +5,9 @@
 # Model List Column configuration
 list: $/bedard/shop/models/discount/columns.yaml
 
+# Filter configuration
+filter: config_filter.yaml
+
 # Model Class name
 modelClass: Bedard\Shop\Models\Discount
 

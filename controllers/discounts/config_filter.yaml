@@ -1,0 +1,10 @@
+# ===================================
+# Filter Scope Definitions
+# ===================================
+
+scopes:
+
+    hide_expired:
+        label: bedard.shop::lang.discounts.list.hide_expired
+        type: checkbox
+        scope: isNotExpired
