@@ -41,4 +41,19 @@ class DiscountTest extends PluginTestCase
         $this->assertEquals(1, $discounts->where('id', $active->id)->first()->status);
         $this->assertEquals(2, $discounts->where('id', $upcoming->id)->first()->status);
     }
+
+    public function test_isExpired_and_isNotExpired_scopes()
+    {
+        $expired = Factory::create(new Discount, ['end_at' => Carbon::yesterday()]);
+        $active = Factory::create(new Discount);
+        $upcoming = Factory::create(new Discount, ['start_at' => Carbon::tomorrow()]);
+
+        $isExpired = Discount::isExpired()->get();
+        $this->assertEquals(1, $isExpired->count());
+        $this->assertEquals($expired->id, $isExpired->first()->id);
+
+        $isNotExpired = Discount::isNotExpired()->get();
+        $this->assertEquals(2, $isNotExpired->count());
+        $this->assertArrayEquals([$active->id, $upcoming->id], $isNotExpired->lists('id'));
+    }
 }
