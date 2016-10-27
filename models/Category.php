@@ -98,11 +98,12 @@ class Category extends Model
     }
 
     /**
-     * Get the parent IDs of every category
+     * Get the parent IDs of every category.
      *
      * @return array
      */
-    public static function getParentCategoryIds() {
+    public static function getParentCategoryIds()
+    {
         $categories = self::select('id', 'parent_id')->get();
 
         $tree = [];
