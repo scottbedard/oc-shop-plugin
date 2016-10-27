@@ -4,6 +4,7 @@ use Bedard\Shop\Models\Discount;
 use Bedard\Shop\Tests\Factory;
 use Bedard\Shop\Tests\PluginTestCase;
 use Carbon\Carbon;
+use stdClass;
 
 class DiscountTest extends PluginTestCase
 {
@@ -28,6 +29,26 @@ class DiscountTest extends PluginTestCase
 
         $percentage = Factory::create(new Discount, ['amount_exact' => 1, 'amount_percentage' => 2, 'is_percentage' => true]);
         $this->assertEquals(2, $percentage->amount);
+    }
+
+    public function test_filtering_discount_form_fields()
+    {
+        $discount = Factory::fill(new Discount, ['is_percentage' => false]);
+
+        $fields = new stdClass;
+        $fields->amount_exact = new stdClass;
+        $fields->amount_percentage = new stdClass;
+        $fields->amount_exact->hidden = null;
+        $fields->amount_percentage->hidden = null;
+
+        $discount->filterFields($fields);
+        $this->assertFalse($fields->amount_exact->hidden);
+        $this->assertTrue($fields->amount_percentage->hidden);
+
+        $discount->is_percentage = true;
+        $discount->filterFields($fields);
+        $this->assertTrue($fields->amount_exact->hidden);
+        $this->assertFalse($fields->amount_percentage->hidden);
     }
 
     public function test_selectStatus_scope()
