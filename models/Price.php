@@ -7,6 +7,8 @@ use Model;
  */
 class Price extends Model
 {
+    use \Bedard\Shop\Traits\Timeable;
+
     /**
      * @var string The database table used by the model.
      */

@@ -12,6 +12,7 @@ use October\Rain\Database\ModelException;
 class Discount extends Model
 {
     use \Bedard\Shop\Traits\Subqueryable,
+        \Bedard\Shop\Traits\Timeable,
         \October\Rain\Database\Traits\Purgeable,
         \October\Rain\Database\Traits\Validation;
 
@@ -130,34 +131,6 @@ class Discount extends Model
     {
         $fields->amount_exact->hidden = $this->is_percentage;
         $fields->amount_percentage->hidden = ! $this->is_percentage;
-    }
-
-    /**
-     * Query discounts that are expired.
-     *
-     * @param  \October\Rain\Database\Builder   $query
-     * @return \October\Rain\Database\Builder
-     */
-    public function scopeIsExpired($query)
-    {
-        return $query->where(function ($discount) {
-            return $discount->whereNotNull('end_at')
-                ->where('end_at', '<=', (string) Carbon::now());
-        });
-    }
-
-    /**
-     * Query discounts that are not expired.
-     *
-     * @param  \October\Rain\Database\Builder   $query
-     * @return \October\Rain\Database\Builder
-     */
-    public function scopeIsNotExpired($query)
-    {
-        return $query->where(function ($discount) {
-            return $discount->whereNull('end_at')
-                ->orWhere('end_at', '>', (string) Carbon::now());
-        });
     }
 
     /**
