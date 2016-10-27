@@ -5,6 +5,7 @@ use Bedard\Shop\Models\Price;
 use Bedard\Shop\Models\Product;
 use Bedard\Shop\Tests\Factory;
 use Bedard\Shop\Tests\PluginTestCase;
+use Carbon\Carbon;
 
 class ProductTest extends PluginTestCase
 {
@@ -115,5 +116,16 @@ class ProductTest extends PluginTestCase
     {
         $product = Factory::create(new Product);
         $this->assertEquals(1, Price::where('product_id', $product->id)->where('price', $product->base_price)->count());
+    }
+
+    public function test_current_price_relationship()
+    {
+        $product = Factory::create(new Product, ['base_price' => 5]);
+        Factory::create(new Price, ['product_id' => $product->id, 'price' => 1, 'start_at' => Carbon::tomorrow()]);
+        Factory::create(new Price, ['product_id' => $product->id, 'price' => 2]);
+        Factory::create(new Price, ['product_id' => $product->id, 'price' => 3]);
+
+        $product->load('current_price');
+        $this->assertEquals(2, $product->current_price->price);
     }
 }

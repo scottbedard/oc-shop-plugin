@@ -67,6 +67,14 @@ class Product extends Model
         ],
     ];
 
+    public $hasOne = [
+        'current_price' => [
+            'Bedard\Shop\Models\Price',
+            'scope' => 'isActive',
+            'order' => 'price asc',
+        ],
+    ];
+
     /**
      * @var array Validation
      */
