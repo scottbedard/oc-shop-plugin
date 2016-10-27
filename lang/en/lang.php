@@ -100,6 +100,8 @@ return [
         'list' => [
             'create_button' => 'Create Product',
             'name' => 'Name',
+            'normal_price' => 'Normally :price',
+            'current_price' => 'Current price',
             'slug' => 'Slug',
             'title' => 'Manage Products',
         ],

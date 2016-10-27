@@ -1,0 +1,12 @@
+<?php if ($record->price < $record->base_price): ?>
+    <span
+        class="color-green"
+        data-toggle="tooltip"
+        title="<?= e(trans('bedard.shop::lang.products.list.normal_price', [
+            'price' => $record->base_price,
+        ])) ?>">
+        <?= $record->price ?>
+    </span>
+<?php else: ?>
+    <span><?= $record->price ?></span>
+<?php endif; ?>
