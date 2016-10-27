@@ -4,4 +4,6 @@
     - 1.0/create_products_table.php
     - 1.0/create_category_product_table.php
     - 1.0/create_discounts_table.php
+    - 1.0/create_category_discount_table.php
+    - 1.0/create_discount_product_table.php
     - dev_seeds.php

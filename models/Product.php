@@ -54,6 +54,10 @@ class Product extends Model
             'table' => 'bedard_shop_category_product',
             'conditions' => 'is_inherited = 0',
         ],
+        'discounts' => [
+            'Bedard\Shop\Models\Discount',
+            'table' => 'bedard_shop_discount_product',
+        ],
     ];
 
     /**

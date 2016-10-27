@@ -42,3 +42,13 @@ fields:
             1: bedard.shop::lang.discounts.form.method_percentage
             0: bedard.shop::lang.discounts.form.method_exact
         span: right
+
+    categories:
+        label: bedard.shop::lang.categories.plural
+        type: relation
+        span: left
+
+    products:
+        label: bedard.shop::lang.categories.plural
+        type: relation
+        span: right

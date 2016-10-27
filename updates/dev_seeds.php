@@ -1,8 +1,10 @@
 <?php namespace Bedard\Shop\Updates;
 
 use Bedard\Shop\Models\Category;
+use Bedard\Shop\Models\Discount;
 use Bedard\Shop\Models\Product;
 use Bedard\Shop\Tests\Factory;
+use Carbon\Carbon;
 use October\Rain\Database\Updates\Seeder;
 
 class DevSeeder extends Seeder
@@ -16,6 +18,7 @@ class DevSeeder extends Seeder
 
         $this->seedCategories();
         $this->seedProducts(10);
+        $this->seedDiscounts();
     }
 
     protected function seedCategories()
@@ -34,5 +37,26 @@ class DevSeeder extends Seeder
             $product = Factory::create(new Product, ['name' => 'Product '.$i, 'slug' => 'product-'.$i]);
             $product->categories()->sync([rand(1, $categories)]);
         }
+
+        Product::syncAllInheritedCategories();
+    }
+
+    protected function seedDiscounts()
+    {
+        $expired = Factory::create(new Discount, [
+            'name' => 'Expired',
+            'end_at' => Carbon::yesterday(),
+        ]);
+
+        $active = Factory::create(new Discount, [
+            'name' => 'Active',
+            'start_at' => Carbon::yesterday(),
+            'end_at' => Carbon::tomorrow(),
+        ]);
+
+        $upcoming = Factory::create(new Discount, [
+            'name' => 'Upcoming',
+            'start_at' => Carbon::tomorrow(),
+        ]);
     }
 }

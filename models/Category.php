@@ -57,6 +57,10 @@ class Category extends Model
     ];
 
     public $belongsToMany = [
+        'discounts' => [
+            'Bedard\Shop\Models\Discount',
+            'table' => 'bedard_shop_category_discount',
+        ],
         'products' => [
             'Bedard\Shop\Models\Product',
             'table' => 'bedard_shop_category_product',

@@ -71,8 +71,16 @@ class Discount extends Model
     /**
      * @var array Relations
      */
-    public $hasMany = [];
-    public $morphMany = [];
+    public $belongsToMany = [
+        'categories' => [
+            'Bedard\Shop\Models\Category',
+            'table' => 'bedard_shop_category_discount'
+        ],
+        'products' => [
+            'Bedard\Shop\Models\Product',
+            'table' => 'bedard_shop_discount_product',
+        ],
+    ];
 
     /**
      * @var  array Validation rules
