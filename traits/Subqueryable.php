@@ -4,12 +4,6 @@ use October\Rain\Database\Builder;
 
 trait Subqueryable
 {
-    /**
-     * Get the table associated with the model.
-     *
-     * @return string
-     */
-    abstract public function getTable();
 
     /**
      * Select from a subquery.
