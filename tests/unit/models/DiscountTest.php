@@ -80,17 +80,28 @@ class DiscountTest extends PluginTestCase
         $this->assertArrayEquals([$active->id, $upcoming->id], $isNotExpired->lists('id'));
     }
 
-    public function test_getProductIds()
+    public function test_prices_are_created_when_discount_is_saved()
     {
         $category1 = Factory::create(new Category);
         $product1 = Factory::create(new Product);
         $product1->categories()->sync([$category1->id]);
         $product2 = Factory::create(new Product);
         $product3 = Factory::create(new Product);
-        $discount = Factory::create(new Discount);
+
+        $discount = Factory::create(new Discount, [
+            'start_at' => Carbon::yesterday(),
+            'end_at' => Carbon::tomorrow(),
+        ]);
+
         $discount->categories()->sync([$category1->id]);
         $discount->products()->sync([$product2->id]);
 
-        $this->assertArrayEquals([$product1->id, $product2->id], $discount->getProductIds());
+        $discount->save();
+        $this->assertArrayEquals([$product1->id, $product2->id], $discount->prices()->lists('product_id'));
+
+        foreach ($discount->prices()->get() as $price) {
+            $this->assertEquals($discount->start_at, $price->start_at);
+            $this->assertEquals($discount->end_at, $price->end_at);
+        }
     }
 }

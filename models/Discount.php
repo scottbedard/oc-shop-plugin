@@ -1,10 +1,12 @@
 <?php namespace Bedard\Shop\Models;
 
+use Bedard\Shop\Models\Price;
 use Carbon\Carbon;
 use Flash;
 use Lang;
 use Model;
 use October\Rain\Database\ModelException;
+use Queue;
 
 /**
  * Discount Model.
@@ -87,6 +89,16 @@ class Discount extends Model
     ];
 
     /**
+     * After save.
+     *
+     * @return void
+     */
+    public function afterSave()
+    {
+        $this->savePrices();
+    }
+
+    /**
      * After validate.
      *
      * @return void
@@ -135,6 +147,34 @@ class Discount extends Model
         $productIds = $this->products()->lists('id');
 
         return array_unique(array_merge($productIds, $categoryProductIds));
+    }
+
+    /**
+     * Save the prices created by this discount.
+     *
+     * @return void
+     */
+    public function savePrices()
+    {
+        $id = $this->id;
+        $productIds = $this->getProductIds();
+
+        Queue::push(function($job) use ($id, $productIds) {
+            $discount = Discount::findOrFail($id);
+            $discount->prices()->delete();
+
+            foreach ($productIds as $productId) {
+                Price::create([
+                    'discount_id' => $discount->id,
+                    'product_id' => $productId,
+                    'price' => 0,
+                    'start_at' => $discount->start_at,
+                    'end_at' => $discount->end_at,
+                ]);
+            }
+
+            $job->delete();
+        });
     }
 
     /**
