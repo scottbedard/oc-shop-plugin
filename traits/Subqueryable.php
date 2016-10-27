@@ -36,16 +36,16 @@ trait Subqueryable
      * @param  string                           $join       Join type [ join, leftJoin ]
      * @return \October\Rain\Database\Builder
      */
-    public function scopeJoinSubquery($query, $subquery, $alias, $left, $operator, $right, $join = 'join')
-    {
-        $self = $this->getTable().'.*';
-        if (! in_array($self, $query->getQuery()->columns)) {
-            $query->addSelect($self);
-        }
+    // public function scopeJoinSubquery($query, $subquery, $alias, $left, $operator, $right, $join = 'join')
+    // {
+    //     $self = $this->getTable().'.*';
+    //     if (! in_array($self, $query->getQuery()->columns)) {
+    //         $query->addSelect($self);
+    //     }
 
-        $subquery = $subquery->getQuery();
-        $raw = DB::raw('('.$subquery->toSql().') '.$alias);
+    //     $subquery = $subquery->getQuery();
+    //     $raw = DB::raw('('.$subquery->toSql().') '.$alias);
 
-        return $query->$join($raw, $left, $operator, $right)->mergeBindings($subquery);
-    }
+    //     return $query->$join($raw, $left, $operator, $right)->mergeBindings($subquery);
+    // }
 }

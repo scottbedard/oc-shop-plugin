@@ -29,4 +29,16 @@ class DiscountTest extends PluginTestCase
         $percentage = Factory::create(new Discount, ['amount_exact' => 1, 'amount_percentage' => 2, 'is_percentage' => true]);
         $this->assertEquals(2, $percentage->amount);
     }
+
+    public function test_selectStatus_scope()
+    {
+        $expired = Factory::create(new Discount, ['end_at' => Carbon::yesterday()]);
+        $active = Factory::create(new Discount);
+        $upcoming = Factory::create(new Discount, ['start_at' => Carbon::tomorrow()]);
+
+        $discounts = Discount::selectStatus()->get();
+        $this->assertEquals(0, $discounts->where('id', $expired->id)->first()->status);
+        $this->assertEquals(1, $discounts->where('id', $active->id)->first()->status);
+        $this->assertEquals(2, $discounts->where('id', $upcoming->id)->first()->status);
+    }
 }
