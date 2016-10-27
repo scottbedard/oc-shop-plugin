@@ -1,6 +1,5 @@
 <?php namespace Bedard\Shop\Models;
 
-use Bedard\Shop\Models\Product;
 use Carbon\Carbon;
 use Flash;
 use Lang;
@@ -121,8 +120,8 @@ class Discount extends Model
     /**
      * Calculate the discounted price.
      *
-     * @param  double $basePrice
-     * @return double
+     * @param  float $basePrice
+     * @return float
      */
     public function calculatePrice($basePrice)
     {
