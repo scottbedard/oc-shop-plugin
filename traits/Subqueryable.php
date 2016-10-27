@@ -4,7 +4,6 @@ use October\Rain\Database\Builder;
 
 trait Subqueryable
 {
-
     /**
      * Select from a subquery.
      *
