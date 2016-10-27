@@ -17,9 +17,9 @@ trait Subqueryable
             $query->select($this->getTable().'.*');
         }
 
-        return $subquery instanceof Builder
-            ? $query->selectSub($subquery->getQuery(), $as)
-            : $query->selectSub($subquery, $as);
+        $q = $subquery instanceof Builder ? $subquery->getQuery() : $subquery;
+
+        return $query->selectSub($q, $as);
     }
 
     /*
