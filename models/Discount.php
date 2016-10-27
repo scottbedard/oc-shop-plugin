@@ -74,7 +74,7 @@ class Discount extends Model
     public $belongsToMany = [
         'categories' => [
             'Bedard\Shop\Models\Category',
-            'table' => 'bedard_shop_category_discount'
+            'table' => 'bedard_shop_category_discount',
         ],
         'products' => [
             'Bedard\Shop\Models\Product',
