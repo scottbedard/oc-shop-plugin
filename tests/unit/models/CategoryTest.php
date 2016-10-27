@@ -145,4 +145,22 @@ class CategoryTest extends PluginTestCase
         $this->assertFalse($parent1->products()->where('id', $product->id)->exists());
         $this->assertTrue($parent2->products()->where('id', $product->id)->exists());
     }
+
+    public function test_getting_tree_of_children()
+    {
+        $c1 = Factory::create(new Category);
+        $c2 = Factory::create(new Category, ['parent_id' => $c1->id]);
+        $c3 = Factory::create(new Category, ['parent_id' => $c2->id]);
+        $c4 = Factory::create(new Category, ['parent_id' => $c3->id]);
+        $c5 = Factory::create(new Category, ['parent_id' => $c2->id]);
+        $c6 = Factory::create(new Category);
+
+        $parentIds = Category::getParentCategoryIds();
+        $this->assertArrayEquals([], $parentIds[$c1->id]);
+        $this->assertArrayEquals([$c1->id], $parentIds[$c2->id]);
+        $this->assertArrayEquals([$c1->id, $c2->id], $parentIds[$c3->id]);
+        $this->assertArrayEquals([$c1->id, $c2->id, $c3->id], $parentIds[$c4->id]);
+        $this->assertArrayEquals([$c1->id, $c2->id], $parentIds[$c5->id]);
+        $this->assertArrayEquals([], $parentIds[$c6->id]);
+    }
 }

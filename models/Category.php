@@ -98,6 +98,22 @@ class Category extends Model
     }
 
     /**
+     * Get the parent IDs of every category
+     *
+     * @return array
+     */
+    public static function getParentCategoryIds() {
+        $categories = self::select('id', 'parent_id')->get();
+
+        $tree = [];
+        foreach ($categories as $category) {
+            $tree[$category->id] = self::walkParentCategories($categories, $category);
+        }
+
+        return $tree;
+    }
+
+    /**
      * Find the child ids of a parent category.
      *
      * @param  \Bedard\Shop\Models\Category|int     $parent
@@ -262,5 +278,23 @@ class Category extends Model
             unset($category['id']);
             self::whereId($id)->update($category);
         }
+    }
+
+    /**
+     * Walk up the category tree gathering parent IDs.
+     *
+     * @param  \October\Rain\Database\Collection    $categories     All categories
+     * @param  \Bedard\Shop\Models\Category         $category       Current category being walked over
+     * @param  array                                $tree           Tree of parent IDs
+     * @return arrau
+     */
+    public static function walkParentCategories($categories, $category, $tree = [])
+    {
+        if ($category->parent_id !== null) {
+            $tree[] = $category->parent_id;
+            $tree = array_merge($tree, self::walkParentCategories($categories, $categories->find($category->parent_id)));
+        }
+
+        return $tree;
     }
 }
