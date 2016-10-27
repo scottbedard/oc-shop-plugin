@@ -127,7 +127,7 @@ class Discount extends Model
     {
         $categoryProductIds = $this->categories()
             ->select('id')
-            ->with(['products' => function($products) {
+            ->with(['products' => function ($products) {
                 return $products->select('id');
             }])
             ->lists('categories.products.id');
