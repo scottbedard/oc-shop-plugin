@@ -1,5 +1,6 @@
 <?php namespace Bedard\Shop\Models;
 
+use October\Rain\Database\Builder;
 use DB;
 use Model;
 use Queue;
@@ -9,7 +10,8 @@ use Queue;
  */
 class Product extends Model
 {
-    use \October\Rain\Database\Traits\Purgeable,
+    use \Bedard\Shop\Traits\Subqueryable,
+        \October\Rain\Database\Traits\Purgeable,
         \October\Rain\Database\Traits\Validation;
 
     /**
@@ -171,6 +173,27 @@ class Product extends Model
             $this->categories()->sync($categoryIds);
             $this->syncInheritedCategories($categoryIds);
         }
+    }
+
+    /**
+     * Left joins a subquery containing the product price
+     *
+     * @param  \October\Rain\Database\Builder   $query
+     * @return \October\Rain\Database\Builder
+     */
+    public function scopeJoinPrice(Builder $query)
+    {
+        $alias = 'prices';
+        $grammar = $query->getQuery()->getGrammar();
+
+        $subquery = Price::isActive()
+            ->addselect('bedard_shop_prices.product_id')
+            ->selectRaw('MIN(' . $grammar->wrap('bedard_shop_prices.price') . ') as ' . $grammar->wrap('price'))
+            ->groupBy('bedard_shop_prices.product_id');
+
+        return $query
+            ->addSelect($alias . '.price')
+            ->joinSubquery($subquery, $alias, 'bedard_shop_products.id', '=', $alias . '.product_id');
     }
 
     /**

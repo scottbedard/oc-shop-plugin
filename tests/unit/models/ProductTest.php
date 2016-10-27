@@ -128,4 +128,15 @@ class ProductTest extends PluginTestCase
         $product->load('current_price');
         $this->assertEquals(2, $product->current_price->price);
     }
+
+    public function test_join_current_price_scope()
+    {
+        $product = Factory::create(new Product, ['base_price' => 5]);
+        Factory::create(new Price, ['product_id' => $product->id, 'price' => 1, 'start_at' => Carbon::tomorrow()]);
+        Factory::create(new Price, ['product_id' => $product->id, 'price' => 2]);
+        Factory::create(new Price, ['product_id' => $product->id, 'price' => 3]);
+
+        $result = Product::joinPrice()->find($product->id);
+        $this->assertEquals(2, $result->price);
+    }
 }
