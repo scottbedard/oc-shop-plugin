@@ -60,6 +60,12 @@ class Product extends Model
         ],
     ];
 
+    public $hasMany = [
+        'prices' => [
+            'Bedard\Shop\Models\Price',
+        ],
+    ];
+
     /**
      * @var array Validation
      */
