@@ -1,6 +1,5 @@
 <?php namespace Bedard\Shop\Traits;
 
-use DB;
 use October\Rain\Database\Builder;
 
 trait Subqueryable
