@@ -29,21 +29,6 @@ class Discount extends Model
     ];
 
     /**
-     * @var array Attribute casting
-     */
-    protected $casts = [
-        //
-    ];
-
-    /**
-     * @var array Date casting
-     */
-    protected $dates = [
-        'end_at',
-        'start_at',
-    ];
-
-    /**
      * @var array Guarded fields
      */
     protected $guarded = ['*'];

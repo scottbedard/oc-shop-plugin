@@ -37,6 +37,7 @@ class Factory
         switch (get_class($model)) {
             case "Bedard\Shop\Models\Category": $data = self::getCategoryData($data); break;
             case "Bedard\Shop\Models\Discount": $data = self::getDiscountData($data); break;
+            case "Bedard\Shop\Models\Price": $data=self::getPriceData($data); break;
             case "Bedard\Shop\Models\Product": $data = self::getProductData($data); break;
         }
 
@@ -84,6 +85,23 @@ class Factory
             'name' => $faker->words(3, true),
             'start_at' => null,
             'end_at' => null,
+        ], $data);
+    }
+
+    /**
+     * Price.
+     *
+     * @param  array $data
+     * @return aray
+     */
+    public static function getPriceData(array $data = [])
+    {
+        return array_merge([
+            'discount_id' => null,
+            'end_at' => null,
+            'price' => 0,
+            'product_id' => 0,
+            'start_at' => null,
         ], $data);
     }
 

@@ -6,6 +6,20 @@ use October\Rain\Database\Builder;
 trait Timeable
 {
     /**
+     * Boot the timeable trait for a model.
+     *
+     * @return void
+     */
+    public static function bootTimeable()
+    {
+        static::extend(function($model) {
+            $model->addFillable('start_at', 'end_at');
+            $model->addDateAttribute('start_at');
+            $model->addDateAttribute('end_at');
+        });
+    }
+
+    /**
      * Query models that are active.
      *
      * @param  \October\Rain\Database\Builder   $query
@@ -84,9 +98,8 @@ trait Timeable
     public function scopeIsNotUpcoming(Builder $query)
     {
         return $query->where(function ($model) {
-            return $model->isExpired()->orWhere(function ($q) {
-                $q->isActive();
-            });
+            return $model->whereNull('start_at')
+                ->orWhere('start_at', '<=', (string) Carbon::now());
         });
     }
 }
