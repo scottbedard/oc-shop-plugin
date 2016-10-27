@@ -176,7 +176,7 @@ class Product extends Model
     }
 
     /**
-     * Left joins a subquery containing the product price
+     * Left joins a subquery containing the product price.
      *
      * @param  \October\Rain\Database\Builder   $query
      * @return \October\Rain\Database\Builder
@@ -188,12 +188,12 @@ class Product extends Model
 
         $subquery = Price::isActive()
             ->addselect('bedard_shop_prices.product_id')
-            ->selectRaw('MIN(' . $grammar->wrap('bedard_shop_prices.price') . ') as ' . $grammar->wrap('price'))
+            ->selectRaw('MIN('.$grammar->wrap('bedard_shop_prices.price').') as '.$grammar->wrap('price'))
             ->groupBy('bedard_shop_prices.product_id');
 
         return $query
-            ->addSelect($alias . '.price')
-            ->joinSubquery($subquery, $alias, 'bedard_shop_products.id', '=', $alias . '.product_id');
+            ->addSelect($alias.'.price')
+            ->joinSubquery($subquery, $alias, 'bedard_shop_products.id', '=', $alias.'.product_id');
     }
 
     /**

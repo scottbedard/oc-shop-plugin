@@ -38,14 +38,14 @@ trait Subqueryable
      */
     public function scopeJoinSubquery(Builder $query, Builder $subquery, $alias, $left, $operator, $right, $join = 'join')
     {
-        $self = $this->getTable() . '.*';
+        $self = $this->getTable().'.*';
 
-        if (!in_array($self, $query->getQuery()->columns)) {
+        if (! in_array($self, $query->getQuery()->columns)) {
             $query->addSelect($self);
         }
 
         $subquery = $subquery->getQuery();
-        $raw = DB::raw('(' . $subquery->toSql() . ') ' . $alias);
+        $raw = DB::raw('('.$subquery->toSql().') '.$alias);
 
         return $query->$join($raw, $left, $operator, $right)->mergeBindings($subquery);
     }
