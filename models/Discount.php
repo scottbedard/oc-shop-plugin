@@ -125,7 +125,7 @@ class Discount extends Model
      */
     public function scopeIsNotExpired($query)
     {
-        return $query->where(function($discount) {
+        return $query->where(function ($discount) {
             return $discount->whereNull('end_at')
                 ->orWhere('end_at', '>', (string) Carbon::now());
         });
