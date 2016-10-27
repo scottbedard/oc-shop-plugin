@@ -99,9 +99,19 @@ class DiscountTest extends PluginTestCase
         $discount->save();
         $this->assertArrayEquals([$product1->id, $product2->id], $discount->prices()->lists('product_id'));
 
-        foreach ($discount->prices()->get() as $price) {
+        foreach ($discount->prices()->with('product')->get() as $price) {
             $this->assertEquals($discount->start_at, $price->start_at);
             $this->assertEquals($discount->end_at, $price->end_at);
+            $this->assertEquals($discount->calculatePrice($price->product->base_price), $price->price);
         }
+    }
+
+    public function test_calculating_discounted_prices()
+    {
+        $discount = Factory::fill(new Discount, ['amount' => 10, 'is_percentage' => false]);
+        $this->assertEquals(0, $discount->calculatePrice(5));
+        $this->assertEquals(40, $discount->calculatePrice(50));
+        $discount->is_percentage = true;
+        $this->assertEquals(45, $discount->calculatePrice(50));
     }
 }

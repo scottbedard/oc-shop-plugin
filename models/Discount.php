@@ -1,5 +1,6 @@
 <?php namespace Bedard\Shop\Models;
 
+use Bedard\Shop\Models\Product;
 use Carbon\Carbon;
 use Flash;
 use Lang;
@@ -118,6 +119,25 @@ class Discount extends Model
     }
 
     /**
+     * Calculate the discounted price.
+     *
+     * @param  double $basePrice
+     * @return double
+     */
+    public function calculatePrice($basePrice)
+    {
+        $value = $this->is_percentage
+            ? $basePrice - ($this->amount > 0 ? $basePrice / $this->amount : 0)
+            : $basePrice - $this->amount;
+
+        if ($value < 0) {
+            $value = 0;
+        }
+
+        return round($value, 2);
+    }
+
+    /**
      * Filter form fields.
      *
      * @param  object   $fields
@@ -134,7 +154,7 @@ class Discount extends Model
      *
      * @return array
      */
-    public function getProductIds()
+    public function getAllProductIds()
     {
         $categoryProductIds = $this->categories()
             ->select('id')
@@ -156,19 +176,22 @@ class Discount extends Model
     public function savePrices()
     {
         $id = $this->id;
-        $productIds = $this->getProductIds();
+        $productIds = $this->getAllProductIds();
 
         Queue::push(function ($job) use ($id, $productIds) {
             $discount = Discount::findOrFail($id);
+            $products = Product::whereIn('id', $productIds)->select('id', 'base_price')->get();
+
             $discount->prices()->delete();
 
             foreach ($productIds as $productId) {
+                $product = $products->find($productId);
                 Price::create([
                     'discount_id' => $discount->id,
-                    'product_id' => $productId,
-                    'price' => 0,
-                    'start_at' => $discount->start_at,
                     'end_at' => $discount->end_at,
+                    'price' => $discount->calculatePrice($product->base_price),
+                    'product_id' => $productId,
+                    'start_at' => $discount->start_at,
                 ]);
             }
 
