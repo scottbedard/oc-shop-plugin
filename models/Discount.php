@@ -119,6 +119,25 @@ class Discount extends Model
     }
 
     /**
+     * Fetch all of the products within the scope of this discount.
+     *
+     * @return array
+     */
+    public function getProductIds()
+    {
+        $categoryProductIds = $this->categories()
+            ->select('id')
+            ->with(['products' => function($products) {
+                return $products->select('id');
+            }])
+            ->lists('categories.products.id');
+
+        $productIds = $this->products()->lists('id');
+
+        return array_unique(array_merge($productIds, $categoryProductIds));
+    }
+
+    /**
      * This exists to makes statuses sortable by assigning them a value.
      *
      * Expired  0

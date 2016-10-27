@@ -1,6 +1,8 @@
 <?php namespace Bedard\Shop\Tests\Unit\Models;
 
+use Bedard\Shop\Models\Category;
 use Bedard\Shop\Models\Discount;
+use Bedard\Shop\Models\Product;
 use Bedard\Shop\Tests\Factory;
 use Bedard\Shop\Tests\PluginTestCase;
 use Carbon\Carbon;
@@ -76,5 +78,19 @@ class DiscountTest extends PluginTestCase
         $isNotExpired = Discount::isNotExpired()->get();
         $this->assertEquals(2, $isNotExpired->count());
         $this->assertArrayEquals([$active->id, $upcoming->id], $isNotExpired->lists('id'));
+    }
+
+    public function test_getProductIds()
+    {
+        $category1 = Factory::create(new Category);
+        $product1 = Factory::create(new Product);
+        $product1->categories()->sync([$category1->id]);
+        $product2 = Factory::create(new Product);
+        $product3 = Factory::create(new Product);
+        $discount = Factory::create(new Discount);
+        $discount->categories()->sync([$category1->id]);
+        $discount->products()->sync([$product2->id]);
+
+        $this->assertArrayEquals([$product1->id, $product2->id], $discount->getProductIds());
     }
 }
