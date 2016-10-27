@@ -8,7 +8,7 @@ class CreatePricesTable extends Migration
 {
     public function up()
     {
-        Schema::create('bedard_shop_prices', function(Blueprint $table) {
+        Schema::create('bedard_shop_prices', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->decimal('price', 10, 2)->unsigned();
