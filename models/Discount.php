@@ -120,8 +120,8 @@ class Discount extends Model
     /**
      * Query discounts that are expired.
      *
-     * @param  [type] $query [description]
-     * @return [type]        [description]
+     * @param  \October\Rain\Database\Builder   $query
+     * @return \October\Rain\Database\Builder
      */
     public function scopeIsExpired($query)
     {
@@ -134,8 +134,8 @@ class Discount extends Model
     /**
      * Query discounts that are not expired.
      *
-     * @param  [type] $query [description]
-     * @return [type]        [description]
+     * @param  \October\Rain\Database\Builder   $query
+     * @return \October\Rain\Database\Builder
      */
     public function scopeIsNotExpired($query)
     {

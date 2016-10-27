@@ -22,8 +22,8 @@ class DevSeeder extends Seeder
     {
         $parent1 = Factory::create(new Category, ['name' => 'Parent 1', 'slug' => 'parent-1']);
         $parent2 = Factory::create(new Category, ['name' => 'Parent 2', 'slug' => 'parent-2']);
-        $child1 = Factory::create(new Category, ['name' => 'Child 1', 'slug' => 'child-1', 'parent_id' => $parent1->id]);
-        $child2 = Factory::create(new Category, ['name' => 'Child 2', 'slug' => 'child-2', 'parent_id' => $parent2->id]);
+        Factory::create(new Category, ['name' => 'Child 1', 'slug' => 'child-1', 'parent_id' => $parent1->id]);
+        Factory::create(new Category, ['name' => 'Child 2', 'slug' => 'child-2', 'parent_id' => $parent2->id]);
     }
 
     protected function seedProducts($count)
