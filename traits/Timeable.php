@@ -12,7 +12,7 @@ trait Timeable
      */
     public static function bootTimeable()
     {
-        static::extend(function($model) {
+        static::extend(function ($model) {
             $model->addFillable('start_at', 'end_at');
             $model->addDateAttribute('start_at');
             $model->addDateAttribute('end_at');

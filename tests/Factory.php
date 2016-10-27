@@ -37,7 +37,7 @@ class Factory
         switch (get_class($model)) {
             case "Bedard\Shop\Models\Category": $data = self::getCategoryData($data); break;
             case "Bedard\Shop\Models\Discount": $data = self::getDiscountData($data); break;
-            case "Bedard\Shop\Models\Price": $data=self::getPriceData($data); break;
+            case "Bedard\Shop\Models\Price": $data = self::getPriceData($data); break;
             case "Bedard\Shop\Models\Product": $data = self::getProductData($data); break;
         }
 
