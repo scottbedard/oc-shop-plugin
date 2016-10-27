@@ -117,7 +117,6 @@ class Discount extends Model
         $fields->amount_percentage->hidden = ! $this->is_percentage;
     }
 
-
     /**
      * Query discounts that are expired.
      *
@@ -126,7 +125,7 @@ class Discount extends Model
      */
     public function scopeIsExpired($query)
     {
-        return $query->where(function($discount) {
+        return $query->where(function ($discount) {
             return $discount->whereNotNull('end_at')
                 ->where('end_at', '<=', (string) Carbon::now());
         });
