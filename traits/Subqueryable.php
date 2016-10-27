@@ -22,7 +22,7 @@ trait Subqueryable
             : $query->selectSub($subquery, $as);
     }
 
-    /**
+    /*
      * Join the query with a subquery. Warning, in order to use this method
      * properly, the join must be executed at the start of the query. If
      * it's added t the end of the query, the bindings won't match up.

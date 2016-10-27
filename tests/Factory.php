@@ -1,6 +1,5 @@
 <?php namespace Bedard\Shop\Tests;
 
-use Carbon\Carbon;
 use Faker;
 use Faker\Provider\Lorem;
 use Model;
