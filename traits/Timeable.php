@@ -55,7 +55,7 @@ trait Timeable
     public function scopeIsNotActive(Builder $query)
     {
         return $query->where(function ($model) {
-            return $model->isExpired()->orWhere(function($q) {
+            return $model->isExpired()->orWhere(function ($q) {
                 $q->isUpcoming();
             });
         });
@@ -74,6 +74,7 @@ trait Timeable
                 ->orWhere('end_at', '>', (string) Carbon::now());
         });
     }
+
     /**
      * Query models that are not upcoming.
      *
