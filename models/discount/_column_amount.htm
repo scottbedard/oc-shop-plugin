@@ -1,0 +1,5 @@
+<?php if ($record->is_percentage): ?>
+    <?= $record->amount_percentage ?>%
+<?php else: ?>
+    <?= number_format($record->amount_exact, 2) ?>
+<?php endif; ?>

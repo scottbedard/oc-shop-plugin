@@ -27,7 +27,17 @@ class Discount extends Model
      */
     public $attributes = [
         'amount' => 0,
+        'amount_exact' => 0,
+        'amount_percentage' => 0,
         'is_percentage' => true,
+    ];
+
+    /**
+     * @var array Attribute casting
+     */
+    public $casts = [
+        'amount' => 'float',
+        'is_percentage' => 'boolean',
     ];
 
     /**
@@ -85,7 +95,7 @@ class Discount extends Model
         'name' => 'required',
         'start_at' => 'date',
         'amount_exact' => 'numeric|min:0',
-        'amount_percentage' => 'integer|min:0',
+        'amount_percentage' => 'numeric|min:0|max:100',
     ];
 
     /**
@@ -166,6 +176,26 @@ class Discount extends Model
         $productIds = $this->products()->lists('id');
 
         return array_unique(array_merge($productIds, $categoryProductIds));
+    }
+
+    /**
+     * Get the exact amount
+     *
+     * @return float
+     */
+    public function getAmountExactAttribute()
+    {
+        return ! $this->is_percentage ? $this->amount : 0;
+    }
+
+    /**
+     * Get the percentage amount
+     *
+     * @return float
+     */
+    public function getAmountPercentageAttribute()
+    {
+        return $this->is_percentage ? $this->amount : 0;
     }
 
     /**

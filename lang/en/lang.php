@@ -68,6 +68,7 @@ return [
             'start_at_invalid' => 'The start date must be before the end date.',
         ],
         'list' => [
+            'amount' => 'Amount',
             'create_button' => 'Create Discount',
             'end_at' => 'End date',
             'end_at_null' => 'Never',

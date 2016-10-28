@@ -7,6 +7,11 @@ columns:
         label: bedard.shop::lang.discounts.list.name
         searchable: true
 
+    amount:
+        label: bedard.shop::lang.discounts.list.amount
+        type: partial
+        path: $/bedard/shop/models/discount/_column_amount.htm
+
     start_at:
         label: bedard.shop::lang.discounts.list.start_at
         type: partial
