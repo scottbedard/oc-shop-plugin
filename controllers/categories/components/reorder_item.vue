@@ -35,11 +35,6 @@
                 return this.categories.filter(category => category.parent_id === this.category.id);
             },
         },
-        methods: {
-            onSort() {
-                this.$emit("sort")
-            },
-        },
         name: 'v-reorder-item',
         props: [
             'category',
