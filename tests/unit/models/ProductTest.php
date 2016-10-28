@@ -150,4 +150,31 @@ class ProductTest extends PluginTestCase
         $product = Factory::create(new Product, ['categoriesList' => [$category2->id]]);
         $this->assertEquals(1, Price::whereProductId($product->id)->whereDiscountId($discount->id)->count());
     }
+
+    public function test_moving_to_a_discounted_category_recalculates_price()
+    {
+        $category1 = Factory::create(new Category);
+        $category2 = Factory::create(new Category);
+        $discount = Factory::create(new Discount, ['amount' => 15, 'is_percentage' => false]);
+        $discount->categories()->sync([$category2->id]);
+        $product = Factory::create(new Product, ['categoriesList' => [$category1->id]]);
+
+        $this->assertEquals(0, Price::whereProductId($product->id)->whereDiscountId($discount->id)->count());
+        $product->categoriesList = [$category2->id];
+        $product->save();
+        $this->assertEquals(1, Price::whereProductId($product->id)->whereDiscountId($discount->id)->count());
+    }
+
+    public function test_changing_price_recalculates_discounts()
+    {
+        $product = Factory::create(new Product, ['base_price' => 100]);
+        $discount = Factory::create(new Discount, ['amount_exact' => 15, 'is_percentage' => false]);
+        $discount->products()->sync([$product->id]);
+        $discount->save();
+        $this->assertEquals(1, Price::whereProductId($product->id)->whereDiscountId($discount->id)->wherePrice(85)->count());
+        $product->base_price = 50;
+        $product->save();
+        $this->assertEquals(0, Price::whereProductId($product->id)->whereDiscountId($discount->id)->wherePrice(85)->count());
+        $this->assertEquals(1, Price::whereProductId($product->id)->whereDiscountId($discount->id)->wherePrice(35)->count());
+    }
 }

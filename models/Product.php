@@ -142,7 +142,10 @@ class Product extends Model
 
         if (is_array($categoryIds)) {
             $this->categories()->sync($categoryIds);
-            $this->syncInheritedCategories($categoryIds);
+        }
+
+        if (is_array($categoryIds) || $this->isDirty('base_price')) {
+            $this->syncInheritedCategories();
         }
     }
 
@@ -207,10 +210,9 @@ class Product extends Model
     /**
      * Sync a product with it's inherited categories.
      *
-     * @param  array|null $categoryIds
      * @return void
      */
-    public function syncInheritedCategories(array $categoryIds = null)
+    public function syncInheritedCategories()
     {
         $data = [];
         $categoryIds = $this->categories()->lists('id');
