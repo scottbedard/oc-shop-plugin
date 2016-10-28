@@ -2,6 +2,7 @@
 
 use Bedard\Shop\Models\Category;
 use Bedard\Shop\Models\Discount;
+use Bedard\Shop\Models\Price;
 use Bedard\Shop\Models\Product;
 use Bedard\Shop\Tests\Factory;
 use Bedard\Shop\Tests\PluginTestCase;
@@ -113,5 +114,26 @@ class DiscountTest extends PluginTestCase
         $this->assertEquals(40, $discount->calculatePrice(50));
         $discount->is_percentage = true;
         $this->assertEquals(45, $discount->calculatePrice(50));
+    }
+
+    public function test_syncing_all_discount_prices()
+    {
+        $product1 = Factory::create(new Product);
+        $category1 = Factory::create(new Category);
+        $category2 = Factory::create(new Category, ['parent_id' => $category1->id]);
+        $product2 = Factory::create(new Product);
+        $product2->categories()->sync([$category2->id]);
+        Product::syncAllInheritedCategories();
+
+        $discount1 = Factory::create(new Discount);
+        $discount2 = Factory::create(new Discount);
+        $discount1->products()->sync([$product1->id]);
+        $discount1->categories()->sync([$category1->id]);
+        $discount2->products()->sync([$product2->id]);
+
+        Discount::syncAllPrices();
+        $this->assertEquals(1, Price::whereProductId($product1->id)->whereDiscountId($discount1->id)->count());
+        $this->assertEquals(1, Price::whereProductId($product2->id)->whereDiscountId($discount1->id)->count());
+        $this->assertEquals(1, Price::whereProductId($product2->id)->whereDiscountId($discount2->id)->count());
     }
 }

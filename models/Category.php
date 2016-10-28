@@ -1,5 +1,6 @@
 <?php namespace Bedard\Shop\Models;
 
+use Bedard\Shop\Models\Product;
 use Lang;
 use Model;
 
@@ -77,13 +78,23 @@ class Category extends Model
     ];
 
     /**
+     * After delete.
+     *
+     * @return void
+     */
+    public function afterDelete()
+    {
+        $this->syncInheritedProductsAfterDelete();
+    }
+
+    /**
      * After save.
      *
      * @return void
      */
     public function afterSave()
     {
-        $this->syncInheritedProducts();
+        $this->syncInheritedProductsAfterSave();
     }
 
     /**
@@ -255,11 +266,23 @@ class Category extends Model
     }
 
     /**
+     * If the model wasn't deleted in bulk, sync inherited categories
+     *
+     * @return void
+     */
+    public function syncInheritedProductsAfterDelete()
+    {
+        if (! $this->dontSyncAfterDelete) {
+            Product::syncAllInheritedCategories();
+        }
+    }
+
+    /**
      * If the parent id has changed, resync all products.
      *
      * @return void
      */
-    public function syncInheritedProducts()
+    public function syncInheritedProductsAfterSave()
     {
         if ($this->isDirty('parent_id')) {
             Product::syncAllInheritedCategories();

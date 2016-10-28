@@ -1,8 +1,9 @@
 <?php namespace Bedard\Shop\Models;
 
-use October\Rain\Database\Builder;
+use Bedard\Shop\Models\Discount;
 use DB;
 use Model;
+use October\Rain\Database\Builder;
 use Queue;
 
 /**
@@ -197,6 +198,7 @@ class Product extends Model
 
             DB::table('bedard_shop_category_product')->whereIsInherited(1)->delete();
             DB::table('bedard_shop_category_product')->insert($data);
+            Discount::syncAllPrices();
 
             $job->delete();
         });

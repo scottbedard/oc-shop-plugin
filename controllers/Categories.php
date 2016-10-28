@@ -5,6 +5,7 @@ use Bedard\Shop\Classes\Controller;
 use Bedard\Shop\Models\Category;
 use Bedard\Shop\Models\Product;
 use Exception;
+use Flash;
 use Lang;
 use Log;
 use Response;
@@ -37,6 +38,17 @@ class Categories extends Controller
     }
 
     /**
+     * After list delete.
+     *
+     * @return void
+     */
+    public function afterListDelete()
+    {
+        Product::syncAllInheritedCategories();
+        Flash::success(Lang::get('backend::lang.list.delete_selected_success'));
+    }
+
+    /**
      * Launch the reorder popup.
      *
      * @return string
@@ -48,6 +60,18 @@ class Categories extends Controller
         return $this->makePartial('$/bedard/shop/controllers/categories/_reorder.htm', [
             'categories' => $categories,
         ]);
+    }
+
+    /**
+     * Override the default list delete behavior
+     *
+     * @param  \Bedard\Shop\Models\Category $record
+     * @return void
+     */
+    public function overrideListDelete(Category $catgory)
+    {
+        $catgory->dontSyncAfterDelete = true;
+        $catgory->delete();
     }
 
     /**

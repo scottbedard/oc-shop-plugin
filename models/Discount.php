@@ -26,6 +26,7 @@ class Discount extends Model
      * @var array Default attributes
      */
     public $attributes = [
+        'amount' => 0,
         'is_percentage' => true,
     ];
 
@@ -175,27 +176,57 @@ class Discount extends Model
     public function savePrices()
     {
         $id = $this->id;
-        $productIds = $this->getAllProductIds();
-
-        Queue::push(function ($job) use ($id, $productIds) {
+        Queue::push(function ($job) use ($id) {
             $discount = Discount::findOrFail($id);
+            $productIds = $discount->getAllProductIds();
             $products = Product::whereIn('id', $productIds)->select('id', 'base_price')->get();
-
             $discount->prices()->delete();
 
             foreach ($productIds as $productId) {
                 $product = $products->find($productId);
-                Price::create([
-                    'discount_id' => $discount->id,
-                    'end_at' => $discount->end_at,
-                    'price' => $discount->calculatePrice($product->base_price),
-                    'product_id' => $productId,
-                    'start_at' => $discount->start_at,
-                ]);
+                if ($product) {
+                    Price::create([
+                        'discount_id' => $discount->id,
+                        'end_at' => $discount->end_at,
+                        'price' => $discount->calculatePrice($product->base_price),
+                        'product_id' => $productId,
+                        'start_at' => $discount->start_at,
+                    ]);
+                }
             }
 
             $job->delete();
         });
+    }
+
+    /**
+     * Sync the prices of all non-expired discounts.
+     *
+     * @return void
+     */
+    public static function syncAllPrices()
+    {
+        $data = [];
+        $discounts = self::isNotExpired()->with('categories.products', 'products')->get();
+        foreach ($discounts as $discount) {
+            $products = $discount->products;
+            foreach ($discount->categories as $category) {
+                $products = $products->merge($category->products);
+            }
+
+            foreach ($products as $product) {
+                $data[] = [
+                    'discount_id' => $discount->id,
+                    'end_at' => $discount->end_at,
+                    'price' => $discount->calculatePrice($product->base_price),
+                    'product_id' => $product->id,
+                    'start_at' => $discount->start_at,
+                ];
+            }
+        }
+
+        Price::whereNotNull('discount_id')->delete();
+        Price::insert($data);
     }
 
     /**

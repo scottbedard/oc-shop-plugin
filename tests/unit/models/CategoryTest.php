@@ -1,6 +1,8 @@
 <?php namespace Bedard\Shop\Tests\Unit\Models;
 
 use Bedard\Shop\Models\Category;
+use Bedard\Shop\Models\Discount;
+use Bedard\Shop\Models\Price;
 use Bedard\Shop\Models\Product;
 use Bedard\Shop\Tests\Factory;
 use Bedard\Shop\Tests\PluginTestCase;
@@ -182,5 +184,23 @@ class CategoryTest extends PluginTestCase
         $this->assertArrayEquals([$product->id], $parent2->products()->lists('id'));
         $this->assertArrayEquals([$product->id], $child1->products()->lists('id'));
         $this->assertEquals(0, $parent1->products()->count());
+    }
+
+    public function test_discounts_are_resynced_when_a_category_is_deleted()
+    {
+        $parent = Factory::create(new Category);
+        $child = Factory::create(new Category, ['parent_id' => $parent->id]);
+        $grandchild = Factory::create(new Category, ['parent_id' => $child->id]);
+        $product = Factory::create(new Product);
+        $product->categories()->sync([$grandchild->id]);
+        Product::syncAllInheritedCategories();
+
+        $discount = Factory::create(new Discount);
+        $discount->categories()->sync([$parent->id]);
+        Discount::syncAllPrices();
+
+        $this->assertEquals(1, Price::whereProductId($product->id)->whereDiscountId($discount->id)->count());
+        $child->delete();
+        $this->assertEquals(0, Price::whereProductId($product->id)->whereDiscountId($discount->id)->count());
     }
 }
