@@ -1,5 +1,7 @@
-<h3 align="center">oc-shop-plugin</h3>
-<p align="center">An ecomerce platform for October CMS.</p>
+<p align="center">
+  <img src="https://cloud.githubusercontent.com/assets/7980426/19796553/213e8998-9c9a-11e6-81aa-2b11b5ff25db.png"><br />
+  An ecomerce platform for October CMS.
+</p>
 <p align="center">
   <a href="https://travis-ci.org/scottbedard/oc-shop-plugin"><img src="https://travis-ci.org/scottbedard/oc-shop-plugin.svg?branch=master" alt="Build Status"></a>
   <a href="https://coveralls.io/github/scottbedard/oc-shop-plugin?branch=master"><img src="https://coveralls.io/repos/github/scottbedard/oc-shop-plugin/badge.svg?branch=master" alt="Coverage Status"></a>
