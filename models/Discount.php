@@ -1,6 +1,5 @@
 <?php namespace Bedard\Shop\Models;
 
-use Bedard\Shop\Models\Product;
 use Carbon\Carbon;
 use Flash;
 use Lang;
@@ -233,7 +232,7 @@ class Discount extends Model
     public static function syncProductPrice(Product $product, array $categoryIds)
     {
         $discounts = self::isNotExpired()
-            ->whereHas('categories', function($category) use ($categoryIds) {
+            ->whereHas('categories', function ($category) use ($categoryIds) {
                 return $category->whereIn('id', $categoryIds);
             })
             ->get();
