@@ -12,6 +12,12 @@ columns:
         type: partial
         path: $/bedard/shop/models/discount/_column_amount.htm
 
+    scope:
+        label: bedard.shop::lang.discounts.list.scope
+        sortable: false
+        type: partial
+        path: $/bedard/shop/models/discount/_column_scope.htm
+
     start_at:
         label: bedard.shop::lang.discounts.list.start_at
         type: partial

@@ -38,6 +38,13 @@ class Discounts extends Controller
      */
     public function listExtendQuery($query)
     {
-        $query->selectStatus();
+        $query->with([
+            'categories' => function ($category) {
+                return $category->select('name');
+            },
+            'products' => function ($product) {
+                return $product->select('name');
+            },
+        ])->selectStatus();
     }
 }

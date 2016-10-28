@@ -1,0 +1,18 @@
+<?php
+$categories = $record->categories->count();
+$products = $record->products->count();
+?>
+
+<div class="discount-column-scope">
+    <?php if ($categories): ?>
+        <span>
+            <i class="icon-folder-o"></i> <?= $categories ?>
+        </span>
+    <?php endif; ?>
+
+    <?php if ($products): ?>
+        <span>
+            <i class="icon-cubes"></i> <?= $products ?>
+        </span>
+    <?php endif ?>
+</div>

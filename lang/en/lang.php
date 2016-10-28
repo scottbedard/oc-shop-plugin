@@ -74,6 +74,7 @@ return [
             'end_at_null' => 'Never',
             'hide_expired' => 'Hide expired',
             'name' => 'Name',
+            'scope' => 'Scope',
             'start_at' => 'Start date',
             'start_at_null' => 'Immediately',
             'status' => 'Status',
