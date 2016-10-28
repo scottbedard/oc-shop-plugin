@@ -285,7 +285,7 @@ class Discount extends Model
             ];
         }
 
-        Price::whereProductId($product->id)->whereIn('discount_id', $discounts->lists('id'))->delete();
+        Price::whereProductId($product->id)->whereNotNull('discount_id')->delete();
         Price::insert($data);
     }
 

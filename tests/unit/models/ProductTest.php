@@ -165,6 +165,20 @@ class ProductTest extends PluginTestCase
         $this->assertEquals(1, Price::whereProductId($product->id)->whereDiscountId($discount->id)->count());
     }
 
+    public function test_moving_out_of_a_discounted_category_recalculates_price()
+    {
+        $category1 = Factory::create(new Category);
+        $category2 = Factory::create(new Category);
+        $discount = Factory::create(new Discount);
+        $discount->categories()->sync([$category1->id]);
+        $product = Factory::create(new Product, ['categoriesList' => [$category1->id]]);
+
+        $this->assertEquals(1, Price::whereProductId($product->id)->whereDiscountId($discount->id)->count());
+        $product->categoriesList = [$category2->id];
+        $product->save();
+        $this->assertEquals(0, Price::whereProductId($product->id)->whereDiscountId($discount->id)->count());
+    }
+
     public function test_changing_price_recalculates_discounts()
     {
         $product = Factory::create(new Product, ['base_price' => 100]);
