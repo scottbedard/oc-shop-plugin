@@ -98,43 +98,6 @@ class Product extends Model
     }
 
     /**
-     * Attach a product to it's inherited categories.
-     *
-     * @param  array|null $categoryIds
-     * @return void
-     */
-    public function attachInheritedCategories(array $categoryIds = null)
-    {
-        if ($categoryIds === null) {
-            $categoryIds = $this->categories->lists('id');
-        }
-
-        foreach (Category::isParentOf($categoryIds)->lists('id') as $parentId) {
-            $this->categories()->attach($parentId, ['is_inherited' => true]);
-        }
-    }
-
-    /**
-     * Detach a product from it's inherited categories.
-     *
-     * @return void
-     */
-    public function detachInheritedCategories()
-    {
-        DB::table('bedard_shop_category_product')
-            ->where('product_id', $this->id)
-            ->where('is_inherited', 1)
-            ->delete();
-    }
-
-    public static function detachAllInheritedCategories()
-    {
-        DB::table('bedard_shop_category_product')
-            ->where('is_inherited', 1)
-            ->delete();
-    }
-
-    /**
      * Get the categories options.
      *
      * @return array
@@ -211,12 +174,10 @@ class Product extends Model
     public static function syncAllInheritedCategories()
     {
         Queue::push(function ($job) {
-            Product::detachAllInheritedCategories();
-
+            $data = [];
             $products = Product::with('categories')->get();
             $categoryTree = Category::getParentCategoryIds();
 
-            $data = [];
             foreach ($products as $product) {
                 $inheritedCategoryIds = [];
                 foreach ($product->categories as $category) {
@@ -234,6 +195,7 @@ class Product extends Model
                 }
             }
 
+            DB::table('bedard_shop_category_product')->whereIsInherited(1)->delete();
             DB::table('bedard_shop_category_product')->insert($data);
 
             $job->delete();
@@ -248,7 +210,18 @@ class Product extends Model
      */
     public function syncInheritedCategories(array $categoryIds = null)
     {
-        $this->detachInheritedCategories();
-        $this->attachInheritedCategories($categoryIds);
+        $data = [];
+        $categoryIds = $this->categories()->lists('id');
+        $parentIds = Category::isParentOf($categoryIds)->lists('id');
+        foreach ($parentIds as $parentId) {
+            $data[] = [
+                'category_id' => $parentId,
+                'product_id' => $this->id,
+                'is_inherited' => true,
+            ];
+        }
+
+        DB::table('bedard_shop_category_product')->whereProductId($this->id)->whereIsInherited(1)->delete();
+        DB::table('bedard_shop_category_product')->insert($data);
     }
 }
