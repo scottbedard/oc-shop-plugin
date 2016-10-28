@@ -165,4 +165,14 @@ class DiscountTest extends PluginTestCase
 
         $this->assertArrayEquals([1, 2], $discount->getAllProductIds());
     }
+
+    public function test_getting_exact_and_percentage_amount_attributes()
+    {
+        $discount = Factory::fill(new Discount, ['amount' => 5, 'is_percentage' => false]);
+        $this->assertEquals(5, $discount->amount_exact);
+        $this->assertEquals(0, $discount->amount_percentage);
+        $discount->is_percentage = true;
+        $this->assertEquals(0, $discount->amount_exact);
+        $this->assertEquals(5, $discount->amount_percentage);
+    }
 }
