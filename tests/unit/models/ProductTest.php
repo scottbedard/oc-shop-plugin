@@ -1,6 +1,7 @@
 <?php namespace Bedard\Shop\Tests\Unit\Models;
 
 use Bedard\Shop\Models\Category;
+use Bedard\Shop\Models\Discount;
 use Bedard\Shop\Models\Price;
 use Bedard\Shop\Models\Product;
 use Bedard\Shop\Tests\Factory;
@@ -138,5 +139,15 @@ class ProductTest extends PluginTestCase
 
         $result = Product::joinPrice()->find($product->id);
         $this->assertEquals(2, $result->price);
+    }
+
+    public function test_creating_product_where_discount_should_apply()
+    {
+        $category1 = Factory::create(new Category);
+        $category2 = Factory::create(new Category, ['parent_id' => $category1->id]);
+        $discount = Factory::create(new Discount, ['amount' => 15, 'is_percentage' => false]);
+        $discount->categories()->sync([$category2->id]);
+        $product = Factory::create(new Product, ['categoriesList' => [$category2->id]]);
+        $this->assertEquals(1, Price::whereProductId($product->id)->whereDiscountId($discount->id)->count());
     }
 }

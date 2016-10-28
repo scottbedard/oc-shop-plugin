@@ -1,5 +1,6 @@
 <?php namespace Bedard\Shop\Models;
 
+use Bedard\Shop\Models\Product;
 use Carbon\Carbon;
 use Flash;
 use Lang;
@@ -226,6 +227,29 @@ class Discount extends Model
         }
 
         Price::whereNotNull('discount_id')->delete();
+        Price::insert($data);
+    }
+
+    public static function syncProductPrice(Product $product, array $categoryIds)
+    {
+        $discounts = self::isNotExpired()
+            ->whereHas('categories', function($category) use ($categoryIds) {
+                return $category->whereIn('id', $categoryIds);
+            })
+            ->get();
+
+        $data = [];
+        foreach ($discounts as $discount) {
+            $data[] = [
+                'discount_id' => $discount->id,
+                'end_at' => $discount->end_at,
+                'price' => $discount->calculatePrice($product->base_price),
+                'product_id' => $product->id,
+                'start_at' => $discount->start_at,
+            ];
+        }
+
+        Price::whereProductId($product->id)->whereIn('discount_id', $discounts->lists('id'))->delete();
         Price::insert($data);
     }
 
