@@ -1,6 +1,5 @@
 <?php namespace Bedard\Shop\Models;
 
-use Bedard\Shop\Models\Product;
 use Lang;
 use Model;
 
@@ -266,7 +265,7 @@ class Category extends Model
     }
 
     /**
-     * If the model wasn't deleted in bulk, sync inherited categories
+     * If the model wasn't deleted in bulk, sync inherited categories.
      *
      * @return void
      */

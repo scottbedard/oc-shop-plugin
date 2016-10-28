@@ -1,6 +1,5 @@
 <?php namespace Bedard\Shop\Models;
 
-use Bedard\Shop\Models\Discount;
 use DB;
 use Model;
 use October\Rain\Database\Builder;
