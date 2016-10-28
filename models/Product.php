@@ -226,7 +226,7 @@ class Product extends Model
         DB::table('bedard_shop_category_product')->whereProductId($this->id)->whereIsInherited(1)->delete();
         DB::table('bedard_shop_category_product')->insert($data);
 
-        $categoryScope = array_merge($categoryIds, $parentIds);        
+        $categoryScope = array_merge($categoryIds, $parentIds);
         Discount::syncProductPrice($this, $categoryScope);
     }
 }
