@@ -112,8 +112,10 @@ class DiscountTest extends PluginTestCase
         $discount = Factory::fill(new Discount, ['amount' => 10, 'is_percentage' => false]);
         $this->assertEquals(0, $discount->calculatePrice(5));
         $this->assertEquals(40, $discount->calculatePrice(50));
+
+        $discount->amount = 15;
         $discount->is_percentage = true;
-        $this->assertEquals(45, $discount->calculatePrice(50));
+        $this->assertEquals(42.5, $discount->calculatePrice(50));
     }
 
     public function test_syncing_all_discount_prices()

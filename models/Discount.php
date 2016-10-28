@@ -127,7 +127,7 @@ class Discount extends Model
     public function calculatePrice($basePrice)
     {
         $value = $this->is_percentage
-            ? $basePrice - ($this->amount > 0 ? $basePrice / $this->amount : 0)
+            ? $basePrice - ($basePrice * ($this->amount / 100))
             : $basePrice - $this->amount;
 
         if ($value < 0) {
