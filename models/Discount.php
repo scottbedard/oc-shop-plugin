@@ -232,11 +232,11 @@ class Discount extends Model
     public static function syncProductPrice(Product $product, array $categoryIds)
     {
         $discounts = self::isNotExpired()
-            ->whereHas('products', function ($product) use ($product) {
-                return $product->where('id', $product->id);
+            ->whereHas('products', function ($query) use ($product) {
+                return $query->where('id', $product->id);
             })
-            ->orWhereHas('categories', function ($category) use ($categoryIds) {
-                return $category->whereIn('id', $categoryIds);
+            ->orWhereHas('categories', function ($query) use ($categoryIds) {
+                return $query->whereIn('id', $categoryIds);
             })
             ->get();
 

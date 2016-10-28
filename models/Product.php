@@ -144,9 +144,7 @@ class Product extends Model
             $this->categories()->sync($categoryIds);
         }
 
-        if (is_array($categoryIds) || $this->isDirty('base_price')) {
-            $this->syncInheritedCategories();
-        }
+        $this->syncInheritedCategories();
     }
 
     /**
