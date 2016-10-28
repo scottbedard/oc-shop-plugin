@@ -179,7 +179,7 @@ class Discount extends Model
     }
 
     /**
-     * Get the exact amount
+     * Get the exact amount.
      *
      * @return float
      */
@@ -189,7 +189,7 @@ class Discount extends Model
     }
 
     /**
-     * Get the percentage amount
+     * Get the percentage amount.
      *
      * @return float
      */
