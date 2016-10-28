@@ -127,6 +127,13 @@ class Product extends Model
             ->delete();
     }
 
+    public static function detachAllInheritedCategories()
+    {
+        DB::table('bedard_shop_category_product')
+            ->where('is_inherited', 1)
+            ->delete();
+    }
+
     /**
      * Get the categories options.
      *
@@ -203,12 +210,34 @@ class Product extends Model
      */
     public static function syncAllInheritedCategories()
     {
-        foreach (self::lists('id') as $id) {
-            Queue::push(function ($job) use ($id) {
-                Product::findOrFail($id)->syncInheritedCategories();
-                $job->delete();
-            });
-        }
+        Queue::push(function ($job) {
+            Product::detachAllInheritedCategories();
+
+            $products = Product::with('categories')->get();
+            $categoryTree = Category::getParentCategoryIds();
+
+            $data = [];
+            foreach ($products as $product) {
+                $inheritedCategoryIds = [];
+                foreach ($product->categories as $category) {
+                    if (array_key_exists($category->id, $categoryTree)) {
+                        $inheritedCategoryIds = array_merge($inheritedCategoryIds, $categoryTree[$category->id]);
+                    }
+                }
+
+                foreach (array_unique($inheritedCategoryIds) as $categoryId) {
+                    $data[] = [
+                        'category_id' => $categoryId,
+                        'product_id' => $product->id,
+                        'is_inherited' => 1,
+                    ];
+                }
+            }
+
+            DB::table('bedard_shop_category_product')->insert($data);
+
+            $job->delete();
+        });
     }
 
     /**

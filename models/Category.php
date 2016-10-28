@@ -291,7 +291,7 @@ class Category extends Model
      */
     public static function walkParentCategories($categories, $category, $tree = [])
     {
-        if ($category->parent_id !== null) {
+        if ($category && $category->parent_id !== null) {
             $tree[] = $category->parent_id;
             $tree = array_merge($tree, self::walkParentCategories($categories, $categories->find($category->parent_id)));
         }

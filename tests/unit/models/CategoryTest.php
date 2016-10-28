@@ -122,10 +122,10 @@ class CategoryTest extends PluginTestCase
 
     public function test_it_sets_orphan_category_parent_ids_to_null()
     {
-        $child = Factory::create(new Category, ['parent_id' => 1]);
+        $child = Factory::create(new Category, ['parent_id' => 2]);
         $orphan = Factory::create(new Category, ['parent_id' => 0]);
 
-        $this->assertEquals(1, $child->parent_id);
+        $this->assertEquals(2, $child->parent_id);
         $this->assertEquals(null, $orphan->parent_id);
     }
 
@@ -162,5 +162,25 @@ class CategoryTest extends PluginTestCase
         $this->assertArrayEquals([$c1->id, $c2->id, $c3->id], $parentIds[$c4->id]);
         $this->assertArrayEquals([$c1->id, $c2->id], $parentIds[$c5->id]);
         $this->assertArrayEquals([], $parentIds[$c6->id]);
+    }
+
+    public function test_product_inherited_is_updated_when_category_nesting_changes()
+    {
+        $parent1 = Factory::create(new Category);
+        $parent2 = Factory::create(new Category);
+        $child1 = Factory::create(new Category, ['parent_id' => $parent1->id]);
+        $product = Factory::create(new Product);
+        $product->categories()->sync([$child1->id]);
+
+        Product::syncAllInheritedCategories();
+        $this->assertArrayEquals([$product->id], $parent1->products()->lists('id'));
+        $this->assertArrayEquals([$product->id], $child1->products()->lists('id'));
+        $this->assertEquals(0, $parent2->products()->count());
+
+        $child1->parent_id = $parent2->id;
+        $child1->save();
+        $this->assertArrayEquals([$product->id], $parent2->products()->lists('id'));
+        $this->assertArrayEquals([$product->id], $child1->products()->lists('id'));
+        $this->assertEquals(0, $parent1->products()->count());
     }
 }
