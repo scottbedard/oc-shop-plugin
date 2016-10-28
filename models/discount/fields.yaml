@@ -49,6 +49,6 @@ fields:
         span: left
 
     products:
-        label: bedard.shop::lang.categories.plural
+        label: bedard.shop::lang.products.plural
         type: relation
         span: right
