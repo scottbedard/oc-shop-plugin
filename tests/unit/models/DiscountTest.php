@@ -136,4 +136,16 @@ class DiscountTest extends PluginTestCase
         $this->assertEquals(1, Price::whereProductId($product2->id)->whereDiscountId($discount1->id)->count());
         $this->assertEquals(1, Price::whereProductId($product2->id)->whereDiscountId($discount2->id)->count());
     }
+
+    public function test_deleting_a_discount_also_deletes_its_prices()
+    {
+        $product = Factory::create(new Product);
+        $discount = Factory::create(new Discount);
+        $discount->products()->sync([$product->id]);
+        Discount::syncAllPrices();
+
+        $this->assertEquals(1, Price::whereDiscountId($discount->id)->count());
+        $discount->delete();
+        $this->assertEquals(0, Price::whereDiscountId($discount->id)->count());
+    }
 }
