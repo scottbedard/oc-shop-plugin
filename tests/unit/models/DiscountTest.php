@@ -150,4 +150,19 @@ class DiscountTest extends PluginTestCase
         $discount->delete();
         $this->assertEquals(0, Price::whereDiscountId($discount->id)->count());
     }
+
+    public function test_getting_the_complete_scope_of_a_discount()
+    {
+        $category = Factory::create(new Category);
+        $product1 = Factory::create(new Product);
+        $product2 = Factory::create(new Product, ['categoriesList' => [$category->id]]);
+        $omittedProduct = Factory::create(new Product);
+
+        $discount = Factory::create(new Discount);
+        $discount->categories()->sync([$category->id]);
+        $discount->products()->sync([$product1->id]);
+        $discount->save();
+
+        $this->assertArrayEquals([1, 2], $discount->getAllProductIds());
+    }
 }

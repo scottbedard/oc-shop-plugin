@@ -166,16 +166,20 @@ class Discount extends Model
      */
     public function getAllProductIds()
     {
-        $categoryProductIds = $this->categories()
-            ->select('id')
-            ->with(['products' => function ($products) {
-                return $products->select('id');
-            }])
-            ->lists('categories.products.id');
-
         $productIds = $this->products()->lists('id');
+        $categories = $this->categories()
+            ->with(['products' => function($product) {
+                return $product->select('id');
+            }])
+            ->get(['id']);
 
-        return array_unique(array_merge($productIds, $categoryProductIds));
+        foreach ($categories as $category) {
+            foreach ($category->products as $product) {
+                $productIds[] = $product->id;
+            }
+        }
+
+        return array_unique($productIds);
     }
 
     /**
