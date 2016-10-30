@@ -23,10 +23,10 @@
             </v-create-button>
             <v-popup id="bedard-shop-option">
                 <v-option
-                    :active-option="activeOption"
                     :inventories="inventories"
                     :lang="lang"
-                    :options="options">
+                    :options="options"
+                    :source-model="activeOption">
                 </v-option>
             </v-popup>
         </div>
@@ -37,10 +37,10 @@
             </v-create-button>
             <v-popup id="bedard-shop-inventory">
                 <v-inventory
-                    :active-inventory="activeInventory"
                     :inventories="inventories"
                     :lang="lang"
-                    :options="options">
+                    :options="options"
+                    :source-model="activeInventory">
                 </v-inventory>
             </v-popup>
         </div>
