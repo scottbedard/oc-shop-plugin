@@ -1,11 +1,14 @@
 require('assets/js/boot');
 
 import Vue from 'vue';
-import OptionsInventoriesComponent from './components/options_inventories/options_inventories';
+
+import Sortable from 'vue-sortable';
+Vue.use(Sortable);
 
 //
 // Mount the options / inventories component
 //
+import OptionsInventoriesComponent from './components/options_inventories/options_inventories';
 $.fn.mountOptionsInventoriesComponent = function({ inventories, lang, options, token }) {
     Vue.http.headers.common['X-CSRF-TOKEN'] = token;
     new Vue({

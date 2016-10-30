@@ -79,6 +79,7 @@
                     id: null,
                     name: '',
                     placeholder: '',
+                    values: [],
                 };
 
                 EventChannel.$emit('option:opened');

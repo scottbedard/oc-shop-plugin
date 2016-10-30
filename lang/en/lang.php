@@ -110,6 +110,8 @@ return [
             'name' => 'Name',
             'placeholder' => 'Placeholder',
             'update_title' => 'Update Option',
+            'values' => 'Values',
+            'values_placeholder' => 'Type value and press enter or tab',
         ],
         'singular' => 'Option',
         'plural' => 'Options',
