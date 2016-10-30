@@ -15,13 +15,6 @@ class OptionsInventories extends FormWidgetBase
     /**
      * {@inheritdoc}
      */
-    public function init()
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function render()
     {
         $this->prepareVars();
@@ -37,6 +30,14 @@ class OptionsInventories extends FormWidgetBase
         $this->vars['name'] = $this->formField->getName();
         $this->vars['value'] = $this->getLoadValue();
         $this->vars['model'] = $this->model;
+
+        if ($this->model->exists) {
+            $this->vars['options'] = $this->model->options()->get()->toArray();
+            $this->vars['inventories'] = $this->model->inventories()->get()->toArray();
+        } else {
+            $this->vars['options'] = [];
+            $this->vars['inventories'] = [];
+        }
     }
 
     /**

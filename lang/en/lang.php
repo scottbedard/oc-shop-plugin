@@ -93,6 +93,8 @@ return [
     'inventories' => [
         'form' => [
             'create_button' => 'Create Inventory',
+            'create_title' => 'Create Inventory',
+            'update_title' => 'Update Inventory',
         ],
         'singular' => 'Inventory',
         'plural' => 'Inventories',
@@ -104,6 +106,8 @@ return [
     'options' => [
         'form' => [
             'create_button' => 'Create Option',
+            'create_title' => 'Create Option',
+            'update_title' => 'Update Option',
         ],
         'singular' => 'Option',
         'plural' => 'Options',

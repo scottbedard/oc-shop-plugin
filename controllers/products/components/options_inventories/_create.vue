@@ -25,7 +25,7 @@
 </style>
 
 <template>
-    <a data-toggle="modal" :href="href">
+    <a data-toggle="modal" :href="href" @click.prevent="onClicked">
         <i class="icon-plus"></i>
         <slot></slot>
     </a>
@@ -33,6 +33,11 @@
 
 <script>
     export default {
+        methods: {
+            onClicked() {
+                this.$emit('click');
+            },
+        },
         props: ['href'],
     };
 </script>

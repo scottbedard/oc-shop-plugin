@@ -3,10 +3,12 @@
 <script>
     $(function() {
         $('[data-bedard-shop="options-inventories-formwidget"]').mountOptionsInventoriesComponent({
+            inventories: <?= json_encode($inventories); ?>,
             lang: <?= $this->controller->getLangJson([
                 'inventories@bedard.shop::lang.inventories',
                 'options@bedard.shop::lang.options',
             ]); ?>,
+            options: <?= json_encode($options); ?>,
             token: '<?= csrf_token() ?>',
         });
     });
