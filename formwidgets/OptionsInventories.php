@@ -3,34 +3,34 @@
 use Backend\Classes\FormWidgetBase;
 
 /**
- * OptionsInventories Form Widget
+ * OptionsInventories Form Widget.
  */
 class OptionsInventories extends FormWidgetBase
 {
-
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected $defaultAlias = 'bedard_shop_options_inventories';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function init()
     {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function render()
     {
         $this->prepareVars();
+
         return $this->makePartial('optionsinventories');
     }
 
     /**
-     * Prepares the form widget view data
+     * Prepares the form widget view data.
      */
     public function prepareVars()
     {
@@ -40,11 +40,10 @@ class OptionsInventories extends FormWidgetBase
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getSaveValue($value)
     {
         return $value;
     }
-
 }
