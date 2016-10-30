@@ -263,6 +263,13 @@ class Discount extends Model
         Price::insert($data);
     }
 
+    /**
+     * Sync the prices of a single product.
+     *
+     * @param  Product $product
+     * @param  array   $categoryIds
+     * @return void
+     */
     public static function syncProductPrice(Product $product, array $categoryIds)
     {
         $discounts = self::isNotExpired()
