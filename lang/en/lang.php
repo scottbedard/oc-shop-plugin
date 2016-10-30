@@ -97,6 +97,9 @@ return [
             'preview_title' => 'Preview Product',
             'base_price' => 'Base price',
             'slug' => 'Slug',
+            'slug' => 'Slug',
+            'tab_general' => 'General',
+            'tab_options_inventories' => 'Options & Inventories',
             'update_title' => 'Update Product',
         ],
         'list' => [

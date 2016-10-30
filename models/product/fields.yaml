@@ -15,12 +15,20 @@ fields:
             field: name
             type: slug
 
-secondaryTabs:
+tabs:
     stretch: true
     fields:
+        options_inventories:
+            tab: bedard.shop::lang.products.form.tab_options_inventories
+            type: options-inventories
+
         categoriesList:
             label: bedard.shop::lang.categories.plural
+            tab: bedard.shop::lang.products.form.tab_general
             type: checkboxlist
+            span: left
 
         base_price:
             label: bedard.shop::lang.products.form.base_price
+            tab: bedard.shop::lang.products.form.tab_general
+            span: right

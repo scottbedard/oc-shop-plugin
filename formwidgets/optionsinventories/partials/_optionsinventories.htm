@@ -1,0 +1,9 @@
+<div data-bedard-shop="options-inventories-formwidget"></div>
+
+<script>
+    $(function() {
+        $('[data-bedard-shop="options-inventories-formwidget"]').mountOptionsInventoriesComponent({
+            token: '<?= csrf_token() ?>',
+        });
+    });
+</script>
