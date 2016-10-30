@@ -1,0 +1,52 @@
+//
+// Breakpoint mixin
+//
+@mixin bp($bp) {
+    @if map-get($breakpoints, $bp) {
+        @media screen and (map-get($breakpoints, $bp)) {
+            @content;
+        }
+    } @else {
+        @media screen and ($bp) {
+            @content;
+        }
+    }
+}
+
+@mixin bp-prop($property, $mobile: false, $large-phone: false, $tablet: false, $desktop: false) {
+    $properties: explode($property, ',');
+
+    @if (type-of($properties) != 'list') {
+        $properties: list($property);
+    }
+
+    @if ($mobile) {
+        @each $prop in $properties {
+            #{ unquote($prop) }: $mobile;
+        }
+    }
+
+    @if ($large-phone) {
+        @include bp(large-phone) {
+            @each $prop in $properties {
+                #{ unquote($prop) }: $large-phone;
+            }
+        }
+    }
+
+    @if ($tablet) {
+        @include bp(tablet) {
+            @each $prop in $properties {
+                #{ unquote($prop) }: $tablet;
+            }
+        }
+    }
+
+    @if ($desktop) {
+        @include bp(desktop) {
+            @each $prop in $properties {
+                #{ unquote($prop) }: $desktop;
+            }
+        }
+    }
+}

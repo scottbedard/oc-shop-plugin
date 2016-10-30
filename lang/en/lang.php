@@ -88,6 +88,28 @@ return [
     ],
 
     //
+    // Inventories
+    //
+    'inventories' => [
+        'form' => [
+            'create_button' => 'Create Inventory',
+        ],
+        'singular' => 'Inventory',
+        'plural' => 'Inventories',
+    ],
+
+    //
+    // Options
+    //
+    'options' => [
+        'form' => [
+            'create_button' => 'Create Option',
+        ],
+        'singular' => 'Option',
+        'plural' => 'Options',
+    ],
+
+    //
     // Products
     //
     'products' => [

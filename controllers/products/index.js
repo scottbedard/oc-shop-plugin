@@ -6,11 +6,13 @@ import OptionsInventoriesComponent from './components/options_inventories/option
 //
 // Mount the options / inventories component
 //
-$.fn.mountOptionsInventoriesComponent = function({ token }) {
+$.fn.mountOptionsInventoriesComponent = function({ lang, token }) {
     Vue.http.headers.common['X-CSRF-TOKEN'] = token;
     new Vue({
         el: $(this)[0],
         components: { 'v-options-inventories': OptionsInventoriesComponent },
-        render: h => <v-options-inventories></v-options-inventories>,
+        render: h => <v-options-inventories
+            lang={ lang }>
+        </v-options-inventories>,
     });
 };
