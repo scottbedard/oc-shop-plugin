@@ -5,7 +5,14 @@
             <h4 class="modal-title">{{ title }}</h4>
         </div>
         <div class="modal-body">
-            Option form goes here
+            <div class="form-group text-field span-full is-required">
+                <label for="bedard-shop-option-name">{{ lang.options.form.name }}</label>
+                <input id="bedard-shop-option-name" v-model="option.name" type="text" class="form-control" ref="name">
+            </div>
+            <div class="form-group text-field span-full">
+                <label for="bedard-shop-option-name">{{ lang.options.form.placeholder }}</label>
+                <input id="bedard-shop-option-name" v-model="option.placeholder" type="text" class="form-control">
+            </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">
@@ -19,15 +26,23 @@
 </template>
 
 <script>
+    import EventChannel from '../_channel';
+
     export default {
+        created() {
+            EventChannel.$on('option:opened', this.onOpened);
+        },
         data() {
             return {
-                option: JSON.parse(JSON.stringify(this.sourceModel)),
+                option: {
+                    name: this.sourceModel.name,
+                    placeholder: this.sourceModel.placeholder,
+                },
             };
         },
         computed: {
             context() {
-                return typeof this.sourceModel.id === 'undefined'
+                return this.sourceModel.id === null
                     ? 'create'
                     : 'update';
             },
@@ -42,7 +57,13 @@
                     : this.lang.options.form.update_title
             },
         },
+        methods: {
+            onOpened() {
+                setTimeout(() => this.$refs.name.focus(), 200);
+            },
+        },
         props: [
+            'channel',
             'inventories',
             'lang',
             'options',

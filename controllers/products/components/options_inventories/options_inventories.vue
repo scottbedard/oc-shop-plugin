@@ -51,6 +51,7 @@
 </template>
 
 <script>
+    import EventChannel from './_channel';
     import CreateButtonComponent from './_create';
     import InventoryComponent from './inventory/inventory';
     import OptionComponent from './option/option';
@@ -74,7 +75,13 @@
                 this.activeInventory = {};
             },
             onCreateOptionClicked() {
-                this.activeOption = {};
+                this.activeOption = {
+                    id: null,
+                    name: '',
+                    placeholder: '',
+                };
+
+                EventChannel.$emit('option:opened');
             },
         },
         props: [

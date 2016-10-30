@@ -107,6 +107,8 @@ return [
         'form' => [
             'create_button' => 'Create Option',
             'create_title' => 'Create Option',
+            'name' => 'Name',
+            'placeholder' => 'Placeholder',
             'update_title' => 'Update Option',
         ],
         'singular' => 'Option',
