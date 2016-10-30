@@ -3,11 +3,10 @@
 use Model;
 
 /**
- * Option Model
+ * Option Model.
  */
 class Option extends Model
 {
-
     /**
      * @var string The database table used by the model.
      */
@@ -37,7 +36,6 @@ class Option extends Model
         'values' => [
             'Bedard\Shop\Models\OptionValue',
             'delete' => true,
-        ]
+        ],
     ];
-
 }

@@ -3,11 +3,10 @@
 use Model;
 
 /**
- * Inventory Model
+ * Inventory Model.
  */
 class Inventory extends Model
 {
-
     /**
      * @var string The database table used by the model.
      */
@@ -32,5 +31,4 @@ class Inventory extends Model
             'table' => 'bedard_shop_inventory_option',
         ],
     ];
-
 }

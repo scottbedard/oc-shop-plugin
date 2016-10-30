@@ -8,7 +8,7 @@ class CreateOptionValuesTable extends Migration
 {
     public function up()
     {
-        Schema::create('bedard_shop_option_values', function(Blueprint $table) {
+        Schema::create('bedard_shop_option_values', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('name')->default('');

@@ -3,11 +3,10 @@
 use Model;
 
 /**
- * OptionValue Model
+ * OptionValue Model.
  */
 class OptionValue extends Model
 {
-
     /**
      * @var string The database table used by the model.
      */
@@ -31,5 +30,4 @@ class OptionValue extends Model
             'Bedard\Shop\Models\Option',
         ],
     ];
-
 }
