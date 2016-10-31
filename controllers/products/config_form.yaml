@@ -23,7 +23,7 @@ create:
 # Update page
 update:
     title: bedard.shop::lang.products.form.update_title
-    redirect: bedard/shop/products
+    redirect: bedard/shop/products/update/:id
     redirectClose: bedard/shop/products
 
 # Preview page
