@@ -285,7 +285,8 @@ class Discount extends Model
      * @param  \Bedard\Shop\Models\Product  $product
      * @return array
      */
-    public static function buildPriceArray(Discount $discount, Product $product) {
+    public static function buildPriceArray(Discount $discount, Product $product)
+    {
         return [
             'discount_id' => $discount->id,
             'end_at' => $discount->end_at,
