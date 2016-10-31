@@ -69,7 +69,10 @@
                     href="#bedard-shop-option"
                     v-for="option in options">
                     <i class="icon-plus"></i>
-                    <div>{{ option.name }}</div>
+                    <div>
+                        <div>{{ option.name }}</div>
+                        <small>{{ optionSummary(option) }}</small>
+                    </div>
                     <a href="#" @click.prevent><i class="icon-bars"></i></a>
                     <a href="#" @click.prevent><i class="icon-trash-o"></i></a>
                 </li>
@@ -151,6 +154,9 @@
                 } else {
                     // update the old option
                 }
+            },
+            optionSummary(option) {
+                return option.values.map(value => value.name).join(', ');
             },
         },
         props: [
