@@ -219,13 +219,7 @@ class Discount extends Model
             foreach ($productIds as $productId) {
                 $product = $products->find($productId);
                 if ($product) {
-                    Price::create([
-                        'discount_id' => $discount->id,
-                        'end_at' => $discount->end_at,
-                        'price' => $discount->calculatePrice($product->base_price),
-                        'product_id' => $productId,
-                        'start_at' => $discount->start_at,
-                    ]);
+                    Price::create(Discount::buildPriceArray($discount, $product));
                 }
             }
 
@@ -249,13 +243,7 @@ class Discount extends Model
             }
 
             foreach ($products as $product) {
-                $data[] = [
-                    'discount_id' => $discount->id,
-                    'end_at' => $discount->end_at,
-                    'price' => $discount->calculatePrice($product->base_price),
-                    'product_id' => $product->id,
-                    'start_at' => $discount->start_at,
-                ];
+                $data[] = self::buildPriceArray($discount, $product);
             }
         }
 
@@ -283,17 +271,28 @@ class Discount extends Model
 
         $data = [];
         foreach ($discounts as $discount) {
-            $data[] = [
-                'discount_id' => $discount->id,
-                'end_at' => $discount->end_at,
-                'price' => $discount->calculatePrice($product->base_price),
-                'product_id' => $product->id,
-                'start_at' => $discount->start_at,
-            ];
+            $data[] = self::buildPriceArray($discount, $product);
         }
 
         Price::whereProductId($product->id)->whereNotNull('discount_id')->delete();
         Price::insert($data);
+    }
+
+    /**
+     * Build the array needed to insert price models.
+     *
+     * @param  \Bedard\Shop\Models\Discount $discount
+     * @param  \Bedard\Shop\Models\Product  $product
+     * @return array
+     */
+    public static function buildPriceArray(Discount $discount, Product $product) {
+        return [
+            'discount_id' => $discount->id,
+            'end_at' => $discount->end_at,
+            'price' => $discount->calculatePrice($product->base_price),
+            'product_id' => $product->id,
+            'start_at' => $discount->start_at,
+        ];
     }
 
     /**

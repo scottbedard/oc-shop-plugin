@@ -65,7 +65,7 @@ class Categories extends Controller
     /**
      * Override the default list delete behavior.
      *
-     * @param  \Bedard\Shop\Models\Category $record
+     * @param  \Bedard\Shop\Models\Category $category
      * @return void
      */
     public function overrideListDelete(Category $catgory)
