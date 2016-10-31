@@ -1,8 +1,5 @@
 <?php namespace Bedard\Shop\Models;
 
-use Bedard\Shop\Models\Inventory;
-use Bedard\Shop\Models\Option;
-use Bedard\Shop\Models\OptionValue;
 use DB;
 use Model;
 use October\Rain\Database\Builder;
@@ -161,7 +158,7 @@ class Product extends Model
     }
 
     /**
-     * Save the options and inventories
+     * Save the options and inventories.
      *
      * @return void
      */
@@ -175,12 +172,13 @@ class Product extends Model
     }
 
     /**
-     * Save an array of related options
+     * Save an array of related options.
      *
      * @param  array  $options
      * @return array
      */
-    protected function saveRelatedOptions(array $options) {
+    protected function saveRelatedOptions(array $options)
+    {
         foreach ($options as &$option) {
             $model = $option['id'] !== null
                 ? Option::firstOrNew(['id' => $option['id']])
@@ -207,7 +205,8 @@ class Product extends Model
      * @param  array  $values
      * @return void
      */
-    protected function saveRelatedOptionValues(Option $option, array $values) {
+    protected function saveRelatedOptionValues(Option $option, array $values)
+    {
         foreach ($values as $value) {
             $model = $value['id'] !== null
                 ? OptionValue::firstOrNew(['id' => $value['id']])
