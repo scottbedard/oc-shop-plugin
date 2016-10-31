@@ -27,12 +27,8 @@ class OptionsInventories extends FormWidgetBase
      */
     public function prepareVars()
     {
-        $this->vars['name'] = $this->formField->getName();
-        $this->vars['value'] = $this->getLoadValue();
-        $this->vars['model'] = $this->model;
-
         if ($this->model->exists) {
-            $this->vars['options'] = $this->model->options()->get()->toArray();
+            $this->vars['options'] = $this->model->options()->with('values')->get()->toArray();
             $this->vars['inventories'] = $this->model->inventories()->get()->toArray();
         } else {
             $this->vars['options'] = [];
@@ -45,6 +41,8 @@ class OptionsInventories extends FormWidgetBase
      */
     public function getSaveValue($value)
     {
-        return $value;
+        $data = json_decode(input('optionsInventories'), true);
+
+        return $data;
     }
 }

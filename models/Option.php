@@ -20,7 +20,13 @@ class Option extends Model
     /**
      * @var array Fillable fields
      */
-    protected $fillable = [];
+    protected $fillable = [
+        'id',
+        'name',
+        'placeholder',
+        'product_id',
+        'sort_order',
+    ];
 
     /**
      * @var array Relations

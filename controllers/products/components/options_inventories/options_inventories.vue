@@ -104,6 +104,9 @@
                 </v-inventory>
             </v-popup>
         </div>
+
+        <!-- Pass data to form widget -->
+        <input type="hidden" name="optionsInventories" :value="formData">
     </div>
 </template>
 
@@ -128,6 +131,14 @@
             'v-inventory': InventoryComponent,
             'v-option': OptionComponent,
         },
+        computed: {
+            formData() {
+                return JSON.stringify({
+                    inventories: this.inventories,
+                    options: this.options,
+                });
+            },
+        },
         methods: {
             onCreateInventoryClicked() {
                 this.activeInventory = {};
@@ -147,16 +158,26 @@
                 this.activeOption = option;
                 EventChannel.$emit('option:opened');
             },
-            onOptionSaved(option) {
-                if (option.id === null && option.newId === null) {
-                    option.newId = ++this.newId;
-                    this.options.push(option);
+            onOptionSaved(data) {
+                if (data.id === null && data.newId === null) {
+                    data.newId = ++this.newId;
+                    this.options.push(data);
                 } else {
-                    // update the old option
+                    let option = this.options.find(model => model.id === data.id || model.newId === data.newId);
+                    option.name = data.name;
+                    option.placeholder = data.placeholder;
+                    option.values = JSON.parse(JSON.stringify(data.values));
                 }
             },
             optionSummary(option) {
-                return option.values.map(value => value.name).join(', ');
+                return option.values
+                    .slice(0)
+                    .sort((a, b) => {
+                        if (a.sort_order > b.sort_order) return 1;
+                        else if (a.sort_order < b.sort_order) return -1;
+                        else return 0;
+                    })
+                    .map(value => value.name).join(', ');
             },
         },
         props: [

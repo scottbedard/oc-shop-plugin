@@ -1,5 +1,8 @@
 <?php namespace Bedard\Shop\Models;
 
+use Bedard\Shop\Models\Inventory;
+use Bedard\Shop\Models\Option;
+use Bedard\Shop\Models\OptionValue;
 use DB;
 use Model;
 use October\Rain\Database\Builder;
@@ -46,6 +49,7 @@ class Product extends Model
      */
     public $purgeable = [
         'categoriesList',
+        'optionsInventories',
     ];
 
     /**
@@ -104,6 +108,7 @@ class Product extends Model
     {
         $this->saveBasePrice();
         $this->saveCategoryRelationships();
+        $this->saveOptionAndInventoryRelationships();
     }
 
     /**
@@ -153,6 +158,65 @@ class Product extends Model
         }
 
         $this->syncInheritedCategories();
+    }
+
+    /**
+     * Save the options and inventories
+     *
+     * @return void
+     */
+    public function saveOptionAndInventoryRelationships()
+    {
+        $data = $this->getOriginalPurgeValue('optionsInventories');
+
+        if (is_array($data['options'])) {
+            $options = $this->saveRelatedOptions($data['options']);
+        }
+    }
+
+    /**
+     * Save an array of related options
+     *
+     * @param  array  $options
+     * @return array
+     */
+    protected function saveRelatedOptions(array $options) {
+        foreach ($options as &$option) {
+            $model = $option['id'] !== null
+                ? Option::firstOrNew(['id' => $option['id']])
+                : new Option;
+
+            $model->product_id = $this->id;
+            $model->fill($option);
+            $model->save();
+
+            $option['id'] = $model->id;
+
+            if (is_array($option['values'])) {
+                $this->saveRelatedOptionValues($model, $option['values']);
+            }
+        }
+
+        return $options;
+    }
+
+    /**
+     * Save related option values.
+     *
+     * @param  Option $option
+     * @param  array  $values
+     * @return void
+     */
+    protected function saveRelatedOptionValues(Option $option, array $values) {
+        foreach ($values as $value) {
+            $model = $value['id'] !== null
+                ? OptionValue::firstOrNew(['id' => $value['id']])
+                : new OptionValue;
+
+            $model->option_id = $option->id;
+            $model->fill($value);
+            $model->save();
+        }
     }
 
     /**

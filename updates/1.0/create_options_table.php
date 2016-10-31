@@ -14,6 +14,7 @@ class CreateOptionsTable extends Migration
             $table->integer('product_id')->unsigned()->index();
             $table->string('name')->default('');
             $table->string('placeholder')->default('');
+            $table->integer('sort_order')->unsigned()->default(0);
             $table->timestamps();
         });
     }

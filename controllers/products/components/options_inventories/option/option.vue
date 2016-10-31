@@ -27,6 +27,10 @@
 
         i {
             color: #ccc;
+
+            &.icon-bars {
+                cursor: move;
+            }
         }
 
         a:hover i {
@@ -169,6 +173,12 @@
             },
             onSourceModelChanged() {
                 this.option = JSON.parse(JSON.stringify(this.sourceModel));
+
+                this.option.values.sort((a, b) => {
+                    if (a.sort_order > b.sort_order) return 1;
+                    else if (a.sort_order < b.sort_order) return -1;
+                    else return 0;
+                });
             },
             preventEnter(e) {
                 let charCode = e.which || e.keyCode;
