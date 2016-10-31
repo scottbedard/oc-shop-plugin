@@ -23,6 +23,7 @@
             </v-create-button>
             <v-popup id="bedard-shop-option">
                 <v-option
+                    @save="onOptionSaved"
                     :inventories="inventories"
                     :lang="lang"
                     :options="options"
@@ -83,6 +84,11 @@
                 };
 
                 EventChannel.$emit('option:opened');
+            },
+            onOptionSaved(option) {
+                if (option.id === null) {
+                    this.options.push(option);
+                }
             },
         },
         props: [

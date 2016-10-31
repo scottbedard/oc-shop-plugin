@@ -52,20 +52,20 @@
         <div class="modal-body">
             <div class="form-group text-field span-full is-required">
                 <label for="bedard-shop-option-name">{{ lang.options.form.name }}</label>
-                <input id="bedard-shop-option-name" v-model="option.name" type="text" class="form-control" ref="name">
+                <input id="bedard-shop-option-name" v-model="option.name" type="text" class="form-control" ref="name" @keydown="preventEnter">
             </div>
             <div class="form-group text-field span-full">
                 <label for="bedard-shop-option-name">{{ lang.options.form.placeholder }}</label>
-                <input id="bedard-shop-option-name" v-model="option.placeholder" type="text" class="form-control">
+                <input id="bedard-shop-option-name" v-model="option.placeholder" type="text" class="form-control" @keydown="preventEnter">
             </div>
             <div class="values">
                 <label for="bedard-shop-option-values">{{ lang.options.form.values }}</label>
-                <ul v-sortable="{ handle: '.icon-bars' }">
-                    <li class="form-group" v-for="(value, index) in option.values">
+                <ul v-sortable="{ handle: '.icon-bars' }" ref="values">
+                    <li class="form-group" v-for="(value, index) in option.values" :data-name="value.name">
                         <div class="form-control">
                             <i class="icon-bars"></i>
                             <div>
-                                <input type="text" v-model="value.name" @keydown="onValueKeydown">
+                                <input type="text" v-model="value.name" @keydown="preventEnter">
                             </div>
                             <a href="#" @click.prevent="onDeleteValueClicked(index)">
                                 <i class="icon-trash-o"></i>
@@ -86,7 +86,7 @@
             <button type="button" class="btn btn-default" data-dismiss="modal">
                 {{ lang.form.cancel }}
             </button>
-            <button type="button" class="btn btn-primary" data-dismiss="modal">
+            <button type="button" class="btn btn-primary" @click.prevent="onCreateClicked">
                 {{ createOrSave }}
             </button>
         </div>
@@ -98,12 +98,13 @@
 
     export default {
         created() {
-            EventChannel.$on('option:opened', this.onOpened);
+            EventChannel.$on('option:opened', () => setTimeout(this.onOpened, 300));
         },
         data() {
             return {
                 newValue: '',
                 option: {
+                    id: null,
                     name: '',
                     placeholder: '',
                     values: [],
@@ -137,6 +138,21 @@
 
                 this.newValue = '';
             },
+            onCreateClicked() {
+                // @todo: validate the form
+
+                // Unfortunately the sortable library is not reliable enough
+                // to correctly splice the order of the values array when
+                // sorting, so we'll just grab the order from the DOM.
+                $(this.$refs.values).find('li').each((i, el) => {
+                    let value = this.option.values.find(value => value.name === el.dataset.name);
+                    value.sort_order = i;
+                });
+
+                // Pass the new option to our parent component and close the modal
+                this.$emit('save', this.option);
+                $(this.$el).closest('.control-popup').modal('hide');
+            },
             onDeleteValueClicked(index) {
                 this.option.values.splice(index, 1);
             },
@@ -148,12 +164,13 @@
                 }
             },
             onOpened() {
-                setTimeout(() => this.$refs.name.focus(), 200);
+                this.$refs.name.focus();
             },
-            onValueKeydown(e) {
+            preventEnter(e) {
                 let charCode = e.which || e.keyCode;
+
                 if (charCode === 13) {
-                    e.preventDefault(); // prevent the enter key from submitting the form
+                    e.preventDefault();
                 }
             },
         },
