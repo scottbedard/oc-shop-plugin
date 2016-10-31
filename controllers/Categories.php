@@ -68,10 +68,10 @@ class Categories extends Controller
      * @param  \Bedard\Shop\Models\Category $category
      * @return void
      */
-    public function overrideListDelete(Category $catgory)
+    public function overrideListDelete(Category $category)
     {
-        $catgory->dontSyncAfterDelete = true;
-        $catgory->delete();
+        $category->dontSyncAfterDelete = true;
+        $category->delete();
     }
 
     /**
