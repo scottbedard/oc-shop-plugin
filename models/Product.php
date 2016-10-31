@@ -38,6 +38,7 @@ class Product extends Model
         'categoriesList',
         'name',
         'base_price',
+        'optionsInventories',
         'slug',
     ];
 

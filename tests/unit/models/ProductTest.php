@@ -191,4 +191,39 @@ class ProductTest extends PluginTestCase
         $this->assertEquals(0, Price::whereProductId($product->id)->whereDiscountId($discount->id)->wherePrice(85)->count());
         $this->assertEquals(1, Price::whereProductId($product->id)->whereDiscountId($discount->id)->wherePrice(35)->count());
     }
+
+    public function test_saving_a_product_with_options_and_inventories()
+    {
+        $product = Factory::create(new Product, [
+            'optionsInventories' => [
+                'options' => [
+                    [
+                        'id' => null,
+                        'name' => 'Size',
+                        'placeholder' => 'Select size',
+                        'values' => [
+                            [
+                                'id' => null,
+                                'name' => 'Small',
+                            ],
+                            [
+                                'id' => null,
+                                'name' => 'Large',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+        $product->load('options.values');
+        $option = $product->options->first();
+        $values = $option->values;
+        $this->assertEquals(1, $product->options->count());
+        $this->assertEquals('Size', $option->name);
+        $this->assertEquals('Select size', $option->placeholder);
+        $this->assertEquals(2, $values->count());
+        $this->assertEquals('Small', $values->first()->name);
+        $this->assertEquals('Large', $values->last()->name);
+    }
 }
