@@ -163,7 +163,11 @@
                     data.newId = ++this.newId;
                     this.options.push(data);
                 } else {
-                    let option = this.options.find(model => model.id === data.id || model.newId === data.newId);
+                    let option = this.options.find(model => {
+                        return (model.id !== null && model.id === data.id) ||
+                            (model.newId === data.newId && typeof model.newId !== 'undefined');
+                    });
+
                     option.name = data.name;
                     option.placeholder = data.placeholder;
                     option.values = JSON.parse(JSON.stringify(data.values));
