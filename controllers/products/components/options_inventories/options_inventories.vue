@@ -12,12 +12,68 @@
             @include bp(tablet) { width: 50% }
         }
     }
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        align-items: center;
+        cursor: pointer;
+        display: flex;
+        height: 60px;
+        padding: 0;
+
+        &:hover {
+            background-color: $light-blue;
+            color: #fff;
+
+            a {
+                display: inline-block;
+            }
+        }
+
+        a {
+            background-color: $blue;
+            color: #fff;
+            display: none;
+            margin-left: 1px;
+            text-decoration: none;
+        }
+
+        i {
+            align-items: center;
+            display: flex;
+            font-size: 20px;
+            height: 60px;
+            justify-content: center;
+            width: 60px;
+        }
+
+        div {
+            flex-grow: 1;
+        }
+    }
 </style>
 
 <template>
     <div class="v-options-inventories">
         <div>
             <label>{{ lang.options.plural }}</label>
+            <ul>
+                <li
+                    @click="onOptionClicked(option)"
+                    data-toggle="modal"
+                    href="#bedard-shop-option"
+                    v-for="option in options">
+                    <i class="icon-plus"></i>
+                    <div>{{ option.name }}</div>
+                    <a href="#" @click.prevent><i class="icon-bars"></i></a>
+                    <a href="#" @click.prevent><i class="icon-trash-o"></i></a>
+                </li>
+            </ul>
             <v-create-button href="#bedard-shop-option" @click="onCreateOptionClicked">
                 {{ lang.options.form.create_button }}
             </v-create-button>
@@ -45,9 +101,6 @@
                 </v-inventory>
             </v-popup>
         </div>
-        <pre>
-            {{ JSON.stringify($data) }}
-        </pre>
     </div>
 </template>
 
@@ -63,6 +116,7 @@
                 activeInventory: {},
                 activeOption: {},
                 inventories: this.inventoriesProp.slice(0),
+                newId: 0,
                 options: this.optionsProp.slice(0),
             };
         },
@@ -79,15 +133,23 @@
                 this.activeOption = {
                     id: null,
                     name: '',
+                    newId: null,
                     placeholder: '',
                     values: [],
                 };
 
                 EventChannel.$emit('option:opened');
             },
+            onOptionClicked(option) {
+                this.activeOption = option;
+                EventChannel.$emit('option:opened');
+            },
             onOptionSaved(option) {
-                if (option.id === null) {
+                if (option.id === null && option.newId === null) {
+                    option.newId = ++this.newId;
                     this.options.push(option);
+                } else {
+                    // update the old option
                 }
             },
         },

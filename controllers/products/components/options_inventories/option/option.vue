@@ -106,6 +106,7 @@
                 option: {
                     id: null,
                     name: '',
+                    newId: null,
                     placeholder: '',
                     values: [],
                 },
@@ -113,7 +114,7 @@
         },
         computed: {
             context() {
-                return this.sourceModel.id === null
+                return this.sourceModel.id === null && this.sourceModel.newId === null
                     ? 'create'
                     : 'update';
             },
@@ -166,6 +167,9 @@
             onOpened() {
                 this.$refs.name.focus();
             },
+            onSourceModelChanged() {
+                this.option = JSON.parse(JSON.stringify(this.sourceModel));
+            },
             preventEnter(e) {
                 let charCode = e.which || e.keyCode;
 
@@ -181,5 +185,8 @@
             'options',
             'sourceModel',
         ],
+        watch: {
+            'sourceModel': 'onSourceModelChanged',
+        }
     };
 </script>
