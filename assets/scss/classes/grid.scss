@@ -1,0 +1,56 @@
+.grid {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+
+    // Space can be added between the cells via the .padded class
+    &.padded {
+        $spacing: 15px;
+        margin-left: -$spacing;
+        margin-right: -$spacing;
+
+        > .cell,
+        > .row > .cell {
+            padding-left: $spacing;
+            padding-right: $spacing;
+        }
+
+        > .row + .row {
+            margin-top: $spacing;
+        }
+    }
+
+    > .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin-left: 0;
+        margin-right: 0;
+        width: 100%;
+    }
+
+    > .cell,
+    > .row > .cell {
+        flex-basis: auto;
+        width: 100%;
+
+        // Adding .grow to a cell will cause it to fill the available width
+        &.grow { flex-grow: 1 }
+
+        // Generate width classes for all of our breakpoints and sizes
+        @for $i from 1 through 12 {
+            &.mobile-#{ $i } {
+                width: #{ $i / 12 * 100% };
+            }
+        }
+
+        @each $breakpoint, $value in $breakpoints {
+            @include bp($breakpoint) {
+                @for $i from 1 through 12 {
+                    &.#{ $breakpoint }-#{ $i } {
+                        width: #{ $i / 12 * 100% };
+                    }
+                }
+            }
+        }
+    }
+}

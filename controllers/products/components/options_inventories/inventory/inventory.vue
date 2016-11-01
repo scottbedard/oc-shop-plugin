@@ -5,7 +5,28 @@
             <h4 class="modal-title">{{ title }}</h4>
         </div>
         <div class="modal-body">
-            Inventory form goes here
+            <div class="grid padded">
+                <div class="row">
+                    <div class="cell mobile-12">
+                        <v-dropdown-field label="Dropdown options"></v-dropdown-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="cell mobile-12 tablet-6">
+                        <v-input-field
+                            v-model="inventory.price"
+                            :label="lang.inventories.form.price"
+                            :required="true">
+                        </v-input-field>
+                    </div>
+                    <div class="cell mobile-12 tablet-6">
+                        <v-input-field
+                            v-model="inventory.sku"
+                            :label="lang.inventories.form.sku">
+                        </v-input-field>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">
@@ -22,7 +43,12 @@
     export default {
         data() {
             return {
-                inventory: JSON.parse(JSON.stringify(this.sourceModel)),
+                isLoading: false,
+                inventory: {
+                    id: null,
+                    price: 0,
+                    sku: '',
+                },
             };
         },
         computed: {
