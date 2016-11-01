@@ -192,6 +192,20 @@ class ProductTest extends PluginTestCase
         $this->assertEquals(1, Price::whereProductId($product->id)->whereDiscountId($discount->id)->wherePrice(35)->count());
     }
 
+    public function test_saving_a_product_with_duplicate_option()
+    {
+        $this->setExpectedException(\October\Rain\Database\ModelException::class);
+
+        Factory::fill(new Product, [
+            'optionsInventories' => [
+                'options' => [
+                    ['name' => 'Foo '],
+                    ['name' => ' foo']
+                ],
+            ],
+        ])->validate();
+    }
+
     public function test_saving_a_product_with_options_and_inventories()
     {
         $data = [

@@ -7,6 +7,8 @@ use Model;
  */
 class Option extends Model
 {
+    use \October\Rain\Database\Traits\Validation;
+
     /**
      * @var string The database table used by the model.
      */
@@ -26,6 +28,14 @@ class Option extends Model
         'placeholder',
         'product_id',
         'sort_order',
+    ];
+
+    public $rules = [
+        'name' => 'required',
+    ];
+
+    public $customMessages = [
+        'name.required' => 'bedard.shop::lang.options.form.name_required_error',
     ];
 
     /**

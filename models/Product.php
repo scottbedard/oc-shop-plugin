@@ -1,8 +1,11 @@
 <?php namespace Bedard\Shop\Models;
 
 use DB;
+use Flash;
+use Lang;
 use Model;
 use October\Rain\Database\Builder;
+use October\Rain\Database\ModelException;
 use Queue;
 
 /**
@@ -107,6 +110,16 @@ class Product extends Model
         $this->saveBasePrice();
         $this->saveCategoryRelationships();
         $this->saveOptionAndInventoryRelationships();
+    }
+
+    /**
+     * After validate.
+     *
+     * @return void
+     */
+    public function afterValidate()
+    {
+        $this->validateOptions();
     }
 
     /**
@@ -300,5 +313,29 @@ class Product extends Model
 
         $categoryScope = array_merge($categoryIds, $parentIds);
         Discount::syncProductPrice($this, $categoryScope);
+    }
+
+    public function validateOptions()
+    {
+        if (! is_array($this->optionsInventories) ||
+            ! is_array($this->optionsInventories['options'])) {
+            return;
+        }
+
+        $names = [];
+        foreach ($this->optionsInventories['options'] as $option) {
+            $name = strtolower(trim($option['name']));
+            // Validate the option
+            $option = new Option($option);
+            $option->validate();
+
+            // Names must be unique
+            if (in_array($name, $names)) {
+                Flash::error(Lang::get('bedard.shop::lang.products.form.duplicate_options_error'));
+                throw new ModelException($this);
+            }
+
+            $names[] = $name;
+        }
     }
 }

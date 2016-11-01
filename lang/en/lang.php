@@ -108,6 +108,7 @@ return [
             'create_button' => 'Create Option',
             'create_title' => 'Create Option',
             'name' => 'Name',
+            'name_required_error' => 'All options must be given a name.',
             'placeholder' => 'Placeholder',
             'update_title' => 'Update Option',
             'values' => 'Values',
@@ -123,6 +124,7 @@ return [
     'products' => [
         'form' => [
             'create_title' => 'Create Product',
+            'duplicate_options_error' => 'Option names must be unique.',
             'name' => 'Name',
             'preview_title' => 'Preview Product',
             'base_price' => 'Base price',
