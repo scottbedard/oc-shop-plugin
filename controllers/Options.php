@@ -1,25 +1,24 @@
 <?php namespace Bedard\Shop\Controllers;
 
-use BackendMenu;
 use Backend\Classes\Controller;
 use Bedard\Shop\Models\Option;
 use Exception;
 use Response;
 
 /**
- * Options Back-end Controller
+ * Options Back-end Controller.
  */
 class Options extends Controller
 {
     /**
-     * Validate an option
+     * Validate an option.
      *
      * @return Response
      */
     public function validate()
     {
         $data = input('option');
-        if (!$data || !is_array($data)) {
+        if (! $data || ! is_array($data)) {
             return Response::make('Error', 422);
         }
 
