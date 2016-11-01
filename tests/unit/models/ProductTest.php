@@ -194,7 +194,7 @@ class ProductTest extends PluginTestCase
 
     public function test_saving_a_product_with_options_and_inventories()
     {
-        $product = Factory::create(new Product, [
+        $data = [
             'optionsInventories' => [
                 'options' => [
                     [
@@ -214,7 +214,9 @@ class ProductTest extends PluginTestCase
                     ],
                 ],
             ],
-        ]);
+        ];
+
+        $product = Factory::create(new Product, $data);
 
         $product->load('options.values');
         $option = $product->options->first();
@@ -225,5 +227,16 @@ class ProductTest extends PluginTestCase
         $this->assertEquals(2, $values->count());
         $this->assertEquals('Small', $values->first()->name);
         $this->assertEquals('Large', $values->last()->name);
+
+        $data['optionsInventories']['options'][0]['id'] = $option->id;
+        $data['optionsInventories']['options'][0]['values'][0]['id'] = $values->first()->id;
+        $data['optionsInventories']['options'][0]['values'][1]['id'] = $values->last()->id;
+        $data['optionsInventories']['options'][0]['name'] = 'foo';
+        $data['optionsInventories']['options'][0]['values'][0]['name'] = 'bar';
+        $product->fill($data);
+        $product->save();
+
+        $this->assertEquals('foo', $product->options()->first()->name);
+        $this->assertEquals('bar', $product->options()->first()->values()->first()->name);
     }
 }
