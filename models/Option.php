@@ -53,6 +53,7 @@ class Option extends Model
         'values' => [
             'Bedard\Shop\Models\OptionValue',
             'delete' => true,
+            'order' => 'sort_order',
         ],
     ];
 }

@@ -76,6 +76,7 @@ class Product extends Model
         'options' => [
             'Bedard\Shop\Models\Option',
             'delete' => true,
+            'order' => 'sort_order',
         ],
         'prices' => [
             'Bedard\Shop\Models\Price',

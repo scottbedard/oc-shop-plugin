@@ -70,6 +70,10 @@
         }
     }
 
+    .sort-handle {
+        cursor: move;
+    }
+
     .pending-delete {
         font-size: 10px;
         word-wrap: break-word;
@@ -80,11 +84,13 @@
     <div class="v-options-inventories">
         <div>
             <label>{{ lang.options.plural }}</label>
-            <ul>
+            <ul v-sortable="{ handle: '.sort-handle', onUpdate: onOptionsSorted }" ref="options">
                 <li
                     v-for="option in options"
                     :class="{ 'is-deleted': option.is_deleted }"
                     @click="onOptionClicked(option)"
+                    :data-id="option.id"
+                    :data-new-id="option.newId"
                     data-toggle="modal"
                     href="#bedard-shop-option">
                     <i :class="{ 'icon-plus': ! option.is_deleted, 'icon-times': option.is_deleted }"></i>
@@ -92,7 +98,7 @@
                         <div>{{ option.name }}</div>
                         <small>{{ optionSummary(option) }}</small>
                     </div>
-                    <a href="#" v-if="! option.is_deleted" @click.prevent.stop><i class="icon-bars"></i></a>
+                    <a href="#" v-if="! option.is_deleted" @click.prevent.stop class="sort-handle"><i class="icon-bars"></i></a>
                     <a href="#" @click.prevent.stop="onDeleteOptionClicked(option)">
                         <i v-if="! option.is_deleted" class="icon-trash-o"></i>
                         <span class="pending-delete" v-else>
@@ -147,8 +153,9 @@
                 activeOption: {},
                 inventories: this.inventoriesProp.slice(0),
                 newId: 0,
-                options: this.optionsProp.map(option => {
+                options: this.optionsProp.map((option, index) => {
                     option.is_deleted = false;
+                    option.sort_order = index;
                     return option;
                 }),
             };
@@ -198,6 +205,7 @@
             onOptionSaved(data) {
                 if (data.id === null && data.newId === null) {
                     data.newId = ++this.newId;
+                    data.sort_order = this.options.length;
                     this.options.push(data);
                 } else {
                     let option = this.options.find(model => {
@@ -209,6 +217,21 @@
                     option.placeholder = data.placeholder;
                     option.values = JSON.parse(JSON.stringify(data.values));
                 }
+            },
+            onOptionsSorted() {
+                // Unfortunately the sortable library is not reliable enough
+                // to correctly splice the order of the values array when
+                // sorting, so we'll just grab the order from the DOM.
+                $(this.$refs.options).find('li').each((index, el) => {
+                    let option = this.options.find(option => {
+                        return (typeof el.dataset.id !== 'undefined' && el.dataset.id == option.id) ||
+                            (typeof el.dataset.newId !== 'undefined' && el.dataset.newId == option.newId);
+                    });
+
+                    if (typeof option !== 'undefined') {
+                        option.sort_order = index;
+                    }
+                });
             },
             optionSummary(option) {
                 return option.values
