@@ -200,7 +200,7 @@ class ProductTest extends PluginTestCase
             'optionsInventories' => [
                 'options' => [
                     ['name' => 'Foo '],
-                    ['name' => ' foo']
+                    ['name' => ' foo'],
                 ],
             ],
         ])->validate();
