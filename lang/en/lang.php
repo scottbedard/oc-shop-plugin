@@ -107,8 +107,10 @@ return [
         'form' => [
             'create_button' => 'Create Option',
             'create_title' => 'Create Option',
+            'delete_confirmation' => "Are you sure you want to delete this option?\nThis will also delete any inventories associated with it.",
             'name' => 'Name',
             'name_required_error' => 'All options must be given a name.',
+            'pending_delete' => 'Pending Delete',
             'placeholder' => 'Placeholder',
             'update_title' => 'Update Option',
             'values' => 'Values',

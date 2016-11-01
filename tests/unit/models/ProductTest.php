@@ -199,8 +199,8 @@ class ProductTest extends PluginTestCase
         Factory::fill(new Product, [
             'optionsInventories' => [
                 'options' => [
-                    ['name' => 'Foo '],
-                    ['name' => ' foo'],
+                    ['name' => 'Foo ', 'is_deleted' => false],
+                    ['name' => ' foo', 'is_deleted' => false],
                 ],
             ],
         ])->validate();
@@ -213,6 +213,7 @@ class ProductTest extends PluginTestCase
                 'options' => [
                     [
                         'id' => null,
+                        'is_deleted' => false,
                         'name' => 'Size',
                         'placeholder' => 'Select size',
                         'values' => [
@@ -232,6 +233,7 @@ class ProductTest extends PluginTestCase
 
         $product = Factory::create(new Product, $data);
 
+        // create the options
         $product->load('options.values');
         $option = $product->options->first();
         $values = $option->values;
@@ -242,6 +244,7 @@ class ProductTest extends PluginTestCase
         $this->assertEquals('Small', $values->first()->name);
         $this->assertEquals('Large', $values->last()->name);
 
+        // save them
         $data['optionsInventories']['options'][0]['id'] = $option->id;
         $data['optionsInventories']['options'][0]['values'][0]['id'] = $values->first()->id;
         $data['optionsInventories']['options'][0]['values'][1]['id'] = $values->last()->id;
@@ -249,8 +252,13 @@ class ProductTest extends PluginTestCase
         $data['optionsInventories']['options'][0]['values'][0]['name'] = 'bar';
         $product->fill($data);
         $product->save();
-
         $this->assertEquals('foo', $product->options()->first()->name);
         $this->assertEquals('bar', $product->options()->first()->values()->first()->name);
+
+        // delete the option
+        $data['optionsInventories']['options'][0]['is_deleted'] = true;
+        $product->fill($data);
+        $product->save();
+        $this->assertEquals(0, $product->options()->count());
     }
 }

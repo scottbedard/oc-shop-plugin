@@ -31,7 +31,22 @@
             color: #fff;
 
             a {
-                display: inline-block;
+                align-items: center;
+                display: flex;
+                flex-direction: column;
+                height: 60px;
+                justify-content: center;
+                text-align: center;
+                width: 60px;
+            }
+        }
+
+        &.is-deleted {
+            background-color: lighten($red, 20%);
+            color: #fff;
+
+            a {
+                background-color: $red;
             }
         }
 
@@ -46,8 +61,6 @@
         i {
             align-items: center;
             display: flex;
-            font-size: 20px;
-            height: 60px;
             justify-content: center;
             width: 60px;
         }
@@ -55,6 +68,11 @@
         div {
             flex-grow: 1;
         }
+    }
+
+    .pending-delete {
+        font-size: 10px;
+        word-wrap: break-word;
     }
 </style>
 
@@ -64,17 +82,23 @@
             <label>{{ lang.options.plural }}</label>
             <ul>
                 <li
+                    v-for="option in options"
+                    :class="{ 'is-deleted': option.is_deleted }"
                     @click="onOptionClicked(option)"
                     data-toggle="modal"
-                    href="#bedard-shop-option"
-                    v-for="option in options">
-                    <i class="icon-plus"></i>
+                    href="#bedard-shop-option">
+                    <i :class="{ 'icon-plus': ! option.is_deleted, 'icon-times': option.is_deleted }"></i>
                     <div>
                         <div>{{ option.name }}</div>
                         <small>{{ optionSummary(option) }}</small>
                     </div>
-                    <a href="#" @click.prevent><i class="icon-bars"></i></a>
-                    <a href="#" @click.prevent><i class="icon-trash-o"></i></a>
+                    <a href="#" v-if="! option.is_deleted" @click.prevent.stop><i class="icon-bars"></i></a>
+                    <a href="#" @click.prevent.stop="onDeleteOptionClicked(option)">
+                        <i v-if="! option.is_deleted" class="icon-trash-o"></i>
+                        <span class="pending-delete" v-else>
+                            {{ lang.options.form.pending_delete }}
+                        </span>
+                    </a>
                 </li>
             </ul>
             <v-create-button href="#bedard-shop-option" @click="onCreateOptionClicked">
@@ -123,7 +147,10 @@
                 activeOption: {},
                 inventories: this.inventoriesProp.slice(0),
                 newId: 0,
-                options: this.optionsProp.slice(0),
+                options: this.optionsProp.map(option => {
+                    option.is_deleted = false;
+                    return option;
+                }),
             };
         },
         components: {
@@ -145,6 +172,7 @@
             },
             onCreateOptionClicked() {
                 this.activeOption = {
+                    is_deleted: false,
                     id: null,
                     name: '',
                     newId: null,
@@ -153,6 +181,15 @@
                 };
 
                 EventChannel.$emit('option:opened');
+            },
+            onDeleteOptionClicked(option) {
+                if (! option.is_deleted) {
+                    $.oc.confirm(this.lang.options.form.delete_confirmation, () => {
+                        option.is_deleted = true;
+                    });
+                } else {
+                    option.is_deleted = false;
+                }
             },
             onOptionClicked(option) {
                 this.activeOption = option;

@@ -123,6 +123,23 @@ class Product extends Model
     }
 
     /**
+     * Delete options that have the is_deleted flag
+     *
+     * @param  [type] $options [description]
+     * @return [type]          [description]
+     */
+    protected function deleteRelatedOptions($options)
+    {
+        return array_filter($options, function($option) {
+            if ($option['id'] !== null && $option['is_deleted']) {
+                Option::find($option['id'])->delete();
+            }
+
+            return ! $option['is_deleted'];
+        });
+    }
+
+    /**
      * Get the categories options.
      *
      * @return array
@@ -181,7 +198,9 @@ class Product extends Model
         $data = $this->getOriginalPurgeValue('optionsInventories');
 
         if (is_array($data['options'])) {
-            $options = $this->saveRelatedOptions($data['options']);
+            $options = $data['options'];
+            $options = $this->deleteRelatedOptions($options);
+            $options = $this->saveRelatedOptions($options);
         }
     }
 

@@ -45,6 +45,7 @@ class Option extends Model
         'inventories' => [
             'Bedard\Shop\Models\Inventory',
             'table' => 'bedard_shop_inventory_option',
+            'delete' => true,
         ],
     ];
 
