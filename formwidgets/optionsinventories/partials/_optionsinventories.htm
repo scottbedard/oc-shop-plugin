@@ -11,6 +11,7 @@
             ]); ?>,
             options: <?= json_encode($options); ?>,
             token: '<?= csrf_token() ?>',
+            optionValidation: '<?= Backend::url('bedard/shop/options/validate') ?>',
         });
     });
 </script>

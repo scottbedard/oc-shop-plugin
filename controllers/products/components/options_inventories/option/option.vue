@@ -45,6 +45,16 @@
             width: 100%;
         }
     }
+
+    .modal-footer {
+        align-items: center;
+        display: flex;
+        justify-content: flex-end;
+
+        > .actions {
+            min-height: 40px;
+        }
+    }
 </style>
 
 <template>
@@ -87,12 +97,17 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">
-                {{ lang.form.cancel }}
-            </button>
-            <button type="button" class="btn btn-primary" @click.prevent="onCreateClicked">
-                {{ createOrSave }}
-            </button>
+            <v-loader v-if="isLoading">
+                {{ lang.options.form.loading_message }}
+            </v-loader>
+            <div v-else class="actions">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    {{ lang.form.cancel }}
+                </button>
+                <button type="button" class="btn btn-primary" @click.prevent="onCreateClicked">
+                    {{ createOrSave }}
+                </button>
+            </div>
         </div>
     </div>
 </template>
@@ -106,6 +121,7 @@
         },
         data() {
             return {
+                isLoading: false,
                 newValue: '',
                 option: {
                     id: null,
@@ -144,19 +160,22 @@
                 this.newValue = '';
             },
             onCreateClicked() {
-                // @todo: validate the form
+                this.validate()
+                    .then(response => {
+                        // Unfortunately the sortable library is not reliable enough
+                        // to correctly splice the order of the values array when
+                        // sorting, so we'll just grab the order from the DOM.
+                        $(this.$refs.values).find('li').each((i, el) => {
+                            let value = this.option.values.find(value => value.name === el.dataset.name);
+                            value.sort_order = i;
+                        });
 
-                // Unfortunately the sortable library is not reliable enough
-                // to correctly splice the order of the values array when
-                // sorting, so we'll just grab the order from the DOM.
-                $(this.$refs.values).find('li').each((i, el) => {
-                    let value = this.option.values.find(value => value.name === el.dataset.name);
-                    value.sort_order = i;
-                });
-
-                // Pass the new option to our parent component and close the modal
-                this.$emit('save', this.option);
-                $(this.$el).closest('.control-popup').modal('hide');
+                        // Pass the new option to our parent component and close the modal
+                        this.$emit('save', this.option);
+                        $(this.$el).closest('.control-popup').modal('hide');
+                    })
+                    .catch(error => $.oc.flashMsg({ text: error.body, class: 'error' }))
+                    .then(() => this.isLoading = false);
             },
             onDeleteValueClicked(index) {
                 this.option.values.splice(index, 1);
@@ -187,6 +206,10 @@
                     e.preventDefault();
                 }
             },
+            validate() {
+                this.isLoading = true;
+                return this.$http.post(this.validationEndpoint, { option: this.option })
+            },
         },
         props: [
             'channel',
@@ -194,6 +217,7 @@
             'lang',
             'options',
             'sourceModel',
+            'validationEndpoint',
         ],
         watch: {
             'sourceModel': 'onSourceModelChanged',

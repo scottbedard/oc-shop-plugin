@@ -116,6 +116,7 @@
                     :inventories="inventories"
                     :lang="lang"
                     :options="options"
+                    :validation-endpoint="optionValidation"
                     :source-model="activeOption">
                 </v-option>
             </v-popup>
@@ -151,7 +152,10 @@
             return {
                 activeInventory: {},
                 activeOption: {},
-                inventories: this.inventoriesProp.slice(0),
+                inventories: this.inventoriesProp.map(inventory => {
+                    inventory.is_deleted = false;
+                    return inventory;
+                }),
                 newId: 0,
                 options: this.optionsProp.map((option, index) => {
                     option.is_deleted = false;
@@ -248,6 +252,7 @@
             'inventoriesProp',
             'lang',
             'optionsProp',
+            'optionValidation',
         ],
     };
 </script>
