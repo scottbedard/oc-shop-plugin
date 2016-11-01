@@ -123,14 +123,14 @@ class Product extends Model
     }
 
     /**
-     * Delete options that have the is_deleted flag
+     * Delete options that have the is_deleted flag.
      *
      * @param  [type] $options [description]
      * @return [type]          [description]
      */
     protected function deleteRelatedOptions($options)
     {
-        return array_filter($options, function($option) {
+        return array_filter($options, function ($option) {
             if ($option['id'] !== null && $option['is_deleted']) {
                 Option::find($option['id'])->delete();
             }
