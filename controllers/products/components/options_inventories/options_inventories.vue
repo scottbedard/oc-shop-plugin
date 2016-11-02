@@ -116,8 +116,8 @@
                     :inventories="inventories"
                     :lang="lang"
                     :options="options"
-                    :validation-endpoint="optionValidation"
-                    :source-model="activeOption">
+                    :source-model="activeOption"
+                    :validation-endpoint="optionValidation">
                 </v-option>
             </v-popup>
         </div>
@@ -131,7 +131,8 @@
                     :inventories="inventories"
                     :lang="lang"
                     :options="options"
-                    :source-model="activeInventory">
+                    :source-model="activeInventory"
+                    :validation-endpoint="inventoryValidation">
                 </v-inventory>
             </v-popup>
         </div>
@@ -250,6 +251,7 @@
         },
         props: [
             'inventoriesProp',
+            'inventoryValidation',
             'lang',
             'optionsProp',
             'optionValidation',

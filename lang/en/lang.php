@@ -94,9 +94,11 @@ return [
         'form' => [
             'create_button' => 'Create Inventory',
             'create_title' => 'Create Inventory',
+            'loading_message' => 'Validating...',
             'option_placeholder' => 'Select :name',
             'quantity' => 'Quantity',
             'sku' => 'Stock Keeping Unit',
+            'sku_unique_error' => 'That stock keeping unit is already taken.',
             'update_title' => 'Update Inventory',
         ],
         'singular' => 'Inventory',

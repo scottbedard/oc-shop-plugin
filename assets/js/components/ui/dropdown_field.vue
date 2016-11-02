@@ -233,6 +233,8 @@
                     this.search = '';
                     this.isExpanded = false;
                 }
+
+                this.$emit('change', selectedValue);
             },
             onValueClicked(value) {
                 this.selectedValue = value;

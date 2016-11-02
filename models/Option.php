@@ -30,6 +30,9 @@ class Option extends Model
         'sort_order',
     ];
 
+    /**
+     * @var array Validation rules
+     */
     public $rules = [
         'name' => 'required',
     ];

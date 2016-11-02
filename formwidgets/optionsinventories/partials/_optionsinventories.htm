@@ -4,6 +4,7 @@
     $(function() {
         $('[data-bedard-shop="options-inventories-formwidget"]').mountOptionsInventoriesComponent({
             inventories: <?= json_encode($inventories); ?>,
+            inventoryValidation: '<?= Backend::url('bedard/shop/inventories/validate') ?>',
             lang: <?= $this->controller->getLangJson([
                 'form@backend::lang.form' => ['cancel', 'create', 'save', 'saving'],
                 'inventories@bedard.shop::lang.inventories',

@@ -1,3 +1,15 @@
+<style lang="scss" scoped>@import 'assets/scss/utils';
+    .modal-footer {
+        align-items: center;
+        display: flex;
+        justify-content: flex-end;
+
+        > .actions {
+            min-height: 40px;
+        }
+    }
+</style>
+
 <template>
     <div>
         <div class="modal-header">
@@ -11,7 +23,8 @@
                         <v-dropdown-field
                             :label="option.name"
                             :placeholder="getPlaceholder(option.name)"
-                            :values="option.values">
+                            :values="option.values"
+                            @change="onOptionChanged">
                         </v-dropdown-field>
                     </div>
                 </div>
@@ -33,12 +46,17 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">
-                {{ lang.form.cancel }}
-            </button>
-            <button type="button" class="btn btn-primary" data-dismiss="modal">
-                {{ createOrSave }}
-            </button>
+            <v-loader v-if="isLoading">
+                {{ lang.inventories.form.loading_message }}
+            </v-loader>
+            <div v-else class="actions">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    {{ lang.form.cancel }}
+                </button>
+                <button type="button" class="btn btn-primary" @click.prevent="onCreateClicked">
+                    {{ createOrSave }}
+                </button>
+            </div>
         </div>
     </div>
 </template>
@@ -50,7 +68,8 @@
                 isLoading: false,
                 inventory: {
                     id: null,
-                    price: 0,
+                    product_id: null,
+                    quantity: 0,
                     sku: '',
                 },
             };
@@ -78,6 +97,22 @@
 
                 return langString.replace(':name', name.trim().toLowerCase());
             },
+            onCreateClicked() {
+                this.validate()
+                    .then(response => {
+                        console.log (response)
+                    })
+                    .catch(error => $.oc.flashMsg({ text: error.body, class: 'error' }))
+                    .then(() => this.isLoading = false);
+            },
+            onOptionChanged(value) {
+                // update value
+            },
+            validate() {
+                this.isLoading = true;
+                console.log (this.inventory);
+                return this.$http.post(this.validationEndpoint, { inventory: this.inventory })
+            },
         },
         props: [
             'inventories',
@@ -85,6 +120,7 @@
             'inventories',
             'options',
             'sourceModel',
+            'validationEndpoint',
         ],
     };
 </script>

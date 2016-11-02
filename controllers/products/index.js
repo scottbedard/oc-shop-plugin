@@ -15,9 +15,11 @@ $.fn.mountOptionsInventoriesComponent = function(params) {
 
     new Vue({
         el: $(this)[0],
+        functional: true,
         components: { 'v-options-inventories': OptionsInventoriesComponent },
         render: h => <v-options-inventories
             inventories-prop={ params.inventories }
+            inventory-validation={ params.inventoryValidation }
             lang={ params.lang }
             options-prop={ params.options }
             option-validation={ params.optionValidation }>
