@@ -6,16 +6,20 @@
         </div>
         <div class="modal-body">
             <div class="grid padded">
-                <div class="row">
+                <div class="row" v-for="option in options">
                     <div class="cell mobile-12">
-                        <v-dropdown-field label="Dropdown options"></v-dropdown-field>
+                        <v-dropdown-field
+                            :label="option.name"
+                            :placeholder="getPlaceholder(option.name)"
+                            :values="option.values">
+                        </v-dropdown-field>
                     </div>
                 </div>
                 <div class="row">
                     <div class="cell mobile-12 tablet-6">
                         <v-input-field
-                            v-model="inventory.price"
-                            :label="lang.inventories.form.price"
+                            v-model="inventory.quantity"
+                            :label="lang.inventories.form.quantity"
                             :required="true">
                         </v-input-field>
                     </div>
@@ -68,10 +72,18 @@
                     : this.lang.inventories.form.update_title
             },
         },
+        methods: {
+            getPlaceholder(name) {
+                let langString = this.lang.inventories.form.option_placeholder;
+
+                return langString.replace(':name', name.trim().toLowerCase());
+            },
+        },
         props: [
             'inventories',
             'lang',
             'inventories',
+            'options',
             'sourceModel',
         ],
     };

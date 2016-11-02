@@ -94,7 +94,8 @@ return [
         'form' => [
             'create_button' => 'Create Inventory',
             'create_title' => 'Create Inventory',
-            'price' => 'Price',
+            'option_placeholder' => 'Select :name',
+            'quantity' => 'Quantity',
             'sku' => 'Stock Keeping Unit',
             'update_title' => 'Update Inventory',
         ],
