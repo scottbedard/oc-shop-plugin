@@ -1,7 +1,6 @@
 <?php namespace Bedard\Shop\Models;
 
 use Model;
-use October\Rain\Database\ModelException;
 
 /**
  * Inventory Model.
