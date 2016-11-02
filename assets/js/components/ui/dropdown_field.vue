@@ -197,10 +197,13 @@
                 this.selectedValue = null;
             },
             onClickOff(e) {
-                if (! e.path.filter(el => el === this.$refs.dropdown).length) {
+                // prevent clicks off of our dropdown from closing a popup
+                if (! e.path.filter(el => el === this.$refs.dropdown).length &&
+                    e.path[0].dataset.bedardShop === 'popup-component') {
                     e.stopPropagation();
-                    this.isExpanded = false;
                 }
+
+                this.isExpanded = false;
             },
             onIsExpandedChanged(isExpanded) {
                 document.body.removeEventListener('click', this.onClickOff, true);

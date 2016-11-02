@@ -1,5 +1,5 @@
 <template>
-    <div class="control-popup modal fade" :id="id">
+    <div class="control-popup modal fade" :id="id" data-bedard-shop="popup-component">
         <div class="modal-dialog">
             <div class="modal-content">
                 <slot></slot>
