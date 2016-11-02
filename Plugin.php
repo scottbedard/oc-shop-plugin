@@ -31,14 +31,8 @@ class Plugin extends PluginBase
     public function registerFormWidgets()
     {
         return [
-            'Bedard\Shop\FormWidgets\OptionsInventories' => [
-                'label' => 'Options Inventories',
-                'code'  => 'options-inventories',
-            ],
-            'Owl\FormWidgets\Knob\Widget' => [
-                'label' => 'Knob',
-                'code'  => 'owl-knob',
-            ],
+            'Bedard\Shop\FormWidgets\OptionsInventories' => 'options-inventories',
+            'Owl\FormWidgets\Knob\Widget' => 'owl-knob',
         ];
     }
 
