@@ -168,20 +168,27 @@
 </template>
 
 <script>
+    import Vue from 'vue';
+
     export default {
+        created() {
+            this.channel.$on('dropdown:set', this.onDropdownSet);
+        },
         data() {
             return {
                 isExpanded: false,
-                selectedValue: null,
+                selectedValue: this.selected,
                 search: '',
             };
         },
         computed: {
             isEmpty() {
-                return this.selectedValue === null;
+                return ! this.selectedValue;
             },
             selectedText() {
-                return this.isEmpty ? this.placeholder : this.selectedValue[this.key];
+                return this.isEmpty || ! this.selectedValue
+                    ? this.placeholder
+                    : this.selectedValue[this.key];
             },
             searchedValues() {
                 let search = this.search.trim().toLowerCase();
@@ -204,6 +211,13 @@
                 }
 
                 this.isExpanded = false;
+            },
+            onDropdownSet(setValue) {
+                if (setValue && this.values.indexOf(setValue) !== -1) {
+                    this.selectedValue = setValue;
+                } else {
+                    this.selectedValue = null;
+                }
             },
             onIsExpandedChanged(isExpanded) {
                 document.body.removeEventListener('click', this.onClickOff, true);
@@ -228,19 +242,20 @@
             onSelectedTextClicked() {
                 this.isExpanded = ! this.isExpanded;
             },
-            onSelectedValueChanged(selectedValue) {
+            onSelectedValueChanged(selectedValue, oldValue = null) {
                 if (selectedValue !== null) {
                     this.search = '';
                     this.isExpanded = false;
                 }
 
-                this.$emit('change', selectedValue);
+                this.$emit('change', selectedValue, oldValue);
             },
             onValueClicked(value) {
                 this.selectedValue = value;
             },
         },
         props: {
+            channel: { default: new Vue },
             clearable: { default: true, type: Boolean },
             key: { default: 'name', type: String },
             label: { default: null, type: String },

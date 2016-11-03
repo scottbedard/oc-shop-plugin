@@ -124,11 +124,33 @@
         </div>
         <div>
             <label>{{ lang.inventories.plural }}</label>
+            <ul>
+                <li
+                    v-for="inventory in inventories"
+                    :class="{ 'is-deleted': inventory.is_deleted }"
+                    @click="onInventoryClicked(inventory)"
+                    data-toggle="modal"
+                    href="#bedard-shop-inventory">
+                    <i :class="{ 'icon-plus': ! inventory.is_deleted, 'icon-times': inventory.is_deleted }"></i>
+                    <div>
+                        <div>{{ inventory.name }}</div>
+                        <small>{{ inStockLangString(inventory) }}</small>
+                    </div>
+                    <!-- <a href="#" v-if="! option.is_deleted" @click.prevent.stop class="sort-handle"><i class="icon-bars"></i></a>
+                    <a href="#" @click.prevent.stop="onDeleteOptionClicked(option)">
+                        <i v-if="! inventory.is_deleted" class="icon-trash-o"></i>
+                        <span class="pending-delete" v-else>
+                            {{ lang.options.form.pending_delete }}
+                        </span>
+                    </a> -->
+                </li>
+            </ul>
             <v-create-button href="#bedard-shop-inventory" @click="onCreateInventoryClicked">
                 {{ lang.inventories.form.create_button }}
             </v-create-button>
             <v-popup id="bedard-shop-inventory">
                 <v-inventory
+                    @save="onInventorySaved"
                     :inventories="inventories"
                     :lang="lang"
                     :options="options"
@@ -180,13 +202,36 @@
             },
         },
         methods: {
+            findModelByIdOrNewId(models, target) {
+                return models.find(model => {
+                    return (model.id !== null && model.id === target.id) ||
+                        (model.newId === target.newId && typeof model.newId !== 'undefined');
+                });
+            },
+            inStockLangString(inventory) {
+                let langString;
+                if (inventory.quantity < 1) langString = this.lang.inventories.form.out_of_stock;
+                else if (inventory.quantity === 1) langString = this.lang.inventories.form.in_stock_singular;
+                else langString = this.lang.inventories.form.in_stock_plural;
+
+                return langString.replace(':quantity', inventory.quantity);
+            },
             onCreateInventoryClicked() {
-                this.activeInventory = {};
+                this.activeInventory = {
+                    id: null,
+                    newId: null,
+                    product_id: null,
+                    quantity: 0,
+                    sku: '',
+                    valueIds: [],
+                };
+
+                EventChannel.$emit('inventory:opened');
             },
             onCreateOptionClicked() {
                 this.activeOption = {
-                    is_deleted: false,
                     id: null,
+                    is_deleted: false,
                     name: '',
                     newId: null,
                     placeholder: '',
@@ -204,6 +249,21 @@
                     option.is_deleted = false;
                 }
             },
+            onInventoryClicked(inventory) {
+                this.activeInventory = inventory;
+                EventChannel.$emit('inventory:opened');
+            },
+            onInventorySaved(data) {
+                if (data.id === null && data.newId === null) {
+                    data.newId = ++this.newId;
+                    this.inventories.push(data);
+                } else {
+                    let inventory = this.findModelByIdOrNewId(this.inventories, data);
+                    inventory.quantity = data.quantity;
+                    inventory.sku = data.sku;
+                    inventory.valueIds = JSON.parse(JSON.stringify(data.valueIds));
+                }
+            },
             onOptionClicked(option) {
                 this.activeOption = option;
                 EventChannel.$emit('option:opened');
@@ -212,14 +272,9 @@
                 if (data.id === null && data.newId === null) {
                     data.newId = ++this.newId;
                     data.sort_order = this.options.length;
-
                     this.options.push(data);
                 } else {
-                    let option = this.options.find(model => {
-                        return (model.id !== null && model.id === data.id) ||
-                            (model.newId === data.newId && typeof model.newId !== 'undefined');
-                    });
-
+                    let option = this.findModelByIdOrNewId(this.options, data);
                     option.name = data.name;
                     option.placeholder = data.placeholder;
                     option.values = JSON.parse(JSON.stringify(data.values));

@@ -239,6 +239,6 @@
         ],
         watch: {
             'sourceModel': 'onSourceModelChanged',
-        }
+        },
     };
 </script>

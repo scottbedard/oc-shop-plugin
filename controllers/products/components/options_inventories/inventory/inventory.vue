@@ -21,8 +21,10 @@
                 <div class="row" v-for="option in options">
                     <div class="cell mobile-12">
                         <v-dropdown-field
+                            :channel="channel"
                             :label="option.name"
                             :placeholder="getPlaceholder(option.name)"
+                            :selected="selectedOptions[`${ option.id || '' }_${ option.newId || '' }`]"
                             :values="option.values"
                             @change="onOptionChanged">
                         </v-dropdown-field>
@@ -63,19 +65,30 @@
 </template>
 
 <script>
+    import EventChannel from '../_channel';
+
     export default {
+        created() {
+            EventChannel.$on('inventory:opened', () => setTimeout(this.onOpened, 300));
+        },
         data() {
             return {
                 isLoading: false,
                 inventory: {
                     id: null,
+                    newId: null,
                     product_id: null,
                     quantity: 0,
                     sku: '',
+                    valueIds: [],
                 },
+                selectedOptions: {},
             };
         },
         computed: {
+            channel() {
+                return EventChannel;
+            },
             context() {
                 return typeof this.sourceModel.id === 'undefined'
                     ? 'create'
@@ -101,14 +114,37 @@
             onCreateClicked() {
                 this.validate()
                     .then(response => {
-                        console.log ('success', response)
+                        this.$emit('save', this.inventory);
+                        $(this.$el).closest('.control-popup').modal('hide');
                     })
                     .catch(error => $.oc.flashMsg({ text: error.body, class: 'error' }))
                     .then(() => this.isLoading = false);
             },
-            onOptionChanged(value) {
-                // update value
-                console.log (value);
+            onOpened() {
+                this.setSelectedOptionValues();
+            },
+            onOptionChanged(value, oldValue) {
+                if (oldValue && typeof oldValue.id !== 'undefined') {
+                    this.inventory.valueIds = this.inventory.valueIds.filter(id => id != oldValue.id);
+                }
+
+                if (value && typeof value.id !== 'undefined') {
+                    this.inventory.valueIds.push(value.id);
+                }
+            },
+            onSourceModelChanged() {
+                this.inventory = JSON.parse(JSON.stringify(this.sourceModel));
+            },
+            setSelectedOptionValues() {
+                for (let option of this.options) {
+                    for (let valueId of this.inventory.valueIds) {
+                        let foundValue = option.values.find(value => value.id === valueId);
+                        if (foundValue) {
+                            console.log ('emitting', foundValue);
+                            EventChannel.$emit('dropdown:set', foundValue);
+                        }
+                    }
+                }
             },
             validate() {
                 this.isLoading = true;
@@ -123,5 +159,8 @@
             'sourceModel',
             'validationEndpoint',
         ],
+        watch: {
+            'sourceModel': 'onSourceModelChanged',
+        },
     };
 </script>
