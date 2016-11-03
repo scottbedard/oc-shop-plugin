@@ -13,7 +13,7 @@ class CreateOptionValuesTable extends Migration
             $table->increments('id');
             $table->string('name')->default('');
             $table->integer('sort_order')->unsigned()->default(0);
-            $table->integer('option_id')->unsigned()->index();
+            $table->integer('option_id')->unsigned()->nullable()->index();
             $table->timestamps();
         });
     }

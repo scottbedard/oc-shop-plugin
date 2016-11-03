@@ -31,6 +31,7 @@
                 <div class="row">
                     <div class="cell mobile-12 tablet-6">
                         <v-input-field
+                            type="number"
                             v-model="inventory.quantity"
                             :label="lang.inventories.form.quantity"
                             :required="true">
@@ -100,17 +101,17 @@
             onCreateClicked() {
                 this.validate()
                     .then(response => {
-                        console.log (response)
+                        console.log ('success', response)
                     })
                     .catch(error => $.oc.flashMsg({ text: error.body, class: 'error' }))
                     .then(() => this.isLoading = false);
             },
             onOptionChanged(value) {
                 // update value
+                console.log (value);
             },
             validate() {
                 this.isLoading = true;
-                console.log (this.inventory);
                 return this.$http.post(this.validationEndpoint, { inventory: this.inventory })
             },
         },

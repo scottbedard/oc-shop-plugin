@@ -220,13 +220,13 @@ class Product extends Model
 
             $model->product_id = $this->id;
             $model->fill($option);
-            $model->save();
 
-            $option['id'] = $model->id;
-
+            $sessionKey = uniqid('session_key', true);
             if (is_array($option['values'])) {
-                $this->saveRelatedOptionValues($model, $option['values']);
+                $this->saveRelatedOptionValues($model, $option['values'], $sessionKey);
             }
+
+            $model->save(null, $sessionKey);
         }
 
         return $options;
@@ -237,18 +237,20 @@ class Product extends Model
      *
      * @param  Option $option
      * @param  array  $values
+     * @param  string $sessionKey
      * @return void
      */
-    protected function saveRelatedOptionValues(Option $option, array $values)
+    protected function saveRelatedOptionValues(Option &$option, array $values, $sessionKey)
     {
         foreach ($values as $value) {
             $model = $value['id'] !== null
                 ? OptionValue::firstOrNew(['id' => $value['id']])
                 : new OptionValue;
 
-            $model->option_id = $option->id;
             $model->fill($value);
             $model->save();
+
+            $option->values()->add($model, $sessionKey);
         }
     }
 

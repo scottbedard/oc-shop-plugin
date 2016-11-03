@@ -153,13 +153,22 @@
             addValue() {
                 this.option.values.push({
                     id: null,
-                    sort_order: this.option.values.length,
                     name: this.newValue,
+                    newId: null,
+                    sort_order: this.option.values.length,
                 });
 
                 this.newValue = '';
             },
+            createValue(value) {
+                return this.$http.post(this.createValueEndpoint, { value }).then(response => {
+                    value.id = response.body.id;
+                });
+            },
             onCreateClicked() {
+                this.isLoading = true;
+                let requests = [];
+
                 this.validate()
                     .then(response => {
                         // Unfortunately the sortable library is not reliable enough
@@ -170,6 +179,15 @@
                             value.sort_order = i;
                         });
 
+                        // create new values for deferred biding with inventories
+                        let newValues = [];
+                        this.option.values.filter(value => value.id === null).forEach(value => {
+                            newValues.push(this.createValue(value));
+                        });
+
+                        return Promise.all(newValues);
+                    })
+                    .then(response => {
                         // Pass the new option to our parent component and close the modal
                         this.$emit('save', this.option);
                         $(this.$el).closest('.control-popup').modal('hide');
@@ -207,12 +225,12 @@
                 }
             },
             validate() {
-                this.isLoading = true;
                 return this.$http.post(this.validationEndpoint, { option: this.option })
             },
         },
         props: [
             'channel',
+            'createValueEndpoint',
             'inventories',
             'lang',
             'options',

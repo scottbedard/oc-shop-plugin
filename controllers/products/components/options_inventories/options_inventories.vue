@@ -113,6 +113,7 @@
             <v-popup id="bedard-shop-option">
                 <v-option
                     @save="onOptionSaved"
+                    :create-value-endpoint="optionCreateValue"
                     :inventories="inventories"
                     :lang="lang"
                     :options="options"
@@ -211,6 +212,8 @@
                 if (data.id === null && data.newId === null) {
                     data.newId = ++this.newId;
                     data.sort_order = this.options.length;
+                    data.values.forEach(value => value.newId = value.id ? null : ++this.newId);
+
                     this.options.push(data);
                 } else {
                     let option = this.options.find(model => {
@@ -254,6 +257,7 @@
             'inventoryValidation',
             'lang',
             'optionsProp',
+            'optionCreateValue',
             'optionValidation',
         ],
     };
