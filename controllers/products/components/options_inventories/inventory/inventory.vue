@@ -24,7 +24,6 @@
                             :channel="channel"
                             :label="option.name"
                             :placeholder="getPlaceholder(option.name)"
-                            :selected="selectedOptions[`${ option.id || '' }_${ option.newId || '' }`]"
                             :values="option.values"
                             @change="onOptionChanged">
                         </v-dropdown-field>
@@ -82,7 +81,6 @@
                     sku: '',
                     valueIds: [],
                 },
-                selectedOptions: {},
             };
         },
         computed: {
@@ -121,6 +119,7 @@
                     .then(() => this.isLoading = false);
             },
             onOpened() {
+                this.channel.$emit('dropdown:reset');
                 this.setSelectedOptionValues();
             },
             onOptionChanged(value, oldValue) {
@@ -140,7 +139,6 @@
                     for (let valueId of this.inventory.valueIds) {
                         let foundValue = option.values.find(value => value.id === valueId);
                         if (foundValue) {
-                            console.log ('emitting', foundValue);
                             EventChannel.$emit('dropdown:set', foundValue);
                         }
                     }

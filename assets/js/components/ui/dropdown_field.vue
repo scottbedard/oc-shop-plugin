@@ -173,6 +173,7 @@
     export default {
         created() {
             this.channel.$on('dropdown:set', this.onDropdownSet);
+            this.channel.$on('dropdown:reset', this.onDropdownReset);
         },
         data() {
             return {
@@ -211,6 +212,9 @@
                 }
 
                 this.isExpanded = false;
+            },
+            onDropdownReset() {
+                this.selectedValue = null;
             },
             onDropdownSet(setValue) {
                 if (setValue && this.values.indexOf(setValue) !== -1) {
