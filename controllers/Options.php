@@ -11,6 +11,11 @@ use Response;
  */
 class Options extends Controller
 {
+    /**
+     * Create a value with deferred bindings to an option.
+     *
+     * @return Response
+     */
     public function createValue()
     {
         $data = input('value');

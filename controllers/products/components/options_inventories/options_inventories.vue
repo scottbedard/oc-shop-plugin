@@ -212,7 +212,6 @@
                 if (data.id === null && data.newId === null) {
                     data.newId = ++this.newId;
                     data.sort_order = this.options.length;
-                    data.values.forEach(value => value.newId = value.id ? null : ++this.newId);
 
                     this.options.push(data);
                 } else {
