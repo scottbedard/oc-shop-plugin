@@ -136,6 +136,7 @@ return [
     'products' => [
         'form' => [
             'create_title' => 'Create Product',
+            'duplicate_inventories_error' => 'Inventories options must be unique.',
             'duplicate_options_error' => 'Option names must be unique.',
             'name' => 'Name',
             'preview_title' => 'Preview Product',

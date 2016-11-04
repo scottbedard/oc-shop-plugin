@@ -312,7 +312,6 @@
 
                 let values = [];
                 for (let id of inventory.valueIds) {
-                    console.log ('looking for', id);
                     for (let option of this.options) {
                         let value = option.values.find(model => model.id == id);
                         if (value) {

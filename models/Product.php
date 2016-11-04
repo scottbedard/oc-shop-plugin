@@ -121,13 +121,25 @@ class Product extends Model
     public function afterValidate()
     {
         $this->validateOptions();
+        $this->validateInventories();
+    }
+
+    /**
+     * Delete inventories that have the is_deleted flag.
+     *
+     * @param  array $inventories
+     * @return array
+     */
+    protected function deleteRelatedInventories($inventories)
+    {
+        // @todo
     }
 
     /**
      * Delete options that have the is_deleted flag.
      *
-     * @param  [type] $options [description]
-     * @return [type]          [description]
+     * @param  array $options
+     * @return array
      */
     protected function deleteRelatedOptions($options)
     {
@@ -203,6 +215,23 @@ class Product extends Model
             $options = $this->deleteRelatedOptions($options);
             $options = $this->saveRelatedOptions($options);
         }
+
+        if (is_array($data['inventories'])) {
+            $inventories = $data['inventories'];
+            // $inventories = $this->deleteRelatedInventories($inventories);
+            $inventories = $this->saveRelatedInventories($inventories);
+        }
+    }
+
+    /**
+     * Save an array of realted inventories.
+     *
+     * @param  array  $inventories
+     * @return array
+     */
+    protected function saveRelatedInventories(array $inventories)
+    {
+        // @todo
     }
 
     /**
@@ -337,7 +366,45 @@ class Product extends Model
         Discount::syncProductPrice($this, $categoryScope);
     }
 
-    public function validateOptions()
+    /**
+     * Validate inventories.
+     *
+     * @throws \October\Rain\Database\ModelException
+     * @return void
+     */
+    protected function validateInventories()
+    {
+        if (! is_array($this->optionsInventories) ||
+            ! is_array($this->optionsInventories['options'])) {
+            return;
+        }
+
+        $takenValueCombinations = [];
+        foreach ($this->optionsInventories['inventories'] as $inventory) {
+            // validate the inventory
+            $model = new Inventory($inventory);
+            $model->validate();
+
+            // validate that the value combinations are unique
+            sort($inventory['valueIds']);
+            $valueCombination = json_encode($inventory['valueIds']);
+
+            if (in_array($valueCombination, $takenValueCombinations)) {
+                Flash::error(Lang::get('bedard.shop::lang.products.form.duplicate_inventories_error'));
+                throw new ModelException($this);
+            }
+
+            $takenValueCombinations[] = $valueCombination;
+        }
+    }
+
+    /**
+     * Validate options.
+     *
+     * @throws \October\Rain\Database\ModelException
+     * @return void
+     */
+    protected function validateOptions()
     {
         if (! is_array($this->optionsInventories) ||
             ! is_array($this->optionsInventories['options'])) {
@@ -347,11 +414,11 @@ class Product extends Model
         $names = [];
         foreach ($this->optionsInventories['options'] as $option) {
             $name = strtolower(trim($option['name']));
-            // Validate the option
-            $option = new Option($option);
-            $option->validate();
+            // validate the option
+            $model = new Option($option);
+            $model->validate();
 
-            // Names must be unique
+            // validate that names are unique
             if (in_array($name, $names)) {
                 Flash::error(Lang::get('bedard.shop::lang.products.form.duplicate_options_error'));
                 throw new ModelException($this);

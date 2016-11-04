@@ -202,6 +202,7 @@ class ProductTest extends PluginTestCase
                     ['name' => 'Foo ', 'is_deleted' => false],
                     ['name' => ' foo', 'is_deleted' => false],
                 ],
+                'inventories' => [],
             ],
         ])->validate();
     }
@@ -228,6 +229,7 @@ class ProductTest extends PluginTestCase
                         ],
                     ],
                 ],
+                'inventories' => [],
             ],
         ];
 
@@ -260,5 +262,29 @@ class ProductTest extends PluginTestCase
         $product->fill($data);
         $product->save();
         $this->assertEquals(0, $product->options()->count());
+    }
+
+    public function test_inventories_must_have_unique_values()
+    {
+        Factory::fill(new Product, [
+            'optionsInventories' => [
+                'options' => [],
+                'inventories' => [
+                    ['valueIds' => [1, 2]],
+                    ['valueIds' => [1, 2, 3]],
+                ],
+            ],
+        ])->validate();
+
+        $this->setExpectedException(\October\Rain\Database\ModelException::class);
+        Factory::fill(new Product, [
+            'optionsInventories' => [
+                'options' => [],
+                'inventories' => [
+                    ['valueIds' => [1, 2, 3]],
+                    ['valueIds' => [2, 3, 1]],
+                ],
+            ],
+        ])->validate();
     }
 }
