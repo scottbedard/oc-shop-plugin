@@ -413,12 +413,13 @@ class Product extends Model
 
         $names = [];
         foreach ($this->optionsInventories['options'] as $option) {
-            $name = strtolower(trim($option['name']));
             // validate the option
             $model = new Option($option);
             $model->validate();
 
             // validate that names are unique
+            $name = strtolower(trim($option['name']));
+
             if (in_array($name, $names)) {
                 Flash::error(Lang::get('bedard.shop::lang.products.form.duplicate_options_error'));
                 throw new ModelException($this);
