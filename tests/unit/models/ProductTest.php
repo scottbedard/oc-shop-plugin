@@ -2,6 +2,7 @@
 
 use Bedard\Shop\Models\Category;
 use Bedard\Shop\Models\Discount;
+use Bedard\Shop\Models\Inventory;
 use Bedard\Shop\Models\Price;
 use Bedard\Shop\Models\Product;
 use Bedard\Shop\Tests\Factory;
@@ -286,5 +287,25 @@ class ProductTest extends PluginTestCase
                 ],
             ],
         ])->validate();
+    }
+
+    public function test_inventories_can_be_deleted()
+    {
+        $inventory = Factory::create(new Inventory);
+
+        Factory::create(new Product, [
+            'optionsInventories' => [
+                'options' => [],
+                'inventories' => [
+                    [
+                        'id' => $inventory->id,
+                        'is_deleted' => true,
+                        'valueIds' => [],
+                    ],
+                ],
+            ],
+        ]);
+
+        $this->assertEquals(false, Inventory::where('id', $inventory->id)->exists());
     }
 }

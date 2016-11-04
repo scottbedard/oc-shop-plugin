@@ -132,7 +132,13 @@ class Product extends Model
      */
     protected function deleteRelatedInventories($inventories)
     {
-        // @todo
+        return array_filter($inventories, function($inventory) {
+            if ($inventory['id'] !== null && $inventory['is_deleted']) {
+                Inventory::find($inventory['id'])->delete();
+            }
+
+            return ! $inventory['is_deleted'];
+        });
     }
 
     /**
@@ -218,7 +224,7 @@ class Product extends Model
 
         if (is_array($data['inventories'])) {
             $inventories = $data['inventories'];
-            // $inventories = $this->deleteRelatedInventories($inventories);
+            $inventories = $this->deleteRelatedInventories($inventories);
             $inventories = $this->saveRelatedInventories($inventories);
         }
     }
