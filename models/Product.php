@@ -132,7 +132,7 @@ class Product extends Model
      */
     protected function deleteRelatedInventories($inventories)
     {
-        return array_filter($inventories, function($inventory) {
+        return array_filter($inventories, function ($inventory) {
             if ($inventory['id'] !== null && $inventory['is_deleted']) {
                 Inventory::find($inventory['id'])->delete();
             }
