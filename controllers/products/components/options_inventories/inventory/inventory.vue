@@ -135,9 +135,9 @@
                 this.inventory = JSON.parse(JSON.stringify(this.sourceModel));
             },
             setSelectedOptionValues() {
-                for (let option of this.options) {
-                    for (let valueId of this.inventory.valueIds) {
-                        let foundValue = option.values.find(value => value.id === valueId);
+                for (let valueId of this.inventory.valueIds) {
+                    for (let option of this.options) {
+                        let foundValue = option.values.find(value => value.id == valueId);
                         if (foundValue) {
                             EventChannel.$emit('dropdown:set', foundValue);
                         }

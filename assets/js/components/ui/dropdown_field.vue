@@ -219,8 +219,6 @@
             onDropdownSet(setValue) {
                 if (setValue && this.values.indexOf(setValue) !== -1) {
                     this.selectedValue = setValue;
-                } else {
-                    this.selectedValue = null;
                 }
             },
             onIsExpandedChanged(isExpanded) {
