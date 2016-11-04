@@ -219,13 +219,13 @@ class Product extends Model
         if (is_array($data['options'])) {
             $options = $data['options'];
             $options = $this->deleteRelatedOptions($options);
-            $options = $this->saveRelatedOptions($options);
+            $this->saveRelatedOptions($options);
         }
 
         if (is_array($data['inventories'])) {
             $inventories = $data['inventories'];
             $inventories = $this->deleteRelatedInventories($inventories);
-            $inventories = $this->saveRelatedInventories($inventories);
+            $this->saveRelatedInventories($inventories);
         }
     }
 
