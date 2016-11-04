@@ -133,7 +133,7 @@
                     href="#bedard-shop-inventory">
                     <i :class="{ 'icon-plus': ! inventory.is_deleted, 'icon-times': inventory.is_deleted }"></i>
                     <div>
-                        <div>{{ inventory.name }}</div>
+                        <div>{{ summarizeInventory(inventory) }}</div>
                         <small>{{ inStockLangString(inventory) }}</small>
                     </div>
                     <!-- <a href="#" v-if="! option.is_deleted" @click.prevent.stop class="sort-handle"><i class="icon-bars"></i></a>
@@ -304,6 +304,24 @@
                         else return 0;
                     })
                     .map(value => value.name).join(', ');
+            },
+            summarizeInventory(inventory) {
+                if (inventory.valueIds.length === 0) {
+                    return this.lang.inventories.form.default_inventory;
+                }
+
+                let values = [];
+                for (let id of inventory.valueIds) {
+                    console.log ('looking for', id);
+                    for (let option of this.options) {
+                        let value = option.values.find(model => model.id == id);
+                        if (value) {
+                            values.push(value.name);
+                        }
+                    }
+                }
+
+                return values.join(', ');
             },
         },
         props: [
