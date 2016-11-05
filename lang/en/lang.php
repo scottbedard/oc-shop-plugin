@@ -14,10 +14,23 @@ return [
             'shop' => 'Shop',
         ],
         'permissions' => [
+            'api' => 'Manage API',
             'categories' => 'Manage Categories',
             'discounts' => 'Manage Discounts',
             'products' => 'Manage Products',
         ],
+    ],
+
+    //
+    // API
+    //
+    'api' => [
+        'description' => 'Manage HTTP API settings.',
+        'form' => [
+            'is_enabled' => 'HTTP Endpoints',
+            'is_enabled_comment' => 'When turned on, HTTP endpoints will be accessible. For traditional themes using October components, this can be left off.',
+        ],
+        'label' => 'API',
     ],
 
     //

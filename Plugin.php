@@ -82,6 +82,10 @@ class Plugin extends PluginBase
     public function registerPermissions()
     {
         return [
+            'bedard.shop.api.manage' => [
+                'label' => 'bedard.shop::lang.plugin.permissions.api',
+                'tab' => 'bedard.shop::lang.plugin.details.name',
+            ],
             'bedard.shop.categories.manage' => [
                 'label' => 'bedard.shop::lang.plugin.permissions.categories',
                 'tab' => 'bedard.shop::lang.plugin.details.name',
@@ -93,6 +97,25 @@ class Plugin extends PluginBase
             'bedard.shop.products.manage' => [
                 'label' => 'bedard.shop::lang.plugin.permissions.products',
                 'tab' => 'bedard.shop::lang.plugin.details.name',
+            ],
+        ];
+    }
+
+    /**
+     * Register settings models.
+     *
+     * @return array
+     */
+    public function registerSettings()
+    {
+        return [
+            'api' => [
+                'label'         => 'bedard.shop::lang.api.label',
+                'description'   => 'bedard.shop::lang.api.description',
+                'category'      => 'bedard.shop::lang.plugin.details.name',
+                'class'         => 'Bedard\Shop\Models\ApiSettings',
+                'permissions'   => ['bedard.shop.api.manage'],
+                'icon'          => 'icon-cog',
             ],
         ];
     }

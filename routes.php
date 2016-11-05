@@ -1,3 +1,7 @@
 <?php
 
-Route::resource('api/bedard/shop/categories', 'Bedard\Shop\Api\Categories');
+Route::group(['middleware' => '\Bedard\Shop\Classes\ApiMiddleware'], function() {
+
+    Route::resource('api/bedard/shop/categories', 'Bedard\Shop\Api\Categories');
+
+});
