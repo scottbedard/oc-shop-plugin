@@ -9,6 +9,7 @@ class ApiMiddleware
     {
         if (! ApiSettings::isEnabled()) {
             abort(403, 'Forbidden');
+
             return;
         }
 

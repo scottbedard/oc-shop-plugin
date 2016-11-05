@@ -7,7 +7,6 @@ use Model;
  */
 class ApiSettings extends Model
 {
-
     /**
      * @var array   Behaviors
      */
@@ -26,7 +25,7 @@ class ApiSettings extends Model
     /**
      * Determines if the HTTP API is enabled.
      *
-     * @return boolean
+     * @return bool
      */
     public static function isEnabled()
     {
