@@ -203,4 +203,15 @@ class CategoryTest extends PluginTestCase
         $child->delete();
         $this->assertEquals(0, Price::whereProductId($product->id)->whereDiscountId($discount->id)->count());
     }
+
+    public function test_isActive_and_isNotActive_scopes()
+    {
+        $active = Factory::create(new Category, ['is_active' => true]);
+        $inactive = Factory::create(new Category, ['is_active' => false]);
+
+        $this->assertEquals(1, Category::isActive()->count());
+        $this->assertEquals(1, Category::isNotActive()->count());
+        $this->assertEquals($active->id, Category::isActive()->first()->id);
+        $this->assertEquals($inactive->id, Category::isNotActive()->first()->id);
+    }
 }

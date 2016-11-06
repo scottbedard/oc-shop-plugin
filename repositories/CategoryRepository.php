@@ -17,7 +17,7 @@ class CategoryRepository
             throw new Exception('Categories fetch() must select at least one column.');
         }
 
-        $query = Category::select($params['select']);
+        $query = Category::isActive()->select($params['select']);
 
         // hide empty categories
         if ($params['hide_empty']) {
