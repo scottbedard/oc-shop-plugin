@@ -22,6 +22,21 @@ class ApiSettings extends Model
      */
     public $settingsFields = 'fields.yaml';
 
+    public static function categoriesHideEmpty()
+    {
+        return self::get('categories_hide_empty', false);
+    }
+
+    public static function categoriesLoadThumbnails()
+    {
+        return self::get('categories_load_thumbnails', false);
+    }
+
+    public static function categoriesSelect()
+    {
+        return self::get('categories_select', []);
+    }
+
     /**
      * Determines if the HTTP API is enabled.
      *

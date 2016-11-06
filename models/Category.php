@@ -52,6 +52,10 @@ class Category extends Model
     /**
      * @var array Relations
      */
+    public $attachMany = [
+        'thumbnails' => 'System\Models\File',
+    ];
+
     public $belongsTo = [
         'parent' => 'Bedard\Shop\Models\Category',
     ];

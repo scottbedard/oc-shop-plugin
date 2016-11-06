@@ -30,6 +30,14 @@ class Product extends Model
     ];
 
     /**
+     * @var array Attribute casting
+     */
+    protected $casts = [
+        'price' => 'float',
+        'base_price' => 'float',
+    ];
+
+    /**
      * @var array Guarded fields
      */
     protected $guarded = ['*'];

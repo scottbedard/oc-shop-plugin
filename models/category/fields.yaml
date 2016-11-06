@@ -3,7 +3,6 @@
 # ===================================
 
 fields:
-
     name:
         label: bedard.shop::lang.categories.form.name
         span: left
@@ -18,7 +17,6 @@ fields:
 tabs:
     stretch: true
     fields:
-
         parent_id:
             label: bedard.shop::lang.categories.form.parent
             tab: bedard.shop::lang.categories.form.tab_settings
@@ -38,6 +36,14 @@ tabs:
             span: right
 
         description_html:
-            tab: bedard.shop::lang.categories.form.tab_settings
             label: bedard.shop::lang.categories.form.description
+            tab: bedard.shop::lang.categories.form.tab_settings
             type: richeditor
+
+        thumbnails:
+            label: bedard.shop::lang.categories.form.thumbnails
+            tab: bedard.shop::lang.categories.form.tab_thumbnails
+            type: fileupload
+            mode: image
+            imageHeight: 260
+            imageWidth: 260

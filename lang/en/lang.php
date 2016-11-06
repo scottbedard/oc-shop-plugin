@@ -25,9 +25,24 @@ return [
     // API
     //
     'api' => [
-        'description' => 'Manage HTTP API settings.',
+        'categories' => [
+            'hide_empty' => 'Hide empty categories',
+            'load_thumbnails' => 'Load thumbnails',
+            'select_created_at' => 'Created date',
+            'select_description_html' => 'Description (html)',
+            'select_description_plain' => 'Description (plain)',
+            'select_id' => 'ID',
+            'select_is_visible' => 'Visible status',
+            'select_name' => 'Name',
+            'select_parent_id' => 'Parent ID',
+            'select_slug' => 'Slug',
+            'select_sort_order' => 'Sort order',
+            'select_updated_at' => 'Updated date',
+            'select' => 'Select columns',
+        ],
+        'description' => 'Manage API settings.',
         'form' => [
-            'is_enabled' => 'HTTP Endpoints',
+            'is_enabled' => 'API Endpoints',
             'is_enabled_comment' => 'When turned on, HTTP endpoints will be accessible. For traditional themes using October components, this can be left off.',
         ],
         'label' => 'API',
@@ -45,9 +60,11 @@ return [
             'name' => 'Name',
             'no_parent' => 'No parent',
             'tab_settings' => 'Settings',
+            'tab_thumbnails' => 'Thumbnails',
             'parent' => 'Parent Category',
             'preview_title' => 'Preview Category',
             'slug' => 'Slug',
+            'thumbnails' => 'Thumbnails',
             'update_title' => 'Update Category',
         ],
         'list' => [

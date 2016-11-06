@@ -7,3 +7,35 @@ fields:
         label: bedard.shop::lang.api.form.is_enabled
         comment: bedard.shop::lang.api.form.is_enabled_comment
         type: switch
+
+tabs:
+    stretch: true
+    fields:
+        categories_select:
+            label: bedard.shop::lang.api.categories.select
+            tab: bedard.shop::lang.categories.plural
+            type: checkboxlist
+            span: left
+            options:
+                created_at: bedard.shop::lang.api.categories.select_created_at
+                description_html: bedard.shop::lang.api.categories.select_description_html
+                description_plain: bedard.shop::lang.api.categories.select_description_plain
+                id: bedard.shop::lang.api.categories.select_id
+                is_visible: bedard.shop::lang.api.categories.select_is_visible
+                name: bedard.shop::lang.api.categories.select_name
+                parent_id: bedard.shop::lang.api.categories.select_parent_id
+                slug: bedard.shop::lang.api.categories.select_slug
+                sort_order: bedard.shop::lang.api.categories.select_sort_order
+                updated_at: bedard.shop::lang.api.categories.select_updated_at
+
+        categories_load_thumbnails:
+            label: bedard.shop::lang.api.categories.load_thumbnails
+            tab: bedard.shop::lang.categories.plural
+            type: switch
+            span: right
+
+        categories_hide_empty:
+            label: bedard.shop::lang.api.categories.hide_empty
+            tab: bedard.shop::lang.categories.plural
+            type: switch
+            span: right
