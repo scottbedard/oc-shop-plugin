@@ -202,7 +202,6 @@ class Category extends Model
      * Query categories that are listed as active.
      *
      * @param  \October\Rain\Database\Builder   $query
-     * @param  \Bedard\Shop\Models\Category|int $parent
      * @return \October\Rain\Database\Builder
      */
     public function scopeIsActive($query)
@@ -214,7 +213,6 @@ class Category extends Model
      * Query categories that are listed as not active.
      *
      * @param  \October\Rain\Database\Builder   $query
-     * @param  \Bedard\Shop\Models\Category|int $parent
      * @return \October\Rain\Database\Builder
      */
     public function scopeIsNotActive($query)
