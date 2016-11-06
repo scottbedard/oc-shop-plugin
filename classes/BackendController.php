@@ -3,7 +3,7 @@
 use Backend\Classes\Controller as BaseController;
 use Lang;
 
-class Controller extends BaseController
+class BackendController extends BaseController
 {
     public function __construct()
     {

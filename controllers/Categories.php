@@ -1,7 +1,7 @@
 <?php namespace Bedard\Shop\Controllers;
 
 use BackendMenu;
-use Bedard\Shop\Classes\Controller;
+use Bedard\Shop\Classes\BackendController;
 use Bedard\Shop\Models\Category;
 use Bedard\Shop\Models\Product;
 use Exception;
@@ -13,7 +13,7 @@ use Response;
 /**
  * Categories Back-end Controller.
  */
-class Categories extends Controller
+class Categories extends BackendController
 {
     public $formConfig = 'config_form.yaml';
 

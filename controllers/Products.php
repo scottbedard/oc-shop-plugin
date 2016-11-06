@@ -1,12 +1,12 @@
 <?php namespace Bedard\Shop\Controllers;
 
 use BackendMenu;
-use Bedard\Shop\Classes\Controller;
+use Bedard\Shop\Classes\BackendController;
 
 /**
  * Products Back-end Controller.
  */
-class Products extends Controller
+class Products extends BackendController
 {
     public $formConfig = 'config_form.yaml';
 

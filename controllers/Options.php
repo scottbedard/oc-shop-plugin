@@ -1,6 +1,6 @@
 <?php namespace Bedard\Shop\Controllers;
 
-use Backend\Classes\Controller;
+use Bedard\Shop\Classes\BackendController;
 use Bedard\Shop\Models\Option;
 use Bedard\Shop\Models\OptionValue;
 use Exception;
@@ -9,7 +9,7 @@ use Response;
 /**
  * Options Back-end Controller.
  */
-class Options extends Controller
+class Options extends BackendController
 {
     /**
      * Create a value with deferred bindings to an option.

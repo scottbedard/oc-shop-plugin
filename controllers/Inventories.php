@@ -1,6 +1,6 @@
 <?php namespace Bedard\Shop\Controllers;
 
-use Backend\Classes\Controller;
+use Bedard\Shop\Classes\BackendController;
 use Bedard\Shop\Models\Inventory;
 use Exception;
 use Response;
@@ -8,7 +8,7 @@ use Response;
 /**
  * Inventories Back-end Controller.
  */
-class Inventories extends Controller
+class Inventories extends BackendController
 {
     /**
      * Validate an inventory.
