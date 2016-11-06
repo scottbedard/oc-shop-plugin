@@ -23,6 +23,7 @@ class Category extends Model
         'description_html' => '',
         'description_plain' => '',
         'product_columns' => 4,
+        'product_order' => '',
         'product_rows' => 3,
         'product_sort' => 'created_at:desc',
     ];
