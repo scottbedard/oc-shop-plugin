@@ -222,7 +222,7 @@ class Category extends Model
     /**
      * Determine if the category has a custom sort.
      *
-     * @return boolean
+     * @return bool
      */
     public function isCustomSorted()
     {
