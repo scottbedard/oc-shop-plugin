@@ -214,4 +214,17 @@ class CategoryTest extends PluginTestCase
         $this->assertEquals($active->id, Category::isActive()->first()->id);
         $this->assertEquals($inactive->id, Category::isNotActive()->first()->id);
     }
+
+    public function test_setting_product_sort()
+    {
+        $standard = Factory::create(new Category, ['product_sort' => 'foo:bar']);
+        $this->assertEquals('foo', $standard->product_sort_column);
+        $this->assertEquals('bar', $standard->product_sort_direction);
+        $this->assertEquals(false, $standard->isCustomSorted());
+
+        $custom = Factory::create(new Category, ['product_sort' => 'custom']);
+        $this->assertEquals(null, $custom->product_sort_column);
+        $this->assertEquals(null, $custom->product_sort_direction);
+        $this->assertEquals(true, $custom->isCustomSorted());
+    }
 }

@@ -17,6 +17,11 @@ class CreateCategoriesTable extends Migration
             $table->string('slug')->default('')->unique();
             $table->text('description_plain');
             $table->text('description_html');
+            $table->integer('product_columns')->unsigned()->default(0);
+            $table->integer('product_rows')->unsigned()->default(0);
+            $table->string('product_sort_column', 16)->nullable();
+            $table->string('product_sort_direction', 4)->nullable();
+            $table->text('product_order');
             $table->boolean('is_active')->default(false);
             $table->boolean('is_visible')->default(false);
             $table->timestamps();

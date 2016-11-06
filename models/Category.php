@@ -8,7 +8,8 @@ use Model;
  */
 class Category extends Model
 {
-    use \October\Rain\Database\Traits\Validation;
+    use \October\Rain\Database\Traits\Purgeable,
+        \October\Rain\Database\Traits\Validation;
 
     /**
      * @var string The database table used by the model.
@@ -21,6 +22,10 @@ class Category extends Model
     public $attributes = [
         'description_html' => '',
         'description_plain' => '',
+        'product_columns' => 4,
+        'product_order' => '[]',
+        'product_rows' => 3,
+        'product_sort' => 'created_at:desc',
     ];
 
     /**
@@ -46,8 +51,21 @@ class Category extends Model
         'description_plain',
         'name',
         'parent_id',
+        'product_sort',
+        'product_sort_column',
+        'product_sort_direction',
         'slug',
     ];
+
+    /**
+     * @var array Jsonable fields
+     */
+    protected $jsonable = ['product_order'];
+
+    /**
+     * @var array Purgeable fields
+     */
+    protected $purgeable = ['product_sort'];
 
     /**
      * @var array Relations
@@ -77,6 +95,8 @@ class Category extends Model
      */
     public $rules = [
         'name' => 'required',
+        'product_columns' => 'required|integer|min:1',
+        'product_rows' => 'required|integer|min:0',
         'slug' => 'required|unique:bedard_shop_categories',
     ];
 
@@ -109,6 +129,7 @@ class Category extends Model
     {
         $this->setPlainDescription();
         $this->setNullParentId();
+        $this->setProductSort();
     }
 
     /**
@@ -199,6 +220,16 @@ class Category extends Model
     }
 
     /**
+     * Determine if the category has a custom sort.
+     *
+     * @return boolean
+     */
+    public function isCustomSorted()
+    {
+        return ! $this->product_sort_column && ! $this->product_sort_direction;
+    }
+
+    /**
      * Query categories that are listed as active.
      *
      * @param  \October\Rain\Database\Builder   $query
@@ -273,7 +304,7 @@ class Category extends Model
      *
      * @return void
      */
-    public function setNullParentId()
+    protected function setNullParentId()
     {
         if (! $this->parent_id) {
             $this->parent_id = null;
@@ -285,9 +316,28 @@ class Category extends Model
      *
      * @return void
      */
-    public function setPlainDescription()
+    protected function setPlainDescription()
     {
         $this->description_plain = strip_tags($this->description_html);
+    }
+
+    /**
+     * Set the product sort.
+     *
+     * @return void
+     */
+    protected function setProductSort()
+    {
+        $sort = $this->getOriginalPurgeValue('product_sort');
+
+        if ($sort === 'custom') {
+            $this->product_sort_column = null;
+            $this->product_sort_direction = null;
+        } else {
+            $parts = explode(':', $this->getOriginalPurgeValue('product_sort'));
+            $this->product_sort_column = $parts[0];
+            $this->product_sort_direction = $parts[1];
+        }
     }
 
     /**

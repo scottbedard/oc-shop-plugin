@@ -47,3 +47,27 @@ tabs:
             mode: image
             imageHeight: 260
             imageWidth: 260
+
+        product_sort:
+            label: bedard.shop::lang.categories.form.product_order
+            tab: bedard.shop::lang.categories.form.tab_products
+            type: dropdown
+            options:
+                "custom": bedard.shop::lang.categories.form.product_order_custom
+                "name:asc": bedard.shop::lang.categories.form.product_order_name_asc
+                "name:desc": bedard.shop::lang.categories.form.product_order_name_desc
+                "created_at:asc": bedard.shop::lang.categories.form.product_order_created_at_asc
+                "created_at:desc": bedard.shop::lang.categories.form.product_order_created_at_desc
+                "updated_at:asc": bedard.shop::lang.categories.form.product_order_updated_at_asc
+                "updated_at:desc": bedard.shop::lang.categories.form.product_order_updated_at_desc
+
+        product_columns:
+            label: bedard.shop::lang.categories.form.product_columns
+            tab: bedard.shop::lang.categories.form.tab_products
+            span: left
+
+        product_rows:
+            label: bedard.shop::lang.categories.form.product_rows
+            tab: bedard.shop::lang.categories.form.tab_products
+            comment: bedard.shop::lang.categories.form.product_rows_comment
+            span: right
