@@ -4,6 +4,7 @@
     $(function() {
         $('[data-bedard-shop="product-order-formwidget"]').mountProductOrderComponent({
             lang: <?= $this->controller->getLangJson([]); ?>,
+            products: <?= json_encode($products); ?>
         });
     });
 </script>

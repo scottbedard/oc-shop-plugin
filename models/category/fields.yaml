@@ -56,6 +56,8 @@ tabs:
                 "custom": bedard.shop::lang.categories.form.product_order_custom
                 "name:asc": bedard.shop::lang.categories.form.product_order_name_asc
                 "name:desc": bedard.shop::lang.categories.form.product_order_name_desc
+                "price:asc": bedard.shop::lang.categories.form.product_order_price_asc
+                "price:desc": bedard.shop::lang.categories.form.product_order_price_desc
                 "created_at:asc": bedard.shop::lang.categories.form.product_order_created_at_asc
                 "created_at:desc": bedard.shop::lang.categories.form.product_order_created_at_desc
                 "updated_at:asc": bedard.shop::lang.categories.form.product_order_updated_at_asc

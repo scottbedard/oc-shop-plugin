@@ -68,6 +68,8 @@ return [
             'product_order_name_desc' => 'Name (descending)',
             'product_order_created_at_asc' => 'Date created (oldest first)',
             'product_order_created_at_desc' => 'Date created (newest first)',
+            'product_order_price_asc' => 'Price (ascending)',
+            'product_order_price_desc' => 'Price (descending)',
             'product_order_updated_at_asc' => 'Date updated (oldest first)',
             'product_order_updated_at_desc' => 'Date updated (newest first)',
             'product_order_custom' => 'Custom',

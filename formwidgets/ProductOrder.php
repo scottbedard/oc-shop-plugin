@@ -15,13 +15,6 @@ class ProductOrder extends FormWidgetBase
     /**
      * {@inheritdoc}
      */
-    public function init()
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function render()
     {
         $this->prepareVars();
@@ -35,6 +28,8 @@ class ProductOrder extends FormWidgetBase
     public function prepareVars()
     {
         $this->model->load('products');
+
+        $this->vars['products'] = $this->model->products;
     }
 
     /**

@@ -1,9 +1,11 @@
 require('assets/js/boot');
 
 import Vue from 'vue';
+import Sortable from 'vue-sortable';
+Vue.use(Sortable);
+
 import CategoryOrderComponent from './components/category_order/reorder';
 import ProductOrderComponent from './components/product_order/product_order';
-
 
 //
 // Category reordering
@@ -24,12 +26,13 @@ $.fn.mountReorderComponent = function({ categories, endpoint, lang, token }) {
 //
 // Product reordering
 //
-$.fn.mountProductOrderComponent = function({ lang }) {
+$.fn.mountProductOrderComponent = function({ lang, products }) {
     new Vue({
         el: $(this)[0],
         components: { 'v-product-order': ProductOrderComponent },
         render: h => <v-product-order
-            lang={ lang }>
+            lang={ lang }
+            products={ products }>
         </v-product-order>,
     });
 };
