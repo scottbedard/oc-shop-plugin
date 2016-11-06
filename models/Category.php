@@ -23,7 +23,6 @@ class Category extends Model
         'description_html' => '',
         'description_plain' => '',
         'product_columns' => 4,
-        'product_order' => '[]',
         'product_rows' => 3,
         'product_sort' => 'created_at:desc',
     ];
@@ -56,11 +55,6 @@ class Category extends Model
         'product_sort_direction',
         'slug',
     ];
-
-    /**
-     * @var array Jsonable fields
-     */
-    protected $jsonable = ['product_order'];
 
     /**
      * @var array Purgeable fields

@@ -32,6 +32,7 @@ class Plugin extends PluginBase
     {
         return [
             'Bedard\Shop\FormWidgets\OptionsInventories' => 'options-inventories',
+            'Bedard\Shop\FormWidgets\ProductOrder' => 'product-order',
             'Owl\FormWidgets\Knob\Widget' => 'owl-knob',
         ];
     }

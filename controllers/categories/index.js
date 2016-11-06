@@ -1,20 +1,35 @@
 require('assets/js/boot');
 
 import Vue from 'vue';
-import ReorderComponent from './components/reorder';
+import CategoryOrderComponent from './components/category_order/reorder';
+import ProductOrderComponent from './components/product_order/product_order';
+
 
 //
-// Mount the category reordering component
+// Category reordering
 //
 $.fn.mountReorderComponent = function({ categories, endpoint, lang, token }) {
     Vue.http.headers.common['X-CSRF-TOKEN'] = token;
     new Vue({
         el: $(this)[0],
-        components: { 'v-reorder': ReorderComponent },
-        render: h => <v-reorder
+        components: { 'v-category-order': CategoryOrderComponent },
+        render: h => <v-category-order
             categories={ categories }
             endpoint={ endpoint }
             lang={ lang }>
-        </v-reorder>,
+        </v-category-order>,
+    });
+};
+
+//
+// Product reordering
+//
+$.fn.mountProductOrderComponent = function({ lang }) {
+    new Vue({
+        el: $(this)[0],
+        components: { 'v-product-order': ProductOrderComponent },
+        render: h => <v-product-order
+            lang={ lang }>
+        </v-product-order>,
     });
 };

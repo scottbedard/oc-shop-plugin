@@ -1,0 +1,9 @@
+<div data-bedard-shop="product-order-formwidget"></div>
+
+<script>
+    $(function() {
+        $('[data-bedard-shop="product-order-formwidget"]').mountProductOrderComponent({
+            lang: <?= $this->controller->getLangJson([]); ?>,
+        });
+    });
+</script>
