@@ -3,34 +3,34 @@
 use Backend\Classes\FormWidgetBase;
 
 /**
- * ProductOrder Form Widget
+ * ProductOrder Form Widget.
  */
 class ProductOrder extends FormWidgetBase
 {
-
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected $defaultAlias = 'bedard_shop_product_order';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function init()
     {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function render()
     {
         $this->prepareVars();
+
         return $this->makePartial('productorder');
     }
 
     /**
-     * Prepares the form widget view data
+     * Prepares the form widget view data.
      */
     public function prepareVars()
     {
@@ -38,11 +38,10 @@ class ProductOrder extends FormWidgetBase
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getSaveValue($value)
     {
         return $value;
     }
-
 }
