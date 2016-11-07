@@ -207,8 +207,10 @@
             },
             onOpened() {
                 this.$refs.name.focus();
+                console.log ('option...', JSON.stringify(this.option));
             },
             onSourceModelChanged() {
+                console.log ('source model changed', this.sourceModel);
                 this.option = JSON.parse(JSON.stringify(this.sourceModel));
 
                 this.option.values.sort((a, b) => {

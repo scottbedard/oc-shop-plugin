@@ -245,7 +245,15 @@ class Product extends Model
      */
     protected function saveRelatedInventories(array $inventories)
     {
-        // @todo
+        foreach ($inventories as $inventory) {
+            $model = $inventory['id'] !== null
+                ? Inventory::firstOrNew(['id' => $inventory['id']])
+                : new Inventory;
+
+            $inventory['product_id'] = $this->id;
+            $model->fill($inventory);
+            $model->save();
+        }
     }
 
     /**

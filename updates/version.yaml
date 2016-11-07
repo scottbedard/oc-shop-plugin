@@ -10,5 +10,5 @@
     - 1.0/create_inventories_table.php
     - 1.0/create_options_table.php
     - 1.0/create_option_values_table.php
-    - 1.0/create_inventory_option_table.php
+    - 1.0/create_inventory_option_values_table.php
     - dev_seeds.php

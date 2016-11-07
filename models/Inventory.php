@@ -63,9 +63,9 @@ class Inventory extends Model
     ];
 
     public $belongsToMany = [
-        'options' => [
-            'Bedard\Shop\Models\Option',
-            'table' => 'bedard_shop_inventory_option',
+        'optionValues' => [
+            'Bedard\Shop\Models\OptionValue',
+            'table' => 'bedard_shop_inventory_option_values',
         ],
     ];
 }

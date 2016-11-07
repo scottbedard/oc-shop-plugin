@@ -28,8 +28,22 @@ class OptionsInventories extends FormWidgetBase
     public function prepareVars()
     {
         if ($this->model->exists) {
-            $this->vars['options'] = $this->model->options()->with('values')->get()->toArray();
-            $this->vars['inventories'] = $this->model->inventories()->get()->toArray();
+            $this->vars['options'] = $this->model
+                ->options()
+                ->with('values')
+                ->get()
+                ->toArray();
+
+            $inventories = $this->model
+                ->inventories()
+                ->with('optionValues')
+                ->get();
+
+            foreach ($inventories as &$inventory) {
+                $inventory['valueIds'] = $inventory->optionValues->lists('id');
+            }
+
+            $this->vars['inventories'] = $inventories->toArray();
         } else {
             $this->vars['options'] = [];
             $this->vars['inventories'] = [];
