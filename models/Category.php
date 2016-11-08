@@ -128,7 +128,8 @@ class Category extends Model
         $this->setProductSort();
     }
 
-    public function filterFields($fields, $context = null){
+    public function filterFields($fields, $context = null)
+    {
         $fields->product_order->hidden = false;
     }
 
