@@ -142,7 +142,7 @@ class Product extends Model
     {
         return array_filter($inventories, function ($inventory) {
             if ($inventory['id'] !== null && $inventory['is_deleted']) {
-                // Inventory::find($inventory['id'])->delete();
+                Inventory::find($inventory['id'])->delete();
             }
 
             return ! $inventory['is_deleted'];
