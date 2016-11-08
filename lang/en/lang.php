@@ -26,9 +26,12 @@ return [
     // API
     //
     'api' => [
-        'categories' => [
-            'hide_empty' => 'Hide empty categories',
-            'load_thumbnails' => 'Load thumbnails',
+        'category' => [
+            'category_select' => 'Select category columns',
+            'load_products' => 'Load first page of products',
+            'load_products_thumbnails' => 'Load product thumbnails',
+            'load_thumbnails' => 'Load category thumbnails',
+            'products_select' => 'Select product columns',
             'select_created_at' => 'Created date',
             'select_description_html' => 'Description (html)',
             'select_description_plain' => 'Description (plain)',
@@ -36,9 +39,18 @@ return [
             'select_is_visible' => 'Visible status',
             'select_name' => 'Name',
             'select_parent_id' => 'Parent ID',
+            'select_product_columns' => 'Product columns',
+            'select_product_order' => 'Product order',
+            'select_product_rows' => 'Product rows',
+            'select_product_sort_column' => 'Product sort column',
+            'select_product_sort_direction' => 'Product sort direction',
             'select_slug' => 'Slug',
             'select_sort_order' => 'Sort order',
             'select_updated_at' => 'Updated date',
+        ],
+        'categories' => [
+            'hide_empty' => 'Hide empty categories',
+            'load_thumbnails' => 'Load thumbnails',
             'select' => 'Select columns',
         ],
         'description' => 'Manage API settings.',
@@ -47,6 +59,16 @@ return [
             'is_enabled_comment' => 'When turned on, HTTP endpoints will be accessible. For traditional themes using October components, this can be left off.',
         ],
         'label' => 'API',
+        'product' => [
+            'select_base_price' => 'Base price',
+            'select_created_at' => 'Created date',
+            'select_description_html' => 'Description (html)',
+            'select_description_plain' => 'Description (plain)',
+            'select_id' => 'ID',
+            'select_name' => 'Name',
+            'select_slug' => 'Slug',
+            'select_updated_at' => 'Updated date',
+        ],
     ],
 
     //

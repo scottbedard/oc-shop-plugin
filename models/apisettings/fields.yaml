@@ -11,22 +11,77 @@ fields:
 tabs:
     stretch: true
     fields:
+        category_select:
+            label: bedard.shop::lang.api.category.category_select
+            tab: bedard.shop::lang.categories.singular
+            type: checkboxlist
+            span: left
+            options:
+                created_at: bedard.shop::lang.api.category.select_created_at
+                description_plain: bedard.shop::lang.api.category.select_description_plain
+                description_html: bedard.shop::lang.api.category.select_description_html
+                id: bedard.shop::lang.api.category.select_id
+                is_visible: bedard.shop::lang.api.category.select_is_visible
+                name: bedard.shop::lang.api.category.select_name
+                parent_id: bedard.shop::lang.api.category.select_parent_id
+                product_columns: bedard.shop::lang.api.category.select_product_columns
+                product_order: bedard.shop::lang.api.category.select_product_order
+                product_rows: bedard.shop::lang.api.category.select_product_rows
+                product_sort_column: bedard.shop::lang.api.category.select_product_sort_column
+                product_sort_direction: bedard.shop::lang.api.category.select_product_sort_direction
+                slug: bedard.shop::lang.api.category.select_slug
+                sort_order: bedard.shop::lang.api.category.select_sort_order
+                updated_at: bedard.shop::lang.api.category.select_updated_at
+
+        category_load_thumbnails:
+            label: bedard.shop::lang.api.category.load_thumbnails
+            tab: bedard.shop::lang.categories.singular
+            type: switch
+            span: right
+
+        category_load_products:
+            label: bedard.shop::lang.api.category.load_products
+            tab: bedard.shop::lang.categories.singular
+            type: switch
+            span: right
+
+        category_load_products_thumbnails:
+            label: bedard.shop::lang.api.category.load_products_thumbnails
+            tab: bedard.shop::lang.categories.singular
+            type: switch
+            span: right
+
+        category_products_select:
+            label: bedard.shop::lang.api.category.products_select
+            tab: bedard.shop::lang.categories.singular
+            type: checkboxlist
+            span: left
+            options:
+                id: bedard.shop::lang.api.product.select_id
+                name: bedard.shop::lang.api.product.select_name
+                description_html: bedard.shop::lang.api.product.select_description_html
+                Description_plain: bedard.shop::lang.api.product.select_description_plain
+                slug: bedard.shop::lang.api.product.select_slug
+                base_price: bedard.shop::lang.api.product.select_base_price
+                created_at: bedard.shop::lang.api.product.select_created_at
+                updated_at: bedard.shop::lang.api.product.select_updated_at
+
         categories_select:
             label: bedard.shop::lang.api.categories.select
             tab: bedard.shop::lang.categories.plural
             type: checkboxlist
             span: left
             options:
-                created_at: bedard.shop::lang.api.categories.select_created_at
-                description_html: bedard.shop::lang.api.categories.select_description_html
-                description_plain: bedard.shop::lang.api.categories.select_description_plain
-                id: bedard.shop::lang.api.categories.select_id
-                is_visible: bedard.shop::lang.api.categories.select_is_visible
-                name: bedard.shop::lang.api.categories.select_name
-                parent_id: bedard.shop::lang.api.categories.select_parent_id
-                slug: bedard.shop::lang.api.categories.select_slug
-                sort_order: bedard.shop::lang.api.categories.select_sort_order
-                updated_at: bedard.shop::lang.api.categories.select_updated_at
+                created_at: bedard.shop::lang.api.category.select_created_at
+                description_html: bedard.shop::lang.api.category.select_description_html
+                description_plain: bedard.shop::lang.api.category.select_description_plain
+                id: bedard.shop::lang.api.category.select_id
+                is_visible: bedard.shop::lang.api.category.select_is_visible
+                name: bedard.shop::lang.api.category.select_name
+                parent_id: bedard.shop::lang.api.category.select_parent_id
+                slug: bedard.shop::lang.api.category.select_slug
+                sort_order: bedard.shop::lang.api.category.select_sort_order
+                updated_at: bedard.shop::lang.api.category.select_updated_at
 
         categories_load_thumbnails:
             label: bedard.shop::lang.api.categories.load_thumbnails

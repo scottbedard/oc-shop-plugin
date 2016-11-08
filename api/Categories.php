@@ -9,7 +9,7 @@ use Log;
 class Categories extends ApiController
 {
     /**
-     * Fetch categories.
+     * List all categories.
      *
      * @return \October\Rain\Database\Collection
      */
@@ -22,7 +22,33 @@ class Categories extends ApiController
                 'select' => ApiSettings::categoriesSelect(),
             ];
 
-            return $repository->fetch($params);
+            return $repository->get($params);
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+
+            abort(500, $e->getMessage());
+        }
+    }
+
+    /**
+     * Find a single category.
+     *
+     * @param  \Bedard\Shop\Repositories\CategoryRepository $repository
+     * @param  string                                       $slug
+     * @return \Bedard\Shop\Models\Category
+     */
+    public function show(CategoryRepository $repository, $slug)
+    {
+        try {
+            $params = [
+                'load_products' => ApiSettings::categoryLoadProducts(),
+                'load_products_thumbnails' => ApiSettings::categoryLoadProductsThumbnails(),
+                'load_thumbnails' => ApiSettings::categoryLoadThumbnails(),
+                'products_select' => ApiSettings::categoryProductsSelect(),
+                'select' => ApiSettings::categorySelect(),
+            ];
+
+            return $repository->show($slug, $params);
         } catch (Exception $e) {
             Log::error($e->getMessage());
 

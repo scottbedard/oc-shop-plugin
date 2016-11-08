@@ -37,6 +37,31 @@ class ApiSettings extends Model
         return self::get('categories_select', []);
     }
 
+    public static function categoryLoadProducts()
+    {
+        return self::get('category_load_products', false);
+    }
+
+    public static function categoryLoadProductsThumbnails()
+    {
+        return self::get('category_load_products_thumbnails', false);
+    }
+
+    public static function categoryLoadThumbnails()
+    {
+        return self::get('category_load_thumbnails', false);
+    }
+
+    public static function categorySelect()
+    {
+        return self::get('category_select', []);
+    }
+
+    public static function categoryProductsSelect()
+    {
+        return self::get('category_products_select', []);
+    }
+
     /**
      * Determines if the HTTP API is enabled.
      *
