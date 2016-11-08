@@ -44,8 +44,9 @@
         <ul v-sortable="{
             animation: 150,
             handle: 'a.oc-icon-bars',
+            onUpdate: onValuesReordered,
         }">
-            <li v-for="value in values">
+            <li v-for="value in values" :key="value">
                 <div class="form-control">
                     <a class="oc-icon-bars" href="#" @click.prevent></a>
                     <input v-model="value.name" @keydown="onValueKeydown">
@@ -102,6 +103,9 @@
                 if (e.keyCode === 13) {
                     e.preventDefault();
                 }
+            },
+            onValuesReordered(e) {
+                this.$emit('reorder', e);
             },
         },
         props: [

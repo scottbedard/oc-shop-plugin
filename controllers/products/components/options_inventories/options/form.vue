@@ -20,7 +20,8 @@
                 :lang="lang"
                 :values="option.values"
                 @add="onValueAdded"
-                @delete="onValueDeleted">
+                @delete="onValueDeleted"
+                @reorder="onValuesReordered">
             </v-value-fields>
         </v-popup-body>
 
@@ -81,6 +82,9 @@
             },
             onValueDeleted(value) {
                 this.option.values.splice(this.option.values.indexOf(value), 1);
+            },
+            onValuesReordered({ newIndex, oldIndex }) {
+                this.option.values.splice(newIndex, 0, this.option.values.splice(oldIndex, 1)[0]);
             },
             validate(option) {
                 return this.$http.post(this.validationEndpoint, { option })
