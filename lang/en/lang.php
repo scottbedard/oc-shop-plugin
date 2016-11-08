@@ -181,17 +181,19 @@ return [
     //
     'products' => [
         'form' => [
+            'base_price' => 'Base price',
             'create_title' => 'Create Product',
             'description' => 'Description',
             'duplicate_inventories_error' => 'Inventories options must be unique.',
             'duplicate_options_error' => 'Option names must be unique.',
+            'images' => 'Images',
             'name' => 'Name',
             'preview_title' => 'Preview Product',
-            'base_price' => 'Base price',
             'slug' => 'Slug',
-            'slug' => 'Slug',
+            'tab_images' => 'Images',
             'tab_general' => 'General',
             'tab_options_inventories' => 'Options & Inventories',
+            'thumbnails' => 'Thumbnails',
             'update_title' => 'Update Product',
         ],
         'list' => [

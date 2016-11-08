@@ -38,3 +38,19 @@ tabs:
             tab: bedard.shop::lang.products.form.tab_general
             type: checkboxlist
             span: right
+
+        thumbnails:
+            label: bedard.shop::lang.products.form.thumbnails
+            tab: bedard.shop::lang.products.form.tab_images
+            type: fileupload
+            mode: image
+            imageHeight: 260
+            imageWidth: 260
+
+        images:
+            label: bedard.shop::lang.products.form.images
+            tab: bedard.shop::lang.products.form.tab_images
+            type: fileupload
+            mode: image
+            imageHeight: 260
+            imageWidth: 260
