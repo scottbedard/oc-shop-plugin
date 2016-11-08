@@ -44,14 +44,6 @@ class Option extends Model
     /**
      * @var array Relations
      */
-    public $belongsToMany = [
-        'inventories' => [
-            'Bedard\Shop\Models\Inventory',
-            'table' => 'bedard_shop_inventory_option',
-            'delete' => true,
-        ],
-    ];
-
     public $hasMany = [
         'values' => [
             'Bedard\Shop\Models\OptionValue',

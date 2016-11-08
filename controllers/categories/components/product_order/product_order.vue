@@ -80,9 +80,9 @@
                         return 0;
                     });
                 } else if (sort === 'price:asc') {
-                    this.products.sort((a, b) => a.price - b.price);
+                    this.products.sort((a, b) => a.current_price.price - b.current_price.price);
                 } else if (sort === 'price:desc') {
-                    this.products.sort((a, b) => b.price - a.price);
+                    this.products.sort((a, b) => b.current_price.price - a.current_price.price);
                 } else if (sort === 'created_at:asc') {
                     this.products.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
                 } else if (sort === 'created_at:desc') {

@@ -27,7 +27,7 @@ class ProductOrder extends FormWidgetBase
      */
     public function prepareVars()
     {
-        $this->model->load('products');
+        $this->model->products->load('current_price');
 
         $this->vars['products'] = $this->model->products;
     }
@@ -37,6 +37,8 @@ class ProductOrder extends FormWidgetBase
      */
     public function getSaveValue($value)
     {
-        return input('product_order') ?: [];
+        $order = input('product_order') ?: [];
+
+        return array_map('intval', $order);
     }
 }

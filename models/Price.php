@@ -15,6 +15,13 @@ class Price extends Model
     public $table = 'bedard_shop_prices';
 
     /**
+     * @var array Attribute casting
+     */
+    protected $casts = [
+        'price' => 'float',
+    ];
+
+    /**
      * @var array Guarded fields
      */
     protected $guarded = ['*'];

@@ -42,6 +42,13 @@ class Category extends Model
     protected $guarded = ['*'];
 
     /**
+     * @var array Jsonable fields
+     */
+    protected $jsonable = [
+        'product_order',
+    ];
+
+    /**
      * @var array Fillable fields
      */
     protected $fillable = [
@@ -51,6 +58,7 @@ class Category extends Model
         'description_plain',
         'name',
         'parent_id',
+        'product_order',
         'product_sort',
         'product_sort_column',
         'product_sort_direction',
@@ -82,7 +90,6 @@ class Category extends Model
             'Bedard\Shop\Models\Product',
             'table' => 'bedard_shop_category_product',
             'pivot' => ['is_inherited'],
-            'scope' => 'joinPrice',
         ],
     ];
 
@@ -126,11 +133,6 @@ class Category extends Model
         $this->setPlainDescription();
         $this->setNullParentId();
         $this->setProductSort();
-    }
-
-    public function filterFields($fields, $context = null)
-    {
-        $fields->product_order->hidden = false;
     }
 
     /**
