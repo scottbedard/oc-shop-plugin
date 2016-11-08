@@ -182,6 +182,7 @@ return [
     'products' => [
         'form' => [
             'create_title' => 'Create Product',
+            'description' => 'Description',
             'duplicate_inventories_error' => 'Inventories options must be unique.',
             'duplicate_options_error' => 'Option names must be unique.',
             'name' => 'Name',

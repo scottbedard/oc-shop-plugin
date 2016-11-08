@@ -22,13 +22,19 @@ tabs:
             tab: bedard.shop::lang.products.form.tab_options_inventories
             type: options-inventories
 
-        categoriesList:
-            label: bedard.shop::lang.categories.plural
+        description_html:
+            label: bedard.shop::lang.products.form.description
             tab: bedard.shop::lang.products.form.tab_general
-            type: checkboxlist
+            type: richeditor
             span: left
 
         base_price:
             label: bedard.shop::lang.products.form.base_price
             tab: bedard.shop::lang.products.form.tab_general
+            span: right
+
+        categoriesList:
+            label: bedard.shop::lang.categories.plural
+            tab: bedard.shop::lang.products.form.tab_general
+            type: checkboxlist
             span: right

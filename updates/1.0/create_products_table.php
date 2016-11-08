@@ -15,6 +15,8 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string('name')->default('');
             $table->string('slug')->default('')->unique();
+            $table->text('description_plain');
+            $table->text('description_html');
             $table->decimal('base_price', 10, 2)->default(0)->unsigned();
             $table->timestamps();
         });

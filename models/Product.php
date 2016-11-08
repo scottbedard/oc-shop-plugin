@@ -27,6 +27,8 @@ class Product extends Model
      */
     public $attributes = [
         'base_price' => 0,
+        'description_html' => '',
+        'description_plain' => '',
     ];
 
     /**
@@ -46,9 +48,11 @@ class Product extends Model
      * @var array Fillable fields
      */
     protected $fillable = [
-        'categoriesList',
-        'name',
         'base_price',
+        'categoriesList',
+        'description_html',
+        'description_plain',
+        'name',
         'optionsInventories',
         'slug',
     ];
@@ -130,6 +134,16 @@ class Product extends Model
     {
         $this->validateOptions();
         $this->validateInventories();
+    }
+
+    /**
+     * Before save.
+     *
+     * @return void
+     */
+    public function beforeSave()
+    {
+        $this->setPlainDescription();
     }
 
     /**
@@ -324,6 +338,16 @@ class Product extends Model
         return $query
             ->addSelect($alias.'.price')
             ->joinSubquery($subquery, $alias, 'bedard_shop_products.id', '=', $alias.'.product_id');
+    }
+
+    /**
+     * Set the plain text description_html.
+     *
+     * @return void
+     */
+    protected function setPlainDescription()
+    {
+        $this->description_plain = strip_tags($this->description_html);
     }
 
     /**
