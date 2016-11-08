@@ -32,7 +32,7 @@ $.fn.mountProductOrderComponent = function({ lang, products }) {
         components: { 'v-product-order': ProductOrderComponent },
         render: h => <v-product-order
             lang={ lang }
-            products={ products }>
+            products-prop={ products }>
         </v-product-order>,
     });
 };

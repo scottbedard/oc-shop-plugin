@@ -37,6 +37,6 @@ class ProductOrder extends FormWidgetBase
      */
     public function getSaveValue($value)
     {
-        return $value;
+        return input('product_order') ?: [];
     }
 }

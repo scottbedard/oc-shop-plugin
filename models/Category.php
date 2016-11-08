@@ -82,6 +82,7 @@ class Category extends Model
             'Bedard\Shop\Models\Product',
             'table' => 'bedard_shop_category_product',
             'pivot' => ['is_inherited'],
+            'scope' => 'joinPrice',
         ],
     ];
 
@@ -125,6 +126,10 @@ class Category extends Model
         $this->setPlainDescription();
         $this->setNullParentId();
         $this->setProductSort();
+    }
+
+    public function filterFields($fields, $context = null){
+        $fields->product_order->hidden = false;
     }
 
     /**
