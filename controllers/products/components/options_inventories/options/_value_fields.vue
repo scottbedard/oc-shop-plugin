@@ -46,7 +46,7 @@
             handle: 'a.oc-icon-bars',
             onUpdate: onValuesReordered,
         }">
-            <li v-for="value in values" :key="value">
+            <li v-for="value in values" :key="value.id || value.newId">
                 <div class="form-control">
                     <a class="oc-icon-bars" href="#" @click.prevent></a>
                     <input v-model="value.name" @keydown="onValueKeydown">
@@ -67,6 +67,7 @@
     export default {
         data() {
             return {
+                newId: 0,
                 newValue: '',
             };
         },
@@ -81,6 +82,7 @@
         methods: {
             addNewValue() {
                 this.$emit('add', {
+                    newId: `_${ this.newId++ }`,
                     name: this.newValueName,
                     option_id: null,
                     sort_order: null,

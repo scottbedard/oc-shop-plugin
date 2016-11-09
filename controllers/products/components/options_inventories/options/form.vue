@@ -32,7 +32,7 @@
             </v-loader>
             <div v-else>
                 <v-button class="btn-default" data-dismiss="modal">{{ lang.form.cancel }}</v-button>
-                <v-button class="btn-primary" @click="onSaveClicked">{{ createOrSave }}</v-button>
+                <v-button class="btn-primary" @click="onSaveClicked">{{ createOrUpdate }}</v-button>
             </div>
         </v-popup-footer>
     </div>
@@ -54,10 +54,14 @@
         },
         computed: {
             context() {
-                return this.option.id === null ? 'create' : 'update';
+                return this.option.id === null
+                    ? 'create'
+                    : 'update';
             },
-            createOrSave() {
-                return this.lang.form[this.context];
+            createOrUpdate() {
+                return this.context === 'create'
+                    ? this.lang.form.create
+                    : this.lang.relation.update;
             },
             title() {
                 return this.lang.options.form[this.context + '_title'];

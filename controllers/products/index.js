@@ -21,7 +21,7 @@ $.fn.mountOptionsInventoriesComponent = function(params) {
             inventories-prop={ params.inventories }
             inventory-validation={ params.inventoryValidation }
             lang={ params.lang }
-            options={ params.options }
+            options-prop={ params.options }
             option-create-value={ params.optionCreateValue }
             option-validation={ params.optionValidation }>
         </v-options-inventories>,
