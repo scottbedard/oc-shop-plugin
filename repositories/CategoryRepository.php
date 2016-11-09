@@ -52,7 +52,7 @@ class CategoryRepository
             ->firstOrFail();
 
         if ($params['load_products']) {
-            $category->load(['products' => function($products) use ($category, $params) {
+            $category->load(['products' => function ($products) use ($category, $params) {
                 if (! array_key_exists('products_select', $params) ||
                     ! is_array($params['products_select']) ||
                     empty($params['products_select'])) {
