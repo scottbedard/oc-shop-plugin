@@ -80,6 +80,9 @@
                 @save="onOptionSaved">
             </v-options-form>
         </v-popup>
+
+        <!-- Form data -->
+        <input type="text" name="optionsInventories" :value="formData">
     </div>
 </template>
 
@@ -96,12 +99,21 @@
                 inventory: {},
                 option: CreateOption(),
                 options: this.optionsProp.slice(0),
+                inventories: [],
             };
         },
         components: {
             'v-inventories-list': InventoriesListComponent,
             'v-options-form': OptionsFormComponent,
             'v-options-list': OptionsListComponent,
+        },
+        computed: {
+            formData() {
+                return JSON.stringify({
+                    inventories: this.inventories,
+                    options: this.options,
+                });
+            },
         },
         methods: {
             onOptionClicked(option) {
@@ -121,7 +133,7 @@
             onOptionSaved(option) {
                 let existingOption = this.options.find(model => {
                     return (option.id && option.id === model.id)
-                        || option.newId === model.newId;
+                        || (! option.id && option.newId === model.newId);
                 });
 
                 if (existingOption) {
