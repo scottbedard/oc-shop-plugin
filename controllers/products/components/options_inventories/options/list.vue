@@ -6,6 +6,19 @@
     .values {
         font-size: 0.85em;
     }
+
+    ul.options-inventories-list {
+        > li.is-deleted {
+            $faded-color: #ccc;
+            color: $faded-color;
+            a { color: $faded-color }
+
+            &:hover {
+                background-color: transparent;
+                a { background-color: transparent }
+            }
+        }
+    }
 </style>
 
 <template>
@@ -17,9 +30,14 @@
             handle: '.oc-icon-bars',
             onUpdate: onOptionsReordered,
         }">
-            <li v-for="option in options" :key="option.id || option.newId" @click="onOptionClicked(option)">
+            <li
+                v-for="option in options"
+                :class="{ 'is-deleted': option.is_deleted }"
+                :key="option.id || option.newId"
+                @click="onOptionClicked(option)">
+                <div v-show="option.is_deleted" class="delete-border"></div>
                 <a href="#" @click.prevent class="oc-icon-plus"></a>
-                <div>
+                <div class="item">
                     <div>{{ option.name }}</div>
                     <div class="values">{{ valueString(option) }}</div>
                 </div>
@@ -46,7 +64,8 @@
                 this.$emit('create');
             },
             onDeleteOptionClicked(option) {
-
+                this.$emit('delete', option);
+                this.$forceUpdate();
             },
             onOptionClicked(option) {
                 this.$emit('open', option);

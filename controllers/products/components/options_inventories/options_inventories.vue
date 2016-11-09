@@ -9,6 +9,7 @@
             display: flex;
             height: 60px;
             padding: 0;
+            position: relative;
 
             &:hover {
                 background-color: $light-blue;
@@ -18,6 +19,16 @@
                 > a {
                     background-color: $blue;
                     color: #fff;
+                }
+
+                > .delete-border {
+                    border: 2px dashed #ccc;
+                    bottom: 0;
+                    left: 0;
+                    pointer-events: none;
+                    position: absolute;
+                    right: 0;
+                    top: 0;
                 }
             }
 
@@ -34,7 +45,7 @@
                 &:not(:first-of-type) { margin-left: 1px }
             }
 
-            > div {
+            > div.item {
                 padding: 0 10px;
                 flex-grow: 1;
             }
@@ -50,7 +61,8 @@
                 class="form-group span-left"
                 :lang="lang"
                 :options="options"
-                @create="onCreateOption"
+                @create="onOptionCreateClicked"
+                @delete="onOptionDeleteClicked"
                 @open="onOptionClicked"
                 @reorder="onOptionsReordered">
             </v-options-list>
@@ -92,13 +104,16 @@
             'v-options-list': OptionsListComponent,
         },
         methods: {
-            onCreateOption() {
-                this.option = CreateOption();
-                this.openOptionPopup();
-            },
             onOptionClicked(option) {
                 this.option = option;
                 this.openOptionPopup();
+            },
+            onOptionCreateClicked() {
+                this.option = CreateOption();
+                this.openOptionPopup();
+            },
+            onOptionDeleteClicked(option) {
+                option.is_deleted = ! option.is_deleted;
             },
             onOptionDismissed() {
                 this.$refs.optionPopup.dismiss();
