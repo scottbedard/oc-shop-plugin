@@ -98,7 +98,10 @@
                 focusDelay: 200,
                 inventory: {},
                 option: CreateOption(),
-                options: this.optionsProp.slice(0),
+                options: this.optionsProp.map(option => {
+                    option.is_deleted = false;
+                    return option;
+                }),
                 inventories: [],
             };
         },

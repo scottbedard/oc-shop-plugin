@@ -283,13 +283,14 @@ class Product extends Model
      */
     protected function saveRelatedOptions(array $options)
     {
-        foreach ($options as &$option) {
+        foreach ($options as $index => &$option) {
             $model = $option['id'] !== null
                 ? Option::firstOrNew(['id' => $option['id']])
                 : new Option;
 
-            $model->product_id = $this->id;
             $model->fill($option);
+            $model->product_id = $this->id;
+            $model->sort_order = $index;
 
             $sessionKey = uniqid('session_key', true);
             if (is_array($option['values'])) {
@@ -312,12 +313,13 @@ class Product extends Model
      */
     protected function saveRelatedOptionValues(Option &$option, array $values, $sessionKey)
     {
-        foreach ($values as $value) {
-            $model = $value['id'] !== null
+        foreach ($values as $index => $value) {
+            $model = array_key_exists('id', $value) && $value['id'] !== null
                 ? OptionValue::firstOrNew(['id' => $value['id']])
                 : new OptionValue;
 
             $model->fill($value);
+            $model->sort_order = $index;
             $model->save();
 
             $option->values()->add($model, $sessionKey);
