@@ -186,6 +186,23 @@ class Product extends Model
     }
 
     /**
+     * Delete option values that have the is_deleted flag.
+     *
+     * @param  array $optionValues
+     * @return array
+     */
+    protected function deleteRelatedOptionValues($optionValues)
+    {
+        return array_filter($optionValues, function($optionValue) {
+            if ($optionValue['id'] !== null && $optionValue['is_deleted']) {
+                OptionValue::find($optionValue['id'])->delete();
+            }
+
+            return ! $optionValue['is_deleted'];
+        });
+    }
+
+    /**
      * Get the categories options.
      *
      * @return array
@@ -294,6 +311,7 @@ class Product extends Model
 
             $sessionKey = uniqid('session_key', true);
             if (is_array($option['values'])) {
+                $option['values'] = $this->deleteRelatedOptionValues($option['values']);
                 $this->saveRelatedOptionValues($model, $option['values'], $sessionKey);
             }
 

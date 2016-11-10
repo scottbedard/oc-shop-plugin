@@ -82,7 +82,7 @@
         </v-popup>
 
         <!-- Form data -->
-        <input type="text" name="optionsInventories" :value="formData">
+        <input type="hidden" name="optionsInventories" :value="formData">
     </div>
 </template>
 
@@ -100,6 +100,7 @@
                 option: CreateOption(),
                 options: this.optionsProp.map(option => {
                     option.is_deleted = false;
+                    option.values.forEach(value => value.is_deleted = false);
                     return option;
                 }),
                 inventories: [],

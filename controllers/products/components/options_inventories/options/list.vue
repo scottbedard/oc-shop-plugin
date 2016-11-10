@@ -74,7 +74,9 @@
                 this.$emit('reorder', e);
             },
             valueString(option) {
-                return option.values.map(value => value.name).join(', ');
+                return option.values
+                    .filter(value => ! value.is_deleted)
+                    .map(value => value.name).join(', ');
             },
         },
         props: [

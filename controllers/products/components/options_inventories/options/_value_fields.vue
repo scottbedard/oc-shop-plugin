@@ -46,7 +46,7 @@
             handle: 'a.oc-icon-bars',
             onUpdate: onValuesReordered,
         }">
-            <li v-for="value in values" :key="value.id || value.newId">
+            <li v-for="value in values" v-if="! value.is_deleted" :key="value.id || value.newId">
                 <div class="form-control">
                     <a class="oc-icon-bars" href="#" @click.prevent></a>
                     <input v-model="value.name" @keydown="onValueKeydown">
@@ -82,6 +82,8 @@
         methods: {
             addNewValue() {
                 this.$emit('add', {
+                    id: null,
+                    is_deleted: false,
                     newId: `_${ this.newId++ }`,
                     name: this.newValueName,
                     option_id: null,
