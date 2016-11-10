@@ -70,7 +70,9 @@
                 class="form-group span-right"
                 :lang="lang"
                 :inventories="inventories"
-                @create="onInventoryCreateClicked">
+                :options="options"
+                @create="onInventoryCreateClicked"
+                @open="onInventoryClicked">
             </v-inventories-list>
         </div>
 
@@ -92,7 +94,9 @@
                 :lang="lang"
                 :options="options"
                 :source-model="inventory"
-                :validation-endpoint="inventoryValidation">
+                :validation-endpoint="inventoryValidation"
+                @dismiss="onInventoryDismissed"
+                @save="onInventorySaved">
             </v-inventory-form>
         <v-popup>
 
@@ -143,6 +147,27 @@
             onInventoryCreateClicked() {
                 this.inventory = Factory.inventory();
                 this.openInventoryPopup();
+            },
+            onInventoryClicked(inventory) {
+                this.inventory = inventory;
+                this.openInventoryPopup();
+            },
+            onInventoryDismissed() {
+                this.$refs.inventoryPopup.dismiss();
+            },
+            onInventorySaved(inventory) {
+                let existingInventory = this.inventories.find(model => {
+                    return (inventory.id && inventory.id === model.id)
+                        || (! inventory.id && inventory.newId === model.newId);
+                });
+
+                if (existingInventory) {
+                    this.inventories.splice(this.inventories.indexOf(existingInventory), 1, inventory);
+                } else {
+                    this.inventories.push(inventory);
+                }
+
+                this.$refs.inventoryPopup.dismiss();
             },
             onOptionClicked(option) {
                 this.option = option;

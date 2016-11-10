@@ -16,6 +16,7 @@
                 @change="onOptionChanged">
             </v-dropdown-field>
             <v-input-field
+                ref="quantity"
                 span="left"
                 v-model="inventory.quantity"
                 :label="lang.inventories.form.quantity"
@@ -69,11 +70,11 @@
         },
         methods: {
             focus() {
-                console.log ('focusing...');
+                this.$refs.quantity.focus();
             },
             getPlaceholder(option) {
                 let langString = this.lang.inventories.form.option_placeholder;
-                
+
                 return langString.replace(':name', option.name.toLowerCase().trim());
             },
             onOptionChanged(model, collection) {
@@ -82,7 +83,17 @@
                 this.$forceUpdate();
             },
             onSaveClicked() {
-
+                this.isLoading = true;
+                this.validate(this.inventory)
+                    .then(response => this.$emit('save', this.inventory))
+                    // .catch(error => $.oc.flashMsg({ text: error.body, class: 'error' }))
+                    .then(() => this.isLoading = false)
+            },
+            onSourceModelChanged() {
+                this.inventory = JSON.parse(JSON.stringify(this.sourceModel));
+            },
+            validate(inventory) {
+                return this.$http.post(this.validationEndpoint, { inventory })
             },
         },
         props: [
@@ -91,5 +102,8 @@
             'sourceModel',
             'validationEndpoint',
         ],
+        watch: {
+            sourceModel: 'onSourceModelChanged',
+        },
     };
 </script>

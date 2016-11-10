@@ -6,14 +6,15 @@
         <!-- Body -->
         <v-popup-body>
             <v-input-field
+                ref="name"
+                v-model="option.name"
                 :label="lang.options.form.name"
-                :prevent-submit="true"
-                v-model="option.name">
+                :prevent-submit="true">
             </v-input-field>
             <v-input-field
+                v-model="option.placeholder"
                 :label="lang.options.form.placeholder"
-                :prevent-submit="true"
-                v-model="option.placeholder">
+                :prevent-submit="true">
             </v-input-field>
             <v-value-fields
                 :label="lang.options.form.values"
@@ -69,7 +70,7 @@
         },
         methods: {
             focus() {
-                $(this.$el).find('input').first().focus();
+                this.$refs.name.focus();
             },
             onSaveClicked() {
                 this.isLoading = true;
@@ -86,7 +87,6 @@
             },
             onValueDeleted(value) {
                 value.is_deleted = true;
-                // this.option.values.splice(this.option.values.indexOf(value), 1);
             },
             onValuesReordered({ newIndex, oldIndex }) {
                 this.option.values.splice(newIndex, 0, this.option.values.splice(oldIndex, 1)[0]);

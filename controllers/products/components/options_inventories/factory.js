@@ -5,6 +5,7 @@ export default {
         return {
             id: null,
             is_deleted: false,
+            newId: `_${ newId++ }`,
             quantity: 0,
             sku: '',
             values: {},

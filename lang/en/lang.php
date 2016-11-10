@@ -162,7 +162,6 @@ return [
         'form' => [
             'create_button' => 'Create Inventory',
             'create_title' => 'Create Inventory',
-            'default_inventory' => 'Default inventory',
             'in_stock_plural' => ':quantity in stock',
             'in_stock_singular' => ':quantity in stock',
             'loading_message' => 'Validating...',
@@ -172,6 +171,9 @@ return [
             'sku' => 'Stock Keeping Unit',
             'sku_unique_error' => 'That stock keeping unit is already taken.',
             'update_title' => 'Update Inventory',
+        ],
+        'list' => [
+            'default' => 'Default inventory',
         ],
         'singular' => 'Inventory',
         'plural' => 'Inventories',

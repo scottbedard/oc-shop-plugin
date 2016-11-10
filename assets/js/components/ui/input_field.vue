@@ -28,6 +28,9 @@
 <script>
     export default {
         methods: {
+            focus() {
+                this.$refs.input.focus();
+            },
             onInput(e) {
                 this.$emit('input', e.target.value);
             },
