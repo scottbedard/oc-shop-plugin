@@ -31,6 +31,7 @@ class Inventory extends Model
      * @var array Fillable fields
      */
     protected $fillable = [
+        'id',
         'product_id',
         'quantity',
         'sku',
@@ -68,4 +69,15 @@ class Inventory extends Model
             'table' => 'bedard_shop_inventory_option_values',
         ],
     ];
+
+    /**
+     * Before validate.
+     *
+     * @return void
+     */
+    public function beforeValidate() {
+        if ($this->id) {
+            $this->rules['sku'] = 'unique:bedard_shop_inventories,sku,' . $this->id;
+        }
+    }
 }
