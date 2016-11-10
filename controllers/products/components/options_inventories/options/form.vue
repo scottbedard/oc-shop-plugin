@@ -39,14 +39,14 @@
 </template>
 
 <script>
-    import CreateOption from './factory';
+    import Factory from '../factory';
     import ValueFieldsComponent from './_value_fields';
 
     export default {
         data() {
             return {
                 isLoading: false,
-                option: CreateOption(),
+                option: Factory.option(),
             };
         },
         components: {

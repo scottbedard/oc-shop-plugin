@@ -66,7 +66,12 @@
                 @open="onOptionClicked"
                 @reorder="onOptionsReordered">
             </v-options-list>
-            <v-inventories-list class="form-group span-right"></v-inventories-list>
+            <v-inventories-list
+                class="form-group span-right"
+                :lang="lang"
+                :inventories="inventories"
+                @create="onInventoryCreateClicked">
+            </v-inventories-list>
         </div>
 
         <!-- Popups -->
@@ -81,13 +86,23 @@
             </v-options-form>
         </v-popup>
 
+        <v-popup ref="inventoryPopup">
+            <v-inventory-form
+                ref="inventoryForm"
+                :lang="lang"
+                :source-model="inventory"
+                :validation-endpoint="inventoryValidation">
+            </v-inventory-form>
+        <v-popup>
+
         <!-- Form data -->
         <input type="hidden" name="optionsInventories" :value="formData">
     </div>
 </template>
 
 <script>
-    import CreateOption from './options/factory';
+    import Factory from './factory';
+    import InventoryFormComponent from './inventories/form';
     import InventoriesListComponent from './inventories/list';
     import OptionsFormComponent from './options/form';
     import OptionsListComponent from './options/list';
@@ -96,18 +111,22 @@
         data() {
             return {
                 focusDelay: 200,
-                inventory: {},
-                option: CreateOption(),
+                inventories: this.inventoriesProp.map(inventory => {
+                    inventory.is_deleted = false;
+                    return inventory;
+                }),
+                inventory: Factory.inventory(),
+                option: Factory.option(),
                 options: this.optionsProp.map(option => {
                     option.is_deleted = false;
                     option.values.forEach(value => value.is_deleted = false);
                     return option;
                 }),
-                inventories: [],
             };
         },
         components: {
             'v-inventories-list': InventoriesListComponent,
+            'v-inventory-form': InventoryFormComponent,
             'v-options-form': OptionsFormComponent,
             'v-options-list': OptionsListComponent,
         },
@@ -120,12 +139,16 @@
             },
         },
         methods: {
+            onInventoryCreateClicked() {
+                this.inventory = Factory.inventory();
+                this.openInventoryPopup();
+            },
             onOptionClicked(option) {
                 this.option = option;
                 this.openOptionPopup();
             },
             onOptionCreateClicked() {
-                this.option = CreateOption();
+                this.option = Factory.option();
                 this.openOptionPopup();
             },
             onOptionDeleteClicked(option) {
@@ -150,6 +173,10 @@
             },
             onOptionsReordered({ newIndex, oldIndex }) {
                 this.options.splice(newIndex, 0, this.options.splice(oldIndex, 1)[0]);
+            },
+            openInventoryPopup() {
+                this.$refs.inventoryPopup.show();
+                setTimeout(this.$refs.inventoryForm.focus, this.focusDelay);
             },
             openOptionPopup() {
                 this.$refs.optionPopup.show();

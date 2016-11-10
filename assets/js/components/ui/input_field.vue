@@ -7,7 +7,12 @@
 </style>
 
 <template>
-    <div class="form-group text-field span-full" :class="{ 'is-required': required }">
+    <div class="form-group text-field" :class="{
+        'is-required': required,
+        'span-full': span === 'full',
+        'span-left': span === 'left',
+        'span-right': span === 'right',
+    }">
         <label v-if="label">{{ label }}</label>
         <input
             class="form-control"
@@ -37,6 +42,7 @@
             label: { default: null },
             placeholder: { default: '', type: String },
             preventSubmit: { default: false, type: Boolean },
+            span: { default: 'full', type: String },
             required: { default: false, type: Boolean },
             type: { default: 'text', type: String },
             value: { default: null, required: true },
