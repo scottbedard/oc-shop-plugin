@@ -80,8 +80,11 @@
                     .map(value => this.createValue(value)));
             },
             createDeferredOption() {
+                if (this.option.id) {
+                    return Promise.resolve;
+                }
+                
                 let option = this.option;
-                console.log (this.createEndpoint);
                 return this.$http.post(this.createEndpoint, { option }).then(response => {
                     this.option.id = response.body.id;
                 });
