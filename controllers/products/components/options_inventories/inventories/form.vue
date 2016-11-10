@@ -11,6 +11,7 @@
                 :empty-message="lang.ui.dropdown.no_results"
                 :label="option.name"
                 :options="option.values"
+                :placeholder="getPlaceholder(option)"
                 :value="inventory.values[option.id] || null"
                 @change="onOptionChanged">
             </v-dropdown-field>
@@ -69,6 +70,11 @@
         methods: {
             focus() {
                 console.log ('focusing...');
+            },
+            getPlaceholder(option) {
+                let langString = this.lang.inventories.form.option_placeholder;
+                
+                return langString.replace(':name', option.name.toLowerCase().trim());
             },
             onOptionChanged(model, collection) {
                 let option = this.options.find(o => o.values === collection);

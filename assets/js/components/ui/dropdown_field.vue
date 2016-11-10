@@ -2,10 +2,10 @@
     .dropdown-outer {
         background-color: #fff;
         display: block;
-        position: relative;
-        width: 100%;
         font-size: 14px;
         line-height: 1.42857143;
+        position: relative;
+        width: 100%;
 
         .dropdown-inner {
             border: 1px solid #d1d6d9;
@@ -34,11 +34,13 @@
         padding: 8px 13px 9px;
 
         span:before { margin-right: 0 }
+        span.is-placeholder { color: #ccc }
     }
 
     .options {
         background-color: #fff;
         border-top: 0;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.075);
         border: 1px solid #d1d6d9;
         left: 0;
         position: absolute;
@@ -55,6 +57,7 @@
             border-radius: 3px;
             border: 1px solid #d1d6d9;
             color: #385487;
+            outline: 0;
             padding: 4px;
             font-size: 14px;
             width: 100%;
@@ -64,8 +67,7 @@
             color: #95a5a6;
             position: absolute;
             right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
+            top: 8px;
         }
     }
 
@@ -76,17 +78,29 @@
     }
 
     li {
+        display: flex;
         cursor: pointer;
+        justify-content: space-between;
         padding: 6px;
         user-select: none;
 
         &.is-selected {
             background-color: #f5f5f5;
+            a { display: inline }
         }
 
         &:hover {
             background-color: #4da7e8;
-            color: #ffffff;
+            color: #fff;
+            a { color: #fff }
+        }
+
+        a {
+            color: #aaa;
+            display: none;
+            text-decoration: none;
+            &:before { margin-right: 5px }
+            &:hover { color: $red }
         }
     }
 
@@ -107,7 +121,7 @@
         <div class="dropdown-outer" :class="{ 'is-expanded': isExpanded }" ref="dropdown">
             <div class="dropdown-inner">
                 <div class="value" @click="onValueClicked">
-                    <span>{{ selectedValue }}</span>
+                    <span :class="{ 'is-placeholder': value === null }">{{ selectedValue }}</span>
                     <span :class="{
                         'oc-icon-angle-down': ! isExpanded,
                         'oc-icon-angle-up': isExpanded,
@@ -135,6 +149,11 @@
                             :class="{ 'is-selected': option === value }"
                             @click="onOptionClicked(option)">
                             <span>{{ option[display] }}</span>
+                            <a
+                                class="oc-icon-times"
+                                href="#"
+                                @click.prevent.stop="onClearSelectionClicked">
+                            </a>
                         </li>
                     </ul>
                     <p v-else>
@@ -168,6 +187,9 @@
             },
         },
         methods: {
+            onClearSelectionClicked() {
+                this.selectOption(null);
+            },
             onClickOff(e) {
                 // prevent clicks off of our dropdown from closing a popup
                 if (! e.path.filter(el => el === this.$refs.dropdown).length &&
@@ -202,14 +224,12 @@
                     }
                 }
             },
-            onValueChanged() {
-                this.isExpanded = false;
-            },
             onValueClicked() {
                 this.isExpanded = ! this.isExpanded;
             },
             selectOption(option) {
                 this.$emit('change', option, this.options);
+                this.isExpanded = false;
             },
         },
         props: {
@@ -226,7 +246,6 @@
         },
         watch: {
             isExpanded: 'onIsExpandedChanged',
-            value: 'onValueChanged',
         },
     };
 </script>
