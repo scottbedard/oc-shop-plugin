@@ -13,6 +13,13 @@ class OptionValue extends Model
     public $table = 'bedard_shop_option_values';
 
     /**
+     * @var array Attribute casting
+     */
+    protected $casts = [
+        'id' => 'integer',
+    ];
+
+    /**
      * @var array Guarded fields
      */
     protected $guarded = ['*'];
