@@ -14,6 +14,7 @@
             ]); ?>,
             options: <?= json_encode($options); ?>,
             token: '<?= csrf_token() ?>',
+            optionCreate: '<?= Backend::url('bedard/shop/options/create') ?>',
             optionCreateValue: '<?= Backend::url('bedard/shop/options/createvalue') ?>',
             optionValidation: '<?= Backend::url('bedard/shop/options/validate') ?>',
         });

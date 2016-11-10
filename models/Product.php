@@ -289,6 +289,7 @@ class Product extends Model
             $inventory['product_id'] = $this->id;
             $model->fill($inventory);
             $model->save();
+            $model->optionValues()->sync($inventory['valueIds']);
         }
     }
 

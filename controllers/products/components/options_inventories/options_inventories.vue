@@ -96,6 +96,8 @@
         <v-popup ref="optionPopup">
             <v-options-form
                 ref="optionForm"
+                :create-endpoint="optionCreate"
+                :create-value-endpoint="optionCreateValue"
                 :lang="lang"
                 :source-model="option"
                 :validation-endpoint="optionValidation"
@@ -114,7 +116,7 @@
                 @dismiss="onInventoryDismissed"
                 @save="onInventorySaved">
             </v-inventory-form>
-        <v-popup>
+        </v-popup>
 
         <!-- Form data -->
         <input type="hidden" name="optionsInventories" :value="formData">
@@ -134,6 +136,12 @@
                 focusDelay: 200,
                 inventories: this.inventoriesProp.map(inventory => {
                     inventory.is_deleted = false;
+                    inventory.values = {};
+                    for (let value of inventory.option_values) {
+                        inventory.values[value.option_id] = value;
+                    }
+
+                    delete inventory.option_values;
                     return inventory;
                 }),
                 inventory: Factory.inventory(),
@@ -153,10 +161,22 @@
         },
         computed: {
             formData() {
-                return JSON.stringify({
+                let data = JSON.parse(JSON.stringify({
                     inventories: this.inventories,
                     options: this.options,
+                }));
+
+                data.inventories.map(inventory => {
+                    inventory.valueIds = Object.keys(inventory.values)
+                        .filter(id => inventory.values[id])
+                        .map(id => inventory.values[id].id);
+
+                    delete inventory.newId;
+                    delete inventory.values;
+                    return inventory;
                 });
+
+                return JSON.stringify(data);
             },
         },
         methods: {
@@ -232,6 +252,7 @@
             'inventoriesProp',
             'inventoryValidation',
             'lang',
+            'optionCreate',
             'optionsProp',
             'optionCreateValue',
             'optionValidation',

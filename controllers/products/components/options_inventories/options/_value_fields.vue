@@ -87,7 +87,7 @@
                     newId: `_${ this.newId++ }`,
                     name: this.newValueName,
                     option_id: null,
-                    sort_order: null,
+                    sort_order: 0,
                 });
 
                 this.newValue = '';

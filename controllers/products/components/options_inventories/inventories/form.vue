@@ -18,6 +18,7 @@
             <v-input-field
                 ref="quantity"
                 span="left"
+                type="number"
                 v-model="inventory.quantity"
                 :label="lang.inventories.form.quantity"
                 :prevent-submit="true">

@@ -69,12 +69,31 @@
             },
         },
         methods: {
+            createValue(value) {
+                return this.$http.post(this.createValueEndpoint, { value }).then(response => {
+                    value.id = response.body.id;
+                });
+            },
+            createDeferredValues() {
+                return Promise.all(this.option.values
+                    .filter(value => value.id === null)
+                    .map(value => this.createValue(value)));
+            },
+            createDeferredOption() {
+                let option = this.option;
+                console.log (this.createEndpoint);
+                return this.$http.post(this.createEndpoint, { option }).then(response => {
+                    this.option.id = response.body.id;
+                });
+            },
             focus() {
                 this.$refs.name.focus();
             },
             onSaveClicked() {
                 this.isLoading = true;
                 this.validate(this.option)
+                    .then(() => this.createDeferredValues())
+                    .then(() => this.createDeferredOption())
                     .then(response => this.$emit('save', this.option))
                     .catch(error => $.oc.flashMsg({ text: error.body, class: 'error' }))
                     .then(() => this.isLoading = false)
@@ -96,6 +115,8 @@
             },
         },
         props: [
+            'createEndpoint',
+            'createValueEndpoint',
             'lang',
             'sourceModel',
             'validationEndpoint',
