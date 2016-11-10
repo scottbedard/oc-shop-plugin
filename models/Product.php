@@ -193,7 +193,7 @@ class Product extends Model
      */
     protected function deleteRelatedOptionValues($optionValues)
     {
-        return array_filter($optionValues, function($optionValue) {
+        return array_filter($optionValues, function ($optionValue) {
             if ($optionValue['id'] !== null && $optionValue['is_deleted']) {
                 OptionValue::find($optionValue['id'])->delete();
             }
