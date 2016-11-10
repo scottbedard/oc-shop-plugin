@@ -75,9 +75,10 @@ class Inventory extends Model
      *
      * @return void
      */
-    public function beforeValidate() {
+    public function beforeValidate()
+    {
         if ($this->id) {
-            $this->rules['sku'] = 'unique:bedard_shop_inventories,sku,' . $this->id;
+            $this->rules['sku'] = 'unique:bedard_shop_inventories,sku,'.$this->id;
         }
     }
 }
