@@ -2,23 +2,6 @@
     .oc-icon-bars {
         cursor: move;
     }
-
-    .values {
-        font-size: 0.85em;
-    }
-
-    ul.options-inventories-list {
-        > li.is-deleted {
-            $faded-color: #ccc;
-            color: $faded-color;
-            a { color: $faded-color }
-
-            &:hover {
-                background-color: transparent;
-                a { background-color: transparent }
-            }
-        }
-    }
 </style>
 
 <template>
@@ -39,7 +22,7 @@
                 <a href="#" @click.prevent class="oc-icon-plus"></a>
                 <div class="item">
                     <div>{{ option.name }}</div>
-                    <div class="values">{{ valueString(option) }}</div>
+                    <small>{{ valueString(option) }}</small>
                 </div>
                 <a href="#" @click.prevent class="oc-icon-bars"></a>
                 <a href="#" @click.prevent.stop="onDeleteOptionClicked(option)" class="oc-icon-trash-o"></a>

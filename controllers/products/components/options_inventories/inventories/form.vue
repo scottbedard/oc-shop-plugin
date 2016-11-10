@@ -86,7 +86,7 @@
                 this.isLoading = true;
                 this.validate(this.inventory)
                     .then(response => this.$emit('save', this.inventory))
-                    // .catch(error => $.oc.flashMsg({ text: error.body, class: 'error' }))
+                    .catch(error => $.oc.flashMsg({ text: error.body, class: 'error' }))
                     .then(() => this.isLoading = false)
             },
             onSourceModelChanged() {

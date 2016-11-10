@@ -11,6 +11,17 @@
             padding: 0;
             position: relative;
 
+            &.is-deleted {
+                $faded-color: #ccc;
+                color: $faded-color !important;
+                a { color: $faded-color !important }
+
+                &:hover {
+                    background-color: transparent;
+                    a { background-color: transparent }
+                }
+            }
+
             &:hover {
                 background-color: $light-blue;
                 color: #fff;
@@ -48,6 +59,10 @@
             > div.item {
                 padding: 0 10px;
                 flex-grow: 1;
+
+                > small {
+                    font-size: 0.85em;
+                }
             }
         }
     }
@@ -72,6 +87,7 @@
                 :inventories="inventories"
                 :options="options"
                 @create="onInventoryCreateClicked"
+                @delete="onInventoryDeleteClicked"
                 @open="onInventoryClicked">
             </v-inventories-list>
         </div>
@@ -151,6 +167,9 @@
             onInventoryClicked(inventory) {
                 this.inventory = inventory;
                 this.openInventoryPopup();
+            },
+            onInventoryDeleteClicked(inventory) {
+                inventory.is_deleted = ! inventory.is_deleted;
             },
             onInventoryDismissed() {
                 this.$refs.inventoryPopup.dismiss();

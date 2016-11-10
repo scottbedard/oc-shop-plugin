@@ -11,9 +11,9 @@
                 <a href="#" @click.prevent class="oc-icon-cube"></a>
                 <div class="item">
                     <div>{{ getInventoryValues(inventory) }}</div>
-                    <div class="values">5 in stock</div>
+                    <small>{{ getQuantityString(inventory) }}</small>
                 </div>
-                <a href="#" @click.prevent.stop="onDeleteInventory(inventory)" class="oc-icon-trash-o"></a>
+                <a href="#" @click.prevent.stop="onDeleteClicked(inventory)" class="oc-icon-trash-o"></a>
             </li>
         </ul>
 
@@ -44,6 +44,17 @@
                 }
 
                 return valueNames.join(', ');
+            },
+            getQuantityString(inventory) {
+                if (inventory.quantity < 1) {
+                    return this.lang.inventories.list.out_of_stock;
+                }
+
+                let langString = inventory.quantity === 1
+                    ? this.lang.inventories.list.in_stock_singular
+                    : this.lang.inventories.list.in_stock_plural;
+
+                return langString.replace(':quantity', inventory.quantity);
             },
             onCreateClicked() {
                 this.$emit('create');
