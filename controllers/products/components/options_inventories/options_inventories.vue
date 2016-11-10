@@ -234,6 +234,7 @@
                     this.options.push(option);
                 }
 
+                this.syncOptionValueReferences();
                 this.$refs.optionPopup.dismiss();
             },
             onOptionsReordered({ newIndex, oldIndex }) {
@@ -246,6 +247,15 @@
             openOptionPopup() {
                 this.$refs.optionPopup.show();
                 setTimeout(this.$refs.optionForm.focus, this.focusDelay);
+            },
+            syncOptionValueReferences() {
+                for (let inventory of this.inventories) {
+                    for (let id of Object.keys(inventory.values)) {
+                        let value = inventory.values[id];
+                        let option = this.options.find(model => model.id === value.option_id);
+                        inventory.values[id] = option.values.find(model => model.id === value.id);
+                    }
+                }
             },
         },
         props: [
