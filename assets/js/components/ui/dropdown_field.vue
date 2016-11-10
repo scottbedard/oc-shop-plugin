@@ -1,81 +1,71 @@
 <style lang="scss" scoped>@import 'assets/scss/utils';
-    .dropdown-container {
-        height: 40px;
-        position: relative;
-    }
-
-    .dropdown-inner {
+    .dropdown-outer {
         background-color: #fff;
-        border-radius: 3px;
-        position: absolute;
+        display: block;
+        position: relative;
         width: 100%;
+        font-size: 14px;
+        line-height: 1.42857143;
+
+        .dropdown-inner {
+            border: 1px solid #d1d6d9;
+            border-radius: 3px;
+        }
 
         &.is-expanded {
-            .selected-text {
-                border-bottom: 1px solid #fff !important;
-                border-color: #808c8d;
+            .dropdown-inner {
+                border-bottom: 1px solid transparent;
                 border-radius: 3px 3px 0 0;
             }
-            .expanded-content {
-                border-color: #808c8d;
+
+            .options {
                 border-radius: 0 0 3px 3px;
-                border-top: 1px solid #fff !important;
+                border-top: 1px solid transparent;
             }
         }
     }
 
-    .selected-text {
-        align-items: center;
-        border: 1px solid #d1d6d9;
+
+    .value {
         cursor: pointer;
         display: flex;
-        height: 40px;
         justify-content: space-between;
-        line-height: 1.42857143;
-        padding: 0px 23px 0px 11px;
+        height: 38px;
+        padding: 8px 13px 9px;
 
-        .is-placeholder {
-            color: #ccc;
-        }
+        span:before { margin-right: 0 }
     }
 
-    .expanded-content {
-        background: #fff;
-        border-radius: 3px;
+    .options {
+        background-color: #fff;
+        border-top: 0;
         border: 1px solid #d1d6d9;
-        padding: 5px 0;
+        left: 0;
         position: absolute;
+        top: 100%;
         width: 100%;
         z-index: 1;
     }
 
-    .search-container {
-        padding: 0px 5px;
+    .search {
+        padding: 0 4px 4px;
         position: relative;
 
-        &:after {
-            -webkit-font-smoothing: antialiased;
-            color: #95a5a6;
-            content: "\f002";
-            font-family: FontAwesome;
-            font-style: normal;
-            font-weight: normal;
-            position: absolute;
-            right: 20px;
-            text-decoration: inherit;
-            top: 50%;
-            transform: translateY(-50%);
+        input {
+            border-radius: 3px;
+            border: 1px solid #d1d6d9;
+            color: #385487;
+            padding: 4px;
+            font-size: 14px;
+            width: 100%;
         }
 
-        input {
-            appearance: none;
-            background-color: #ffffff;
-            border-radius: 3px;
-            border: 1px solid #e0e0e0;
-            color: #555555;
-            outline: 0;
-            padding: 6px;
-            width: 100%;
+        .icon-search {
+            color: #95a5a6;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
         }
     }
 
@@ -86,56 +76,45 @@
     }
 
     li {
-        align-items: center;
-        color: #2a3e51;
         cursor: pointer;
-        display: flex;
-        justify-content: space-between;
-        margin: 0;
-        text-decoration: none;
+        padding: 6px;
+        user-select: none;
 
-        &:hover {
-            background-color: $light-blue;
-            color: #fff;
-
-            .icon-times {
-                color: #fff;
-            }
-        }
-
-        &.is-selected a:not(:hover) {
+        &.is-selected {
             background-color: #f5f5f5;
         }
 
-        span {
-            flex-grow: 1;
-            padding: 6px 11px;
+        &:hover {
+            background-color: #4da7e8;
+            color: #ffffff;
         }
+    }
 
-
-        .icon-times {
-            color: #ccc;
-            margin-right: 15px;
-            padding: 6px;
-
-            &:hover {
-                color: $red;
-            }
-        }
+    p {
+        margin: 0;
+        padding: 6px;
     }
 </style>
 
 <template>
-    <div :class="{ 'is-required': required }">
+    <div class="form-group" :class="{
+        'is-required': required,
+        'span-full': span === 'full',
+        'span-left': span === 'left',
+        'span-right': span === 'right',
+    }">
         <label v-if="label">{{ label }}</label>
-        <div class="dropdown-container" ref="dropdown">
-            <div class="dropdown-inner" :class="{ 'is-expanded': isExpanded }">
-                <div class="selected-text" @click="onSelectedTextClicked">
-                    <span :class="{ 'is-placeholder': isEmpty }">{{ selectedText }}</span>
-                    <i :class="{ 'icon-angle-up': isExpanded, 'icon-angle-down': ! isExpanded }"></i>
+        <div class="dropdown-outer" :class="{ 'is-expanded': isExpanded }" ref="dropdown">
+            <div class="dropdown-inner">
+                <div class="value" @click="onValueClicked">
+                    <span>{{ selectedValue }}</span>
+                    <span :class="{
+                        'oc-icon-angle-down': ! isExpanded,
+                        'oc-icon-angle-up': isExpanded,
+                    }"></span>
                 </div>
-                <div class="expanded-content" v-show="isExpanded">
-                    <div v-if="searchable" class="search-container">
+                <div class="options" v-if="isExpanded">
+                    <div class="search" v-if="searchable">
                         <input
                             autocapitalize="off"
                             autocomplete="off"
@@ -147,20 +126,20 @@
                             type="search"
                             v-model="search"
                             :placeholder="searchPlaceholder"
-                            @keydown="onSearchKeypress">
+                            @keydown="onSearchKeydown">
+                        <i class="icon-search"></i>
                     </div>
-                    <ul>
-                        <li v-for="value in searchedValues" :class="{ 'is-selected': selectedValue === value }">
-                            <span @click="onValueClicked(value)">
-                                {{ value[key] }}
-                            </span>
-                            <i
-                                class="icon-times"
-                                v-if="clearable && selectedValue === value"
-                                @click="onClearSelectionClicked">
-                            </i>
+                    <ul v-if="filteredOptions.length > 0">
+                        <li
+                            v-for="option in filteredOptions"
+                            :class="{ 'is-selected': option === value }"
+                            @click="onOptionClicked(option)">
+                            <span>{{ option[display] }}</span>
                         </li>
                     </ul>
+                    <p v-else>
+                        {{ emptyMessage }}
+                    </p>
                 </div>
             </div>
         </div>
@@ -168,42 +147,27 @@
 </template>
 
 <script>
-    import Vue from 'vue';
-
     export default {
-        created() {
-            this.channel.$on('dropdown:set', this.onDropdownSet);
-            this.channel.$on('dropdown:reset', this.onDropdownReset);
-        },
         data() {
             return {
                 isExpanded: false,
-                selectedValue: this.selected,
                 search: '',
             };
         },
         computed: {
-            isEmpty() {
-                return ! this.selectedValue;
-            },
-            selectedText() {
-                return this.isEmpty || ! this.selectedValue
-                    ? this.placeholder
-                    : this.selectedValue[this.key];
-            },
-            searchedValues() {
+            filteredOptions() {
                 let search = this.search.trim().toLowerCase();
 
-                return this.values.filter(value => {
+                return this.options.filter(option => {
                     return search.length === 0 ||
-                        value[this.key].trim().toLowerCase().indexOf(search) !== -1;
+                        option[this.display].trim().toLowerCase().indexOf(search) !== -1;
                 });
+            },
+            selectedValue() {
+                return this.value ? this.value[this.display] : this.placeholder;
             },
         },
         methods: {
-            onClearSelectionClicked() {
-                this.selectedValue = null;
-            },
             onClickOff(e) {
                 // prevent clicks off of our dropdown from closing a popup
                 if (! e.path.filter(el => el === this.$refs.dropdown).length &&
@@ -211,14 +175,8 @@
                     e.stopPropagation();
                 }
 
-                this.isExpanded = false;
-            },
-            onDropdownReset() {
-                this.selectedValue = null;
-            },
-            onDropdownSet(setValue) {
-                if (setValue && this.values.indexOf(setValue) !== -1) {
-                    this.selectedValue = setValue;
+                if (! e.path.filter(el => el === this.$refs.dropdown).length) {
+                    this.isExpanded = false;
                 }
             },
             onIsExpandedChanged(isExpanded) {
@@ -232,44 +190,43 @@
                     }
                 }
             },
-            onSearchKeypress(e) {
+            onOptionClicked(option) {
+                this.selectOption(option);
+            },
+            onSearchKeydown(e) {
                 if (e.keyCode === 13 || e.keyCode === 9) {
                     e.preventDefault();
 
-                    if (this.searchedValues.length > 0) {
-                        this.selectedValue = this.searchedValues[0];
+                    if (this.filteredOptions.length > 0) {
+                        this.selectOption(this.filteredOptions[0]);
                     }
                 }
             },
-            onSelectedTextClicked() {
+            onValueChanged() {
+                this.isExpanded = false;
+            },
+            onValueClicked() {
                 this.isExpanded = ! this.isExpanded;
             },
-            onSelectedValueChanged(selectedValue, oldValue = null) {
-                if (selectedValue !== null) {
-                    this.search = '';
-                    this.isExpanded = false;
-                }
-
-                this.$emit('change', selectedValue, oldValue);
-            },
-            onValueClicked(value) {
-                this.selectedValue = value;
+            selectOption(option) {
+                this.$emit('change', option, this.options);
             },
         },
         props: {
-            channel: { default: new Vue },
-            clearable: { default: true, type: Boolean },
-            key: { default: 'name', type: String },
-            label: { default: null, type: String },
+            display: { default: 'name', type: String },
+            emptyMessage: { default: 'sdf', type: String },
+            label: { default: null },
+            options: { default : [], type: Array },
             placeholder: { default: '', type: String },
-            required: { default: false, type: Boolean },
             searchable: { default: true, type: Boolean },
             searchPlaceholder: { default: '', type: String },
-            values: { default: [], type: Array },
+            span: { default: 'full', type: String },
+            required: { default: false, type: Boolean },
+            value: { default: null },
         },
         watch: {
             isExpanded: 'onIsExpandedChanged',
-            selectedValue: 'onSelectedValueChanged',
+            value: 'onValueChanged',
         },
     };
 </script>

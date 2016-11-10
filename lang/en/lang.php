@@ -229,4 +229,13 @@ return [
         'plural' => 'Products',
         'singular' => 'Product',
     ],
+
+    //
+    // UI
+    //
+    'ui' => [
+        'dropdown' => [
+            'no_results' => 'No results found.',
+        ],
+    ],
 ];

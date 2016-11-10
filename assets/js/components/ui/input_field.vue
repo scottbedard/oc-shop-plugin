@@ -13,9 +13,10 @@
         'span-left': span === 'left',
         'span-right': span === 'right',
     }">
-        <label v-if="label">{{ label }}</label>
+        <label v-if="label" @click="onLabelClicked">{{ label }}</label>
         <input
             class="form-control"
+            ref="input"
             :placeholder="placeholder"
             :type="type"
             :value="value"
@@ -29,6 +30,9 @@
         methods: {
             onInput(e) {
                 this.$emit('input', e.target.value);
+            },
+            onLabelClicked() {
+                this.$refs.input.focus();
             },
             onKeydown(e) {
                 if (this.preventSubmit && e.keyCode === 13) {

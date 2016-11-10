@@ -18,6 +18,14 @@ fields:
 tabs:
     stretch: true
     fields:
+        foo:
+            type: dropdown
+            tab: bedard.shop::lang.products.form.tab_options_inventories
+            options:
+                1: 1
+                2: 2
+                3: 3
+
         optionsInventories:
             tab: bedard.shop::lang.products.form.tab_options_inventories
             type: options-inventories

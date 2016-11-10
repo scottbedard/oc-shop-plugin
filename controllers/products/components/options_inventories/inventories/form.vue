@@ -5,6 +5,15 @@
 
         <!-- Body -->
         <v-popup-body>
+            <v-dropdown-field
+                display="name"
+                v-for="option in options"
+                :empty-message="lang.ui.dropdown.no_results"
+                :label="option.name"
+                :options="option.values"
+                :value="inventory.values[option.id] || null"
+                @change="onOptionChanged">
+            </v-dropdown-field>
             <v-input-field
                 span="left"
                 v-model="inventory.quantity"
@@ -61,12 +70,18 @@
             focus() {
                 console.log ('focusing...');
             },
+            onOptionChanged(model, collection) {
+                let option = this.options.find(o => o.values === collection);
+                this.inventory.values[option.id] = model;
+                this.$forceUpdate();
+            },
             onSaveClicked() {
 
             },
         },
         props: [
             'lang',
+            'options',
             'sourceModel',
             'validationEndpoint',
         ],

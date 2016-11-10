@@ -90,6 +90,7 @@
             <v-inventory-form
                 ref="inventoryForm"
                 :lang="lang"
+                :options="options"
                 :source-model="inventory"
                 :validation-endpoint="inventoryValidation">
             </v-inventory-form>

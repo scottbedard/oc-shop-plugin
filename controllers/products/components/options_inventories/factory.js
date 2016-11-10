@@ -7,6 +7,7 @@ export default {
             is_deleted: false,
             quantity: 0,
             sku: '',
+            values: {},
         };
     },
     option() {
