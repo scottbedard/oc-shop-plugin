@@ -360,12 +360,12 @@ class Product extends Model
         $grammar = $query->getQuery()->getGrammar();
 
         $subquery = Inventory::addSelect('bedard_shop_inventories.product_id')
-            ->selectRaw('SUM(' . $grammar->wrap('bedard_shop_inventories.quantity') .') as '. $grammar->wrap('inventory'))
+            ->selectRaw('SUM('.$grammar->wrap('bedard_shop_inventories.quantity').') as '.$grammar->wrap('inventory'))
             ->groupBy('bedard_shop_inventories.product_id');
 
         return $query
-            ->addSelect($alias . '.inventory')
-            ->joinSubquery($subquery, $alias, 'bedard_shop_products.id', '=', $alias . '.product_id', 'leftJoin');
+            ->addSelect($alias.'.inventory')
+            ->joinSubquery($subquery, $alias, 'bedard_shop_products.id', '=', $alias.'.product_id', 'leftJoin');
     }
 
     /**
@@ -390,7 +390,7 @@ class Product extends Model
     }
 
     /**
-     * This exists to makes statuses sortable by assigning them a value
+     * This exists to makes statuses sortable by assigning them a value.
      *
      * Disabled     -2
      * Out of stock -1
@@ -403,18 +403,18 @@ class Product extends Model
     public function scopeSelectStatus($query)
     {
         $grammar = $query->getQuery()->getGrammar();
-        
+
         $price = $grammar->wrap('price');
         $inventory = $grammar->wrap('inventory');
         $is_enabled = $grammar->wrap('bedard_shop_products.is_enabled');
         $base_price = $grammar->wrap('bedard_shop_products.base_price');
 
-        $subquery = "CASE " .
-            "WHEN {$is_enabled} = 0 THEN -2 " .
-            "WHEN ({$inventory} IS NULL or {$inventory} = 0) THEN -1 " .
-            "WHEN {$price} < {$base_price} THEN 1 " .
-            "ELSE 0 " .
-        "END";
+        $subquery = 'CASE '.
+            "WHEN {$is_enabled} = 0 THEN -2 ".
+            "WHEN ({$inventory} IS NULL or {$inventory} = 0) THEN -1 ".
+            "WHEN {$price} < {$base_price} THEN 1 ".
+            'ELSE 0 '.
+        'END';
 
         return $query->selectSubquery($subquery, 'status');
     }
