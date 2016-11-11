@@ -6,7 +6,6 @@ use Bedard\Shop\Models\OptionValue;
 use Bedard\Shop\Models\Product;
 use Bedard\Shop\Tests\Factory;
 use Bedard\Shop\Tests\PluginTestCase;
-use Carbon\Carbon;
 
 class InventoryTest extends PluginTestCase
 {
