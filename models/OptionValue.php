@@ -42,4 +42,12 @@ class OptionValue extends Model
             'Bedard\Shop\Models\Option',
         ],
     ];
+
+    public $belongsToMany = [
+        'inventories' => [
+            'Bedard\Shop\Models\Inventory',
+            'table' => 'bedard_shop_inventory_option_values',
+            'delete' => true,
+        ],
+    ];
 }

@@ -174,7 +174,7 @@ class Product extends Model
      * @param  array $options
      * @return array
      */
-    protected function deleteRelatedOptions($options)
+    protected function deleteRelatedOptions(array $options)
     {
         return array_filter($options, function ($option) {
             if ($option['id'] !== null && $option['is_deleted']) {
@@ -191,7 +191,7 @@ class Product extends Model
      * @param  array $optionValues
      * @return array
      */
-    protected function deleteRelatedOptionValues($optionValues)
+    protected function deleteRelatedOptionValues(array $optionValues)
     {
         return array_filter($optionValues, function ($optionValue) {
             if ($optionValue['id'] !== null && $optionValue['is_deleted']) {
@@ -260,16 +260,16 @@ class Product extends Model
     {
         $data = $this->getOriginalPurgeValue('optionsInventories');
 
-        if (is_array($data['options'])) {
-            $options = $data['options'];
-            $options = $this->deleteRelatedOptions($options);
-            $this->saveRelatedOptions($options);
-        }
-
         if (is_array($data['inventories'])) {
             $inventories = $data['inventories'];
             $inventories = $this->deleteRelatedInventories($inventories);
             $this->saveRelatedInventories($inventories);
+        }
+
+        if (is_array($data['options'])) {
+            $options = $data['options'];
+            $options = $this->deleteRelatedOptions($options);
+            $this->saveRelatedOptions($options);
         }
     }
 

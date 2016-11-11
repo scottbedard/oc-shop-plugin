@@ -3,6 +3,8 @@
 use Bedard\Shop\Models\Category;
 use Bedard\Shop\Models\Discount;
 use Bedard\Shop\Models\Inventory;
+use Bedard\Shop\Models\Option;
+use Bedard\Shop\Models\OptionValue;
 use Bedard\Shop\Models\Price;
 use Bedard\Shop\Models\Product;
 use Bedard\Shop\Tests\Factory;
@@ -309,5 +311,63 @@ class ProductTest extends PluginTestCase
         ]);
 
         $this->assertEquals(false, Inventory::where('id', $inventory->id)->exists());
+    }
+
+    public function test_deleting_an_option_deletes_associated_inventories()
+    {
+        $product = Factory::create(new Product);
+        $option1 = Factory::create(new Option, ['product_id' => $product->id]);
+        $option2 = Factory::create(new Option, ['product_id' => $product->id]);
+        $optionValue1 = Factory::create(new OptionValue, ['option_id' => $option1->id]);
+        $optionValue2 = Factory::create(new OptionValue, ['option_id' => $option2->id]);
+        $inventory1 = Factory::create(new Inventory);
+        $inventory2 = Factory::create(new Inventory);
+        $inventory1->optionValues()->sync([$optionValue1->id]);
+        $inventory2->optionValues()->sync([$optionValue2->id]);
+
+        $product->optionsInventories = [
+            'options' => [
+                [
+                    'id' => $option1->id,
+                    'is_deleted' => false,
+                    'name' => 'Whatever',
+                    'values' => [
+                        [
+                            'id' => $optionValue1->id,
+                            'is_deleted' => true,
+                            'name' => 'Whatever',
+                        ],
+                    ],
+                ],
+                [
+                    'id' => $option2->id,
+                    'is_deleted' => true,
+                    'name' => 'foo',
+                    'values' => [
+                        [
+                            'id' => $optionValue2->id,
+                            'is_deleted' => false,
+                            'name' => 'bar',
+                        ],
+                    ],
+                ],
+            ],
+            'inventories' => [
+                [
+                    'id' => $inventory1->id,
+                    'is_deleted' => false,
+                    'valueIds' => [$optionValue1->id],
+                ],
+                [
+                    'id' => $inventory2->id,
+                    'is_deleted' => false,
+                    'valueIds' => [$optionValue2->id],
+                ],
+            ],
+        ];
+
+        $product->save();
+        $this->assertEquals(false, Inventory::whereId($inventory1->id)->exists());
+        $this->assertEquals(false, Inventory::whereId($inventory2->id)->exists());
     }
 }

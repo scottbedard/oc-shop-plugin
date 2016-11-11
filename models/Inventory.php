@@ -81,4 +81,22 @@ class Inventory extends Model
             $this->rules['sku'] = 'unique:bedard_shop_inventories,sku,'.$this->id;
         }
     }
+
+    /**
+     * Select inventories with one or more optionValue ids.
+     *
+     * @param  \October\Rain\Database\Builder   $query
+     * @param  array                            $ids
+     * @return \October\Rain\Database\Builder
+     */
+    public function scopeHasOptionValueIds($query, $ids)
+    {
+        if (! is_array($ids)) {
+            $ids = [ $ids ];
+        }
+
+        return $query->whereHas('optionValues', function($optionValue) use ($ids){
+            return $optionValue->whereIn('id', $ids);
+        });
+    }
 }
