@@ -18,10 +18,6 @@ fields:
 tabs:
     stretch: true
     fields:
-        optionsInventories:
-            tab: bedard.shop::lang.products.form.tab_options_inventories
-            type: options-inventories
-
         description_html:
             label: bedard.shop::lang.products.form.description
             tab: bedard.shop::lang.products.form.tab_general
@@ -38,6 +34,10 @@ tabs:
             tab: bedard.shop::lang.products.form.tab_general
             type: checkboxlist
             span: right
+
+        optionsInventories:
+            tab: bedard.shop::lang.products.form.tab_options_inventories
+            type: options-inventories
 
         thumbnails:
             label: bedard.shop::lang.products.form.thumbnails

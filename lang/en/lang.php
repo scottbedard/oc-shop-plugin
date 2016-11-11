@@ -162,7 +162,7 @@ return [
         'form' => [
             'create_button' => 'Create Inventory',
             'create_title' => 'Create Inventory',
-            'loading_message' => 'Validating...',
+            'loading_message' => 'Saving inventory...',
             'option_placeholder' => 'Select :name',
             'quantity' => 'Quantity',
             'sku' => 'Stock Keeping Unit',
@@ -187,7 +187,7 @@ return [
             'create_button' => 'Create Option',
             'create_title' => 'Create Option',
             'delete_confirmation' => "Are you sure you want to delete this option?\nThis will also delete any inventories associated with it.",
-            'loading_message' => 'Validating...',
+            'loading_message' => 'Saving option...',
             'name' => 'Name',
             'name_required_error' => 'All options must be given a name.',
             'pending_delete' => 'Pending Delete',
