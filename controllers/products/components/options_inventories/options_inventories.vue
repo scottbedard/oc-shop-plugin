@@ -200,6 +200,8 @@
                         || (! inventory.id && inventory.newId === model.newId);
                 });
 
+                console.log (inventory.values);
+
                 if (existingInventory) {
                     this.inventories.splice(this.inventories.indexOf(existingInventory), 1, inventory);
                 } else {

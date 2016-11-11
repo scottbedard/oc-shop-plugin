@@ -78,9 +78,15 @@
 
                 return langString.replace(':name', option.name.toLowerCase().trim());
             },
-            onOptionChanged(model, collection) {
+            onOptionChanged(value, collection) {
                 let option = this.options.find(o => o.values === collection);
-                this.inventory.values[option.id] = model;
+
+                if (value === null) {
+                    delete this.inventory.values[option.id];
+                } else {
+                    this.inventory.values[option.id] = value;
+                }
+                
                 this.$forceUpdate();
             },
             onSaveClicked() {

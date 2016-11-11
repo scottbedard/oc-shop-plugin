@@ -461,7 +461,7 @@ class Product extends Model
             sort($inventory['valueIds']);
             $valueCombination = json_encode($inventory['valueIds']);
 
-            if (in_array($valueCombination, $takenValueCombinations)) {
+            if (in_array($valueCombination, $takenValueCombinations) && ! $inventory['is_deleted']) {
                 Flash::error(Lang::get('bedard.shop::lang.products.form.duplicate_inventories_error'));
                 throw new ModelException($this);
             }

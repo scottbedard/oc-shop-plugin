@@ -38,7 +38,7 @@
 
                 let valueNames = [];
                 for (let option of this.options) {
-                    if (typeof inventory.values[option.id] !== 'undefined') {
+                    if (inventory.values[option.id]) {
                         valueNames.push(inventory.values[option.id].name);
                     }
                 }
