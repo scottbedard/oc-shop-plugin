@@ -109,7 +109,7 @@ class Factory
     }
 
     /**
-     * Option
+     * Option.
      *
      * @param  array $data
      * @return aray
@@ -126,7 +126,7 @@ class Factory
     }
 
     /**
-     * OptionValue
+     * OptionValue.
      *
      * @param  array $data
      * @return aray
@@ -134,7 +134,7 @@ class Factory
     public static function getOptionValueData(array $data = [])
     {
         $faker = Faker\Factory::create();
-        
+
         return array_merge([
             'name' => $faker->words(3, true),
             'sort_order' => 0,
