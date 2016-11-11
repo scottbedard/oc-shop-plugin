@@ -92,10 +92,10 @@ class Inventory extends Model
     public function scopeHasOptionValueIds($query, $ids)
     {
         if (! is_array($ids)) {
-            $ids = [ $ids ];
+            $ids = [$ids];
         }
 
-        return $query->whereHas('optionValues', function($optionValue) use ($ids){
+        return $query->whereHas('optionValues', function ($optionValue) use ($ids) {
             return $optionValue->whereIn('id', $ids);
         });
     }
