@@ -29,6 +29,7 @@ class Product extends Model
         'base_price' => 0,
         'description_html' => '',
         'description_plain' => '',
+        'is_enabled' => true,
     ];
 
     /**
@@ -37,6 +38,7 @@ class Product extends Model
     protected $casts = [
         'price' => 'float',
         'base_price' => 'float',
+        'is_enabled' => 'boolean',
     ];
 
     /**
@@ -52,6 +54,7 @@ class Product extends Model
         'categoriesList',
         'description_html',
         'description_plain',
+        'is_enabled',
         'name',
         'optionsInventories',
         'slug',
@@ -346,6 +349,26 @@ class Product extends Model
     }
 
     /**
+     * Left joins a subquery containing the available inventory.
+     *
+     * @param  \October\Rain\Database\Builder   $query
+     * @return \October\Rain\Database\Builder
+     */
+    public function scopeJoinInventory(Builder $query)
+    {
+        $alias = 'inventories';
+        $grammar = $query->getQuery()->getGrammar();
+
+        $subquery = Inventory::addSelect('bedard_shop_inventories.product_id')
+            ->selectRaw('SUM(' . $grammar->wrap('bedard_shop_inventories.quantity') .') as '. $grammar->wrap('inventory'))
+            ->groupBy('bedard_shop_inventories.product_id');
+
+        return $query
+            ->addSelect($alias . '.inventory')
+            ->joinSubquery($subquery, $alias, 'bedard_shop_products.id', '=', $alias . '.product_id', 'leftJoin');
+    }
+
+    /**
      * Left joins a subquery containing the product price.
      *
      * @param  \October\Rain\Database\Builder   $query
@@ -364,6 +387,36 @@ class Product extends Model
         return $query
             ->addSelect($alias.'.price')
             ->joinSubquery($subquery, $alias, 'bedard_shop_products.id', '=', $alias.'.product_id');
+    }
+
+    /**
+     * This exists to makes statuses sortable by assigning them a value
+     *
+     * Disabled     -2
+     * Out of stock -1
+     * Normal        0
+     * Discounted    1
+     *
+     * @param  \October\Rain\Database\Builder   $query
+     * @return \October\Rain\Database\Builder
+     */
+    public function scopeSelectStatus($query)
+    {
+        $grammar = $query->getQuery()->getGrammar();
+        
+        $price = $grammar->wrap('price');
+        $inventory = $grammar->wrap('inventory');
+        $is_enabled = $grammar->wrap('bedard_shop_products.is_enabled');
+        $base_price = $grammar->wrap('bedard_shop_products.base_price');
+
+        $subquery = "CASE " .
+            "WHEN {$is_enabled} = 0 THEN -2 " .
+            "WHEN ({$inventory} IS NULL or {$inventory} = 0) THEN -1 " .
+            "WHEN {$price} < {$base_price} THEN 1 " .
+            "ELSE 0 " .
+        "END";
+
+        return $query->selectSubquery($subquery, 'status');
     }
 
     /**

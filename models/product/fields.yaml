@@ -24,6 +24,13 @@ tabs:
             type: richeditor
             span: left
 
+        is_enabled:
+            label: bedard.shop::lang.products.form.is_enabled
+            comment: bedard.shop::lang.products.form.is_enabled_comment
+            tab: bedard.shop::lang.products.form.tab_general
+            type: switch
+            span: right
+
         base_price:
             label: bedard.shop::lang.products.form.base_price
             tab: bedard.shop::lang.products.form.tab_general

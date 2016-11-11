@@ -40,7 +40,7 @@ class Products extends BackendController
      */
     public function listExtendQueryBefore($query)
     {
-        $query->joinPrice();
+        $query->joinInventory()->joinPrice();
     }
 
     /**
@@ -53,6 +53,9 @@ class Products extends BackendController
      */
     public function listExtendQuery($query)
     {
-        $query->select('bedard_shop_products.*', 'price');
+        $query
+            ->with('current_price.discount')
+            ->select('bedard_shop_products.*', 'inventory', 'price')
+            ->selectStatus();
     }
 }

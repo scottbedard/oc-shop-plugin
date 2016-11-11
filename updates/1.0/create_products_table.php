@@ -18,6 +18,7 @@ class CreateProductsTable extends Migration
             $table->text('description_plain');
             $table->text('description_html');
             $table->decimal('base_price', 10, 2)->default(0)->unsigned();
+            $table->boolean('is_enabled')->default(true);
             $table->timestamps();
         });
     }

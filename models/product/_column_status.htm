@@ -1,0 +1,22 @@
+<?php if ($value === -2): ?>
+    <i class="icon-times color-red"></i>
+    <span><?= e(trans('bedard.shop::lang.products.list.status_disabled')) ?></span>
+<?php elseif ($value === -1): ?>
+    <i class="icon-minus"></i>
+    <span><?= e(trans('bedard.shop::lang.products.list.status_out_of_stock')) ?></span>
+<?php elseif ($value === 0): ?>
+    <i class="icon-check color-green"></i>
+    <span><?= e(trans('bedard.shop::lang.products.list.status_normal')) ?></span>
+<?php elseif ($value === 1): ?>
+    <span
+        data-toggle="tooltip"
+        title="<?= e(trans('bedard.shop::lang.products.list.status_discounted_tooltip', [
+            'discount_name' => $record->current_price->discount->name,
+            'end_at' => $record->current_price->discount->end_at->diffForHumans(),
+        ])) ?>">
+        <i class="icon-clock-o color-blue"></i>
+        <?= e(trans('bedard.shop::lang.products.list.status_discounted', [
+            'discount_name' => $record->current_price->discount->name,
+        ])) ?>
+    </span>
+<?php endif; ?>
