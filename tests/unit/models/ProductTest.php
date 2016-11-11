@@ -370,4 +370,34 @@ class ProductTest extends PluginTestCase
         $this->assertEquals(false, Inventory::whereId($inventory1->id)->exists());
         $this->assertEquals(false, Inventory::whereId($inventory2->id)->exists());
     }
+
+    public function test_joinInventory_scope()
+    {
+        $outOfStock = Factory::create(new Product);
+        $inStock = Factory::create(new Product);
+        $inventory = Factory::create(new Inventory, ['quantity' => 1, 'product_id' => $inStock->id]);
+
+        $products = Product::joinInventory()->select('*')->orderBy('id')->get()->toArray();
+        $this->assertEquals(null, $products[0]['inventory']);
+        $this->assertEquals(1, $products[1]['inventory']);
+    }
+
+    public function test_selectStatus_scope()
+    {
+        $disabled = Factory::create(new Product, ['is_enabled' => false]);
+        $outOfStock = Factory::create(new Product);
+        $inStock = Factory::create(new Product);
+        $discounted = Factory::create(new Product, ['base_price' => 50]);
+        $inventory = Factory::create(new Inventory, ['quantity' => 1, 'product_id' => $inStock->id]);
+        $inventory = Factory::create(new Inventory, ['quantity' => 1, 'product_id' => $discounted->id]);
+        $discount = Factory::create(new Discount, ['amount_exact' => 15, 'is_percentage' => false]);
+        $discount->products()->sync([$discounted->id]);
+        $discount->save();
+
+        $products = Product::joinPrice()->joinInventory()->selectStatus()->orderBy('id')->get()->toArray();
+        $this->assertEquals(-2, $products[0]['status']);
+        $this->assertEquals(-1, $products[1]['status']);
+        $this->assertEquals(0, $products[2]['status']);
+        $this->assertEquals(1, $products[3]['status']);
+    }
 }
