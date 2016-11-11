@@ -12,7 +12,7 @@
                 :label="option.name"
                 :options="option.values"
                 :placeholder="getPlaceholder(option)"
-                :value="inventory.values[option.id] || null"
+                :value="getDropdownValue(option)"
                 @change="onOptionChanged">
             </v-dropdown-field>
             <v-input-field
@@ -73,6 +73,16 @@
             focus() {
                 this.$refs.quantity.focus();
             },
+            getDropdownValue(option) {
+                let value;
+                let inventoryValue = this.inventory.values[option.id];
+
+                if (inventoryValue) {
+                    value = option.values.find(model => model.id === inventoryValue.id);
+                }
+
+                return value || null;
+            },
             getPlaceholder(option) {
                 let langString = this.lang.inventories.form.option_placeholder;
 
@@ -86,7 +96,7 @@
                 } else {
                     this.inventory.values[option.id] = value;
                 }
-                
+
                 this.$forceUpdate();
             },
             onSaveClicked() {
