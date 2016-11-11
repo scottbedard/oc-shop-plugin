@@ -31,16 +31,6 @@
                     background-color: $blue;
                     color: #fff;
                 }
-
-                > .delete-border {
-                    border: 2px dashed #ccc;
-                    bottom: 0;
-                    left: 0;
-                    pointer-events: none;
-                    position: absolute;
-                    right: 0;
-                    top: 0;
-                }
             }
 
             > a {

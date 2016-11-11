@@ -18,7 +18,6 @@
                 :class="{ 'is-deleted': option.is_deleted }"
                 :key="option.id || option.newId"
                 @click="onOptionClicked(option)">
-                <div v-show="option.is_deleted" class="delete-border"></div>
                 <a href="#" @click.prevent class="oc-icon-plus"></a>
                 <div class="item">
                     <div>{{ option.name }}</div>

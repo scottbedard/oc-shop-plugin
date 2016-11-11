@@ -1,8 +1,8 @@
 <style lang="scss" scoped>
     a {
         align-items: center;
-        border: dotted 2px #ebebeb;
-        border-radius: 5px;
+        border: 2px dashed #BDC3C7;
+        border-radius: 3px;
         color: #bdc3c7;
         display: flex;
         font-size: 13px;
@@ -12,10 +12,9 @@
         text-transform: uppercase;
 
         &:hover {
+            border-color: #1F99DC;
+            color: #1F99DC;
             text-decoration: none;
-            background-color: #58b6f7;
-            color: #ffffff;
-            border: none;
         }
     }
 

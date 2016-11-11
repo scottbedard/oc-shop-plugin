@@ -7,7 +7,6 @@
                 v-for="inventory in inventories"
                 :class="{ 'is-deleted': inventory.is_deleted }"
                 @click="onInventoryClicked(inventory)">
-                <div v-show="inventory.is_deleted" class="delete-border"></div>
                 <a href="#" @click.prevent class="oc-icon-cube"></a>
                 <div class="item">
                     <div>{{ getInventoryValues(inventory) }}</div>
