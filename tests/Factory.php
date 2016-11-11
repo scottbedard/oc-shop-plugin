@@ -38,6 +38,8 @@ class Factory
             case "Bedard\Shop\Models\Category": $data = self::getCategoryData($data); break;
             case "Bedard\Shop\Models\Discount": $data = self::getDiscountData($data); break;
             case "Bedard\Shop\Models\Inventory": $data = self::getInventoryData($data); break;
+            case "Bedard\Shop\Models\Option": $data = self::getOptionData($data); break;
+            case "Bedard\Shop\Models\OptionValue": $data = self::getOptionValueData($data); break;
             case "Bedard\Shop\Models\Price": $data = self::getPriceData($data); break;
             case "Bedard\Shop\Models\Product": $data = self::getProductData($data); break;
         }
@@ -103,6 +105,39 @@ class Factory
             'product_id' => 0,
             'quantity' => 0,
             'sku' => null,
+        ], $data);
+    }
+
+    /**
+     * Option
+     *
+     * @param  array $data
+     * @return aray
+     */
+    public static function getOptionData(array $data = [])
+    {
+        $faker = Faker\Factory::create();
+
+        return array_merge([
+            'name' => $faker->words(3, true),
+            'placeholder' => $faker->words(3, true),
+            'sort_order' => 0,
+        ], $data);
+    }
+
+    /**
+     * OptionValue
+     *
+     * @param  array $data
+     * @return aray
+     */
+    public static function getOptionValueData(array $data = [])
+    {
+        $faker = Faker\Factory::create();
+        
+        return array_merge([
+            'name' => $faker->words(3, true),
+            'sort_order' => 0,
         ], $data);
     }
 
