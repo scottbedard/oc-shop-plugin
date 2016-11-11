@@ -221,10 +221,12 @@ class ProductTest extends PluginTestCase
                         'values' => [
                             [
                                 'id' => null,
+                                'is_deleted' => false,
                                 'name' => 'Small',
                             ],
                             [
                                 'id' => null,
+                                'is_deleted' => false,
                                 'name' => 'Large',
                             ],
                         ],
@@ -282,8 +284,8 @@ class ProductTest extends PluginTestCase
             'optionsInventories' => [
                 'options' => [],
                 'inventories' => [
-                    ['valueIds' => [1, 2, 3]],
-                    ['valueIds' => [2, 3, 1]],
+                    ['is_deleted' => false, 'valueIds' => [1, 2, 3]],
+                    ['is_deleted' => false, 'valueIds' => [2, 3, 1]],
                 ],
             ],
         ])->validate();
