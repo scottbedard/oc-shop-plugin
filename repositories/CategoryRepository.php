@@ -59,6 +59,10 @@ class CategoryRepository
                     throw new Exception('Category show() products must select at least one column.');
                 }
 
+                if (in_array('price', $params['products_select'])) {
+                    $products->joinPrice();
+                }
+                
                 $products->select($params['products_select']);
 
                 if (! is_null($category->product_sort_column) &&

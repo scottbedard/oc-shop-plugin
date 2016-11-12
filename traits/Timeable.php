@@ -1,6 +1,7 @@
 <?php namespace Bedard\Shop\Traits;
 
 use Carbon\Carbon;
+use DB;
 use October\Rain\Database\Builder;
 
 trait Timeable
@@ -17,6 +18,16 @@ trait Timeable
             $model->addDateAttribute('start_at');
             $model->addDateAttribute('end_at');
         });
+    }
+
+    /**
+     * Get the raw date string.
+     *
+     * @return \Illuminate\Database\Query\Expression
+     */
+    protected function getRawCarbonString()
+    {
+        return DB::raw("'".(string) Carbon::now()."'");
     }
 
     /**
@@ -42,7 +53,7 @@ trait Timeable
     {
         return $query->where(function ($model) {
             return $model->whereNotNull('end_at')
-                ->where('end_at', '<=', (string) Carbon::now());
+                ->where('end_at', '<=', $this->getRawCarbonString());
         });
     }
 
@@ -56,7 +67,7 @@ trait Timeable
     {
         return $query->where(function ($model) {
             return $model->whereNotNull('start_at')
-                ->where('start_at', '>', (string) Carbon::now());
+                ->where('start_at', '>', $this->getRawCarbonString());
         });
     }
 
@@ -85,7 +96,7 @@ trait Timeable
     {
         return $query->where(function ($model) {
             return $model->whereNull('end_at')
-                ->orWhere('end_at', '>', (string) Carbon::now());
+                ->orWhere('end_at', '>', $this->getRawCarbonString());
         });
     }
 
@@ -99,7 +110,7 @@ trait Timeable
     {
         return $query->where(function ($model) {
             return $model->whereNull('start_at')
-                ->orWhere('start_at', '<=', (string) Carbon::now());
+                ->orWhere('start_at', '<=', $this->getRawCarbonString());
         });
     }
 }

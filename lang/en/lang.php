@@ -62,6 +62,7 @@ return [
         'product' => [
             'select_base_price' => 'Base price',
             'select_created_at' => 'Created date',
+            'select_current_price' => 'Current price',
             'select_description_html' => 'Description (html)',
             'select_description_plain' => 'Description (plain)',
             'select_id' => 'ID',

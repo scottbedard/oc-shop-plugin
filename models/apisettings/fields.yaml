@@ -63,6 +63,7 @@ tabs:
                 Description_plain: bedard.shop::lang.api.product.select_description_plain
                 slug: bedard.shop::lang.api.product.select_slug
                 base_price: bedard.shop::lang.api.product.select_base_price
+                price: bedard.shop::lang.api.product.select_current_price
                 created_at: bedard.shop::lang.api.product.select_created_at
                 updated_at: bedard.shop::lang.api.product.select_updated_at
 
