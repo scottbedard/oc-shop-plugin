@@ -62,7 +62,7 @@ class CategoryRepository
                 if (in_array('price', $params['products_select'])) {
                     $products->joinPrice();
                 }
-                
+
                 $products->select($params['products_select']);
 
                 if (! is_null($category->product_sort_column) &&
