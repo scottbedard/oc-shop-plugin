@@ -1,7 +1,6 @@
 require('assets/js/boot');
 
 import Vue from 'vue';
-
 import Sortable from 'vue-sortable';
 Vue.use(Sortable);
 

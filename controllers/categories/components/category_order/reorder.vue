@@ -8,11 +8,8 @@
 
 <template>
     <div>
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">{{ lang.categories.list.reorder_button }}</h4>
-        </div>
-        <div class="modal-body">
+        <v-popup-header>{{ lang.categories.list.reorder_button }}</v-popup-header>
+        <v-popup-body>
             <div
                 class="control-treelist"
                 data-control="treelist"
@@ -29,8 +26,8 @@
             <p v-else>
                 {{ lang.categories.list.reorder_empty }}
             </p>
-        </div>
-        <div class="modal-footer">
+        </v-popup-body>
+        <v-popup-footer>
             <v-loader v-if="isLoading">
                 {{ lang.form.saving }}
             </v-loader>
@@ -49,7 +46,7 @@
                     {{ lang.form.apply }}
                 </button>
             </div>
-        </div>
+        </v-popup-footer>
     </div>
 </template>
 
