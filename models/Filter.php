@@ -26,7 +26,6 @@ class Filter extends Model
         'comparator',
         'left',
         'right',
-        'sort_order',
         'value',
     ];
 

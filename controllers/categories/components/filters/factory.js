@@ -8,7 +8,6 @@ export default () => {
         left: '',
         newId: `_${ newId++ }`,
         right: '',
-        sort_order: 0,
         value: 0,
     };
 };

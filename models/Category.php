@@ -99,7 +99,6 @@ class Category extends Model
     public $hasMany = [
         'filters' => [
             'Bedard\Shop\Models\Filter',
-            'order' => 'sort_order asc',
         ],
     ];
 

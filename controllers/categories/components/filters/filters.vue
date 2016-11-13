@@ -13,7 +13,6 @@
                     @click="onFilterClicked(filter)">
                     <a href="#" @click.prevent class="oc-icon-filter"></a>
                     <div class="item">{{ getFilterString(filter) }}</div>
-                    <a href="#" @click.prevent class="oc-icon-bars"></a>
                     <a href="#" @click.prevent class="oc-icon-trash-o"></a>
                 </li>
             </ul>

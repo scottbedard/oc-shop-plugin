@@ -12,7 +12,6 @@ class CreateFiltersTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('category_id')->unsigned()->index();
-            $table->integer('sort_order')->unsigned()->default(0);
             $table->string('left')->default('');
             $table->string('comparator')->default('');
             $table->string('right')->default('');
