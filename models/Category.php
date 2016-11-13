@@ -54,6 +54,7 @@ class Category extends Model
     protected $fillable = [
         'is_active',
         'is_visible',
+        'category_filters',
         'description_html',
         'description_plain',
         'name',

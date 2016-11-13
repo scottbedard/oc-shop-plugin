@@ -1,6 +1,7 @@
 <?php namespace Bedard\Shop\Tests\Unit\Models;
 
 use Bedard\Shop\Models\Category;
+use Bedard\Shop\Models\Filter;
 use Bedard\Shop\Models\Discount;
 use Bedard\Shop\Models\Price;
 use Bedard\Shop\Models\Product;
@@ -226,5 +227,55 @@ class CategoryTest extends PluginTestCase
         $this->assertEquals(null, $custom->product_sort_column);
         $this->assertEquals(null, $custom->product_sort_direction);
         $this->assertEquals(true, $custom->isCustomSorted());
+    }
+
+    public function test_creating_updating_and_deleting_filters()
+    {
+        // create
+        $category = Factory::create(new Category, [
+            'category_filters' => [
+                [
+                    'comparator' => '<',
+                    'id' => null,
+                    'is_deleted' => false,
+                    'left' => 'foo',
+                    'right' => 'bar',
+                    'value' => 0,
+                ],
+            ],
+        ]);
+
+        $this->assertEquals(1, $category->filters()->count());
+        $filter = $category->filters()->first();
+
+        // update
+        $category->category_filters = [
+            [
+                'comparator' => '>',
+                'id' => $filter->id,
+                'is_deleted' => false,
+                'left' => 'hello',
+                'right' => 'world',
+                'value' => 1.23,
+            ],
+        ];
+
+        $category->save();
+        $filter = $category->filters()->first();
+        $this->assertEquals('>', $filter->comparator);
+        $this->assertEquals('hello', $filter->left);
+        $this->assertEquals('world', $filter->right);
+        $this->assertEquals(1.23, $filter->value);
+
+        // delete
+        $category->category_filters = [
+            [
+                'id' => $filter->id,
+                'is_deleted' => true,
+            ],
+        ];
+
+        $category->save();
+        $this->assertEquals(0, $category->filters()->count());
     }
 }
