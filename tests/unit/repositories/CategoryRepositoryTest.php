@@ -5,7 +5,6 @@ use Bedard\Shop\Models\Product;
 use Bedard\Shop\Repositories\CategoryRepository;
 use Bedard\Shop\Tests\Factory;
 use Bedard\Shop\Tests\PluginTestCase;
-use Exception;
 
 class CategoryRepositoryTest extends PluginTestCase
 {
@@ -16,7 +15,7 @@ class CategoryRepositoryTest extends PluginTestCase
         $category = Factory::create(new Category);
         $repository = new CategoryRepository;
         $results = $repository->get(['select' => ['id']])->first()->toArray();
-        
+
         $this->assertTrue(array_key_exists('id', $results));
         $this->assertFalse(array_key_exists('name', $results));
     }
