@@ -16,13 +16,6 @@ class CategoryFilters extends FormWidgetBase
     /**
      * {@inheritDoc}
      */
-    public function init()
-    {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function render()
     {
         $this->prepareVars();
@@ -34,18 +27,6 @@ class CategoryFilters extends FormWidgetBase
      */
     public function prepareVars()
     {
-        $this->vars['name'] = $this->formField->getName();
-        $this->vars['value'] = $this->getLoadValue();
-        $this->vars['model'] = $this->model;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function loadAssets()
-    {
-        $this->addCss('css/categoryfilters.css', 'Bedard.Shop');
-        $this->addJs('js/categoryfilters.js', 'Bedard.Shop');
     }
 
     /**

@@ -3,7 +3,9 @@
 <script>
     $(function() {
         $('[data-bedard-shop="category-filters-formwidget"]').mountFiltersComponent({
-            lang: <?= $this->controller->getLangJson([]); ?>,
+            lang: <?= $this->controller->getLangJson([
+                'categories@bedard.shop::lang.categories',
+            ]); ?>,
         });
     });
 </script>

@@ -1,0 +1,13 @@
+<template>
+    <div>
+        <v-popup-header>
+            header
+        </v-popup-header>
+        <v-popup-body>
+            body
+        </v-popup-body>
+        <v-popup-footer>
+            footer
+        </v-popup-footer>
+    </div>
+</template>

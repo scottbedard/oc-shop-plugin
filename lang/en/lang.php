@@ -77,6 +77,7 @@ return [
     //
     'categories' => [
         'form' => [
+            'create_filter' => 'Create Filter',
             'create_title' => 'Create Category',
             'description' => 'Description',
             'filter_frequency' => 'Filter frequency',
