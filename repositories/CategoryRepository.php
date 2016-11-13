@@ -31,37 +31,35 @@ class CategoryRepository
     }
 
     /**
-     * Show a category.
+     * Find a category.
      *
      * @param  string   $slug
      * @param  array    $params
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      * @return \Bedard\Shop\Models\Category
      */
-    public function show($slug, array $params = [])
+    public function find($slug, array $params = [])
     {
-        if (! array_key_exists('select', $params) || ! is_array($params['select']) || empty($params['select'])) {
-            throw new Exception('Category show() must select at least one column.');
+        $query = Category::isActive()->whereSlug($slug);
+
+        if (array_key_exists('select', $params) && $params['select']) {
+            $query->select($params['select']);
         }
 
-        $category = Category::isActive()
-            ->select($params['select'])
-            ->whereSlug($slug)
-            ->firstOrFail();
+        $category = $query->firstOrFail();
 
-        if ($params['load_products']) {
+        $loadProducts = array_key_exists('load_products', $params) && $params['load_products'];
+        if ($loadProducts) {
             $category->load(['products' => function ($products) use ($category, $params) {
-                if (! array_key_exists('products_select', $params) ||
-                    ! is_array($params['products_select']) ||
-                    empty($params['products_select'])) {
-                    throw new Exception('Category show() products must select at least one column.');
-                }
+                $selectProducts = array_key_exists('products_select', $params) && $params['products_select'];
+                if ($selectProducts) {
+                    $products->select($params['products_select']);
 
-                if (in_array('price', $params['products_select'])) {
+                    if (array_key_exists('price', $params['products_select']) && $params['products_select']['price']) {
+                        $products->joinPrice();
+                    }
+                } else {
                     $products->joinPrice();
                 }
-
-                $products->select($params['products_select']);
 
                 if (! is_null($category->product_sort_column) &&
                     ! is_null($category->product_sort_direction)) {
@@ -69,12 +67,14 @@ class CategoryRepository
                 }
             }]);
 
-            if ($params['load_products_thumbnails']) {
+            if ($loadProducts &&
+                array_key_exists('load_products_thumbnails', $params) &&
+                $params['load_products_thumbnails']) {
                 $category->products->load('thumbnails');
             }
         }
 
-        if ($params['load_thumbnails']) {
+        if (array_key_exists('load_thumbnails', $params) && $params['load_thumbnails']) {
             $category->load('thumbnails');
         }
 

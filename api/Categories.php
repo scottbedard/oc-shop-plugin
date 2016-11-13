@@ -48,7 +48,7 @@ class Categories extends ApiController
                 'select' => ApiSettings::categorySelect(),
             ];
 
-            return $repository->show($slug, $params);
+            return $repository->find($slug, $params);
         } catch (Exception $e) {
             Log::error($e->getMessage());
 

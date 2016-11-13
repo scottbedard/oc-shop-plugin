@@ -10,7 +10,7 @@ class CategoryRepositoryTest extends PluginTestCase
 {
     protected $refreshPlugins = ['Bedard.Shop'];
 
-    public function test_setting_explicit_column_selects()
+    public function test_selecting_multiple_categories_columns()
     {
         $repository = new CategoryRepository;
 
@@ -49,5 +49,30 @@ class CategoryRepositoryTest extends PluginTestCase
 
         $this->assertTrue(array_key_exists('thumbnails', $thumbnails));
         $this->assertFalse(array_key_exists('thumbnails', $noThumbnails));
+    }
+
+    public function test_selecting_single_category_colums()
+    {
+        $repository = new CategoryRepository;
+
+        $category = Factory::create(new Category);
+        $allColumns = $repository->find($category->slug);
+        $selectedColumns = $repository->find($category->slug, ['select' => ['id']]);
+
+        $this->assertEquals($category->name, $allColumns->name);
+        $this->assertEquals($category->id, $selectedColumns->id);
+        $this->assertNull($selectedColumns->name);
+    }
+
+    public function test_eager_loading_single_category_products()
+    {
+        $repository = new CategoryRepository;
+
+        $category = Factory::create(new Category);
+        $withProducts = $repository->find($category->slug, ['load_products' => true])->toArray();
+        $withoutProducts = $repository->find($category->slug, ['load_products' => false])->toArray();
+
+        $this->assertTrue(array_key_exists('products', $withProducts));
+        $this->assertFalse(array_key_exists('products', $withoutProducts));
     }
 }
