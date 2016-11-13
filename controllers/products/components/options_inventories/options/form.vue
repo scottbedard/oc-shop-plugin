@@ -83,7 +83,7 @@
                 if (this.option.id) {
                     return Promise.resolve;
                 }
-                
+
                 let option = this.option;
                 return this.$http.post(this.createEndpoint, { option }).then(response => {
                     this.option.id = response.body.id;

@@ -162,6 +162,30 @@ return [
     ],
 
     //
+    // Filters
+    //
+    'filters' => [
+        'form' => [
+            'comparator' => 'Comparator',
+            'comparator_equal_to' => 'Equal to',
+            'comparator_not_equal_to' => 'Does not equal',
+            'comparator_less_than' => 'Less than',
+            'comparator_less_than_or_equal' => 'Less than or equal to',
+            'comparator_greater_than' => 'Greater than',
+            'comparator_greater_than_or_equal' => 'Greater than or equal to',
+            'create' => 'Create filter',
+            'left_actual_price' => 'Actual price',
+            'left_base_price' => 'Base price',
+            'left_created_at' => 'Created date',
+            'left_updated_at' => 'Updated date',
+            'left' => 'Relevant field',
+            'loading_message' => 'Saving filter...',
+            'right' => 'Value field',
+            'update' => 'Update filter',
+        ],
+    ],
+
+    //
     // Inventories
     //
     'inventories' => [

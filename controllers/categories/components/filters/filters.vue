@@ -5,23 +5,31 @@
         </v-relation-list-create>
 
         <v-popup ref="filtersPopup">
-            <v-filters-list
-                ref="filtersList"
+            <v-filters-form
+                ref="filtersForm"
+                :source-model="filter"
                 :lang="lang">
-            </v-filters-list>
+            </v-filters-form>
         </v-popup>
     </div>
 </template>
 
 <script>
-    import FiltersListComponent from './list';
+    import Filter from './factory';
+    import FiltersFormComponent from './form';
 
     export default {
+        data() {
+            return {
+                filter: Filter(),
+            };
+        },
         components: {
-            'v-filters-list': FiltersListComponent,
+            'v-filters-form': FiltersFormComponent,
         },
         methods: {
             onCreateClicked() {
+                this.filter = Filter();
                 this.$refs.filtersPopup.show();
             },
         },

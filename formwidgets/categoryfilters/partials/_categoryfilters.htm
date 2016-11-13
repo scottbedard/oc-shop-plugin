@@ -5,6 +5,9 @@
         $('[data-bedard-shop="category-filters-formwidget"]').mountFiltersComponent({
             lang: <?= $this->controller->getLangJson([
                 'categories@bedard.shop::lang.categories',
+                'filters@bedard.shop::lang.filters',
+                'form@backend::lang.form' => ['cancel', 'create'],
+                'relation@backend::lang.relation' => ['update'],
             ]); ?>,
         });
     });
