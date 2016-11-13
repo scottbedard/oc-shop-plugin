@@ -22,10 +22,10 @@ create:
 
 # Update page
 update:
-    title: bedard.shop::lang.products.form.update_title
+    title: bedard.shop::lang.categories.form.update_title
     redirect: bedard/shop/categories
     redirectClose: bedard/shop/categories
 
 # Preview page
 preview:
-    title: bedard.shop::lang.products.form.preview_title
+    title: bedard.shop::lang.categories.form.preview_title
