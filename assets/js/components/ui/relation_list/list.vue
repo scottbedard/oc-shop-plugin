@@ -41,9 +41,10 @@
                 height: 60px;
                 justify-content: center;
                 text-decoration: none;
-                width: 60px;
+                min-width: 60px;
                 &:before { margin: 0 }
                 &:not(:first-of-type) { margin-left: 1px }
+                &.oc-icon-bars { cursor: move }
             }
 
             > div.item {

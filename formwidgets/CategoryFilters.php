@@ -27,6 +27,7 @@ class CategoryFilters extends FormWidgetBase
      */
     public function prepareVars()
     {
+        $this->model->load('filters');
     }
 
     /**

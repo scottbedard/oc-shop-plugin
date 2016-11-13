@@ -234,7 +234,7 @@
         },
         props: {
             display: { default: 'name', type: String },
-            emptyMessage: { default: 'sdf', type: String },
+            emptyMessage: { default: '', type: String },
             label: { default: null },
             options: { default : [], type: Array },
             placeholder: { default: '', type: String },

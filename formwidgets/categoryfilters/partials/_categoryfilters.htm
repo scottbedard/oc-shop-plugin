@@ -9,6 +9,8 @@
                 'form@backend::lang.form' => ['cancel', 'create'],
                 'relation@backend::lang.relation' => ['update'],
             ]); ?>,
+            filterValidation: '<?= Backend::url('bedard/shop/filters/validate') ?>',
+            filtersProp: <?= $this->model->filters->toJson() ?>,
         });
     });
 </script>

@@ -6,6 +6,7 @@
                 display="name"
                 :label="lang.filters.form.left"
                 :options="leftValues"
+                :required="true"
                 :value="filter.left"
                 @change="onLeftChanged">
             </v-dropdown-field>
@@ -13,6 +14,7 @@
                 display="name"
                 :label="lang.filters.form.comparator"
                 :options="comparatorValues"
+                :required="true"
                 :value="filter.comparator"
                 @change="onComparatorChanged">
             </v-dropdown-field>
@@ -23,6 +25,7 @@
                     :class="{ 'span-left': isCustom }"
                     :label="lang.filters.form.right"
                     :options="rightValues"
+                    :required="true"
                     :value="filter.right"
                     @change="onRightChanged">
                 </v-dropdown-field>
@@ -33,7 +36,8 @@
                     v-model="filter.value"
                     :class="{ 'span-right': isLeftPrice }"
                     :label="valueLabel"
-                    :prevent-submit="true">
+                    :prevent-submit="true"
+                    :required="true">
                 </v-input-field>
             </div>
         </v-popup-body>
@@ -119,6 +123,10 @@
             },
             onLeftChanged(left) {
                 this.filter.left = left;
+
+                if (left.value === 'created_at' || left.value === 'updated_at') {
+                    this.filter.right = this.rightValues.find(option => option.value === 'custom');
+                }
             },
             onRightChanged(right) {
                 this.filter.right = right;
@@ -128,13 +136,22 @@
                 }
             },
             onSaveClicked() {
-                console.log ('Saving');
+                this.isLoading = true;
+
+                this.validate(this.filter)
+                    .then(response => this.$emit('save', this.filter))
+                    .catch(error => $.oc.flashMsg({ text: error.body, class: 'error' }))
+                    .then(() => this.isLoading = false);
             },
             onSourceModelChanged(filter) {
                 this.filter = JSON.parse(JSON.stringify(filter));
             },
+            validate(filter) {
+                return this.$http.post(this.filterValidation, { filter })
+            },
         },
         props: [
+            'filterValidation',
             'lang',
             'sourceModel',
         ],

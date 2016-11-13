@@ -27,11 +27,13 @@ $.fn.mountReorderComponent = function({ categories, endpoint, lang, token }) {
 //
 // Filters
 //
-$.fn.mountFiltersComponent = function({ lang }) {
+$.fn.mountFiltersComponent = function({ filterValidation, filtersProp, lang }) {
     new Vue({
         el: $(this)[0],
         components: { 'v-filters': FiltersComponent },
         render: h => <v-filters
+            filter-validation={ filterValidation }
+            filters-prop={ filtersProp }
             lang={ lang }>
         </v-filters>,
     });

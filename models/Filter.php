@@ -7,6 +7,8 @@ use Model;
  */
 class Filter extends Model
 {
+    use \October\Rain\Database\Traits\Validation;
+
     /**
      * @var string The database table used by the model.
      */
@@ -35,5 +37,15 @@ class Filter extends Model
         'category' => [
             'Bedard\Shop\Models\Category',
         ],
+    ];
+
+    /**
+     * @var Validation
+     */
+    public $rules = [
+        'left' => 'required',
+        'comparator' => 'required|min:1|max:2',
+        'right' => 'required',
+        'value' => 'numeric|required_if:right,custom',
     ];
 }

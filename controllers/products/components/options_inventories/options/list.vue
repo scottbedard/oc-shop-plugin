@@ -1,9 +1,3 @@
-<style lang="scss" scoped>@import 'assets/scss/utils';
-    .oc-icon-bars {
-        cursor: move;
-    }
-</style>
-
 <template>
     <div>
         <label>{{ lang.options.plural }}</label>
