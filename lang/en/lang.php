@@ -183,6 +183,8 @@ return [
             'right' => 'Value field',
             'right_custom' => 'Custom value',
             'right_days_ago' => 'Days ago',
+            'right_n_days_ago_singular' => ':n day ago',
+            'right_n_days_ago_plural' => ':n days ago',
             'update' => 'Update filter',
         ],
     ],

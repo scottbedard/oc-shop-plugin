@@ -23,6 +23,7 @@ class Filter extends Model
      * @var array Fillable fields
      */
     protected $fillable = [
+        'category_id',
         'comparator',
         'left',
         'right',

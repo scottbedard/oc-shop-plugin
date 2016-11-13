@@ -35,7 +35,9 @@ class CategoryFilters extends FormWidgetBase
      */
     public function getSaveValue($value)
     {
-        return $value;
+        $data = json_decode(input('categoryFilters'), true);
+        
+        return $data;
     }
 
 }

@@ -280,7 +280,7 @@ class Product extends Model
      * Save an array of realted inventories.
      *
      * @param  array  $inventories
-     * @return array
+     * @return void
      */
     protected function saveRelatedInventories(array $inventories)
     {

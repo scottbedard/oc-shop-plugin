@@ -69,7 +69,9 @@ class Category extends Model
      * @var array Purgeable fields
      */
     protected $purgeable = [
+        'category_filters',
         'filters_list',
+        'filter_frequency',
         'product_sort',
     ];
 
@@ -129,6 +131,7 @@ class Category extends Model
      */
     public function afterSave()
     {
+        $this->saveFiltersRelationship();
         $this->syncInheritedProductsAfterSave();
     }
 
@@ -142,6 +145,23 @@ class Category extends Model
         $this->setPlainDescription();
         $this->setNullParentId();
         $this->setProductSort();
+    }
+
+    /**
+     * Delete filters that have the is_deleted flag.
+     *
+     * @param  array $filters
+     * @return array
+     */
+    protected function deleteRelatedFilters(array $filters)
+    {
+        return array_filter($filters, function ($filter) {
+            if ($filter['id'] !== null && $filter['is_deleted']) {
+                Filter::find($filter['id'])->delete();
+            }
+
+            return ! $filter['is_deleted'];
+        });
     }
 
     /**
@@ -239,6 +259,40 @@ class Category extends Model
     public function isCustomSorted()
     {
         return ! $this->product_sort_column && ! $this->product_sort_direction;
+    }
+
+    /**
+     * Save filters relationship.
+     *
+     * @return void
+     */
+    protected function saveFiltersRelationship()
+    {
+        $filters = $this->getOriginalPurgeValue('category_filters');
+
+        if (is_array($filters) && ! empty($filters)) {
+            $filters = $this->deleteRelatedFilters($filters);
+            $this->saveRelatedFilters($filters);
+        }
+    }
+
+    /**
+     * Save related filters.
+     *
+     * @param  array  $filters
+     * @return void
+     */
+    protected function saveRelatedFilters(array $filters)
+    {
+        foreach ($filters as $filter) {
+            $model = $filter['id'] !== null
+                ? Filter::firstOrNew(['id' => $filter['id']])
+                : new Filter;
+
+            $filter['category_id'] = $this->id;
+            $model->fill($filter);
+            $model->save();
+        }
     }
 
     /**

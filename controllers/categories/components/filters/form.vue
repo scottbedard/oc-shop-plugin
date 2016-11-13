@@ -70,7 +70,7 @@
             createOrUpdate() {
                 return this.context === 'create'
                     ? this.lang.form.create
-                    : this.lang.relation.form.update;
+                    : this.lang.relation.update;
             },
             comparatorValues() {
                 return [
