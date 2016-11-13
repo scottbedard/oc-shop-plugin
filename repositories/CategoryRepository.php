@@ -13,19 +13,17 @@ class CategoryRepository
      */
     public function get(array $params = [])
     {
-        if (! array_key_exists('select', $params) || ! is_array($params['select']) || empty($params['select'])) {
-            throw new Exception('Categories get() must select at least one column.');
+        $query = Category::isActive();
+
+        if (array_key_exists('select', $params) && is_array($params['select']) && ! empty($params['select'])) {
+            $query->select($params['select']);
         }
 
-        $query = Category::isActive()->select($params['select']);
-
-        // hide empty categories
-        if ($params['hide_empty']) {
+        if (array_key_exists('hide_empty', $params) && $params['hide_empty']) {
             $query->has('products');
         }
 
-        // eager load thumbnails
-        if ($params['load_thumbnails']) {
+        if (array_key_exists('load_thumbnails', $params) && $params['load_thumbnails']) {
             $query->with('thumbnails');
         }
 
