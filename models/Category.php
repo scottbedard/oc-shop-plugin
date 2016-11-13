@@ -71,7 +71,6 @@ class Category extends Model
     protected $purgeable = [
         'category_filters',
         'filters_list',
-        'filter_frequency',
         'product_sort',
     ];
 

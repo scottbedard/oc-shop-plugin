@@ -17,48 +17,36 @@ fields:
 tabs:
     stretch: true
     fields:
-        # parent_id:
-        #     label: bedard.shop::lang.categories.form.parent
-        #     tab: bedard.shop::lang.categories.form.tab_settings
-        #     type: dropdown
-        #     span: left
-        #
-        # is_active:
-        #     label: bedard.shop::lang.categories.form.is_active
-        #     tab: bedard.shop::lang.categories.form.tab_settings
-        #     type: checkbox
-        #     span: right
-        #
-        # is_visible:
-        #     label: bedard.shop::lang.categories.form.is_visible
-        #     tab: bedard.shop::lang.categories.form.tab_settings
-        #     type: checkbox
-        #     span: right
-        #
-        # description_html:
-        #     label: bedard.shop::lang.categories.form.description
-        #     tab: bedard.shop::lang.categories.form.tab_settings
-        #     type: richeditor
-        #
-        # thumbnails:
-        #     label: bedard.shop::lang.categories.form.thumbnails
-        #     tab: bedard.shop::lang.categories.form.tab_thumbnails
-        #     type: fileupload
-        #     mode: image
-        #     imageHeight: 260
-        #     imageWidth: 260
-
-        category_filters:
-            label: bedard.shop::lang.categories.form.filters
-            tab: bedard.shop::lang.categories.form.tab_filters
+        parent_id:
+            label: bedard.shop::lang.categories.form.parent
+            tab: bedard.shop::lang.categories.form.tab_settings
+            type: dropdown
             span: left
-            type: category-filters
 
-        filter_frequency:
-            label: bedard.shop::lang.categories.form.filter_frequency
-            comment: bedard.shop::lang.categories.form.filter_frequency_comment
-            tab: bedard.shop::lang.categories.form.tab_filters
+        is_active:
+            label: bedard.shop::lang.categories.form.is_active
+            tab: bedard.shop::lang.categories.form.tab_settings
+            type: checkbox
             span: right
+
+        is_visible:
+            label: bedard.shop::lang.categories.form.is_visible
+            tab: bedard.shop::lang.categories.form.tab_settings
+            type: checkbox
+            span: right
+
+        description_html:
+            label: bedard.shop::lang.categories.form.description
+            tab: bedard.shop::lang.categories.form.tab_settings
+            type: richeditor
+
+        thumbnails:
+            label: bedard.shop::lang.categories.form.thumbnails
+            tab: bedard.shop::lang.categories.form.tab_thumbnails
+            type: fileupload
+            mode: image
+            imageHeight: 260
+            imageWidth: 260
 
         product_sort:
             label: bedard.shop::lang.categories.form.product_sort
@@ -126,3 +114,8 @@ tabs:
             label: bedard.shop::lang.categories.form.product_order
             tab: bedard.shop::lang.categories.form.tab_products
             type: product-order
+
+        category_filters:
+            label: bedard.shop::lang.categories.form.filters
+            tab: bedard.shop::lang.categories.form.tab_filters
+            type: category-filters
