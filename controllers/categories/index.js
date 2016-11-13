@@ -5,6 +5,7 @@ import Sortable from 'vue-sortable';
 Vue.use(Sortable);
 
 import CategoryOrderComponent from './components/category_order/reorder';
+import FiltersComponent from './components/filters/filters';
 import ProductOrderComponent from './components/product_order/product_order';
 
 //
@@ -20,6 +21,19 @@ $.fn.mountReorderComponent = function({ categories, endpoint, lang, token }) {
             endpoint={ endpoint }
             lang={ lang }>
         </v-category-order>,
+    });
+};
+
+//
+// Filters
+//
+$.fn.mountFiltersComponent = function({ lang }) {
+    new Vue({
+        el: $(this)[0],
+        components: { 'v-filters': FiltersComponent },
+        render: h => <v-filters
+            lang={ lang }>
+        </v-filters>,
     });
 };
 

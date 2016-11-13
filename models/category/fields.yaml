@@ -48,6 +48,18 @@ tabs:
         #     imageHeight: 260
         #     imageWidth: 260
 
+        filtersList:
+            label: bedard.shop::lang.categories.form.filters
+            tab: bedard.shop::lang.categories.form.tab_filters
+            span: left
+            type: category-filters
+
+        filter_frequency:
+            label: bedard.shop::lang.categories.form.filter_frequency
+            comment: bedard.shop::lang.categories.form.filter_frequency_comment
+            tab: bedard.shop::lang.categories.form.tab_filters
+            span: right
+
         product_sort:
             label: bedard.shop::lang.categories.form.product_sort
             tab: bedard.shop::lang.categories.form.tab_products

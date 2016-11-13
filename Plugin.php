@@ -31,6 +31,7 @@ class Plugin extends PluginBase
     public function registerFormWidgets()
     {
         return [
+            'Bedard\Shop\FormWidgets\CategoryFilters' => 'category-filters',
             'Bedard\Shop\FormWidgets\OptionsInventories' => 'options-inventories',
             'Bedard\Shop\FormWidgets\ProductOrder' => 'product-order',
             'Owl\FormWidgets\Knob\Widget' => 'owl-knob',

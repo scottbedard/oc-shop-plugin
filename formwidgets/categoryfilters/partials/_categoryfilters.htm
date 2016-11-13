@@ -1,0 +1,9 @@
+<div data-bedard-shop="category-filters-formwidget"></div>
+
+<script>
+    $(function() {
+        $('[data-bedard-shop="category-filters-formwidget"]').mountFiltersComponent({
+            lang: <?= $this->controller->getLangJson([]); ?>,
+        });
+    });
+</script>
