@@ -8,7 +8,7 @@ class CreateFiltersTable extends Migration
 {
     public function up()
     {
-        Schema::create('bedard_shop_filters', function(Blueprint $table) {
+        Schema::create('bedard_shop_filters', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('category_id')->unsigned()->index();

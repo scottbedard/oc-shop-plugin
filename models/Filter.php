@@ -3,11 +3,10 @@
 use Model;
 
 /**
- * Filter Model
+ * Filter Model.
  */
 class Filter extends Model
 {
-
     /**
      * @var string The database table used by the model.
      */
@@ -36,5 +35,4 @@ class Filter extends Model
             'Bedard\Shop\Models\Category',
         ],
     ];
-
 }
