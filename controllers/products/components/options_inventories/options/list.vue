@@ -8,39 +8,36 @@
     <div>
         <label>{{ lang.options.plural }}</label>
 
-        <ul class="options-inventories-list" v-sortable="{
-            animation: 150,
-            handle: '.oc-icon-bars',
-            onUpdate: onOptionsReordered,
-        }">
-            <li
-                v-for="option in options"
-                :class="{ 'is-deleted': option.is_deleted }"
-                :key="option.id || option.newId"
-                @click="onOptionClicked(option)">
-                <a href="#" @click.prevent class="oc-icon-plus"></a>
-                <div class="item">
-                    <div>{{ option.name }}</div>
-                    <small>{{ valueString(option) }}</small>
-                </div>
-                <a href="#" @click.prevent class="oc-icon-bars"></a>
-                <a href="#" @click.prevent.stop="onDeleteOptionClicked(option)" class="oc-icon-trash-o"></a>
-            </li>
-        </ul>
+        <v-relation-list>
+            <ul v-sortable="{
+                animation: 150,
+                handle: '.oc-icon-bars',
+                onUpdate: onOptionsReordered,
+            }">
+                <li
+                    v-for="option in options"
+                    :class="{ 'is-deleted': option.is_deleted }"
+                    :key="option.id || option.newId"
+                    @click="onOptionClicked(option)">
+                    <a href="#" @click.prevent class="oc-icon-plus"></a>
+                    <div class="item">
+                        <div>{{ option.name }}</div>
+                        <small>{{ valueString(option) }}</small>
+                    </div>
+                    <a href="#" @click.prevent class="oc-icon-bars"></a>
+                    <a href="#" @click.prevent.stop="onDeleteOptionClicked(option)" class="oc-icon-trash-o"></a>
+                </li>
+            </ul>
+        </v-relation-list>
 
-        <v-create-button @click="onCreateClicked">
+        <v-relation-list-create @click="onCreateClicked">
             {{ lang.options.form.create_button }}
-        </v-create-button>
+        </v-relation-list-create>
     </div>
 </template>
 
 <script>
-    import CreateButtonComponent from '../_create_button';
-
     export default {
-        components: {
-            'v-create-button': CreateButtonComponent,
-        },
         methods: {
             onCreateClicked() {
                 this.$emit('create');

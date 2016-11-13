@@ -10,4 +10,6 @@ module.exports = {
     'v-popup-footer': require('./ui/popup/popup_footer'),
     'v-popup-header': require('./ui/popup/popup_header'),
     'v-popup': require('./ui/popup/popup'),
-}
+    'v-relation-list': require('./ui/relation_list/list'),
+    'v-relation-list-create': require('./ui/relation_list/create'),
+};

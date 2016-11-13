@@ -68,7 +68,10 @@ class Category extends Model
     /**
      * @var array Purgeable fields
      */
-    protected $purgeable = ['product_sort'];
+    protected $purgeable = [
+        'filters_list',
+        'product_sort',
+    ];
 
     /**
      * @var array Relations

@@ -48,7 +48,7 @@ tabs:
         #     imageHeight: 260
         #     imageWidth: 260
 
-        filtersList:
+        filters_list:
             label: bedard.shop::lang.categories.form.filters
             tab: bedard.shop::lang.categories.form.tab_filters
             span: left
