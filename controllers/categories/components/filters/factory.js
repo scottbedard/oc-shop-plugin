@@ -5,5 +5,6 @@ export default () => {
         left: '',
         right: '',
         sort_order: 0,
+        value: 0,
     };
 };

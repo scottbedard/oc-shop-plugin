@@ -25,6 +25,7 @@ class Filter extends Model
         'left',
         'right',
         'sort_order',
+        'value',
     ];
 
     /**

@@ -16,6 +16,7 @@ class CreateFiltersTable extends Migration
             $table->string('left')->default('');
             $table->string('comparator')->default('');
             $table->string('right')->default('');
+            $table->decimal('value', 10, 2)->default(0);
             $table->timestamps();
         });
     }
