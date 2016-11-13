@@ -5,6 +5,13 @@ use Closure;
 
 class ApiMiddleware
 {
+    /**
+     * Abort all requests when the HTTP API is not enabled.
+     *
+     * @param  \Illuminate\Http\Request $request 
+     * @param  \Closure                 $next
+     * @return \Closure
+     */
     public function handle($request, Closure $next)
     {
         if (! ApiSettings::isEnabled()) {
