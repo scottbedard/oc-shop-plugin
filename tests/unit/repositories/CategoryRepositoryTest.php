@@ -12,8 +12,9 @@ class CategoryRepositoryTest extends PluginTestCase
 
     public function test_setting_explicit_column_selects()
     {
-        $category = Factory::create(new Category);
         $repository = new CategoryRepository;
+
+        Factory::create(new Category);
         $results = $repository->get(['select' => ['id']])->first()->toArray();
 
         $this->assertTrue(array_key_exists('id', $results));
@@ -22,12 +23,12 @@ class CategoryRepositoryTest extends PluginTestCase
 
     public function test_hiding_empty_categories()
     {
+        $repository = new CategoryRepository;
+
         $category1 = Factory::create(new Category);
         $category2 = Factory::create(new Category);
         $product = Factory::create(new Product);
         $product->categories()->sync([$category1->id]);
-
-        $repository = new CategoryRepository;
 
         $hiding = $repository->get(['hide_empty' => true]);
         $notHiding = $repository->get(['hide_empty' => false]);
@@ -35,5 +36,18 @@ class CategoryRepositoryTest extends PluginTestCase
         $this->assertEquals(1, $hiding->count());
         $this->assertEquals($category1->id, $hiding->first()->id);
         $this->assertEquals(2, $notHiding->count());
+    }
+
+    public function test_eager_loading_thumbnails()
+    {
+        $repository = new CategoryRepository;
+
+        Factory::create(new Category);
+
+        $thumbnails = $repository->get(['load_thumbnails' => true])->first()->toArray();
+        $noThumbnails = $repository->get(['load_thumbnails' => false])->first()->toArray();
+
+        $this->assertTrue(array_key_exists('thumbnails', $thumbnails));
+        $this->assertFalse(array_key_exists('thumbnails', $noThumbnails));
     }
 }
