@@ -50,15 +50,12 @@ class CategoryRepository
         $loadProducts = array_key_exists('load_products', $params) && $params['load_products'];
         if ($loadProducts) {
             $category->load(['products' => function ($products) use ($category, $params) {
-                $selectProducts = array_key_exists('products_select', $params) && $params['products_select'];
-                if ($selectProducts) {
+                if (array_key_exists('products_select', $params) && $params['products_select']) {
                     $products->select($params['products_select']);
 
-                    if (array_key_exists('price', $params['products_select']) && $params['products_select']['price']) {
+                    if (in_array('price', $params['products_select'])) {
                         $products->joinPrice();
                     }
-                } else {
-                    $products->joinPrice();
                 }
 
                 if (! is_null($category->product_sort_column) &&
