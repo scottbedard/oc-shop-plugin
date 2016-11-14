@@ -6,7 +6,7 @@ use Exception;
 use Response;
 
 /**
- * Filters Back-end Controller
+ * Filters Back-end Controller.
  */
 class Filters extends BackendController
 {

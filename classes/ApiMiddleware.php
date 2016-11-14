@@ -8,7 +8,7 @@ class ApiMiddleware
     /**
      * Abort all requests when the HTTP API is not enabled.
      *
-     * @param  \Illuminate\Http\Request $request 
+     * @param  \Illuminate\Http\Request $request
      * @param  \Closure                 $next
      * @return \Closure
      */

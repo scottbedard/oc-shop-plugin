@@ -1,7 +1,6 @@
 <?php namespace Bedard\Shop\Tests\Unit\Models;
 
 use Bedard\Shop\Models\Category;
-use Bedard\Shop\Models\Filter;
 use Bedard\Shop\Models\Discount;
 use Bedard\Shop\Models\Price;
 use Bedard\Shop\Models\Product;

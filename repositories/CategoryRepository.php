@@ -1,7 +1,6 @@
 <?php namespace Bedard\Shop\Repositories;
 
 use Bedard\Shop\Models\Category;
-use Exception;
 
 class CategoryRepository
 {

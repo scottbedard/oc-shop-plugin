@@ -3,27 +3,27 @@
 use Backend\Classes\FormWidgetBase;
 
 /**
- * CategoryFilters Form Widget
+ * CategoryFilters Form Widget.
  */
 class CategoryFilters extends FormWidgetBase
 {
-
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected $defaultAlias = 'bedard_shop_category_filters';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function render()
     {
         $this->prepareVars();
+
         return $this->makePartial('categoryfilters');
     }
 
     /**
-     * Prepares the form widget view data
+     * Prepares the form widget view data.
      */
     public function prepareVars()
     {
@@ -31,13 +31,12 @@ class CategoryFilters extends FormWidgetBase
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getSaveValue($value)
     {
         $data = json_decode(input('categoryFilters'), true);
-        
+
         return $data;
     }
-
 }
