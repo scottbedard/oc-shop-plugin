@@ -378,4 +378,22 @@ class CategoryTest extends PluginTestCase
         $this->assertEquals($product2->id, $products[1]->id);
         $this->assertEquals($product1->id, $products[2]->id);
     }
+
+    public function test_sorting_products_by_defined_order()
+    {
+        $product1 = Factory::create(new Product, ['name' => 'c']);
+        $product2 = Factory::create(new Product, ['name' => 'b']);
+        $product3 = Factory::create(new Product, ['name' => 'a']);
+        $category = Factory::create(new Category, [
+            'product_sort' => 'custom',
+            'product_order' => [$product2->id, $product1->id, $product3->id],
+        ]);
+
+        $category->products()->sync([$product1->id, $product2->id, $product3->id]);
+        $products = $category->getProducts();
+
+        $this->assertEquals($product2->id, $products[0]->id);
+        $this->assertEquals($product1->id, $products[1]->id);
+        $this->assertEquals($product3->id, $products[2]->id);
+    }
 }
