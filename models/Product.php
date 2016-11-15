@@ -86,6 +86,11 @@ class Product extends Model
             'Bedard\Shop\Models\Discount',
             'table' => 'bedard_shop_discount_product',
         ],
+        'inherited_categories' => [
+            'Bedard\Shop\Models\Category',
+            'table' => 'bedard_shop_category_product',
+            'conditions' => 'is_inherited = 1',
+        ],
     ];
 
     public $hasMany = [
@@ -346,6 +351,47 @@ class Product extends Model
 
             $option->values()->add($model, $sessionKey);
         }
+    }
+
+    /**
+     * Select products appearing in a particular category.
+     *
+     * @param  \October\Rain\Database\Builder   $query      
+     * @param  integer                          $categoryId
+     * @return \October\Rain\Database\Builder
+     */
+    public function scopeAppearingInCategory(Builder $query, $categoryId)
+    {
+        return $query->where(function($q) use ($categoryId) {
+            return $q->whereHas('categories', function($category) use ($categoryId) {
+                    $category->whereId($categoryId);
+                })->orWhereHas('inherited_categories', function($category) use ($categoryId) {
+                    $category->whereId($categoryId);
+                });
+        });
+    }
+
+
+    /**
+     * Select products that are enabled.
+     *
+     * @param  \October\Rain\Database\Builder   $query
+     * @return \October\Rain\Database\Builder
+     */
+    public function scopeIsEnabled(Builder $query)
+    {
+        return $query->whereIsEnabled(true);
+    }
+
+    /**
+     * Select products that are not enabled
+     *
+     * @param  \October\Rain\Database\Builder   $query
+     * @return \October\Rain\Database\Builder
+     */
+    public function scopeIsNotEnabled(Builder $query)
+    {
+        return $query->whereIsEnabled(false);
     }
 
     /**

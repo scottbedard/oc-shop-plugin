@@ -38,7 +38,7 @@ class CategoryRepository
      */
     public function find($slug, array $params = [])
     {
-        $query = Category::isActive()->whereSlug($slug);
+        $query = Category::isActive()->with('filters')->whereSlug($slug);
 
         if (array_key_exists('select', $params) && $params['select']) {
             $query->select($params['select']);
@@ -46,28 +46,8 @@ class CategoryRepository
 
         $category = $query->firstOrFail();
 
-        $loadProducts = array_key_exists('load_products', $params) && $params['load_products'];
-        if ($loadProducts) {
-            $category->load(['products' => function ($products) use ($category, $params) {
-                if (array_key_exists('products_select', $params) && $params['products_select']) {
-                    $products->select($params['products_select']);
-
-                    if (in_array('price', $params['products_select'])) {
-                        $products->joinPrice();
-                    }
-                }
-
-                if (! is_null($category->product_sort_column) &&
-                    ! is_null($category->product_sort_direction)) {
-                    $products->orderBy($category->product_sort_column, $category->product_sort_direction);
-                }
-            }]);
-
-            if ($loadProducts &&
-                array_key_exists('load_products_thumbnails', $params) &&
-                $params['load_products_thumbnails']) {
-                $category->products->load('thumbnails');
-            }
+        if (array_key_exists('load_products', $params) && $params['load_products']) {
+            $category->products = $category->getProducts($params);
         }
 
         if (array_key_exists('load_thumbnails', $params) && $params['load_thumbnails']) {

@@ -13,7 +13,7 @@ class CreateFiltersTable extends Migration
             $table->increments('id');
             $table->integer('category_id')->unsigned()->index();
             $table->string('left')->default('');
-            $table->string('comparator')->default('');
+            $table->string('comparator', 2)->default('');
             $table->string('right')->default('');
             $table->decimal('value', 10, 2)->default(0);
             $table->timestamps();

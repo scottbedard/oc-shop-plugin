@@ -15,6 +15,13 @@ class Filter extends Model
     public $table = 'bedard_shop_filters';
 
     /**
+     * @var array Attribute casting
+     */
+    protected $casts = [
+        'value' => 'float',
+    ];
+
+    /**
      * @var array Guarded fields
      */
     protected $guarded = ['*'];

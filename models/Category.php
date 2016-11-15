@@ -1,7 +1,10 @@
 <?php namespace Bedard\Shop\Models;
 
+use Carbon\Carbon;
+use DB;
 use Lang;
 use Model;
+use October\Rain\Database\Builder;
 
 /**
  * Category Model.
@@ -136,6 +139,34 @@ class Category extends Model
     }
 
     /**
+     * Apply filters to a products query.
+     *
+     * @param  \October\Rain\Database\Builder   $query
+     * @return void
+     */
+    protected function applyProductFilters(Builder &$products)
+    {
+        $products->where(function ($query) {
+            foreach ($this->filters as $filter) {
+                // price filters
+                if ($filter->left === 'base_price' || $filter->left === 'price') {
+                    $right = $filter->right === 'custom'
+                        ? $filter->value
+                        : DB::raw($filter->right);
+
+                    $query->where($filter->left, $filter->comparator, $right);
+                }
+
+                // date filters
+                elseif ($filter->left === 'created_at' || $filter->left === 'updated_at') {
+                    $right = Carbon::now()->subDays($filter->value);
+                    $query->where($filter->left, $filter->comparator, $right);
+                }
+            }
+        });
+    }
+
+    /**
      * Before save.
      *
      * @return void
@@ -252,6 +283,35 @@ class Category extends Model
     }
 
     /**
+     * Query a category's products.
+     *
+     * @param  array $params
+     * @return \October\Rain\Database\Collection
+     */
+    public function getProducts(array $params = [])
+    {
+        $products = Product::isEnabled();
+
+        // select the appropriate columns
+        if (array_key_exists('products_select', $params) && $params['products_select']) {
+            $products->select($params['products_select']);
+
+            if (in_array('price', $params['products_select'])) {
+                $products->joinPrice();
+            }
+        }
+
+        // grab products from filters or relationship
+        if ($this->isFiltered()) {
+            $this->applyProductFilters($products);
+        } else {
+            $products->appearingInCategory($this->id);
+        }
+
+        return $products->get();
+    }
+
+    /**
      * Determine if the category has a custom sort.
      *
      * @return bool
@@ -259,6 +319,16 @@ class Category extends Model
     public function isCustomSorted()
     {
         return ! $this->product_sort_column && ! $this->product_sort_direction;
+    }
+
+    /**
+     * Determine if the category is filtered.
+     *
+     * @return boolean
+     */
+    public function isFiltered()
+    {
+        return $this->filters->count() > 0;
     }
 
     /**
