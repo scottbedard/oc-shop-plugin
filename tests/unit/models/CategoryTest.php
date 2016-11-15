@@ -6,6 +6,7 @@ use Bedard\Shop\Models\Price;
 use Bedard\Shop\Models\Product;
 use Bedard\Shop\Tests\Factory;
 use Bedard\Shop\Tests\PluginTestCase;
+use Carbon\Carbon;
 
 class CategoryTest extends PluginTestCase
 {
@@ -301,9 +302,9 @@ class CategoryTest extends PluginTestCase
         $product1->categories()->sync([$category->id]);
         $product2->categories()->sync([$category->id]);
 
-        $category->loadProducts();
-        $this->assertEquals(1, $category->products->count());
-        $this->assertEquals($product1->id, $category->products->first()->id);
+        $products = $category->getProducts();
+        $this->assertEquals(1, $products->count());
+        $this->assertEquals($product1->id, $products->first()->id);
     }
 
     public function test_loading_products_of_a_category_filtered_by_relative_price()
@@ -330,8 +331,36 @@ class CategoryTest extends PluginTestCase
         $product1->categories()->sync([$category->id]);
         $product2->categories()->sync([$category->id]);
 
-        $category->loadProducts(['products_select' => ['price']]);
-        $this->assertEquals(1, $category->products->count());
-        $this->assertEquals($product2->id, $category->products->first()->id);
+        $products = $category->getProducts(['products_select' => ['price']]);
+        $this->assertEquals(1, $products->count());
+        $this->assertEquals($product2->id, $products->first()->id);
+    }
+
+    public function test_loading_products_of_a_category_filtered_by_date()
+    {
+        $product1 = Factory::create(new Product);
+        $product1->created_at = Carbon::now()->subDays(1);
+        $product1->save();
+
+        $product2 = Factory::create(new Product);
+
+        $category = Factory::create(new Category, [
+            'category_filters' => [
+                [
+                    'comparator' => '>',
+                    'id' => null,
+                    'is_deleted' => false,
+                    'left' => 'created_at',
+                    'right' => 'custom',
+                    'value' => 1,
+                ],
+            ],
+        ]);
+
+        $category->products()->sync([ $product1->id, $product2->id ]);
+
+        $products = $category->getProducts();
+        $this->assertEquals(1, $products->count());
+        $this->assertEquals($product2->id, $products->first()->id);
     }
 }
