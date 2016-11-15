@@ -357,7 +357,7 @@ class CategoryTest extends PluginTestCase
             ],
         ]);
 
-        $category->products()->sync([ $product1->id, $product2->id ]);
+        $category->products()->sync([$product1->id, $product2->id]);
 
         $products = $category->getProducts();
         $this->assertEquals(1, $products->count());

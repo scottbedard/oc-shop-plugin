@@ -356,21 +356,20 @@ class Product extends Model
     /**
      * Select products appearing in a particular category.
      *
-     * @param  \October\Rain\Database\Builder   $query      
-     * @param  integer                          $categoryId
+     * @param  \October\Rain\Database\Builder   $query
+     * @param  int                          $categoryId
      * @return \October\Rain\Database\Builder
      */
     public function scopeAppearingInCategory(Builder $query, $categoryId)
     {
-        return $query->where(function($q) use ($categoryId) {
-            return $q->whereHas('categories', function($category) use ($categoryId) {
-                    $category->whereId($categoryId);
-                })->orWhereHas('inherited_categories', function($category) use ($categoryId) {
-                    $category->whereId($categoryId);
-                });
+        return $query->where(function ($q) use ($categoryId) {
+            return $q->whereHas('categories', function ($category) use ($categoryId) {
+                $category->whereId($categoryId);
+            })->orWhereHas('inherited_categories', function ($category) use ($categoryId) {
+                $category->whereId($categoryId);
+            });
         });
     }
-
 
     /**
      * Select products that are enabled.
@@ -384,7 +383,7 @@ class Product extends Model
     }
 
     /**
-     * Select products that are not enabled
+     * Select products that are not enabled.
      *
      * @param  \October\Rain\Database\Builder   $query
      * @return \October\Rain\Database\Builder

@@ -324,7 +324,7 @@ class Category extends Model
     /**
      * Determine if the category is filtered.
      *
-     * @return boolean
+     * @return bool
      */
     public function isFiltered()
     {
