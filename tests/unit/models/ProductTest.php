@@ -414,4 +414,13 @@ class ProductTest extends PluginTestCase
         $this->assertEquals(1, Product::appearingInCategory($category2->id)->count());
         $this->assertEquals(0, Product::appearingInCategory($category3->id)->count());
     }
+
+    public function test_isNotEnabled_scope()
+    {
+        $enabled = Factory::create(new Product, ['is_enabled' => true]);
+        $disabled = Factory::create(new Product, ['is_enabled' => false]);
+
+        $this->assertEquals(1, Product::isNotEnabled()->count());
+        $this->assertEquals($disabled->id, Product::isNotEnabled()->first()->id);
+    }
 }
