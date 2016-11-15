@@ -244,6 +244,7 @@ class CategoryTest extends PluginTestCase
             ],
         ]);
 
+        $this->assertTrue($category->isFiltered());
         $this->assertEquals(1, $category->filters()->count());
         $filter = $category->filters()->first();
 
@@ -275,6 +276,8 @@ class CategoryTest extends PluginTestCase
         ];
 
         $category->save();
+        $category->load('filters');
+        $this->assertFalse($category->isFiltered());
         $this->assertEquals(0, $category->filters()->count());
     }
 }
