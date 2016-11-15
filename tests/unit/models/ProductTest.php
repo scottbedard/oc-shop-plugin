@@ -400,4 +400,18 @@ class ProductTest extends PluginTestCase
         $this->assertEquals(0, $products[2]['status']);
         $this->assertEquals(1, $products[3]['status']);
     }
+
+    public function test_appearingInCategory_scope()
+    {
+        $category1 = Factory::create(new Category);
+        $category2 = Factory::create(new Category, ['parent_id' => $category1->id]);
+        $category3 = Factory::create(new Category);
+        $product = Factory::create(new Product);
+        $product->categories()->sync([$category2->id]);
+        $product->syncInheritedCategories();
+
+        $this->assertEquals(1, Product::appearingInCategory($category1->id)->count());
+        $this->assertEquals(1, Product::appearingInCategory($category2->id)->count());
+        $this->assertEquals(0, Product::appearingInCategory($category3->id)->count());
+    }
 }
