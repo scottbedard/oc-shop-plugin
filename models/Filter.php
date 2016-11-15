@@ -1,5 +1,7 @@
 <?php namespace Bedard\Shop\Models;
 
+use Carbon\Carbon;
+use DB;
 use Model;
 
 /**
@@ -55,4 +57,32 @@ class Filter extends Model
         'right' => 'required',
         'value' => 'numeric|required_if:right,custom',
     ];
+
+    /**
+     * Get the right side of a filter's where clause.
+     *
+     * @return mixed
+     */
+    public function getRightClause()
+    {
+        if ($this->getType() === 'price') {
+            return $this->right === 'custom'
+                ? $this->value
+                : DB::raw($this->right);
+        }
+
+        return Carbon::now()->subDays($this->value);
+    }
+
+    /**
+     * Determine the type of filter.
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->left === 'base_price' || $this->left === 'price'
+            ? 'price'
+            : 'date';
+    }
 }

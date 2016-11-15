@@ -148,20 +148,8 @@ class Category extends Model
     {
         $products->where(function ($query) {
             foreach ($this->filters as $filter) {
-                // price filters
-                if ($filter->left === 'base_price' || $filter->left === 'price') {
-                    $right = $filter->right === 'custom'
-                        ? $filter->value
-                        : DB::raw($filter->right);
-
-                    $query->where($filter->left, $filter->comparator, $right);
-                }
-
-                // date filters
-                elseif ($filter->left === 'created_at' || $filter->left === 'updated_at') {
-                    $right = Carbon::now()->subDays($filter->value);
-                    $query->where($filter->left, $filter->comparator, $right);
-                }
+                $right = $filter->getRightClause();
+                $query->where($filter->left, $filter->comparator, $right);
             }
         });
     }
