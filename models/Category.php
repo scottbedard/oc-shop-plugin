@@ -141,7 +141,7 @@ class Category extends Model
     /**
      * Apply filters to a products query.
      *
-     * @param  \October\Rain\Database\Builder   $query
+     * @param  \October\Rain\Database\Builder   $products
      * @return void
      */
     protected function applyProductFilters(Builder &$products)
@@ -306,6 +306,16 @@ class Category extends Model
             $this->applyProductFilters($products);
         } else {
             $products->appearingInCategory($this->id);
+        }
+
+        // sort the results
+        if (array_key_exists('products_sort_column', $params) &&
+            array_key_exists('products_sort_direction', $params)) {
+            $products->orderBy($params['products_sort_column'], $params['products_sort_direction']);
+        } elseif ($this->isCustomSorted()) {
+            // @todo
+        } else {
+            $products->orderBy($this->product_sort_column, $this->product_sort_direction);
         }
 
         return $products->get();
