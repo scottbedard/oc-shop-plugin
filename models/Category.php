@@ -1,7 +1,5 @@
 <?php namespace Bedard\Shop\Models;
 
-use Carbon\Carbon;
-use DB;
 use Lang;
 use Model;
 use October\Rain\Database\Builder;
