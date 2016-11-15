@@ -280,4 +280,58 @@ class CategoryTest extends PluginTestCase
         $this->assertFalse($category->isFiltered());
         $this->assertEquals(0, $category->filters()->count());
     }
+
+    public function test_loading_products_of_a_category_filtered_by_explicit_price()
+    {
+        $product1 = Factory::create(new Product, ['base_price' => 10]);
+        $product2 = Factory::create(new Product, ['base_price' => 20]);
+        $category = Factory::create(new Category, [
+            'category_filters' => [
+                [
+                    'comparator' => '<',
+                    'id' => null,
+                    'is_deleted' => false,
+                    'left' => 'base_price',
+                    'right' => 'custom',
+                    'value' => 15,
+                ],
+            ],
+        ]);
+
+        $product1->categories()->sync([$category->id]);
+        $product2->categories()->sync([$category->id]);
+
+        $category->loadProducts();
+        $this->assertEquals(1, $category->products->count());
+        $this->assertEquals($product1->id, $category->products->first()->id);
+    }
+
+    public function test_loading_products_of_a_category_filtered_by_relative_price()
+    {
+        $product1 = Factory::create(new Product, ['base_price' => 10]);
+        $product2 = Factory::create(new Product, ['base_price' => 20]);
+        $discount = Factory::create(new Discount, ['amount_exact' => 5, 'is_percentage' => false]);
+        $discount->products()->sync([$product2->id]);
+        $discount->save();
+
+        $category = Factory::create(new Category, [
+            'category_filters' => [
+                [
+                    'comparator' => '<',
+                    'id' => null,
+                    'is_deleted' => false,
+                    'left' => 'price',
+                    'right' => 'base_price',
+                    'value' => 0,
+                ],
+            ],
+        ]);
+
+        $product1->categories()->sync([$category->id]);
+        $product2->categories()->sync([$category->id]);
+
+        $category->loadProducts(['products_select' => ['price']]);
+        $this->assertEquals(1, $category->products->count());
+        $this->assertEquals($product2->id, $category->products->first()->id);
+    }
 }
