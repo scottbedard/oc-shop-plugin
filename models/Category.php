@@ -138,7 +138,7 @@ class Category extends Model
 
     protected function applyCustomOrder(Builder &$products)
     {
-        $customOrder = "";
+        $customOrder = '';
         foreach ($this->product_order as $index => $id) {
             $customOrder .= "when {$id} then {$index} ";
         }
