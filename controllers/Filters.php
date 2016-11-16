@@ -11,7 +11,7 @@ use Response;
 class Filters extends BackendController
 {
     /**
-     * Validate an option.
+     * Validate a filter.
      *
      * @return Response
      */
