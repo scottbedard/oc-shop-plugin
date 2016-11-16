@@ -1,5 +1,6 @@
 <?php namespace Bedard\Shop\Models;
 
+use Bedard\Shop\Classes\ProductsQuery;
 use Lang;
 use Model;
 use October\Rain\Database\Builder;
@@ -59,8 +60,10 @@ class Category extends Model
         'description_html',
         'description_plain',
         'name',
+        'product_columns',
         'parent_id',
         'product_order',
+        'product_rows',
         'product_sort',
         'product_sort_column',
         'product_sort_direction',
@@ -134,32 +137,6 @@ class Category extends Model
     {
         $this->saveFiltersRelationship();
         $this->syncInheritedProductsAfterSave();
-    }
-
-    protected function applyCustomOrder(Builder &$products)
-    {
-        $customOrder = '';
-        foreach ($this->product_order as $index => $id) {
-            $customOrder .= "when {$id} then {$index} ";
-        }
-
-        $products->orderByRaw("case id {$customOrder} else 'last' end");
-    }
-
-    /**
-     * Apply filters to a products query.
-     *
-     * @param  \October\Rain\Database\Builder   $products
-     * @return void
-     */
-    protected function applyProductFilters(Builder &$products)
-    {
-        $products->where(function ($query) {
-            foreach ($this->filters as $filter) {
-                $right = $filter->getRightClause();
-                $query->where($filter->left, $filter->comparator, $right);
-            }
-        });
     }
 
     /**
@@ -286,35 +263,9 @@ class Category extends Model
      */
     public function getProducts(array $params = [])
     {
-        $products = Product::isEnabled();
+        $query = new ProductsQuery($this, $params);
 
-        // select the appropriate columns
-        if (array_key_exists('products_select', $params) && $params['products_select']) {
-            $products->select($params['products_select']);
-
-            if (in_array('price', $params['products_select'])) {
-                $products->joinPrice();
-            }
-        }
-
-        // grab products from filters or relationship
-        if ($this->isFiltered()) {
-            $this->applyProductFilters($products);
-        } else {
-            $products->appearingInCategory($this->id);
-        }
-
-        // sort the results
-        if (array_key_exists('products_sort_column', $params) &&
-            array_key_exists('products_sort_direction', $params)) {
-            $products->orderBy($params['products_sort_column'], $params['products_sort_direction']);
-        } elseif ($this->isCustomSorted()) {
-            $this->applyCustomOrder($products);
-        } else {
-            $products->orderBy($this->product_sort_column, $this->product_sort_direction);
-        }
-
-        return $products->get();
+        return $query->get();
     }
 
     /**
@@ -335,6 +286,16 @@ class Category extends Model
     public function isFiltered()
     {
         return $this->filters->count() > 0;
+    }
+
+    /**
+     * Determine if the category is paginated.
+     *
+     * @return bool
+     */
+    public function isPaginated()
+    {
+        return $this->product_rows > 0;
     }
 
     /**

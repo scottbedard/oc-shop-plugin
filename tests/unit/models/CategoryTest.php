@@ -414,4 +414,13 @@ class CategoryTest extends PluginTestCase
         $this->assertEquals($product2->id, $products[1]->id);
         $this->assertEquals($product1->id, $products[2]->id);
     }
+
+    public function test_isPaginated_method()
+    {
+        $paginated = Factory::fill(new Category, ['product_rows' => 1]);
+        $notPaginated = Factory::fill(new Category, ['product_rows' => 0]);
+
+        $this->assertTrue($paginated->isPaginated());
+        $this->assertFalse($notPaginated->isPaginated());
+    }
 }
