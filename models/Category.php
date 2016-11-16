@@ -136,6 +136,16 @@ class Category extends Model
         $this->syncInheritedProductsAfterSave();
     }
 
+    protected function applyCustomOrder(Builder &$products)
+    {
+        $customOrder = "";
+        foreach ($this->product_order as $index => $id) {
+            $customOrder .= "when {$id} then {$index} ";
+        }
+
+        $products->orderByRaw("case id {$customOrder} else 'last' end");
+    }
+
     /**
      * Apply filters to a products query.
      *
@@ -299,7 +309,7 @@ class Category extends Model
             array_key_exists('products_sort_direction', $params)) {
             $products->orderBy($params['products_sort_column'], $params['products_sort_direction']);
         } elseif ($this->isCustomSorted()) {
-            // @todo
+            $this->applyCustomOrder($products);
         } else {
             $products->orderBy($this->product_sort_column, $this->product_sort_direction);
         }
