@@ -2,7 +2,6 @@
 
 use Bedard\Shop\Models\Category;
 use Bedard\Shop\Models\Product;
-use October\Rain\Database\Builder;
 
 class ProductsQuery
 {
