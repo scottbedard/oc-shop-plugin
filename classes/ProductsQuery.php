@@ -17,7 +17,7 @@ class ProductsQuery
     protected $params;
 
     /**
-     * Construct
+     * Construct.
      *
      * @param \Bedard\Shop\Models\Category  $category
      * @param array                         $params

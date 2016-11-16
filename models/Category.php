@@ -3,7 +3,6 @@
 use Bedard\Shop\Classes\ProductsQuery;
 use Lang;
 use Model;
-use October\Rain\Database\Builder;
 
 /**
  * Category Model.
