@@ -423,4 +423,41 @@ class CategoryTest extends PluginTestCase
         $this->assertTrue($paginated->isPaginated());
         $this->assertFalse($notPaginated->isPaginated());
     }
+
+    public function test_paginating_results()
+    {
+        $product1 = Factory::create(new Product);
+        $product2 = Factory::create(new Product);
+        $product3 = Factory::create(new Product);
+        $product4 = Factory::create(new Product);
+        $product5 = Factory::create(new Product);
+        $category = Factory::create(new Category, [
+            'product_columns' => 2,
+            'product_rows' => 1,
+            'product_sort_column' => 'id',
+            'product_sort_direction' => 'asc',
+        ]);
+
+        $category->products()->sync([
+            $product1->id,
+            $product2->id,
+            $product3->id,
+            $product4->id,
+            $product5->id,
+        ]);
+
+        $page1 = $category->getProducts(['page' => 1]);
+        $this->assertEquals(2, $page1->count());
+        $this->assertEquals(1, $page1[0]->id);
+        $this->assertEquals(2, $page1[1]->id);
+
+        $page2 = $category->getProducts(['page' => 2]);
+        $this->assertEquals(2, $page2->count());
+        $this->assertEquals(3, $page2[0]->id);
+        $this->assertEquals(4, $page2[1]->id);
+
+        $page3 = $category->getProducts(['page' => 3]);
+        $this->assertEquals(1, $page3->count());
+        $this->assertEquals(5, $page3[0]->id);
+    }
 }

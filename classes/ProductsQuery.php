@@ -45,6 +45,7 @@ class ProductsQuery
 
         $this->applySelectStatements();
         $this->applyWhereStatements();
+        $this->applyPagination();
         $this->applyOrderByStatements();
     }
 
@@ -77,6 +78,23 @@ class ProductsQuery
             $this->applyCustomOrder();
         } else {
             $this->query->orderBy($this->category->product_sort_column, $this->category->product_sort_direction);
+        }
+    }
+
+    /**
+     * Paginate the results.
+     *
+     * @return void
+     */
+    protected function applyPagination()
+    {
+        if (array_key_exists('page', $this->params) && $this->category->isPaginated()) {
+            $resultsPerPage = $this->category->resultsPerPage();
+            $resultsToSkip = ($this->params['page'] - 1) * $resultsPerPage;
+
+            $this->query
+                ->skip($resultsToSkip)
+                ->take($resultsPerPage);
         }
     }
 

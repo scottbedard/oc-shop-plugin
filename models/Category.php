@@ -298,6 +298,16 @@ class Category extends Model
     }
 
     /**
+     * Determine how many results are on each page.
+     *
+     * @return integer
+     */
+    public function resultsPerPage()
+    {
+        return $this->product_rows * $this->product_columns;
+    }
+
+    /**
      * Save filters relationship.
      *
      * @return void
