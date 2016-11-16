@@ -93,8 +93,8 @@ class ProductsQuery
             $resultsToSkip = ($this->params['page'] - 1) * $resultsPerPage;
 
             $this->query
-                ->skip($resultsToSkip)
-                ->take($resultsPerPage);
+                ->offset($resultsToSkip)
+                ->limit($resultsPerPage);
         }
     }
 
