@@ -38,7 +38,7 @@ class CategoryRepositoryTest extends PluginTestCase
         $this->assertEquals(2, $notHiding->count());
     }
 
-    public function test_eager_loading_thumbnails()
+    public function test_eager_loading_multiple_category_thumbnails()
     {
         $repository = new CategoryRepository;
 
@@ -74,5 +74,17 @@ class CategoryRepositoryTest extends PluginTestCase
 
         $this->assertTrue(array_key_exists('products', $withProducts));
         $this->assertFalse(array_key_exists('products', $withoutProducts));
+    }
+
+    public function test_eager_loading_single_category_thumbnails()
+    {
+        $repository = new CategoryRepository;
+
+        $category = Factory::create(new Category);
+        $withThumbnails = $repository->find($category->slug, ['load_thumbnails' => true])->toArray();
+        $withoutThumbnails = $repository->find($category->slug, ['load_thumbnails' => false])->toArray();
+
+        $this->assertTrue(array_key_exists('thumbnails', $withThumbnails));
+        $this->assertFalse(array_key_exists('thumbnails', $withoutThumbnails));
     }
 }
