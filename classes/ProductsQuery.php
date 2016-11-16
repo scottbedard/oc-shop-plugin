@@ -17,6 +17,11 @@ class ProductsQuery
     protected $params;
 
     /**
+     * @var \October\Rain\Databse\Builder   Products query.
+     */
+    public $query;
+
+    /**
      * Construct.
      *
      * @param \Bedard\Shop\Models\Category  $category
@@ -26,66 +31,64 @@ class ProductsQuery
     {
         $this->category = $category;
         $this->params = $params;
+
+        $this->buildQuery();
     }
 
     /**
-     * Execute a products query.
+     * Build up the products query.
      *
-     * @return \October\Rain\Database\Collection
+     * @return void
      */
-    public function get()
+    protected function buildQuery()
     {
-        $query = Product::isEnabled();
-        $this->applySelectStatements($query);
-        $this->applyWhereStatements($query);
-        $this->applyOrderByStatements($query);
+        $this->query = Product::isEnabled();
 
-        return $query->get();
+        $this->applySelectStatements();
+        $this->applyWhereStatements();
+        $this->applyOrderByStatements();
     }
 
     /**
      * Apply a custom sort order to a products query.
      *
-     * @param  \October\Rain\Database\Builder   $products
      * @return void
      */
-    protected function applyCustomOrder(Builder &$query)
+    protected function applyCustomOrder()
     {
         $order = '';
         foreach ($this->category->product_order as $index => $id) {
             $order .= "when {$id} then {$index} ";
         }
 
-        $query->orderByRaw("case id {$order} else 'last' end");
+        $this->query->orderByRaw("case id {$order} else 'last' end");
     }
 
     /**
      * Apply an order by statement to the products query.
      *
-     * @param  \October\Rain\Database\Builder   $products
      * @return void
      */
-    protected function applyOrderByStatements(Builder &$query)
+    protected function applyOrderByStatements()
     {
         if (array_key_exists('products_sort_column', $this->params) &&
             array_key_exists('products_sort_direction', $this->params)) {
-            $query->orderBy($this->params['products_sort_column'], $this->params['products_sort_direction']);
+            $this->query->orderBy($this->params['products_sort_column'], $this->params['products_sort_direction']);
         } elseif ($this->category->isCustomSorted()) {
-            $this->applyCustomOrder($query);
+            $this->applyCustomOrder();
         } else {
-            $query->orderBy($this->category->product_sort_column, $this->category->product_sort_direction);
+            $this->query->orderBy($this->category->product_sort_column, $this->category->product_sort_direction);
         }
     }
 
     /**
      * Apply filters to a products query.
      *
-     * @param  \October\Rain\Database\Builder   $query
      * @return void
      */
-    protected function applyProductFilters(Builder &$query)
+    protected function applyProductFilters()
     {
-        $query->where(function ($q) {
+        $this->query->where(function ($q) {
             foreach ($this->category->filters as $filter) {
                 $right = $filter->getRightClause();
                 $q->where($filter->left, $filter->comparator, $right);
@@ -96,18 +99,17 @@ class ProductsQuery
     /**
      * Apply select statements and join prices.
      *
-     * @param  \October\Rain\Database\Builder   $query
      * @return void
      */
-    protected function applySelectStatements(Builder &$query)
+    protected function applySelectStatements()
     {
         // apply select statements if neccessary
         if (array_key_exists('products_select', $this->params) && $this->params['products_select']) {
-            $query->select($this->params['products_select']);
+            $this->query->select($this->params['products_select']);
 
             // join the prices if neccessary
             if (in_array('price', $this->params['products_select'])) {
-                $query->joinPrice();
+                $this->query->joinPrice();
             }
         }
     }
@@ -115,19 +117,18 @@ class ProductsQuery
     /**
      * Restrict our query to products that should be visible in our category.
      *
-     * @param  \October\Rain\Database\Builder   $query
      * @return void
      */
-    protected function applyWhereStatements(Builder &$query)
+    protected function applyWhereStatements()
     {
         // if the category is filtered, grab our products from those
         if ($this->category->isFiltered()) {
-            $this->applyProductFilters($query);
+            $this->applyProductFilters();
         }
 
         // otherwise grab all products appearing in our category
         else {
-            $query->appearingInCategory($this->category->id);
+            $this->query->appearingInCategory($this->category->id);
         }
     }
 }

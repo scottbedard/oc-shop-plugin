@@ -262,9 +262,9 @@ class Category extends Model
      */
     public function getProducts(array $params = [])
     {
-        $query = new ProductsQuery($this, $params);
+        $products = new ProductsQuery($this, $params);
 
-        return $query->get();
+        return $products->query->get();
     }
 
     /**
