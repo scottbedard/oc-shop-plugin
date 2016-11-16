@@ -300,7 +300,7 @@ class Category extends Model
     /**
      * Determine how many results are on each page.
      *
-     * @return integer
+     * @return int
      */
     public function resultsPerPage()
     {
