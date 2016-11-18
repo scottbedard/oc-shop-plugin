@@ -71,9 +71,7 @@ class Categories extends ApiController
             ];
 
             return $repository->products($slug, $params);
-        }
-
-        catch (Exception $e) {
+        } catch (Exception $e) {
             Log::error($e->getMessage());
 
             abort(500, $e->getMessage());
