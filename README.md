@@ -42,7 +42,7 @@ $ npm run build
 
 ### API
 
-This plugin comes with an HTTP API. Below are the available endpoints.
+This plugin comes with an HTTP API, below are the available endpoints. To disable the HTTP API, navigate to `/backend/system/settings/update/bedard/shop/api` and set `API Endpoints` to `off`.
 
 | Endpoint | Response |
 | -------- | -------- |
