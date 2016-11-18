@@ -49,3 +49,4 @@ This plugin comes with an HTTP API. Below are the available endpoints.
 | `/api/bedard/shop/categories` | All enabled categories. |
 | `/api/bedard/shop/categories/:slug` | A single category, optionally can include the first page of products.
 | `/api/bedard/shop/categories/:slug/products` | The products belonging to a category. |
+| `/api/bedard/shop/products/:slug` | A single product. |
