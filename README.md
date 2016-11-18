@@ -39,3 +39,13 @@ Production assets can be built with the following command.
 ```bash
 $ npm run build
 ```
+
+### API
+
+This plugin comes with an HTTP API. Below are the available endpoints.
+
+| Endpoint | Response |
+| -------- | -------- |
+| `/api/bedard/shop/categories` | All enabled categories. |
+| `/api/bedard/shop/categories/:slug` | A single category, optionally can include the first page of products.
+| `/api/bedard/shop/categories/:slug/products` | The products belonging to a category. |
