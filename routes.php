@@ -12,5 +12,4 @@ Route::group(['middleware' => '\Bedard\Shop\Classes\ApiMiddleware'], function ()
     // Products
     //
     Route::resource('api/bedard/shop/products', 'Bedard\Shop\Api\Products');
-
 });
