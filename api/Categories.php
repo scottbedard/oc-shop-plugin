@@ -55,4 +55,28 @@ class Categories extends ApiController
             abort(500, $e->getMessage());
         }
     }
+
+    /**
+     * List the products in a category.
+     *
+     * @param  CategoryRepository $repository
+     * @param  string             $slug
+     * @return \October\Rain\Database\Collection
+     */
+    public function products(CategoryRepository $repository, $slug)
+    {
+        try {
+            $params = [
+                'products_select' => ApiSettings::categoryProductsSelect(),
+            ];
+
+            return $repository->products($slug, $params);
+        }
+
+        catch (Exception $e) {
+            Log::error($e->getMessage());
+
+            abort(500, $e->getMessage());
+        }
+    }
 }

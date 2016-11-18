@@ -56,4 +56,21 @@ class CategoryRepository
 
         return $category;
     }
+
+    /**
+     * Fetch the products in a category.
+     *
+     * @param  string   $slug
+     * @param  array    $params
+     * @return \October\Rain\Database\Collection
+     */
+    public function products($slug, array $params = [])
+    {
+        $category = Category::isActive()
+            ->with('filters')
+            ->whereSlug($slug)
+            ->firstOrFail();
+
+        return $category->getProducts($params);
+    }
 }
