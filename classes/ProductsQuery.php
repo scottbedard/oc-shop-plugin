@@ -56,12 +56,12 @@ class ProductsQuery
      */
     protected function applyCustomOrder()
     {
-        $order = '';
-        foreach ($this->category->product_order as $index => $id) {
-            $order .= "when {$id} then {$index} ";
-        }
-
-        $this->query->orderByRaw("case id {$order} else 'last' end");
+        $this->query
+            ->join('bedard_shop_category_product', function ($join) {
+                $join->on('bedard_shop_products.id', '=', 'bedard_shop_category_product.product_id')
+                    ->where('bedard_shop_category_product.category_id', '=', $this->category->id);
+            })
+            ->orderBy('bedard_shop_category_product.sort_order');
     }
 
     /**

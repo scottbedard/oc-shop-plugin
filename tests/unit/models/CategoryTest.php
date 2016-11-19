@@ -389,6 +389,7 @@ class CategoryTest extends PluginTestCase
             'product_order' => [$product2->id, $product1->id, $product3->id],
         ]);
         $category->products()->sync([$product1->id, $product2->id, $product3->id]);
+        $category->save();
 
         $products = $category->getProducts();
 

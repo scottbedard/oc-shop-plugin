@@ -1,6 +1,7 @@
 <?php namespace Bedard\Shop\Models;
 
 use Bedard\Shop\Classes\ProductsQuery;
+use DB;
 use Lang;
 use Model;
 
@@ -135,6 +136,7 @@ class Category extends Model
     public function afterSave()
     {
         $this->saveFiltersRelationship();
+        $this->saveProductOrder();
         $this->syncInheritedProductsAfterSave();
     }
 
@@ -319,6 +321,29 @@ class Category extends Model
         if (is_array($filters) && ! empty($filters)) {
             $filters = $this->deleteRelatedFilters($filters);
             $this->saveRelatedFilters($filters);
+        }
+    }
+
+    /**
+     * Save the product sort order.
+     *
+     * @return void
+     */
+    protected function saveProductOrder()
+    {
+        // clear out the old sort values
+        DB::table('bedard_shop_category_product')
+            ->whereCategoryId($this->id)
+            ->update(['sort_order' => null]);
+
+        // @todo: these can be optimized to run as a single query
+        if ($this->isCustomSorted()) {
+            foreach ($this->product_order as $index => $productId) {
+                DB::table('bedard_shop_category_product')
+                    ->whereCategoryId($this->id)
+                    ->whereProductId($productId)
+                    ->update(['sort_order' => $index]);
+            }
         }
     }
 
