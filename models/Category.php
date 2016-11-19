@@ -337,7 +337,7 @@ class Category extends Model
             ->update(['sort_order' => null]);
 
         // @todo: these can be optimized to run as a single query
-        if ($this->isCustomSorted()) {
+        if ($this->isCustomSorted() && is_array($this->product_order)) {
             foreach ($this->product_order as $index => $productId) {
                 DB::table('bedard_shop_category_product')
                     ->whereCategoryId($this->id)
