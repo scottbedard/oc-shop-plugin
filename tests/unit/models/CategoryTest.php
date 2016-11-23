@@ -450,9 +450,9 @@ class CategoryTest extends PluginTestCase
         $page1 = $category->getProducts(['page' => 1]);
         $page2 = $category->getProducts(['page' => 2]);
         $page3 = $category->getProducts(['page' => 3]);
-        print_r ($page1->toArray());
-        print_r ($page2->toArray());
-        print_r ($page3->toArray());
+        print_r($page1->toArray());
+        print_r($page2->toArray());
+        print_r($page3->toArray());
         $this->assertEquals(2, $page1->count());
         $this->assertEquals(1, $page1[0]->id);
         $this->assertEquals(2, $page1[1]->id);
