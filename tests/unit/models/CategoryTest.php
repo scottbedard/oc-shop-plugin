@@ -452,14 +452,14 @@ class CategoryTest extends PluginTestCase
         $page3 = $category->getProducts(['page' => 3]);
 
         $this->assertEquals(2, $page1->count());
-        $this->assertEquals(1, $page1[0]->id);
-        $this->assertEquals(2, $page1[1]->id);
+        $this->assertEquals(1, $page1->get(0)->id);
+        $this->assertEquals(2, $page1->get(1)->id);
 
         $this->assertEquals(2, $page2->count());
-        $this->assertEquals(3, $page2[0]->id);
-        $this->assertEquals(4, $page2[1]->id);
+        $this->assertEquals(3, $page2->get(0)->id);
+        $this->assertEquals(4, $page2->get(1)->id);
 
         $this->assertEquals(1, $page3->count());
-        $this->assertEquals(5, $page3[0]->id);
+        $this->assertEquals(5, $page3->get(0)->id);
     }
 }
