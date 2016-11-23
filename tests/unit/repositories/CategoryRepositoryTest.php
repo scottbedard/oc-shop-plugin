@@ -87,4 +87,18 @@ class CategoryRepositoryTest extends PluginTestCase
         $this->assertTrue(array_key_exists('thumbnails', $withThumbnails));
         $this->assertFalse(array_key_exists('thumbnails', $withoutThumbnails));
     }
+
+    public function test_fetching_the_products_in_a_category()
+    {
+        $product1 = Factory::create(new Product);
+        $product2 = Factory::create(new Product);
+        $category = Factory::create(new Category);
+        $category->products()->sync([$product1->id]);
+
+        $repository = new CategoryRepository;
+
+        $products = $repository->products($category->slug, []);
+        $this->assertEquals(1, $products->count());
+        $this->assertEquals($product1->id, $products->first()->id);
+    }
 }
