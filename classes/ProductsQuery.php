@@ -84,6 +84,8 @@ class ProductsQuery
             print_r('ordering by category defaults');
             $this->query->orderBy($this->category->product_sort_column, $this->category->product_sort_direction);
         }
+
+        print_r ($this->query->toSql());
     }
 
     /**
