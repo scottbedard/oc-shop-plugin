@@ -80,7 +80,7 @@ class ProductsQuery
             $this->query->orderBy($this->category->product_sort_column, $this->category->product_sort_direction);
         }
 
-        print_r ($this->query->toSql());
+        print_r($this->query->toSql());
     }
 
     /**
