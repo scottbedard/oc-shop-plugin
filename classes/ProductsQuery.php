@@ -71,21 +71,14 @@ class ProductsQuery
      */
     protected function applyOrderByStatements()
     {
-        print_r($this->params);
-
         if (array_key_exists('products_sort_column', $this->params) &&
             array_key_exists('products_sort_direction', $this->params)) {
-            print_r('ordering by params');
             $this->query->orderBy($this->params['products_sort_column'], $this->params['products_sort_direction']);
         } elseif ($this->category->isCustomSorted()) {
-            print_r('custom order');
             $this->applyCustomOrder();
         } else {
-            print_r('ordering by category defaults');
             $this->query->orderBy($this->category->product_sort_column, $this->category->product_sort_direction);
         }
-
-        print_r($this->query->toSql());
     }
 
     /**
