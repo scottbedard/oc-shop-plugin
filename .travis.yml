@@ -29,7 +29,8 @@ before_script:
 
 script:
   - mkdir -p build/logs
-  - php vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+  - php vendor/bin/phpunit --filter=test_paginating_results
+  # - php vendor/bin/phpunit --coverage-clover build/logs/clover.xml
 
 after_script:
   - if [[ $TRAVIS_PHP_VERSION > 5.6 ]] ; then php vendor/bin/coveralls -v; fi
