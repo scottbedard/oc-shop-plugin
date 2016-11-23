@@ -18,6 +18,7 @@ return [
             'api' => 'Manage API',
             'categories' => 'Manage Categories',
             'discounts' => 'Manage Discounts',
+            'orders' => 'Manage Orders',
             'products' => 'Manage Products',
         ],
     ],
@@ -232,6 +233,17 @@ return [
         ],
         'singular' => 'Option',
         'plural' => 'Options',
+    ],
+
+    //
+    // Orders
+    //
+    'orders' => [
+        'list' => [
+            'title' => 'Manage Orders',
+        ],
+        'plural' => 'Orders',
+        'singular' => 'Order',
     ],
 
     //
