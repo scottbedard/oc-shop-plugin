@@ -13,7 +13,7 @@
   "author": "Scott Bedard",
   "license": "MIT",
   "dependencies": {
-    "vue": "^2.0.3"
+    "vue": "^2.1.1"
   },
   "devDependencies": {
     "autoprefixer": "^6.5.1",
