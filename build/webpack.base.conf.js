@@ -22,7 +22,7 @@ module.exports = {
         rules: [
             {
                 test: /\.vue$/,
-                loader: 'vue',
+                loader: 'vue-loader',
                 options: {
                     loaders: utils.cssLoaders({
                         sourceMap: true,
@@ -37,12 +37,12 @@ module.exports = {
             },
             {
                 test: /\.js$/,
-                loader: 'babel',
+                loader: 'babel-loader',
                 exclude: /node_modules/
             },
             {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-                loader: 'url',
+                loader: 'url-loader',
                 query: {
                     limit: 10000,
                     name: path.resolve(__dirname, '../assets/img/[name].[ext]'),
@@ -50,7 +50,7 @@ module.exports = {
             },
             {
                 test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-                loader: 'url',
+                loader: 'url-loader',
                 query: {
                     limit: 10000,
                     name: path.resolve(__dirname, '../assets/fonts/[name].[ext]'),
@@ -58,7 +58,7 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
-                loaders: ['style', 'css', 'sass'],
+                loaders: ['style-loader', 'css-loader', 'sass-loader'],
             },
         ],
     },
