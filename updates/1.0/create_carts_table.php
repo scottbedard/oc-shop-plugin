@@ -8,7 +8,7 @@ class CreateCartsTable extends Migration
 {
     public function up()
     {
-        Schema::create('bedard_shop_carts', function(Blueprint $table) {
+        Schema::create('bedard_shop_carts', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->timestamps();

@@ -8,7 +8,7 @@ class CreateCartItemsTable extends Migration
 {
     public function up()
     {
-        Schema::create('bedard_shop_cart_items', function(Blueprint $table) {
+        Schema::create('bedard_shop_cart_items', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('cart_id')->unsigned()->index();

@@ -3,11 +3,10 @@
 use Model;
 
 /**
- * Cart Model
+ * Cart Model.
  */
 class Cart extends Model
 {
-
     /**
      * @var string The database table used by the model.
      */
@@ -31,5 +30,4 @@ class Cart extends Model
             'Bedard\Shop\Models\CartItem',
         ],
     ];
-
 }
