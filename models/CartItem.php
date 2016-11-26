@@ -7,10 +7,17 @@ use Model;
  */
 class CartItem extends Model
 {
+    use \October\Rain\Database\Traits\SoftDelete;
+
     /**
      * @var string The database table used by the model.
      */
     public $table = 'bedard_shop_cart_items';
+
+    /**
+     * @var array Date fields
+     */
+    protected $dates = ['deleted_at'];
 
     /**
      * @var array Guarded fields

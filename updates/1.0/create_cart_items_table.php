@@ -14,6 +14,7 @@ class CreateCartItemsTable extends Migration
             $table->integer('cart_id')->unsigned()->index();
             $table->integer('inventory_id')->unsigned()->index();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
