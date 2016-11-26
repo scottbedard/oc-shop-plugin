@@ -13,4 +13,6 @@
     - 1.0/create_inventory_option_values_table.php
     - 1.0/create_filters_table.php
     - 1.0/create_orders_table.php
+    - 1.0/create_carts_table.php
+    - 1.0/create_cart_items_table.php
     - dev_seeds.php

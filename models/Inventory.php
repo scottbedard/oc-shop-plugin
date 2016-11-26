@@ -70,6 +70,12 @@ class Inventory extends Model
         ],
     ];
 
+    public $hasMany = [
+        'cartItems' => [
+            'Bedard\Shop\Moels\CartItem',
+        ],
+    ];
+
     /**
      * Before validate.
      *
