@@ -1,7 +1,6 @@
 <?php namespace Bedard\Shop\Api;
 
 use Bedard\Shop\Classes\ApiController;
-use Bedard\Shop\Models\ApiSettings;
 use Bedard\Shop\Repositories\CartRepository;
 use Exception;
 use Log;
@@ -19,7 +18,6 @@ class Carts extends ApiController
         try {
 
             // @todo
-
         } catch (Exception $e) {
             Log::error($e->getMessage());
 
@@ -38,7 +36,6 @@ class Carts extends ApiController
         try {
 
             // @todo
-
         } catch (Exception $e) {
             Log::error($e->getMessage());
 
