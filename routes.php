@@ -1,6 +1,10 @@
 <?php
 
 Route::group(['middleware' => '\Bedard\Shop\Classes\ApiMiddleware'], function () {
+    //
+    // Cart
+    //
+    Route::resource('api/bedard/shop/carts', 'Bedard\Shop\Api\Carts');
 
     //
     // Categories
