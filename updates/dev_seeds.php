@@ -47,7 +47,7 @@ class DevSeeder extends Seeder
 
     protected function seedOptionsAndInventories()
     {
-        Product::all()->each(function($product) {
+        Product::all()->each(function ($product) {
             $option = Factory::create(new Option, [
                 'name' => 'Size',
                 'placeholder' => '-- select size --',
