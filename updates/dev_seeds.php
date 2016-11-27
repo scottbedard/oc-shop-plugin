@@ -2,6 +2,9 @@
 
 use Bedard\Shop\Models\Category;
 use Bedard\Shop\Models\Discount;
+use Bedard\Shop\Models\Inventory;
+use Bedard\Shop\Models\Option;
+use Bedard\Shop\Models\OptionValue;
 use Bedard\Shop\Models\Product;
 use Bedard\Shop\Tests\Factory;
 use Carbon\Carbon;
@@ -18,6 +21,7 @@ class DevSeeder extends Seeder
 
         $this->seedCategories();
         $this->seedProducts(10);
+        $this->seedOptionsAndInventories();
         $this->seedDiscounts();
     }
 
@@ -39,6 +43,28 @@ class DevSeeder extends Seeder
         }
 
         Product::syncAllInheritedCategories();
+    }
+
+    protected function seedOptionsAndInventories()
+    {
+        Product::all()->each(function($product) {
+            $option = Factory::create(new Option, [
+                'name' => 'Size',
+                'placeholder' => '-- select size --',
+                'product_id' => $product->id,
+            ]);
+
+            $value = Factory::create(new OptionValue, ['option_id' => $option->id, 'name' => 'Small', 'sort_order' => 0]);
+            Factory::create(new OptionValue, ['option_id' => $option->id, 'name' => 'Medium', 'sort_order' => 1]);
+            Factory::create(new OptionValue, ['option_id' => $option->id, 'name' => 'Large', 'sort_order' => 2]);
+
+            $inventory = Factory::create(new Inventory, [
+                'product_id' => $product->id,
+                'quantity' => rand(0, 3),
+            ]);
+
+            $inventory->optionValues()->sync([$value->id]);
+        });
     }
 
     protected function seedDiscounts()
