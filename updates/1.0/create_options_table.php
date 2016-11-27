@@ -11,7 +11,7 @@ class CreateOptionsTable extends Migration
         Schema::create('bedard_shop_options', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->integer('product_id')->unsigned()->index();
+            $table->integer('product_id')->unsigned()->nullable()->index();
             $table->string('name')->default('');
             $table->string('placeholder')->default('');
             $table->integer('sort_order')->unsigned()->default(0);
