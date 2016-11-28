@@ -5,8 +5,24 @@ use Bedard\Shop\Repositories\CartRepository;
 use Exception;
 use Log;
 
-class Carts extends ApiController
+class Cart extends ApiController
 {
+    /**
+     * Add an inventory to the cart.
+     *
+     * @param CartRepository $repository
+     */
+    public function add(CartRepository $repository)
+    {
+        try {
+            // @todo
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+
+            abort(500, $e->getMessage());
+        }
+    }
+
     /**
      * Show the current cart.
      *
