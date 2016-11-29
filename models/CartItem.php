@@ -13,7 +13,7 @@ class CartItem extends Model
      * @var string The database table used by the model.
      */
     public $table = 'bedard_shop_cart_items';
-    
+
     /**
      * @var array Default attributes
      */
