@@ -20,7 +20,9 @@ class Cart extends Model
     /**
      * @var array Fillable fields
      */
-    protected $fillable = [];
+    protected $fillable = [
+        'token',
+    ];
 
     /**
      * @var array Relations
@@ -30,4 +32,26 @@ class Cart extends Model
             'Bedard\Shop\Models\CartItem',
         ],
     ];
+
+    /**
+     * Before create.
+     *
+     * @return void
+     */
+    public function beforeCreate()
+    {
+        $this->generateToken();
+    }
+
+    /**
+     * Generate a unique token.
+     *
+     * @return void
+     */
+    protected function generateToken()
+    {
+        do {
+            $this->token = str_random(40);
+        } while (self::whereToken($this->token)->exists());
+    }
 }

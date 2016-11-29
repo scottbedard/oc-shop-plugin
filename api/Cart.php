@@ -29,11 +29,10 @@ class Cart extends ApiController
      * @param  \Bedard\Shop\Repositories\CartRepository     $repository
      * @return \Bedard\Shop\Models\Cart
      */
-    public function show(CartRepository $repository)
+    public function index(CartRepository $repository)
     {
         try {
-
-            // @todo
+            return $repository->current();
         } catch (Exception $e) {
             Log::error($e->getMessage());
 

@@ -11,6 +11,7 @@ class CreateCartsTable extends Migration
         Schema::create('bedard_shop_carts', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
+            $table->string('token', 40)->unique();
             $table->timestamps();
         });
     }

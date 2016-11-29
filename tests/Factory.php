@@ -35,6 +35,7 @@ class Factory
         }
 
         switch (get_class($model)) {
+            case "Bedard\Shop\Models\Cart": $data = self::getCartData($data); break;
             case "Bedard\Shop\Models\Category": $data = self::getCategoryData($data); break;
             case "Bedard\Shop\Models\Discount": $data = self::getDiscountData($data); break;
             case "Bedard\Shop\Models\Inventory": $data = self::getInventoryData($data); break;
@@ -51,6 +52,15 @@ class Factory
         }
 
         return $model;
+    }
+
+    public static function getCartData(array $data = [])
+    {
+        $faker = Faker\Factory::create();
+
+        return array_merge([
+
+        ], $data);
     }
 
     /**
