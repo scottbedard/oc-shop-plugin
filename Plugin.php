@@ -94,6 +94,10 @@ class Plugin extends PluginBase
                 'label' => 'bedard.shop::lang.plugin.permissions.api',
                 'tab' => 'bedard.shop::lang.plugin.details.name',
             ],
+            'bedard.shop.carts.manage' => [
+                'label' => 'bedard.shop::lang.plugin.permissions.carts',
+                'tab' => 'bedard.shop::lang.plugin.details.name',
+            ],
             'bedard.shop.categories.manage' => [
                 'label' => 'bedard.shop::lang.plugin.permissions.categories',
                 'tab' => 'bedard.shop::lang.plugin.details.name',
@@ -128,6 +132,14 @@ class Plugin extends PluginBase
                 'class'         => 'Bedard\Shop\Models\ApiSettings',
                 'permissions'   => ['bedard.shop.api.manage'],
                 'icon'          => 'icon-cog',
+            ],
+            'carts' => [
+                'label'         => 'bedard.shop::lang.carts.label',
+                'description'   => 'bedard.shop::lang.carts.description',
+                'category'      => 'bedard.shop::lang.plugin.details.name',
+                'class'         => 'Bedard\Shop\Models\CartSettings',
+                'permissions'   => ['bedard.shop.carts.manage'],
+                'icon'          => 'icon-shopping-cart',
             ],
         ];
     }

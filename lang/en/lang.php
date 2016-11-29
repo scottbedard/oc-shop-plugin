@@ -16,6 +16,7 @@ return [
         ],
         'permissions' => [
             'api' => 'Manage API',
+            'carts' => 'Manage Carts',
             'categories' => 'Manage Categories',
             'discounts' => 'Manage Discounts',
             'orders' => 'Manage Orders',
@@ -71,6 +72,14 @@ return [
             'select_slug' => 'Slug',
             'select_updated_at' => 'Updated date',
         ],
+    ],
+
+    //
+    // Carts
+    //
+    'carts' => [
+        'label' => 'Shopping carts',
+        'description' => 'Manage shopping cart settings.',
     ],
 
     //
