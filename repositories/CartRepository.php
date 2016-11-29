@@ -18,7 +18,7 @@ class CartRepository
      * Add an item to the curent cart.
      *
      * @param  \Bedard\Shop\Models\Inventory
-     * @param  integer
+     * @param  int
      * @return \Bedard\Shop\Models\Cart
      */
     public function add(Inventory $inventory, $quantity)
