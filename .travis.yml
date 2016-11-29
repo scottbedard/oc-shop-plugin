@@ -30,7 +30,7 @@ before_script:
 script:
   # - mkdir -p build/logs
   - echo $TRAVIS_PHP_VERSION
-  - if [[$TRAVIS_PHP_VERSION -lt 7.1]]; then echo "no coverage"; else echo "coverage"; fi
+  - if ["$TRAVIS_PHP_VERSION" -lt "7.1"]; then echo "no coverage"; else echo "coverage"; fi
   # - if [[$TRAVIS_PHP_VERSION < 7.1]]; then php vendor/bin/phpunit; else php vendor/bin/phpunit --coverage-clover build/logs/clover.xml; fi
 
 # after_script:
