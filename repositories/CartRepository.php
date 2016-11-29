@@ -24,14 +24,12 @@ class CartRepository
     public function add(Inventory $inventory, $quantity)
     {
         $cart = $this->find();
-
         $item = CartItem::firstOrCreate([
             'cart_id' => $cart->id,
             'inventory_id' => $inventory->id,
         ]);
 
         $item->quantity += $quantity;
-
         if ($item->quantity > $inventory->quantity) {
             $item->quantity = $inventory->quantity;
         }
@@ -57,6 +55,27 @@ class CartRepository
     }
 
     /**
+     * Delete an inventory from the cart.
+     *
+     * @param  Inventory $inventory
+     * @return \Bedard\Shop\Models\Cart
+     */
+    public function delete(Inventory $inventory)
+    {
+        $cart = $this->find();
+
+        $item = $cart->items()->whereInventoryId($inventory->id)->first();
+
+        if ($item) {
+            $item->delete();
+        }
+
+        $cart->load('items');
+
+        return $cart;
+    }
+
+    /**
      * Get the current cart, or create one if none exists.
      *
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
@@ -74,6 +93,38 @@ class CartRepository
             return $this->create();
         }
 
-        return Cart::whereToken($token)->firstOrFail();
+        return Cart::whereToken($token)
+            ->isOpen()
+            ->with('items')
+            ->firstOrFail();
+    }
+
+    /**
+     * Update an item in the curent cart.
+     *
+     * @param  \Bedard\Shop\Models\Inventory
+     * @param  integer
+     * @return \Bedard\Shop\Models\Cart
+     */
+    public function update(Inventory $inventory, $quantity)
+    {
+        if ($quantity <= 0) {
+            return $this->delete($inventory);
+        }
+
+        $cart = $this->find();
+        $item = CartItem::firstOrCreate([
+            'cart_id' => $cart->id,
+            'inventory_id' => $inventory->id,
+        ]);
+
+        $item->quantity = $quantity;
+        if ($item->quantity > $inventory->quantity) {
+            $item->quantity = $inventory->quantity;
+        }
+
+        $item->save();
+
+        return $cart;
     }
 }

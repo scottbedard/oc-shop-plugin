@@ -58,4 +58,40 @@ class CartRepositoryTest extends PluginTestCase
         $this->assertEquals(5, $cart->items()->first()->quantity);
         $this->assertEquals(1, $cart->items()->count());
     }
+
+    public function test_updating_an_item_in_the_cart()
+    {
+        $product = Factory::create(new Product);
+        $inventory = Factory::create(new Inventory, ['product_id' => $product->id, 'quantity' => 5]);
+
+        $repository = new CartRepository;
+        $cart = $repository->add($inventory, 10);
+        $repository->update($inventory, 3);
+
+        $this->assertEquals(3, $cart->items()->first()->quantity);
+    }
+
+    public function test_deleting_an_item_from_the_cart()
+    {
+        $product = Factory::create(new Product);
+        $inventory = Factory::create(new Inventory, ['product_id' => $product->id, 'quantity' => 5]);
+
+        $repository = new CartRepository;
+        $cart = $repository->add($inventory, 10);
+        $repository->delete($inventory);
+
+        $this->assertEquals(0, $cart->items()->count());
+    }
+
+    public function test_deleting_an_item_by_setting_its_quantity_to_zero()
+    {
+        $product = Factory::create(new Product);
+        $inventory = Factory::create(new Inventory, ['product_id' => $product->id, 'quantity' => 5]);
+
+        $repository = new CartRepository;
+        $cart = $repository->add($inventory, 10);
+        $repository->update($inventory, 0);
+
+        $this->assertEquals(0, $cart->items()->count());
+    }
 }
