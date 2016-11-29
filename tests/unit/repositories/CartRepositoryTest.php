@@ -1,9 +1,7 @@
 <?php namespace Bedard\Shop\Tet\Unit\Repositories;
 
 use Bedard\Shop\Repositories\CartRepository;
-use Bedard\Shop\Tests\Factory;
 use Bedard\Shop\Tests\PluginTestCase;
-use Cookie;
 
 class CartRepositoryTest extends PluginTestCase
 {
