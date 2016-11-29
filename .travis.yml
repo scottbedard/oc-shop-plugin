@@ -14,6 +14,7 @@ matrix:
     - php: nightly
 
 before_script:
+  - echo "memory_limit=520M" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   - wget http://getcomposer.org/composer.phar
   - php composer.phar install --dev --no-interaction
   - composer self-update
@@ -25,13 +26,12 @@ before_script:
   - cp config/cms.php config/cms.php.testing
   - mv config/cms.php.testing config/testing/cms.php
   - cd plugins/bedard/shop
-  - composer update
-  - if [[ $TRAVIS_PHP_VERSION -ne hhvm ]]; then phpenv config-rm xdebug.ini; fi
+  - composer install
 
 script:
   - mkdir -p build/logs
-  - if [[ $TRAVIS_PHP_VERSION > 5.6 ]]; then php vendor/bin/phpunit --coverage-clover build/logs/clover.xml;
-  - else php vendor/bin/phpunit --coverage-clover build/logs/clover.xml; fi
+  - if [[ $TRAVIS_PHP_VERSION > 5.6 ]]; then php vendor/bin/phpunit --coverage-clover build/logs/clover.xml; else
+  - php vendor/bin/phpunit; fi
 
 after_script:
   - if [[ $TRAVIS_PHP_VERSION > 5.6 ]]; then php vendor/bin/coveralls -v; fi
