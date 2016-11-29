@@ -3,3 +3,13 @@
 # ===================================
 
 fields:
+    lifespan:
+        label: bedard.shop::lang.carts.form.lifespan_label
+        type: dropdown
+        options:
+            720: bedard.shop::lang.carts.form.lifespan_12_hours
+            1440: bedard.shop::lang.carts.form.lifespan_1_day
+            10080: bedard.shop::lang.carts.form.lifespan_1_week
+            43200: bedard.shop::lang.carts.form.lifespan_1_month
+            -1: bedard.shop::lang.carts.form.lifespan_forever
+        default: 10080

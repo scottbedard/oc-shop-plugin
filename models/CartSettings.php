@@ -21,4 +21,15 @@ class CartSettings extends Model
      * @var string  Settings fields
      */
     public $settingsFields = 'fields.yaml';
+
+    /**
+     * Cart lifespan in minutes, -1 represents an infinite lifespan
+     *
+     * @return integer
+     */
+    public static function getLifespan()
+    {
+        // Default to 1 week (10080 minutes)
+        return self::get('lifespan', 10080);
+    }
 }

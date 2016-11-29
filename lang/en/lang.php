@@ -80,6 +80,14 @@ return [
     'carts' => [
         'label' => 'Shopping carts',
         'description' => 'Manage shopping cart settings.',
+        'form' => [
+            'lifespan_label' => 'Cart lifespan',
+            'lifespan_12_hours' => '12 hours',
+            'lifespan_1_day' => '1 day',
+            'lifespan_1_week' => '1 week',
+            'lifespan_1_month' => '1 month',
+            'lifespan_forever' => 'Forever',
+        ],
     ],
 
     //
