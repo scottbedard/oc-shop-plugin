@@ -103,7 +103,7 @@ class CartRepository
      * Update an item in the curent cart.
      *
      * @param  \Bedard\Shop\Models\Inventory
-     * @param  integer
+     * @param  int
      * @return \Bedard\Shop\Models\Cart
      */
     public function update(Inventory $inventory, $quantity)
