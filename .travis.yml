@@ -14,22 +14,24 @@ matrix:
     - php: nightly
 
 before_script:
-  - wget http://getcomposer.org/composer.phar
-  - php composer.phar install --dev --no-interaction
-  - composer self-update
-  - git clone https://github.com/octobercms/october.git
-  - mkdir -p ./october/plugins/bedard/shop
-  - mv !(october) october/plugins/bedard/shop
-  - cd october
-  - composer install
-  - cp config/cms.php config/cms.php.testing
-  - mv config/cms.php.testing config/testing/cms.php
-  - cd plugins/bedard/shop
-  - composer install
+  # - wget http://getcomposer.org/composer.phar
+  # - php composer.phar install --dev --no-interaction
+  # - composer self-update
+  # - git clone https://github.com/octobercms/october.git
+  # - mkdir -p ./october/plugins/bedard/shop
+  # - mv !(october) october/plugins/bedard/shop
+  # - cd october
+  # - composer install
+  # - cp config/cms.php config/cms.php.testing
+  # - mv config/cms.php.testing config/testing/cms.php
+  # - cd plugins/bedard/shop
+  # - composer install
 
 script:
-  - mkdir -p build/logs
-  - if [[$TRAVIS_PHP_VERSION < 7.1]]; then php vendor/bin/phpunit; else php vendor/bin/phpunit --coverage-clover build/logs/clover.xml; fi
+  # - mkdir -p build/logs
+  - echo $TRAVIS_PHP_VERSION
+  - if [[$TRAVIS_PHP_VERSION < 7.1]]; then echo "no coverage"; else echo "coverage"; fi
+  # - if [[$TRAVIS_PHP_VERSION < 7.1]]; then php vendor/bin/phpunit; else php vendor/bin/phpunit --coverage-clover build/logs/clover.xml; fi
 
-after_script:
-  - if [[$TRAVIS_PHP_VERSION >= 7.1]]; then php vendor/bin/coveralls -v; fi
+# after_script:
+  # - if [[$TRAVIS_PHP_VERSION >= 7.1]]; then php vendor/bin/coveralls -v; fi
