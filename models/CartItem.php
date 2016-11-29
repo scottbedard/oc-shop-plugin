@@ -13,6 +13,13 @@ class CartItem extends Model
      * @var string The database table used by the model.
      */
     public $table = 'bedard_shop_cart_items';
+    
+    /**
+     * @var array Default attributes
+     */
+    public $attributes = [
+        'quantity' => 0,
+    ];
 
     /**
      * @var array Date fields
@@ -27,7 +34,11 @@ class CartItem extends Model
     /**
      * @var array Fillable fields
      */
-    protected $fillable = [];
+    protected $fillable = [
+        'cart_id',
+        'inventory_id',
+        'quantity',
+    ];
 
     /**
      * @var array Relations
@@ -39,5 +50,12 @@ class CartItem extends Model
         'inventory' => [
             'Bedard\Shop\Models\Inventory',
         ],
+    ];
+
+    /**
+     * @var array Touch parent timestamps
+     */
+    protected $touches = [
+        'cart',
     ];
 }

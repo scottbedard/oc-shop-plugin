@@ -1,6 +1,9 @@
 <?php namespace Bedard\Shop\Tet\Unit\Repositories;
 
+use Bedard\Shop\Models\Inventory;
+use Bedard\Shop\Models\Product;
 use Bedard\Shop\Repositories\CartRepository;
+use Bedard\Shop\Tests\Factory;
 use Bedard\Shop\Tests\PluginTestCase;
 
 class CartRepositoryTest extends PluginTestCase
@@ -30,5 +33,29 @@ class CartRepositoryTest extends PluginTestCase
         $found = $repository->find();
 
         $this->assertEquals($original->id, $found->id);
+    }
+
+    public function test_adding_an_item_to_the_cart()
+    {
+        $product = Factory::create(new Product);
+        $inventory = Factory::create(new Inventory, ['product_id' => $product->id, 'quantity' => 1]);
+
+        $repository = new CartRepository;
+        $cart = $repository->add($inventory, 1);
+        $this->assertEquals(1, $cart->items()->count());
+    }
+
+    public function test_adding_items_that_exceed_the_available_quantity()
+    {
+        $product = Factory::create(new Product);
+        $inventory = Factory::create(new Inventory, ['product_id' => $product->id, 'quantity' => 5]);
+
+        $repository = new CartRepository;
+        $cart = $repository->add($inventory, 10);
+        $this->assertEquals(5, $cart->items()->first()->quantity);
+
+        $cart = $repository->add($inventory, 10);
+        $this->assertEquals(5, $cart->items()->first()->quantity);
+        $this->assertEquals(1, $cart->items()->count());
     }
 }

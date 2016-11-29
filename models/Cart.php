@@ -28,7 +28,7 @@ class Cart extends Model
      * @var array Relations
      */
     public $hasMany = [
-        'cartItems' => [
+        'items' => [
             'Bedard\Shop\Models\CartItem',
         ],
     ];
@@ -53,5 +53,16 @@ class Cart extends Model
         do {
             $this->token = str_random(40);
         } while (self::whereToken($this->token)->exists());
+    }
+
+    /**
+     * Select carts that are open.
+     *
+     * @param  \October\Rain\Database\Builder   $query
+     * @return \October\Rain\Database\Builder
+     */
+    public function scopeIsOpen($query)
+    {
+        return $query; // @todo
     }
 }
