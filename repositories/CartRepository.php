@@ -1,6 +1,5 @@
 <?php namespace Bedard\Shop\Repositories;
 
-use Session;
 
 class CartRepository
 {
