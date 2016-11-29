@@ -29,8 +29,7 @@ before_script:
 
 script:
   - mkdir -p build/logs
-  - php vendor/bin/phpunit --coverage-clover build/logs/clover.xml
-  - if [[ $TRAVIS_PHP_VERSION < 7.1 ]] ; then php vendor/bin/phpunit; else php vendor/bin/phpunit --coverage-clover build/logs/clover.xml; fi
+  - if [[$TRAVIS_PHP_VERSION < 7.1]]; then php vendor/bin/phpunit; else php vendor/bin/phpunit --coverage-clover build/logs/clover.xml; fi
 
 after_script:
-  - if [[ $TRAVIS_PHP_VERSION >= 7.1 ]] ; then php vendor/bin/coveralls -v; fi
+  - if [[$TRAVIS_PHP_VERSION >= 7.1]]; then php vendor/bin/coveralls -v; fi
