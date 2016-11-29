@@ -26,10 +26,11 @@ before_script:
   - mv config/cms.php.testing config/testing/cms.php
   - cd plugins/bedard/shop
   - composer update
+  - phpenv config-rm xdebug.ini
 
 script:
   - mkdir -p build/logs
-  - php vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+  - phpdbg -qrr vendor/bin/phpunit --coverage-clover build/logs/clover.xml
 
 after_script:
   - if [[ $TRAVIS_PHP_VERSION > 5.6 ]] ; then php vendor/bin/coveralls -v; fi
