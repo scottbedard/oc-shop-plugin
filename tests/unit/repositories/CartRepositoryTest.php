@@ -21,7 +21,7 @@ class CartRepositoryTest extends PluginTestCase
     public function test_finding_a_cart_when_none_exists()
     {
         $repository = new CartRepository;
-        $cart = $repository->find();
+        $cart = $repository->getCart();
 
         $this->assertEquals('Bedard\Shop\Models\Cart', get_class($cart));
     }
@@ -30,7 +30,7 @@ class CartRepositoryTest extends PluginTestCase
     {
         $repository = new CartRepository;
         $original = $repository->create();
-        $found = $repository->find();
+        $found = $repository->getCart();
 
         $this->assertEquals($original->id, $found->id);
     }
@@ -41,7 +41,8 @@ class CartRepositoryTest extends PluginTestCase
         $inventory = Factory::create(new Inventory, ['product_id' => $product->id, 'quantity' => 1]);
 
         $repository = new CartRepository;
-        $cart = $repository->add($inventory->id, 1);
+        $repository->addInventory($inventory->id, 1);
+        $cart = $repository->getCart();
         $this->assertEquals(1, $cart->items()->count());
     }
 
@@ -51,10 +52,12 @@ class CartRepositoryTest extends PluginTestCase
         $inventory = Factory::create(new Inventory, ['product_id' => $product->id, 'quantity' => 5]);
 
         $repository = new CartRepository;
-        $cart = $repository->add($inventory->id, 10);
+        $repository->addInventory($inventory->id, 10);
+        $cart = $repository->getCart();
         $this->assertEquals(5, $cart->items()->first()->quantity);
 
-        $cart = $repository->add($inventory->id, 10);
+        $repository->addInventory($inventory->id, 10);
+        $cart = $repository->getCart();
         $this->assertEquals(5, $cart->items()->first()->quantity);
         $this->assertEquals(1, $cart->items()->count());
     }
@@ -65,8 +68,9 @@ class CartRepositoryTest extends PluginTestCase
         $inventory = Factory::create(new Inventory, ['product_id' => $product->id, 'quantity' => 5]);
 
         $repository = new CartRepository;
-        $cart = $repository->add($inventory->id, 10);
-        $repository->set($inventory->id, 3);
+        $repository->addInventory($inventory->id, 10);
+        $repository->setInventory($inventory->id, 3);
+        $cart = $repository->getCart();
 
         $this->assertEquals(3, $cart->items()->first()->quantity);
     }
@@ -77,8 +81,9 @@ class CartRepositoryTest extends PluginTestCase
         $inventory = Factory::create(new Inventory, ['product_id' => $product->id, 'quantity' => 5]);
 
         $repository = new CartRepository;
-        $cart = $repository->add($inventory->id, 10);
-        $repository->delete($inventory->id);
+        $repository->addInventory($inventory->id, 10);
+        $repository->deleteInventory($inventory->id);
+        $cart = $repository->getCart();
 
         $this->assertEquals(0, $cart->items()->count());
     }
@@ -89,8 +94,9 @@ class CartRepositoryTest extends PluginTestCase
         $inventory = Factory::create(new Inventory, ['product_id' => $product->id, 'quantity' => 5]);
 
         $repository = new CartRepository;
-        $cart = $repository->add($inventory->id, 10);
-        $repository->set($inventory->id, 0);
+        $repository->addInventory($inventory->id, 10);
+        $repository->setInventory($inventory->id, 0);
+        $cart = $repository->getCart();
 
         $this->assertEquals(0, $cart->items()->count());
     }

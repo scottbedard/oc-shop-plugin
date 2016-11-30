@@ -26,11 +26,11 @@ class CartRepository
      * @param  int
      * @return \Bedard\Shop\Models\Cart
      */
-    public function add($inventoryId, $quantity)
+    public function addInventory($inventoryId, $quantity)
     {
         $inventory = Inventory::findOrFail($inventoryId);
 
-        $cart = $this->find();
+        $cart = $this->getCart();
         $item = CartItem::firstOrCreate([
             'cart_id' => $cart->id,
             'inventory_id' => $inventory->id,
@@ -41,9 +41,7 @@ class CartRepository
             $item->quantity = $inventory->quantity;
         }
 
-        $item->save();
-
-        return $cart;
+        return $item->save();
     }
 
     /**
@@ -67,19 +65,17 @@ class CartRepository
      * @param  int
      * @return \Bedard\Shop\Models\Cart
      */
-    public function delete($inventoryId)
+    public function deleteInventory($inventoryId)
     {
-        $cart = $this->find();
+        $cart = $this->getCart();
 
         $item = $cart->items()->whereInventoryId($inventoryId)->first();
 
         if ($item) {
-            $item->delete();
+            return $item->delete();
         }
 
-        $cart->load('items');
-
-        return $cart;
+        return false;
     }
 
     /**
@@ -88,7 +84,7 @@ class CartRepository
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      * @return \Bedard\Shop\Models\Cart
      */
-    public function find()
+    public function getCart()
     {
         if ($this->cart !== null) {
             return $this->cart;
@@ -116,15 +112,15 @@ class CartRepository
      * @param  int
      * @return \Bedard\Shop\Models\Cart
      */
-    public function set($inventoryId, $quantity)
+    public function setInventory($inventoryId, $quantity)
     {
         $inventory = Inventory::findOrFail($inventoryId);
 
         if ($quantity <= 0) {
-            return $this->delete($inventory->id);
+            return $this->deleteInventory($inventory->id);
         }
 
-        $cart = $this->find();
+        $cart = $this->getCart();
         $item = CartItem::firstOrCreate([
             'cart_id' => $cart->id,
             'inventory_id' => $inventory->id,
@@ -135,8 +131,6 @@ class CartRepository
             $item->quantity = $inventory->quantity;
         }
 
-        $item->save();
-
-        return $cart;
+        return $item->save();
     }
 }
