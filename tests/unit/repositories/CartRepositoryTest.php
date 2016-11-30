@@ -100,4 +100,25 @@ class CartRepositoryTest extends PluginTestCase
 
         $this->assertEquals(0, $cart->items()->count());
     }
+
+    public function test_updating_multiple_inventories()
+    {
+        $product1 = Factory::create(new Product);
+        $product2 = Factory::create(new Product);
+        $inventory1 = Factory::create(new Inventory, ['product_id' => $product1->id, 'quantity' => 5]);
+        $inventory2 = Factory::create(new Inventory, ['product_id' => $product2->id, 'quantity' => 5]);
+
+        $repository = new CartRepository;
+        $repository->addInventory($inventory1->id, 1);
+        $repository->addInventory($inventory2->id, 1);
+
+        $repository->updateInventories([
+            $inventory1->id => 2,
+            $inventory2->id => 3,
+        ]);
+
+        $cart = $repository->getCart();
+        $this->assertEquals(2, $cart->items()->whereInventoryId($inventory1->id)->first()->quantity);
+        $this->assertEquals(3, $cart->items()->whereInventoryId($inventory2->id)->first()->quantity);
+    }
 }

@@ -133,4 +133,17 @@ class CartRepository
 
         return $item->save();
     }
+
+    /**
+     * Update multiple inventories.
+     *
+     * @param  array  $inventories
+     * @return void
+     */
+    public function updateInventories(array $inventories)
+    {
+        foreach ($inventories as $inventoryId => $quantity) {
+            $this->setInventory($inventoryId, $quantity);
+        }
+    }
 }
