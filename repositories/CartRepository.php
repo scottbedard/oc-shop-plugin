@@ -79,6 +79,18 @@ class CartRepository
     }
 
     /**
+     * Determine if a cart exists.
+     *
+     * @return bool
+     */
+    public function exists()
+    {
+        $token = $this->getToken();
+
+        return Cart::whereToken($token)->isOpen()->exists();
+    }
+
+    /**
      * Get the current cart, or create one if none exists.
      *
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
@@ -90,10 +102,7 @@ class CartRepository
             return $this->cart;
         }
 
-        $token = Session::get(self::CART_KEY);
-        if (! $token && Cookie::has(self::CART_KEY)) {
-            $token = Cookie::get(self::CART_KEY);
-        }
+        $token = $this->getToken();
 
         if (! $token) {
             return $this->create();
@@ -104,6 +113,21 @@ class CartRepository
             ->firstOrFail();
 
         return $this->cart;
+    }
+
+    /**
+     * Get the cart token.
+     *
+     * @return string
+     */
+    public function getToken()
+    {
+        $token = Session::get(self::CART_KEY);
+        if (! $token && Cookie::has(self::CART_KEY)) {
+            $token = Cookie::get(self::CART_KEY);
+        }
+
+        return $token;
     }
 
     /**

@@ -24,6 +24,23 @@ class Cart extends ApiController
     }
 
     /**
+     * Determine if a cart exists or not.
+     *
+     * @param  CartRepository $repository
+     * @return bool
+     */
+    public function exists(CartRepository $repository)
+    {
+        try {
+            return $repository->exists() ? 'true' : 'false';
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+
+            abort(500, $e->getMessage());
+        }
+    }
+
+    /**
      * Show the current cart.
      *
      * @param  \Bedard\Shop\Repositories\CartRepository     $repository
