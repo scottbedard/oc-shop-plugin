@@ -41,7 +41,7 @@ class CartRepositoryTest extends PluginTestCase
         $inventory = Factory::create(new Inventory, ['product_id' => $product->id, 'quantity' => 1]);
 
         $repository = new CartRepository;
-        $cart = $repository->add($inventory, 1);
+        $cart = $repository->add($inventory->id, 1);
         $this->assertEquals(1, $cart->items()->count());
     }
 
@@ -51,10 +51,10 @@ class CartRepositoryTest extends PluginTestCase
         $inventory = Factory::create(new Inventory, ['product_id' => $product->id, 'quantity' => 5]);
 
         $repository = new CartRepository;
-        $cart = $repository->add($inventory, 10);
+        $cart = $repository->add($inventory->id, 10);
         $this->assertEquals(5, $cart->items()->first()->quantity);
 
-        $cart = $repository->add($inventory, 10);
+        $cart = $repository->add($inventory->id, 10);
         $this->assertEquals(5, $cart->items()->first()->quantity);
         $this->assertEquals(1, $cart->items()->count());
     }
@@ -65,8 +65,8 @@ class CartRepositoryTest extends PluginTestCase
         $inventory = Factory::create(new Inventory, ['product_id' => $product->id, 'quantity' => 5]);
 
         $repository = new CartRepository;
-        $cart = $repository->add($inventory, 10);
-        $repository->update($inventory, 3);
+        $cart = $repository->add($inventory->id, 10);
+        $repository->set($inventory->id, 3);
 
         $this->assertEquals(3, $cart->items()->first()->quantity);
     }
@@ -77,8 +77,8 @@ class CartRepositoryTest extends PluginTestCase
         $inventory = Factory::create(new Inventory, ['product_id' => $product->id, 'quantity' => 5]);
 
         $repository = new CartRepository;
-        $cart = $repository->add($inventory, 10);
-        $repository->delete($inventory);
+        $cart = $repository->add($inventory->id, 10);
+        $repository->delete($inventory->id);
 
         $this->assertEquals(0, $cart->items()->count());
     }
@@ -89,8 +89,8 @@ class CartRepositoryTest extends PluginTestCase
         $inventory = Factory::create(new Inventory, ['product_id' => $product->id, 'quantity' => 5]);
 
         $repository = new CartRepository;
-        $cart = $repository->add($inventory, 10);
-        $repository->update($inventory, 0);
+        $cart = $repository->add($inventory->id, 10);
+        $repository->set($inventory->id, 0);
 
         $this->assertEquals(0, $cart->items()->count());
     }

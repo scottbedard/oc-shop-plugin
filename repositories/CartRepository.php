@@ -15,14 +15,21 @@ class CartRepository
     const CART_KEY = 'bedard_shop_cart';
 
     /**
+     * @var \Bedard\Shop\Models\Cart
+     */
+    protected $cart = null;
+
+    /**
      * Add an item to the curent cart.
      *
-     * @param  \Bedard\Shop\Models\Inventory
+     * @param  int
      * @param  int
      * @return \Bedard\Shop\Models\Cart
      */
-    public function add(Inventory $inventory, $quantity)
+    public function add($inventoryId, $quantity)
     {
+        $inventory = Inventory::findOrFail($inventoryId);
+
         $cart = $this->find();
         $item = CartItem::firstOrCreate([
             'cart_id' => $cart->id,
@@ -46,25 +53,25 @@ class CartRepository
      */
     public function create()
     {
-        $cart = Cart::create();
+        $this->cart = Cart::create();
 
-        Session::put(self::CART_KEY, $cart->token);
-        Cookie::queue(self::CART_KEY, $cart->token, CartSettings::getLifespan());
+        Session::put(self::CART_KEY, $this->cart->token);
+        Cookie::queue(self::CART_KEY, $this->cart->token, CartSettings::getLifespan());
 
-        return $cart;
+        return $this->cart;
     }
 
     /**
      * Delete an inventory from the cart.
      *
-     * @param  Inventory $inventory
+     * @param  int
      * @return \Bedard\Shop\Models\Cart
      */
-    public function delete(Inventory $inventory)
+    public function delete($inventoryId)
     {
         $cart = $this->find();
 
-        $item = $cart->items()->whereInventoryId($inventory->id)->first();
+        $item = $cart->items()->whereInventoryId($inventoryId)->first();
 
         if ($item) {
             $item->delete();
@@ -83,8 +90,11 @@ class CartRepository
      */
     public function find()
     {
-        $token = Session::get(self::CART_KEY);
+        if ($this->cart !== null) {
+            return $this->cart;
+        }
 
+        $token = Session::get(self::CART_KEY);
         if (! $token && Cookie::has(self::CART_KEY)) {
             $token = Cookie::get(self::CART_KEY);
         }
@@ -100,16 +110,18 @@ class CartRepository
     }
 
     /**
-     * Update an item in the curent cart.
+     * Set an item's quantity in the curent cart.
      *
-     * @param  \Bedard\Shop\Models\Inventory
+     * @param  int
      * @param  int
      * @return \Bedard\Shop\Models\Cart
      */
-    public function update(Inventory $inventory, $quantity)
+    public function set($inventoryId, $quantity)
     {
+        $inventory = Inventory::findOrFail($inventoryId);
+
         if ($quantity <= 0) {
-            return $this->delete($inventory);
+            return $this->delete($inventory->id);
         }
 
         $cart = $this->find();
