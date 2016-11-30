@@ -99,9 +99,11 @@ class CartRepository
             return $this->create();
         }
 
-        return Cart::whereToken($token)
+        $this->cart = Cart::whereToken($token)
             ->isOpen()
             ->firstOrFail();
+
+        return $this->cart;
     }
 
     /**
