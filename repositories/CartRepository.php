@@ -101,8 +101,19 @@ class CartRepository
 
         return Cart::whereToken($token)
             ->isOpen()
-            ->with('items')
             ->firstOrFail();
+    }
+
+    /**
+     * Load the related cart data.
+     *
+     * @return \Bedard\Shop\Models\Cart
+     */
+    public function loadCart()
+    {
+        $this->getCart()->load('items.inventory.product');
+
+        return $this->cart;
     }
 
     /**

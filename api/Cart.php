@@ -32,7 +32,7 @@ class Cart extends ApiController
     public function index(CartRepository $repository)
     {
         try {
-            return $repository->current();
+            return $repository->loadCart();
         } catch (Exception $e) {
             Log::error($e->getMessage());
 

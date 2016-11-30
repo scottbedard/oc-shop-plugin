@@ -121,4 +121,13 @@ class CartRepositoryTest extends PluginTestCase
         $this->assertEquals(2, $cart->items()->whereInventoryId($inventory1->id)->first()->quantity);
         $this->assertEquals(3, $cart->items()->whereInventoryId($inventory2->id)->first()->quantity);
     }
+
+    public function test_getting_cart_with_related_data()
+    {
+        $repository = new CartRepository;
+        $cart = $repository->loadCart();
+
+        $this->assertEquals('Bedard\Shop\Models\Cart', get_class($cart));
+        $this->assertEquals('October\Rain\Database\Collection', get_class($cart->items));
+    }
 }
