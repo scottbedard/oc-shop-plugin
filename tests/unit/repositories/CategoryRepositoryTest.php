@@ -10,17 +10,6 @@ class CategoryRepositoryTest extends PluginTestCase
 {
     protected $refreshPlugins = ['Bedard.Shop'];
 
-    public function test_selecting_multiple_categories_columns()
-    {
-        $repository = new CategoryRepository;
-
-        Factory::create(new Category);
-        $results = $repository->get(['select' => ['id']])->first()->toArray();
-
-        $this->assertTrue(array_key_exists('id', $results));
-        $this->assertFalse(array_key_exists('name', $results));
-    }
-
     public function test_hiding_empty_categories()
     {
         $repository = new CategoryRepository;
@@ -49,19 +38,6 @@ class CategoryRepositoryTest extends PluginTestCase
 
         $this->assertTrue(array_key_exists('thumbnails', $thumbnails));
         $this->assertFalse(array_key_exists('thumbnails', $noThumbnails));
-    }
-
-    public function test_selecting_single_category_colums()
-    {
-        $repository = new CategoryRepository;
-
-        $category = Factory::create(new Category);
-        $allColumns = $repository->find($category->slug);
-        $selectedColumns = $repository->find($category->slug, ['select' => ['id']]);
-
-        $this->assertEquals($category->name, $allColumns->name);
-        $this->assertEquals($category->id, $selectedColumns->id);
-        $this->assertNull($selectedColumns->name);
     }
 
     public function test_eager_loading_single_category_products()
