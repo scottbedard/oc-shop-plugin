@@ -43,6 +43,7 @@ class CartRepository
         }
 
         $item->save();
+
         return $item;
     }
 
