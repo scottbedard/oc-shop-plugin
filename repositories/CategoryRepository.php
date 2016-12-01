@@ -14,10 +14,6 @@ class CategoryRepository
     {
         $query = Category::isActive();
 
-        if (array_key_exists('select', $params) && is_array($params['select']) && ! empty($params['select'])) {
-            $query->select($params['select']);
-        }
-
         if (array_key_exists('hide_empty', $params) && $params['hide_empty']) {
             $query->has('products');
         }
@@ -38,13 +34,10 @@ class CategoryRepository
      */
     public function find($slug, array $params = [])
     {
-        $query = Category::isActive()->with('filters')->whereSlug($slug);
-
-        if (array_key_exists('select', $params) && $params['select']) {
-            $query->select($params['select']);
-        }
-
-        $category = $query->firstOrFail();
+        $category = Category::isActive()
+            ->with('filters')
+            ->whereSlug($slug)
+            ->firstOrFail();
 
         if (array_key_exists('load_products', $params) && $params['load_products']) {
             $category->products = $category->getProducts($params);
