@@ -22,6 +22,16 @@ class CartItem extends Model
     ];
 
     /**
+     * @var array Attribute casting.
+     */
+    protected $casts = [
+        'id' => 'integer',
+        'cart_id' => 'integer',
+        'inventory_id' => 'integer',
+        'quantity' => 'integer',
+    ];
+
+    /**
      * @var array Date fields
      */
     protected $dates = ['deleted_at'];

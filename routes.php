@@ -4,8 +4,8 @@ Route::group(['middleware' => '\Bedard\Shop\Classes\ApiMiddleware'], function ()
     //
     // Cart
     //
-    Route::get('api/bedard/shop/cart/add', 'Bedard\Shop\Api\Cart@add');
     Route::get('api/bedard/shop/cart/exists', 'Bedard\Shop\Api\Cart@exists');
+    Route::post('api/bedard/shop/cart/add', 'Bedard\Shop\Api\Cart@add');
     Route::resource('api/bedard/shop/cart', 'Bedard\Shop\Api\Cart');
 
     //

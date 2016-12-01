@@ -5,6 +5,7 @@ use Bedard\Shop\Models\CartItem;
 use Bedard\Shop\Models\CartSettings;
 use Bedard\Shop\Models\Inventory;
 use Cookie;
+use Exception;
 use Session;
 
 class CartRepository
@@ -41,7 +42,8 @@ class CartRepository
             $item->quantity = $inventory->quantity;
         }
 
-        return $item->save();
+        $item->save();
+        return $item;
     }
 
     /**
@@ -108,9 +110,13 @@ class CartRepository
             return $this->create();
         }
 
-        $this->cart = Cart::whereToken($token)
-            ->isOpen()
-            ->firstOrFail();
+        try {
+            $this->cart = Cart::whereToken($token)
+                ->isOpen()
+                ->firstOrFail();
+        } catch (Exception $e) {
+            $this->cart = $this->create();
+        }
 
         return $this->cart;
     }

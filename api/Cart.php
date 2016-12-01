@@ -15,7 +15,10 @@ class Cart extends ApiController
     public function add(CartRepository $repository)
     {
         try {
-            // @todo
+            $inventoryId = input('inventoryId');
+            $quantity = input('quantity');
+
+            return $repository->addInventory($inventoryId, $quantity);
         } catch (Exception $e) {
             Log::error($e->getMessage());
 
