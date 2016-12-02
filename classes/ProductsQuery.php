@@ -46,6 +46,7 @@ class ProductsQuery
         $this->applyWhereStatements();
         $this->applyPagination();
         $this->applyOrderByStatements();
+        $this->loadRelatedModels();
     }
 
     /**
@@ -127,6 +128,18 @@ class ProductsQuery
         // otherwise grab all products appearing in our category
         else {
             $this->query->appearingInCategory($this->category->id);
+        }
+    }
+
+    /**
+     * Load related models.
+     *
+     * @return void
+     */
+    protected function loadRelatedModels()
+    {
+        if (array_key_exists('load_thumbnails', $this->params) && $this->params['load_thumbnails']) {
+            $this->query->with('thumbnails');
         }
     }
 }

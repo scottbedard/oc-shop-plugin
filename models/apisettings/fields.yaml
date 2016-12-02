@@ -20,10 +20,8 @@ tabs:
             label: bedard.shop::lang.api.categories.load_thumbnails
             tab: bedard.shop::lang.categories.plural
             type: switch
-            span: right
 
         categories_hide_empty:
             label: bedard.shop::lang.api.categories.hide_empty
             tab: bedard.shop::lang.categories.plural
             type: switch
-            span: right

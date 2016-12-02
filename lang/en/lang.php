@@ -29,11 +29,11 @@ return [
     //
     'api' => [
         'category' => [
-            'load_thumbnails' => 'Load thumbnails',
+            'load_thumbnails' => 'Load product thumbnails',
         ],
         'categories' => [
             'hide_empty' => 'Hide empty categories',
-            'load_thumbnails' => 'Load thumbnails',
+            'load_thumbnails' => 'Load category thumbnails',
         ],
         'description' => 'Manage API settings.',
         'form' => [

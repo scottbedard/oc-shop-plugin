@@ -61,7 +61,9 @@ class Categories extends ApiController
     public function products(CategoryRepository $repository, $slug)
     {
         try {
-            $params = [];
+            $params = [
+                'load_thumbnails' => ApiSettings::categoryLoadThumbnails(),
+            ];
 
             return $repository->products($slug, $params);
         } catch (Exception $e) {
