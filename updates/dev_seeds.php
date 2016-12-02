@@ -45,7 +45,6 @@ class DevSeeder extends Seeder
                 ],
             ],
         ]);
-
     }
 
     protected function seedProducts($count)
