@@ -144,7 +144,12 @@ class CartRepository
      */
     public function loadCart()
     {
-        $this->getCart()->load('items.inventory.product');
+        $this->getCart()->load([
+            'items.inventory.product' => function ($product) {
+                $product->joinPrice()->with('thumbnails');
+            },
+            'items.inventory.optionValues.option',
+        ]);
 
         return $this->cart;
     }
