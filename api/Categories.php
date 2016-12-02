@@ -19,7 +19,6 @@ class Categories extends ApiController
             $params = [
                 'hide_empty' => ApiSettings::categoriesHideEmpty(),
                 'load_thumbnails' => ApiSettings::categoriesLoadThumbnails(),
-                'select' => ApiSettings::categoriesSelect(),
             ];
 
             return $repository->get($params);
@@ -41,11 +40,7 @@ class Categories extends ApiController
     {
         try {
             $params = [
-                'load_products' => ApiSettings::categoryLoadProducts(),
-                'load_products_thumbnails' => ApiSettings::categoryLoadProductsThumbnails(),
                 'load_thumbnails' => ApiSettings::categoryLoadThumbnails(),
-                'products_select' => ApiSettings::categoryProductsSelect(),
-                'select' => ApiSettings::categorySelect(),
             ];
 
             return $repository->find($slug, $params);
@@ -66,9 +61,7 @@ class Categories extends ApiController
     public function products(CategoryRepository $repository, $slug)
     {
         try {
-            $params = [
-                'products_select' => ApiSettings::categoryProductsSelect(),
-            ];
+            $params = [];
 
             return $repository->products($slug, $params);
         } catch (Exception $e) {

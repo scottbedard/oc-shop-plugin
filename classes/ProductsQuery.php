@@ -41,9 +41,8 @@ class ProductsQuery
      */
     protected function buildQuery()
     {
-        $this->query = Product::isEnabled();
+        $this->query = Product::isEnabled()->joinPrice();
 
-        $this->applySelectStatements();
         $this->applyWhereStatements();
         $this->applyPagination();
         $this->applyOrderByStatements();
@@ -111,24 +110,6 @@ class ProductsQuery
                 $q->where($filter->left, $filter->comparator, $right);
             }
         });
-    }
-
-    /**
-     * Apply select statements and join prices.
-     *
-     * @return void
-     */
-    protected function applySelectStatements()
-    {
-        // apply select statements if neccessary
-        if (array_key_exists('products_select', $this->params) && $this->params['products_select']) {
-            $this->query->select($this->params['products_select']);
-
-            // join the prices if neccessary
-            if (in_array('price', $this->params['products_select'])) {
-                $this->query->joinPrice();
-            }
-        }
     }
 
     /**

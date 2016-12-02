@@ -15,19 +15,6 @@ tabs:
             label: bedard.shop::lang.api.category.load_thumbnails
             tab: bedard.shop::lang.categories.singular
             type: switch
-            span: right
-
-        category_load_products:
-            label: bedard.shop::lang.api.category.load_products
-            tab: bedard.shop::lang.categories.singular
-            type: switch
-            span: right
-
-        category_load_products_thumbnails:
-            label: bedard.shop::lang.api.category.load_products_thumbnails
-            tab: bedard.shop::lang.categories.singular
-            type: switch
-            span: right
 
         categories_load_thumbnails:
             label: bedard.shop::lang.api.categories.load_thumbnails

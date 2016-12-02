@@ -17,9 +17,7 @@ class Products extends ApiController
     public function show(ProductRepository $repository, $slug)
     {
         try {
-            $params = [
-
-            ];
+            $params = [];
 
             return $repository->find($slug, $params);
         } catch (Exception $e) {

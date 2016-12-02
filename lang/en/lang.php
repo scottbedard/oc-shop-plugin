@@ -29,9 +29,7 @@ return [
     //
     'api' => [
         'category' => [
-            'load_products' => 'Load first page of products',
-            'load_products_thumbnails' => 'Load product thumbnails',
-            'load_thumbnails' => 'Load category thumbnails',
+            'load_thumbnails' => 'Load thumbnails',
         ],
         'categories' => [
             'hide_empty' => 'Hide empty categories',
@@ -40,7 +38,7 @@ return [
         'description' => 'Manage API settings.',
         'form' => [
             'is_enabled' => 'API Endpoints',
-            'is_enabled_comment' => 'When turned on, HTTP endpoints will be accessible. For traditional themes using October components, this can be left off.',
+            'is_enabled_comment' => 'Traditional themes using October components should leave this turned off.',
         ],
         'label' => 'API',
         'product' => [
