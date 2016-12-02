@@ -9,7 +9,8 @@ use Model;
  */
 class Filter extends Model
 {
-    use \October\Rain\Database\Traits\Validation;
+    use \October\Rain\Database\Traits\Purgeable,
+        \October\Rain\Database\Traits\Validation;
 
     /**
      * @var string The database table used by the model.
@@ -37,6 +38,13 @@ class Filter extends Model
         'left',
         'right',
         'value',
+    ];
+
+    /**
+     * @var array Purgeable fields
+     */
+    protected $purgeable = [
+        'is_deleted',
     ];
 
     /**

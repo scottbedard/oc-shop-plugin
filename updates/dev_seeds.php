@@ -31,6 +31,21 @@ class DevSeeder extends Seeder
         $parent2 = Factory::create(new Category, ['name' => 'Parent 2', 'slug' => 'parent-2']);
         Factory::create(new Category, ['name' => 'Child 1', 'slug' => 'child-1', 'parent_id' => $parent1->id]);
         Factory::create(new Category, ['name' => 'Child 2', 'slug' => 'child-2', 'parent_id' => $parent2->id]);
+        Factory::create(new Category, [
+            'name' => 'On sale',
+            'slug' => 'sale',
+            'category_filters' => [
+                [
+                    'comparator' => '<',
+                    'id' => null,
+                    'is_deleted' => false,
+                    'left' => 'price',
+                    'right' => 'base_price',
+                    'value' => 0,
+                ],
+            ],
+        ]);
+
     }
 
     protected function seedProducts($count)
@@ -74,15 +89,25 @@ class DevSeeder extends Seeder
             'end_at' => Carbon::yesterday(),
         ]);
 
-        Factory::create(new Discount, [
+        $active = Factory::create(new Discount, [
             'name' => 'Active',
             'start_at' => Carbon::yesterday(),
             'end_at' => Carbon::tomorrow(),
+            'amount_percentage' => 25,
+            'is_percentage' => true,
         ]);
 
-        Factory::create(new Discount, [
+        $active->products()->sync([1, 2, 3]);
+        $active->save();
+
+        $upcoming = Factory::create(new Discount, [
             'name' => 'Upcoming',
             'start_at' => Carbon::tomorrow(),
+            'amount_exact' => 5,
+            'is_percentage' => false,
         ]);
+
+        $upcoming->categories()->sync([1]);
+        $upcoming->save();
     }
 }
