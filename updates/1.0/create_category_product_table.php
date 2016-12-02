@@ -14,7 +14,7 @@ class CreateCategoryProductTables extends Migration
             $table->integer('product_id')->unsigned()->nullable();
             $table->boolean('is_inherited')->default(false);
             $table->integer('sort_order')->unsigned()->nullable()->index();
-            $table->primary(['category_id', 'product_id']);
+            $table->primary(['category_id', 'product_id', 'is_inherited'], 'category_product');
         });
     }
 
