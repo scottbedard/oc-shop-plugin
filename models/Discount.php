@@ -203,6 +203,26 @@ class Discount extends Model
     }
 
     /**
+     * Get categories options.
+     *
+     * @return array
+     */
+    public function getCategoriesOptions()
+    {
+        return Category::lists('name', 'id');
+    }
+
+    /**
+     * Get products options.
+     *
+     * @return array
+     */
+    public function getProductsOptions()
+    {
+        return Product::lists('name', 'id');
+    }
+
+    /**
      * Save the prices created by this discount.
      *
      * @return void

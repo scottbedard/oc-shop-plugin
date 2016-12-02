@@ -45,10 +45,12 @@ fields:
 
     categories:
         label: bedard.shop::lang.categories.plural
-        type: relation
+        type: checkboxlist
         span: left
+        emptyOption: bedard.shop::lang.discounts.form.categories_empty
 
     products:
         label: bedard.shop::lang.products.plural
-        type: relation
+        type: checkboxlist
         span: right
+        emptyOption: bedard.shop::lang.discounts.form.products_empty
