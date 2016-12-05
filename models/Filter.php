@@ -1,8 +1,8 @@
 <?php namespace Bedard\Shop\Models;
 
-use Carbon\Carbon;
 use DB;
 use Model;
+use Carbon\Carbon;
 
 /**
  * Filter Model.

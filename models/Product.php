@@ -1,12 +1,12 @@
 <?php namespace Bedard\Shop\Models;
 
 use DB;
-use Flash;
 use Lang;
+use Flash;
 use Model;
+use Queue;
 use October\Rain\Database\Builder;
 use October\Rain\Database\ModelException;
-use Queue;
 
 /**
  * Product Model.

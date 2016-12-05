@@ -1,13 +1,13 @@
 <?php namespace Bedard\Shop\Tests\Unit\Models;
 
+use stdClass;
+use Carbon\Carbon;
+use Bedard\Shop\Models\Price;
+use Bedard\Shop\Tests\Factory;
+use Bedard\Shop\Models\Product;
 use Bedard\Shop\Models\Category;
 use Bedard\Shop\Models\Discount;
-use Bedard\Shop\Models\Price;
-use Bedard\Shop\Models\Product;
-use Bedard\Shop\Tests\Factory;
 use Bedard\Shop\Tests\PluginTestCase;
-use Carbon\Carbon;
-use stdClass;
 
 class DiscountTest extends PluginTestCase
 {

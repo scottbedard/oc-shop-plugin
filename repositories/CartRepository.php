@@ -1,12 +1,12 @@
 <?php namespace Bedard\Shop\Repositories;
 
+use Cookie;
+use Session;
+use Exception;
 use Bedard\Shop\Models\Cart;
 use Bedard\Shop\Models\CartItem;
-use Bedard\Shop\Models\CartSettings;
 use Bedard\Shop\Models\Inventory;
-use Cookie;
-use Exception;
-use Session;
+use Bedard\Shop\Models\CartSettings;
 
 class CartRepository
 {

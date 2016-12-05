@@ -1,10 +1,10 @@
 <?php namespace Bedard\Shop\Tests\Unit\Models;
 
-use Bedard\Shop\Models\Inventory;
 use Bedard\Shop\Models\Option;
-use Bedard\Shop\Models\OptionValue;
-use Bedard\Shop\Models\Product;
 use Bedard\Shop\Tests\Factory;
+use Bedard\Shop\Models\Product;
+use Bedard\Shop\Models\Inventory;
+use Bedard\Shop\Models\OptionValue;
 use Bedard\Shop\Tests\PluginTestCase;
 
 class InventoryTest extends PluginTestCase
