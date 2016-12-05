@@ -32,6 +32,11 @@ class ApiSettings extends Model
         return self::get('categories_load_thumbnails', false);
     }
 
+    public static function categoriesLoadProductsCount()
+    {
+        return self::get('categories_load_products_count', false);
+    }
+
     public static function categoryLoadThumbnails()
     {
         return self::get('category_load_thumbnails', false);

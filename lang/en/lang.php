@@ -34,6 +34,7 @@ return [
         'categories' => [
             'hide_empty' => 'Hide empty categories',
             'load_thumbnails' => 'Load category thumbnails',
+            'load_products_count' => 'Load products count',
         ],
         'description' => 'Manage API settings.',
         'form' => [

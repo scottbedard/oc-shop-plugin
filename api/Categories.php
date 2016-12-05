@@ -18,6 +18,7 @@ class Categories extends ApiController
         try {
             $params = [
                 'hide_empty' => ApiSettings::categoriesHideEmpty(),
+                'load_products_count' => ApiSettings::categoriesLoadProductsCount(),
                 'load_thumbnails' => ApiSettings::categoriesLoadThumbnails(),
             ];
 

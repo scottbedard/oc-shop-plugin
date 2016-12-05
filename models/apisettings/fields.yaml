@@ -21,6 +21,11 @@ tabs:
             tab: bedard.shop::lang.categories.plural
             type: switch
 
+        categories_load_products_count:
+            label: bedard.shop::lang.api.categories.load_products_count
+            tab: bedard.shop::lang.categories.plural
+            type: switch
+
         categories_hide_empty:
             label: bedard.shop::lang.api.categories.hide_empty
             tab: bedard.shop::lang.categories.plural

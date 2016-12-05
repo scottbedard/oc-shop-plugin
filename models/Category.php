@@ -10,7 +10,8 @@ use Bedard\Shop\Classes\ProductsQuery;
  */
 class Category extends Model
 {
-    use \October\Rain\Database\Traits\Purgeable,
+    use \Bedard\Shop\Traits\Subqueryable,
+        \October\Rain\Database\Traits\Purgeable,
         \October\Rain\Database\Traits\Validation;
 
     /**
@@ -434,6 +435,27 @@ class Category extends Model
     public function scopeIsNotParentOf($query, $child)
     {
         return $query->whereNotIn('id', self::getParentIds($child));
+    }
+
+    /**
+     * Count the products in the category.
+     *
+     * @param  \October\Rain\Database\Builder   $query
+     * @return \October\Rain\Database\Builder
+     */
+    public function scopeJoinProductsCount($query)
+    {
+        $alias = 'products';
+        $grammar = $query->getQuery()->getGrammar();
+
+        $subquery = DB::table('bedard_shop_category_product')
+            ->select('category_id')
+            ->selectRaw('count(*) as '.$grammar->wrap('products_count'))
+            ->groupBy('category_id');
+
+        return $query
+            ->addSelect($alias.'.products_count')
+            ->joinSubquery($subquery, $alias, 'bedard_shop_categories.id', '=', $alias.'.category_id', 'leftJoin');
     }
 
     /**

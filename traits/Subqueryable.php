@@ -36,7 +36,7 @@ trait Subqueryable
      * @param  string                           $join       Join type [ join, leftJoin ]
      * @return \October\Rain\Database\Builder
      */
-    public function scopeJoinSubquery(Builder $query, Builder $subquery, $alias, $left, $operator, $right, $join = 'join')
+    public function scopeJoinSubquery(Builder $query, $subquery, $alias, $left, $operator, $right, $join = 'join')
     {
         $self = $this->getTable().'.*';
 
@@ -44,7 +44,10 @@ trait Subqueryable
             $query->addSelect($self);
         }
 
-        $subquery = $subquery->getQuery();
+        if (get_class($subquery) === 'October\Rain\Database\Builder') {
+            $subquery = $subquery->getQuery();
+        }
+
         $raw = DB::raw('('.$subquery->toSql().') '.$alias);
 
         return $query->$join($raw, $left, $operator, $right)->mergeBindings($subquery);

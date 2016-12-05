@@ -22,6 +22,10 @@ class CategoryRepository
             $query->with('thumbnails');
         }
 
+        if (array_key_exists('load_products_count', $params) && $params['load_products_count']) {
+            $query->joinProductsCount();
+        }
+
         return $query->get();
     }
 
