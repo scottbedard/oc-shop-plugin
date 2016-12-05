@@ -272,6 +272,7 @@ return [
             'status_normal' => 'Normal',
             'status_discounted' => ':discount_name',
             'status_discounted_tooltip' => 'Discount ends :end_at',
+            'status_discounted_indefinite_tooltip' => 'Discount runs indefinitely',
             'title' => 'Manage Products',
         ],
         'plural' => 'Products',
