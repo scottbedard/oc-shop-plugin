@@ -44,6 +44,8 @@ class CartRepository
 
         $item->save();
 
+        $item->load('inventory.product.thumbnails');
+
         return $item;
     }
 
