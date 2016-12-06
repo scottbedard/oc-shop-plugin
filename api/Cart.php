@@ -61,6 +61,26 @@ class Cart extends ApiController
     }
 
     /**
+     * Remove an item from the cart.
+     *
+     * @param  CartRepository $repository
+     * @param  int            $inventoryId
+     * @return \Bedard\Shop\Models\Cart
+     */
+    public function remove(CartRepository $repository, $inventoryId)
+    {
+        try {
+            $repository->deleteItem($inventoryId);
+
+            return $repository->loadCart();
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+
+            abort(500, $e->getMessage());
+        }
+    }
+
+    /**
      * Create a new cart.
      *
      * @param  \Bedard\Shop\Repositories\CartRepository     $repository

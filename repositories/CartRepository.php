@@ -68,7 +68,7 @@ class CartRepository
      * @param  int
      * @return \Bedard\Shop\Models\Cart
      */
-    public function deleteInventory($inventoryId)
+    public function deleteItem($inventoryId)
     {
         $cart = $this->getCart();
 
@@ -166,7 +166,7 @@ class CartRepository
         $inventory = Inventory::findOrFail($inventoryId);
 
         if ($quantity <= 0) {
-            return $this->deleteInventory($inventory->id);
+            return $this->deleteItem($inventory->id);
         }
 
         $cart = $this->getCart();
