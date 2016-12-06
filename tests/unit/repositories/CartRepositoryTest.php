@@ -82,7 +82,7 @@ class CartRepositoryTest extends PluginTestCase
 
         $repository = new CartRepository;
         $repository->addInventory($inventory->id, 10);
-        $repository->deleteInventory($inventory->id);
+        $repository->deleteItem($inventory->id);
         $cart = $repository->getCart();
 
         $this->assertEquals(0, $cart->items()->count());
