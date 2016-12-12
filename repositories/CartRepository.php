@@ -45,6 +45,7 @@ class CartRepository
         $item->save();
 
         $item->load([
+            'inventory.optionValues.option',
             'inventory.product' => function ($product) {
                 return $product->joinPrice()->with('thumbnails');
             },
