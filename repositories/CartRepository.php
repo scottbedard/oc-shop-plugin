@@ -44,7 +44,11 @@ class CartRepository
 
         $item->save();
 
-        $item->load('inventory.product.thumbnails');
+        $item->load([
+            'inventory.product' => function($product) {
+                return $product->joinPrice()->with('thumbnails');
+            },
+        ]);
 
         return $item;
     }
