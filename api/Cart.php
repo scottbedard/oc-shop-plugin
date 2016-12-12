@@ -61,13 +61,13 @@ class Cart extends ApiController
     }
 
     /**
-     * Remove an item from the cart.
+     * Delete an item from the cart.
      *
      * @param  CartRepository $repository
      * @param  int            $inventoryId
      * @return \Bedard\Shop\Models\Cart
      */
-    public function remove(CartRepository $repository, $inventoryId)
+    public function deleteItem(CartRepository $repository, $inventoryId)
     {
         try {
             $repository->deleteItem($inventoryId);
@@ -96,5 +96,10 @@ class Cart extends ApiController
 
             abort(500, $e->getMessage());
         }
+    }
+
+    public function updateItem(CartRepository $repository)
+    {
+        return 'hello';
     }
 }
