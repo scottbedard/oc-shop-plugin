@@ -84,7 +84,7 @@ class CartItem extends Model
         if ($this->quantity < 0) {
             $this->quantity = 0;
         }
-        
+
         if ($this->quantity > $this->inventory->quantity) {
             $this->quantity = $this->inventory->quantity;
         }
