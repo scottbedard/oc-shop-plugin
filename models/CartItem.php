@@ -68,4 +68,25 @@ class CartItem extends Model
     protected $touches = [
         'cart',
     ];
+
+    /**
+     * Before save.
+     *
+     * @return void
+     */
+    public function beforeSave()
+    {
+        $this->validateQuantity();
+    }
+
+    protected function validateQuantity()
+    {
+        if ($this->quantity < 0) {
+            $this->quantity = 0;
+        }
+        
+        if ($this->quantity > $this->inventory->quantity) {
+            $this->quantity = $this->inventory->quantity;
+        }
+    }
 }
