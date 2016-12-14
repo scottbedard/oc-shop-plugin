@@ -162,7 +162,7 @@ class CartRepository
     }
 
     /**
-     * Set an item's quantity in the curent cart.
+     * Set an item's quantity in the current cart.
      *
      * @param  int
      * @param  int
@@ -183,9 +183,6 @@ class CartRepository
         ]);
 
         $item->quantity = $quantity;
-        if ($item->quantity > $inventory->quantity) {
-            $item->quantity = $inventory->quantity;
-        }
 
         return $item->save();
     }
@@ -201,5 +198,26 @@ class CartRepository
         foreach ($inventories as $inventoryId => $quantity) {
             $this->setInventory($inventoryId, $quantity);
         }
+    }
+
+    /**
+     * Update a single item quantity.
+     *
+     * @param  int                          $itemId
+     * @param  int                          $quantity
+     * @return \Bedard\Shop\Models\CartItem
+     */
+    public function updateItem($itemId, $quantity)
+    {
+        $cart = $this->getCart();
+
+        $item = $cart->items()->find($itemId);
+
+        if ($item) {
+            $item->quantity = $quantity;
+            $item->save();
+        }
+
+        return $item;
     }
 }

@@ -98,8 +98,22 @@ class Cart extends ApiController
         }
     }
 
-    public function updateItem(CartRepository $repository)
+    /**
+     * Update an item in the cart.
+     *
+     * @param  CartRepository $repository
+     * @return [type]
+     */
+    public function updateItem(CartRepository $repository, $itemId)
     {
-        return 'hello';
+        try {
+            $quantity = input('quantity');
+
+            return $repository->updateItem($itemId, $quantity);
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+
+            abort(500, $e->getMessage());
+        }
     }
 }
