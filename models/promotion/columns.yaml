@@ -3,6 +3,20 @@
 # ===================================
 
 columns:
-    id:
-        label: ID
-        searchable: true
+    name:
+        label: bedard.shop::lang.promotions.list.name
+
+    amount:
+        label: bedard.shop::lang.promotions.list.amount
+        type: partial
+        path: $/bedard/shop/models/promotion/_column_amount.htm
+
+    start_at:
+        label: bedard.shop::lang.promotions.list.start_at
+        type: partial
+        path: $/bedard/shop/models/promotion/_column_start_at.htm
+
+    end_at:
+        label: bedard.shop::lang.promotions.list.end_at
+        type: partial
+        path: $/bedard/shop/models/promotion/_column_end_at.htm

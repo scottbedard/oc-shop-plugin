@@ -28,6 +28,14 @@ class Promotion extends Model
     ];
 
     /**
+     * @var array Attribute casting
+     */
+    public $casts = [
+        'amount' => 'float',
+        'is_percentage' => 'boolean',
+    ];
+
+    /**
      * @var array Guarded fields
      */
     protected $guarded = ['*'];

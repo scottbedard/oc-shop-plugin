@@ -1,0 +1,7 @@
+<?php if ($value === null): ?>
+    <?= e(trans('bedard.shop::lang.promotions.list.start_at_null')) ?>
+<?php else: ?>
+    <span data-toggle="tooltip" title="<?= $value->diffForHumans() ?>">
+        <?= $value->format('M jS \a\t g:ia') ?>
+    </span>
+<?php endif; ?>

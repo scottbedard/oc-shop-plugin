@@ -300,7 +300,13 @@ return [
             'update_title' => 'Update Promotion',
         ],
         'list' => [
+            'amount' => 'Amount',
             'create_button' => 'Create Promotion',
+            'end_at_null' => 'Never',
+            'end_at' => 'End date',
+            'name' => 'Name',
+            'start_at_null' => 'Immediately',
+            'start_at' => 'Start date',
             'title' => 'Manage Promotions',
         ],
         'plural' => 'Promotions',
