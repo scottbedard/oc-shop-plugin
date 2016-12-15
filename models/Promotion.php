@@ -79,5 +79,4 @@ class Promotion extends Model
         $fields->amount_exact->hidden = $this->is_percentage;
         $fields->amount_percentage->hidden = ! $this->is_percentage;
     }
-
 }
