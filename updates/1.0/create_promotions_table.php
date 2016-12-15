@@ -8,7 +8,7 @@ class CreatePromotionsTable extends Migration
 {
     public function up()
     {
-        Schema::create('bedard_shop_promotions', function(Blueprint $table) {
+        Schema::create('bedard_shop_promotions', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->timestamps();

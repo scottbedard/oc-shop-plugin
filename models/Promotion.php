@@ -3,7 +3,7 @@
 use Model;
 
 /**
- * Promotion Model
+ * Promotion Model.
  */
 class Promotion extends Model
 {
