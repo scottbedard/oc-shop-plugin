@@ -15,4 +15,5 @@
     - 1.0/create_orders_table.php
     - 1.0/create_carts_table.php
     - 1.0/create_cart_items_table.php
+    - 1.0/create_promotions_table.php
     - dev_seeds.php

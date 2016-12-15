@@ -6,6 +6,7 @@ module.exports = {
         categories: path.resolve(__dirname, '../controllers/categories/index.js'),
         discounts: path.resolve(__dirname, '../controllers/discounts/index.js'),
         products: path.resolve(__dirname, '../controllers/products/index.js'),
+        promotions: path.resolve(__dirname, '../controllers/promotions/index.js'),
     },
     output: {
         filename: '[name].js',
