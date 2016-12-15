@@ -1,11 +1,8 @@
 <?php namespace Bedard\Shop\Models;
 
-use Lang;
-use Flash;
 use Model;
 use Queue;
 use Carbon\Carbon;
-use October\Rain\Database\ModelException;
 
 /**
  * Discount Model.

@@ -1,7 +1,7 @@
 <?php namespace Bedard\Shop\Traits;
 
-use Flash;
 use Lang;
+use Flash;
 use October\Rain\Database\ModelException;
 
 trait StartEndable
@@ -13,8 +13,8 @@ trait StartEndable
      */
     public static function bootStartEndable()
     {
-        static::extend(function($model) {
-            $model->bindEvent('model.afterValidate', function() use ($model) {
+        static::extend(function ($model) {
+            $model->bindEvent('model.afterValidate', function () use ($model) {
                 $model->validateStartEndDates();
             });
         });
