@@ -9,7 +9,8 @@ use Carbon\Carbon;
  */
 class Discount extends Model
 {
-    use \Bedard\Shop\Traits\StartEndable,
+    use \Bedard\Shop\Traits\Amountable,
+        \Bedard\Shop\Traits\StartEndable,
         \Bedard\Shop\Traits\Subqueryable,
         \Bedard\Shop\Traits\Timeable,
         \October\Rain\Database\Traits\Purgeable,
@@ -25,8 +26,6 @@ class Discount extends Model
      */
     public $attributes = [
         'amount' => 0,
-        'amount_exact' => 0,
-        'amount_percentage' => 0,
         'is_percentage' => true,
     ];
 
@@ -48,8 +47,6 @@ class Discount extends Model
      */
     protected $fillable = [
         'amount',
-        'amount_exact',
-        'amount_percentage',
         'end_at',
         'is_percentage',
         'name',
@@ -59,10 +56,7 @@ class Discount extends Model
     /**
      * @var array Purgeable vields
      */
-    protected $purgeable = [
-        'amount_exact',
-        'amount_percentage',
-    ];
+    protected $purgeable = [];
 
     /**
      * @var array Relations
@@ -92,8 +86,6 @@ class Discount extends Model
         'end_at' => 'date',
         'name' => 'required',
         'start_at' => 'date',
-        'amount_exact' => 'numeric|min:0',
-        'amount_percentage' => 'numeric|min:0|max:100',
     ];
 
     /**
@@ -104,16 +96,6 @@ class Discount extends Model
     public function afterSave()
     {
         $this->savePrices();
-    }
-
-    /**
-     * Before save.
-     *
-     * @return void
-     */
-    public function beforeSave()
-    {
-        $this->setAmount();
     }
 
     /**
@@ -168,26 +150,6 @@ class Discount extends Model
         }
 
         return array_unique($productIds);
-    }
-
-    /**
-     * Get the exact amount.
-     *
-     * @return float
-     */
-    public function getAmountExactAttribute()
-    {
-        return ! $this->is_percentage ? $this->amount : 0;
-    }
-
-    /**
-     * Get the percentage amount.
-     *
-     * @return float
-     */
-    public function getAmountPercentageAttribute()
-    {
-        return $this->is_percentage ? $this->amount : 0;
     }
 
     /**
@@ -328,20 +290,5 @@ class Discount extends Model
         'END';
 
         return $query->selectSubquery($subquery, 'status');
-    }
-
-    /**
-     * Set the discount amount.
-     *
-     * @return  void
-     */
-    public function setAmount()
-    {
-        $exact = $this->getOriginalPurgeValue('amount_exact');
-        $percentage = $this->getOriginalPurgeValue('amount_percentage');
-
-        $this->amount = $this->is_percentage
-            ? $percentage
-            : $exact;
     }
 }
