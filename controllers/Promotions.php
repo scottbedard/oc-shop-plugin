@@ -11,6 +11,7 @@ class Promotions extends BackendController
     public $implement = [
         'Backend.Behaviors.FormController',
         'Backend.Behaviors.ListController',
+        'Owl.Behaviors.ListDelete.Behavior',
     ];
 
     public $formConfig = 'config_form.yaml';

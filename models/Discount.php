@@ -12,7 +12,8 @@ use October\Rain\Database\ModelException;
  */
 class Discount extends Model
 {
-    use \Bedard\Shop\Traits\Subqueryable,
+    use \Bedard\Shop\Traits\StartEndable,
+        \Bedard\Shop\Traits\Subqueryable,
         \Bedard\Shop\Traits\Timeable,
         \October\Rain\Database\Traits\Purgeable,
         \October\Rain\Database\Traits\Validation;
@@ -106,16 +107,6 @@ class Discount extends Model
     public function afterSave()
     {
         $this->savePrices();
-    }
-
-    /**
-     * After validate.
-     *
-     * @return void
-     */
-    public function afterValidate()
-    {
-        $this->validateDates();
     }
 
     /**
@@ -355,21 +346,5 @@ class Discount extends Model
         $this->amount = $this->is_percentage
             ? $percentage
             : $exact;
-    }
-
-    /**
-     * Ensure the start and end dates are valid.
-     *
-     * @return void
-     */
-    public function validateDates()
-    {
-        // Start date must be after the end date
-        if ($this->start_at !== null &&
-            $this->end_at !== null &&
-            $this->start_at >= $this->end_at) {
-            Flash::error(Lang::get('bedard.shop::lang.discounts.form.start_at_invalid'));
-            throw new ModelException($this);
-        }
     }
 }

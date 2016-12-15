@@ -3,6 +3,50 @@
 # ===================================
 
 fields:
-    id:
-        label: ID
-        disabled: true
+    name:
+        label: bedard.shop::lang.promotions.form.name
+
+    start_at:
+        label: bedard.shop::lang.promotions.form.start_at
+        type: datepicker
+        span: left
+
+    end_at:
+        label: bedard.shop::lang.promotions.form.end_at
+        type: datepicker
+        span: right
+
+    amount_percentage:
+        dependsOn: is_percentage
+        knobLabel: bedard.shop::lang.promotions.form.amount
+        knobComment: bedard.shop::lang.promotions.form.amount_percentage
+        type: owl-knob
+        angleOffset: -115
+        angleArc: 230
+        fgColor: 95B753
+        inputColor: 666
+        width: 81
+        span: left
+
+    amount_exact:
+        dependsOn: is_percentage
+        label: bedard.shop::lang.promotions.form.amount
+        comment: bedard.shop::lang.promotions.form.amount_exact
+        placeholder: "0.00"
+        span: left
+
+    is_percentage:
+        label: bedard.shop::lang.promotions.form.method
+        type: radio
+        options:
+            1: bedard.shop::lang.promotions.form.method_percentage
+            0: bedard.shop::lang.promotions.form.method_exact
+        span: right
+
+    minimum_cart_value:
+        label: bedard.shop::lang.promotions.form.minimum_cart_value
+        span: left
+
+    message:
+        label: bedard.shop::lang.promotions.form.message
+        span: right

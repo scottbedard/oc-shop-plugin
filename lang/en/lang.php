@@ -132,7 +132,6 @@ return [
             'method' => 'Discount method',
             'name' => 'Name',
             'products_empty' => 'There are no products.',
-            'start_at_invalid' => 'The start date must be before the end date.',
             'start_at' => 'Start date',
         ],
         'list' => [
@@ -285,8 +284,25 @@ return [
     // Promotions
     //
     'promotions' => [
+        'form' => [
+            'create_title' => 'Create Promotion',
+            'update_title' => 'Update Promotion',
+        ],
+        'list' => [
+            'create_button' => 'Create Promotion',
+            'title' => 'Manage Promotions',
+        ],
         'plural' => 'Promotions',
         'singular' => 'Promotion',
+    ],
+
+    //
+    // Traits
+    //
+    'traits' => [
+        'startendable' => [
+            'start_at_invalid' => 'The start date must be before the end date.',
+        ],
     ],
 
     //
