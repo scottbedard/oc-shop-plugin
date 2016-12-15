@@ -35,16 +35,16 @@ class Factory
         }
 
         switch (get_class($model)) {
-            case "Bedard\Shop\Models\Cart":         $data = self::getCartData($data);           break;
-            case "Bedard\Shop\Models\CartItem":     $data = self::getCartItemData($data);       break;
-            case "Bedard\Shop\Models\Category":     $data = self::getCategoryData($data);       break;
-            case "Bedard\Shop\Models\Discount":     $data = self::getDiscountData($data);       break;
-            case "Bedard\Shop\Models\Inventory":    $data = self::getInventoryData($data);      break;
-            case "Bedard\Shop\Models\Option":       $data = self::getOptionData($data);         break;
-            case "Bedard\Shop\Models\OptionValue":  $data = self::getOptionValueData($data);    break;
-            case "Bedard\Shop\Models\Price":        $data = self::getPriceData($data);          break;
-            case "Bedard\Shop\Models\Product":      $data = self::getProductData($data);        break;
-            case "Bedard\Shop\Models\Promotion":    $data = self::getPromotionData($data);      break;
+            case "Bedard\Shop\Models\Cart":         $data = self::getCartData($data); break;
+            case "Bedard\Shop\Models\CartItem":     $data = self::getCartItemData($data); break;
+            case "Bedard\Shop\Models\Category":     $data = self::getCategoryData($data); break;
+            case "Bedard\Shop\Models\Discount":     $data = self::getDiscountData($data); break;
+            case "Bedard\Shop\Models\Inventory":    $data = self::getInventoryData($data); break;
+            case "Bedard\Shop\Models\Option":       $data = self::getOptionData($data); break;
+            case "Bedard\Shop\Models\OptionValue":  $data = self::getOptionValueData($data); break;
+            case "Bedard\Shop\Models\Price":        $data = self::getPriceData($data); break;
+            case "Bedard\Shop\Models\Product":      $data = self::getProductData($data); break;
+            case "Bedard\Shop\Models\Promotion":    $data = self::getPromotionData($data); break;
         }
 
         $model->fill($data);
