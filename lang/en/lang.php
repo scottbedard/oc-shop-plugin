@@ -285,7 +285,18 @@ return [
     //
     'promotions' => [
         'form' => [
+            'amount_exact' => 'The exact amount to reduce the cart total by.',
+            'amount_percentage' => 'The percentage to reduce the cart total by.',
+            'amount' => 'Discount amount',
             'create_title' => 'Create Promotion',
+            'end_at' => 'End date',
+            'message' => 'Message',
+            'method_exact' => 'Exact amount',
+            'method_percentage' => 'Percentage',
+            'method' => 'Discount method',
+            'minimum_cart_value' => 'Minimum cart value',
+            'name' => 'Name',
+            'start_at' => 'Start date',
             'update_title' => 'Update Promotion',
         ],
         'list' => [

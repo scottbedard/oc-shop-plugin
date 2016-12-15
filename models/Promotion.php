@@ -57,11 +57,12 @@ class Promotion extends Model
      * @var  array Validation rules
      */
     public $rules = [
-        'end_at' => 'date',
-        'name' => 'required',
-        'start_at' => 'date',
         'amount_exact' => 'numeric|min:0',
         'amount_percentage' => 'numeric|min:0|max:100',
+        'end_at' => 'date',
+        'minimum_cart_value' => 'numeric|min:0',
+        'name' => 'required',
+        'start_at' => 'date',
     ];
 
     /**
@@ -84,6 +85,26 @@ class Promotion extends Model
     {
         $fields->amount_exact->hidden = $this->is_percentage;
         $fields->amount_percentage->hidden = ! $this->is_percentage;
+    }
+
+    /**
+     * Get the exact amount.
+     *
+     * @return float
+     */
+    public function getAmountExactAttribute()
+    {
+        return ! $this->is_percentage ? $this->amount : 0;
+    }
+
+    /**
+     * Get the percentage amount.
+     *
+     * @return float
+     */
+    public function getAmountPercentageAttribute()
+    {
+        return $this->is_percentage ? $this->amount : 0;
     }
 
     /**
