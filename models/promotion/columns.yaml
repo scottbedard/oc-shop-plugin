@@ -5,6 +5,7 @@
 columns:
     name:
         label: bedard.shop::lang.promotions.list.name
+        searchable: true
 
     amount:
         label: bedard.shop::lang.promotions.list.amount
