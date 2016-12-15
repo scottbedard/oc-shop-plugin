@@ -34,11 +34,30 @@ class Cart extends Model
     /**
      * @var array Relations
      */
+    public $belongsTo = [
+        'promotion' => [
+            'Bedard\Shop\Models\Promotion',
+        ],
+    ];
+
     public $hasMany = [
         'items' => [
             'Bedard\Shop\Models\CartItem',
         ],
     ];
+
+    /**
+     * Apply a promotion to the cart.
+     *
+     * @param  string $code     The promotion code to apply.
+     * @return void
+     */
+    public function applyPromotion($name)
+    {
+        $promotion = Promotion::isActive()->whereName($name)->firstOrFail();
+        $this->promotion_id = $promotion->id;
+        $this->save();
+    }
 
     /**
      * Before create.

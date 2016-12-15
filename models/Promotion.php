@@ -67,14 +67,13 @@ class Promotion extends Model
     ];
 
     /**
-     * Before save.
-     *
-     * @return void
+     * @var array Relations
      */
-    public function beforeSave()
-    {
-        $this->setAmount();
-    }
+    public $hasMany = [
+        'carts' => [
+            'Bedard\Shop\Models\Cart',
+        ],
+    ];
 
     /**
      * Filter form fields.
