@@ -27,6 +27,25 @@ class Cart extends ApiController
     }
 
     /**
+     * Apply a promotion to the cart.
+     *
+     * @param  CartRepository $repository
+     * @return [type]
+     */
+    public function applyPromotion(CartRepository $repository)
+    {
+        try {
+            $code = input('code');
+
+            return $repository->applyPromotion($code);
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+
+            abort(500, $e->getMessage());
+        }
+    }
+
+    /**
      * Determine if a cart exists or not.
      *
      * @param  CartRepository $repository

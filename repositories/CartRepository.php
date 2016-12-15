@@ -55,6 +55,21 @@ class CartRepository
     }
 
     /**
+     * Apply a promotion to the cart.
+     *
+     * @param  string                   $code
+     * @return \Bedard\Shop\Models\Cart
+     */
+    public function applyPromotion($code)
+    {
+        $cart = $this->getCart();
+
+        $cart->applyPromotion($code);
+
+        return $this->loadCart();
+    }
+
+    /**
      * Create a new cart.
      *
      * @return \Bedard\Shop\Models\Cart
@@ -156,6 +171,7 @@ class CartRepository
                 $product->joinPrice()->with('thumbnails');
             },
             'items.inventory.optionValues.option',
+            'promotion',
         ]);
 
         return $this->cart;
