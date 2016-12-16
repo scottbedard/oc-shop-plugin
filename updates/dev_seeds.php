@@ -1,14 +1,14 @@
 <?php namespace Bedard\Shop\Updates;
 
+use Carbon\Carbon;
+use Bedard\Shop\Models\Option;
+use Bedard\Shop\Tests\Factory;
+use Bedard\Shop\Models\Product;
 use Bedard\Shop\Models\Category;
 use Bedard\Shop\Models\Discount;
 use Bedard\Shop\Models\Inventory;
-use Bedard\Shop\Models\Option;
-use Bedard\Shop\Models\OptionValue;
-use Bedard\Shop\Models\Product;
 use Bedard\Shop\Models\Promotion;
-use Bedard\Shop\Tests\Factory;
-use Carbon\Carbon;
+use Bedard\Shop\Models\OptionValue;
 use October\Rain\Database\Updates\Seeder;
 
 class DevSeeder extends Seeder
