@@ -1,13 +1,14 @@
 <?php namespace Bedard\Shop\Updates;
 
-use Carbon\Carbon;
-use Bedard\Shop\Models\Option;
-use Bedard\Shop\Tests\Factory;
-use Bedard\Shop\Models\Product;
 use Bedard\Shop\Models\Category;
 use Bedard\Shop\Models\Discount;
 use Bedard\Shop\Models\Inventory;
+use Bedard\Shop\Models\Option;
 use Bedard\Shop\Models\OptionValue;
+use Bedard\Shop\Models\Product;
+use Bedard\Shop\Models\Promotion;
+use Bedard\Shop\Tests\Factory;
+use Carbon\Carbon;
 use October\Rain\Database\Updates\Seeder;
 
 class DevSeeder extends Seeder
@@ -23,6 +24,7 @@ class DevSeeder extends Seeder
         $this->seedProducts(10);
         $this->seedOptionsAndInventories();
         $this->seedDiscounts();
+        $this->seedPromotions();
     }
 
     protected function seedCategories()
@@ -108,5 +110,25 @@ class DevSeeder extends Seeder
 
         $upcoming->categories()->sync([1]);
         $upcoming->save();
+    }
+
+    protected function seedPromotions()
+    {
+        Factory::create(new Promotion, [
+            'amount_percentage' => 20,
+            'is_percentage' => true,
+            'message' => 'Thanks friend!',
+            'minimum_cart_value' => 20,
+            'name' => 'Friends',
+        ]);
+
+        Factory::create(new Promotion, [
+            'amount_exact' => 5,
+            'is_percentage' => false,
+            'message' => 'This promotion is not active yet.',
+            'minimum_cart_value' => 20,
+            'name' => 'Upcoming',
+            'start_at' => Carbon::tomorrow(),
+        ]);
     }
 }
