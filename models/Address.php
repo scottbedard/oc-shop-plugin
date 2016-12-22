@@ -126,11 +126,11 @@ class Address extends Model
             ->isPrimary();
 
         if ($this->is_shipping && $this->is_primary) {
-            $shipping = $query->isShipping()->update(['is_primary' => false]);
+            $query->isShipping()->update(['is_primary' => false]);
         }
 
         if ($this->is_billing && $this->is_primary) {
-            $shipping = $query->isBilling()->update(['is_primary' => false]);
+            $query->isBilling()->update(['is_primary' => false]);
         }
     }
 }
