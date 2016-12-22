@@ -3,7 +3,7 @@
 use Model;
 
 /**
- * Customer Model
+ * Customer Model.
  */
 class Customer extends Model
 {

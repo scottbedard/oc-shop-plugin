@@ -8,7 +8,7 @@ class CreateCustomersTable extends Migration
 {
     public function up()
     {
-        Schema::create('bedard_shop_customers', function(Blueprint $table) {
+        Schema::create('bedard_shop_customers', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('name')->default('');

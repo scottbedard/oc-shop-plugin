@@ -3,7 +3,7 @@
 use Model;
 
 /**
- * Address Model
+ * Address Model.
  */
 class Address extends Model
 {
