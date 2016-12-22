@@ -35,6 +35,7 @@ class Factory
         }
 
         switch (get_class($model)) {
+            case "Bedard\Shop\Models\Address":      $data = self::getAddressData($data); break;
             case "Bedard\Shop\Models\Cart":         $data = self::getCartData($data); break;
             case "Bedard\Shop\Models\CartItem":     $data = self::getCartItemData($data); break;
             case "Bedard\Shop\Models\Category":     $data = self::getCategoryData($data); break;
@@ -57,6 +58,21 @@ class Factory
     }
 
     /**
+     * Address.
+     *
+     * @param  array $data
+     * @return array
+     */
+    public static function getAddressData(array $data = [])
+    {
+        // $faker = Faker\Factory::create();
+
+        return array_merge([
+
+        ], $data);
+    }
+
+    /**
      * Cart.
      *
      * @param  array $data
@@ -64,7 +80,7 @@ class Factory
      */
     public static function getCartData(array $data = [])
     {
-        $faker = Faker\Factory::create();
+        // $faker = Faker\Factory::create();
 
         return array_merge([
 
@@ -79,7 +95,7 @@ class Factory
      */
     public static function getCartItemData(array $data = [])
     {
-        $faker = Faker\Factory::create();
+        // $faker = Faker\Factory::create();
 
         return array_merge([
             'cart_id' => 0,
@@ -132,7 +148,7 @@ class Factory
      */
     public static function getInventoryData(array $data = [])
     {
-        $faker = Faker\Factory::create();
+        // $faker = Faker\Factory::create();
 
         return array_merge([
             'product_id' => 0,
@@ -182,6 +198,8 @@ class Factory
      */
     public static function getPriceData(array $data = [])
     {
+        // $faker = Faker\Factory::create();
+        
         return array_merge([
             'discount_id' => null,
             'end_at' => null,

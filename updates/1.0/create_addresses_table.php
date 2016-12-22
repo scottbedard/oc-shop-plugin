@@ -11,7 +11,7 @@ class CreateAddressesTable extends Migration
         Schema::create('bedard_shop_addresses', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->integer('customer_id')->unsigned()->index();
+            $table->integer('customer_id')->unsigned()->nullable()->index();
             $table->boolean('is_primary')->default(false);
             $table->boolean('is_billing')->default(false);
             $table->boolean('is_shipping')->default(false);
