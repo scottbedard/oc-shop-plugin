@@ -3,6 +3,10 @@
 # ===================================
 
 fields:
-    id:
-        label: ID
-        disabled: true
+    name:
+        label: bedard.shop::lang.customers.form.name
+        span: left
+
+    email:
+        label: bedard.shop::lang.customers.form.email
+        span: right

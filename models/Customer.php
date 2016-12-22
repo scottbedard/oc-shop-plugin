@@ -7,6 +7,8 @@ use Model;
  */
 class Customer extends Model
 {
+    use \October\Rain\Database\Traits\Validation;
+
     /**
      * @var string The database table used by the model.
      */
@@ -20,7 +22,18 @@ class Customer extends Model
     /**
      * @var array Fillable fields
      */
-    protected $fillable = [];
+    protected $fillable = [
+        'email',
+        'name',
+    ];
+
+    /**
+     * @var array Validation
+     */
+    public $rules = [
+        'name' => 'required',
+        'email' => 'required|email|unique:bedard_shop_customers',
+    ];
 
     /**
      * @var array Relations

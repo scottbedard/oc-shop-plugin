@@ -124,10 +124,14 @@ return [
     'customers' => [
         'form' => [
             'create_title' => 'Create Customer',
+            'email' => 'Email address',
+            'name' => 'Name',
             'update_title' => 'Update Customer',
         ],
         'list' => [
             'create_button' => 'Create Customer',
+            'email' => 'Email address',
+            'name' => 'Name',
             'title' => 'Manage Customers',
         ],
         'plural' => 'Customers',

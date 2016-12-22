@@ -5,4 +5,9 @@
 columns:
     id:
         label: ID
-        searchable: true
+
+    name:
+        label: bedard.shop::lang.customers.list.name
+
+    email:
+        label: bedard.shop::lang.customers.list.email
