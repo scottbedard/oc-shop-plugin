@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: bedard.shop::lang.customers.singular
+
+# Model Form Field configuration
+form: $/bedard/shop/models/customer/fields.yaml
+
+# Model Class name
+modelClass: Bedard\Shop\Models\Customer
+
+# Default redirect location
+defaultRedirect: bedard/shop/customers
+
+# Create page
+create:
+    title: bedard.shop::lang.customers.form.create_title
+    redirect: bedard/shop/customers/update/:id
+    redirectClose: bedard/shop/customers
+
+# Update page
+update:
+    title: bedard.shop::lang.customers.form.update_title
+    redirect: bedard/shop/customers/update/:id
+    redirectClose: bedard/shop/customers
+
+# Preview page
+preview:
+    title: bedard.shop::lang.customers.form.preview_title

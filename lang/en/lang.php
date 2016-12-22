@@ -18,6 +18,7 @@ return [
             'api' => 'Manage API',
             'carts' => 'Manage Carts',
             'categories' => 'Manage Categories',
+            'customers' => 'Manage Customers',
             'discounts' => 'Manage Discounts',
             'orders' => 'Manage Orders',
             'products' => 'Manage Products',
@@ -115,6 +116,22 @@ return [
         ],
         'plural' => 'Categories',
         'singular' => 'Category',
+    ],
+
+    //
+    // Customers
+    //
+    'customers' => [
+        'form' => [
+            'create_title' => 'Create Customer',
+            'update_title' => 'Update Customer',
+        ],
+        'list' => [
+            'create_button' => 'Create Customer',
+            'title' => 'Manage Customers',
+        ],
+        'plural' => 'Customers',
+        'singular' => 'Customer',
     ],
 
     //

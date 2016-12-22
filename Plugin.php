@@ -59,6 +59,12 @@ class Plugin extends PluginBase
                         'url'           => Backend::url('bedard/shop/orders'),
                         'permissions'   => ['bedard.shop.orders.*'],
                     ],
+                    'customers' => [
+                        'label'         => 'bedard.shop::lang.customers.plural',
+                        'icon'          => 'icon-users',
+                        'url'           => Backend::url('bedard/shop/customers'),
+                        'permissions'   => ['bedard.shop.customers.*'],
+                    ],
                     'products' => [
                         'label'         => 'bedard.shop::lang.products.plural',
                         'icon'          => 'icon-cubes',
@@ -106,6 +112,10 @@ class Plugin extends PluginBase
             ],
             'bedard.shop.categories.manage' => [
                 'label' => 'bedard.shop::lang.plugin.permissions.categories',
+                'tab' => 'bedard.shop::lang.plugin.details.name',
+            ],
+            'bedard.shop.customers.manage' => [
+                'label' => 'bedard.shop::lang.plugin.permissions.customers',
                 'tab' => 'bedard.shop::lang.plugin.details.name',
             ],
             'bedard.shop.discounts.manage' => [
