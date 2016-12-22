@@ -13,7 +13,7 @@ class CreateCustomersTable extends Migration
             $table->increments('id');
             $table->string('name')->default('');
             $table->string('email')->default('');
-            $table->integer('user_id')->unsigned()->index();
+            $table->integer('user_id')->unsigned()->nullable()->index();
             $table->timestamps();
         });
     }

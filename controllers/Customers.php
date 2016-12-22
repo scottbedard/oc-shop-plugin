@@ -8,6 +8,8 @@ use Bedard\Shop\Classes\BackendController;
  */
 class Customers extends BackendController
 {
+    public $bodyClass = 'compact-container';
+
     public $formConfig = 'config_form.yaml';
 
     public $listConfig = 'config_list.yaml';
