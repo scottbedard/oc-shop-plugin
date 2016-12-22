@@ -199,7 +199,7 @@ class Factory
     public static function getPriceData(array $data = [])
     {
         // $faker = Faker\Factory::create();
-        
+
         return array_merge([
             'discount_id' => null,
             'end_at' => null,

@@ -1,7 +1,7 @@
 <?php namespace Bedard\Shop\Tests\Unit\Models;
 
-use Bedard\Shop\Models\Address;
 use Bedard\Shop\Tests\Factory;
+use Bedard\Shop\Models\Address;
 use Bedard\Shop\Tests\PluginTestCase;
 
 class AddressTest extends PluginTestCase

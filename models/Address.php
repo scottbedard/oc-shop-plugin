@@ -28,7 +28,6 @@ class Address extends Model
         'is_shipping' => 'boolean',
     ];
 
-
     /**
      * @var array Jsonable fields
      */
