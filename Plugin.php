@@ -178,7 +178,7 @@ class Plugin extends PluginBase
 
     /**
      * Register shipping calculators.
-     * ['className' => 'alias']
+     * ['className' => 'alias'].
      *
      * @return array
      */

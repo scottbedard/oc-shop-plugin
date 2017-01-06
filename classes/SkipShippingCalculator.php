@@ -12,6 +12,5 @@ class SkipShippingCalculator implements ShippingInterface
      */
     public function calculate(Cart $cart)
     {
-
     }
 }
