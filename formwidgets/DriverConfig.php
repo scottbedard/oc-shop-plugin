@@ -14,10 +14,16 @@ class DriverConfig extends FormWidgetBase
     protected $defaultAlias = 'bedard_shop_driver_config';
 
     /**
+     * @var \Bedard\Shop\Classes\DriverManager;
+     */
+    protected $manager;
+
+    /**
      * {@inheritdoc}
      */
     public function init()
     {
+        $this->manager = DriverManager::instance();
     }
 
     /**
@@ -35,10 +41,7 @@ class DriverConfig extends FormWidgetBase
      */
     public function prepareVars()
     {
-        $this->vars['calculators'] = $this->getShippingCalculators();
-        $this->vars['name'] = $this->formField->getName();
-        $this->vars['value'] = $this->getLoadValue();
-        $this->vars['model'] = $this->model;
+        $this->vars['drivers'] = $this->getShippingDriverDetails();
     }
 
     /**
@@ -46,8 +49,8 @@ class DriverConfig extends FormWidgetBase
      */
     public function loadAssets()
     {
-        $this->addCss('css/driverconfig.css', 'Bedard.Shop');
-        $this->addJs('js/driverconfig.js', 'Bedard.Shop');
+        $this->addJs('/plugins/bedard/shop/assets/dist/vendor.js');
+        $this->addJs('/plugins/bedard/shop/assets/dist/driverconfig.js', 'Bedard.Shop');
     }
 
     /**
@@ -58,10 +61,17 @@ class DriverConfig extends FormWidgetBase
         return $value;
     }
 
-    protected function getShippingCalculators()
+    /**
+     * Get the driver details.
+     *
+     * @return array
+     */
+    protected function getShippingDriverDetails()
     {
-        $manager = DriverManager::instance();
+        foreach ($this->manager->getShippingDrivers() as $driver) {
+            $details[get_class($driver)] = $driver->driverDetails();
+        }
 
-        return $manager->getShippingDrivers();
+        return $details;
     }
 }

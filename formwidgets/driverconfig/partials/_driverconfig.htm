@@ -1,1 +1,10 @@
-<?php var_dump($calculators) ?>
+<div data-bedard-shop="driverconfig-formwidget"></div>
+
+<script>
+    $(function() {
+        $('[data-bedard-shop="driverconfig-formwidget"]').mountDriverConfigComponent({
+            drivers: <?= json_encode($drivers); ?>,
+            token: '<?= csrf_token() ?>',
+        });
+    });
+</script>

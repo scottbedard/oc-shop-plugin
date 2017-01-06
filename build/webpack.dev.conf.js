@@ -10,6 +10,9 @@ Object.keys(webpackBaseConfig.entry).forEach(function (name) {
 
 module.exports = merge(webpackBaseConfig, {
     devtool: '#eval-source-map',
+    performance: {
+        hints: false,
+    },
     plugins: [
         new webpack.DefinePlugin({
             'process.env': {
