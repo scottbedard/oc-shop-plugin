@@ -340,6 +340,10 @@ return [
     //
     'shipping' => [
         'description' => 'Manage shipping calculators.',
+        'form' => [
+            'comment' => 'Below are your installed shipping calculators.',
+            'label' => 'Configure shipping drivers',
+        ],
         'label' => 'Shipping calculators',
     ],
 

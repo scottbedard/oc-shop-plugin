@@ -32,6 +32,7 @@ class Plugin extends PluginBase
     {
         return [
             'Bedard\Shop\FormWidgets\CategoryFilters' => 'category-filters',
+            'Bedard\Shop\FormWidgets\DriverConfig' => 'driver-config',
             'Bedard\Shop\FormWidgets\OptionsInventories' => 'options-inventories',
             'Bedard\Shop\FormWidgets\ProductOrder' => 'product-order',
             'Owl\FormWidgets\Knob\Widget' => 'owl-knob',
@@ -177,15 +178,15 @@ class Plugin extends PluginBase
     }
 
     /**
-     * Register shipping calculators.
+     * Register shipping drivers.
      * ['className' => 'alias'].
      *
      * @return array
      */
-    public function registerShippingCalculators()
+    public function registerShippingDrivers()
     {
         return [
-            'Bedard\Shop\Classes\SkipShippingCalculator' => 'skip',
+            'Bedard\Shop\Classes\NoShippingDriver',
         ];
     }
 }
