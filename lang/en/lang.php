@@ -23,6 +23,7 @@ return [
             'orders' => 'Manage Orders',
             'products' => 'Manage Products',
             'promotions' => 'Manage Promotions',
+            'shipping' => 'Manage Shipping',
         ],
     ],
 
@@ -332,6 +333,14 @@ return [
         ],
         'plural' => 'Promotions',
         'singular' => 'Promotion',
+    ],
+
+    //
+    // Shipping
+    //
+    'shipping' => [
+        'description' => 'Manage shipping calculators.',
+        'label' => 'Shipping calculators',
     ],
 
     //

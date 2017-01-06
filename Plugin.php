@@ -134,6 +134,10 @@ class Plugin extends PluginBase
                 'label' => 'bedard.shop::lang.plugin.permissions.promotions',
                 'tab' => 'bedard.shop::lang.plugin.details.name',
             ],
+            'bedard.shop.shipping.manage' => [
+                'label' => 'bedard.shop::lang.plugin.permissions.shipping',
+                'tab' => 'bedard.shop::lang.plugin.details.name',
+            ],
         ];
     }
 
@@ -161,6 +165,27 @@ class Plugin extends PluginBase
                 'permissions'   => ['bedard.shop.carts.manage'],
                 'icon'          => 'icon-shopping-cart',
             ],
+            'shipping' => [
+                'label'         => 'bedard.shop::lang.shipping.label',
+                'description'   => 'bedard.shop::lang.shipping.description',
+                'category'      => 'bedard.shop::lang.plugin.details.name',
+                'class'         => 'Bedard\Shop\Models\ShippingSettings',
+                'permissions'   => ['bedard.shop.shipping.manage'],
+                'icon'          => 'icon-truck',
+            ],
+        ];
+    }
+
+    /**
+     * Register shipping calculators.
+     * ['className' => 'alias']
+     *
+     * @return array
+     */
+    public function registerShippingCalculators()
+    {
+        return [
+            'Bedard\Shop\Classes\SkipShippingCalculator' => 'skip',
         ];
     }
 }
