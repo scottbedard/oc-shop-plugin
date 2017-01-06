@@ -102,11 +102,11 @@ class DriverManager
     protected function validateDriverDetails($details, $driverClass)
     {
         if (! is_array($details)) {
-            throw new Exception('An array must be returned from the driverDetails() method in '. $driverClass . '.');
+            throw new Exception('An array must be returned from the driverDetails() method in '.$driverClass.'.');
         }
 
         if (! array_key_exists('name', $details) || ! is_string($details['name'])) {
-            throw new Exception('A valid name must be returned from the driverDetails() method in ' . $driverClass . '.');
+            throw new Exception('A valid name must be returned from the driverDetails() method in '.$driverClass.'.');
         }
     }
 }
