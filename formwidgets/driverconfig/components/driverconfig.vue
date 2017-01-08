@@ -17,9 +17,7 @@
             onDriverClicked(driver) {
                 $(this.$el).popup({
                     handler: 'onLoadDriverSettings',
-                    extraData: {
-                        driver,
-                    },
+                    extraData: { driver },
                 });
             },
         },

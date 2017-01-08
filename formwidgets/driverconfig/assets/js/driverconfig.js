@@ -25,6 +25,8 @@ $.fn.mountDriverFormComponent = function(params) {
         functional: true,
         components: { 'v-driver-form': DriverFormComponent },
         render: h => <v-driver-form
+            details={ params.details }
+            driver={ params.driver }
             lang={ params.lang }>
         </v-driver-form>
     });

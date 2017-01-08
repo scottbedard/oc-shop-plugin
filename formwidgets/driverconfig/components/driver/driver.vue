@@ -20,7 +20,7 @@
     export default {
         methods: {
             onDriverClicked() {
-                this.$emit('click', this.driver);
+                this.$emit('click', this.driver.driver);
             },
         },
         props: [

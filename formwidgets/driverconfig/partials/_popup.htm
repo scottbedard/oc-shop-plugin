@@ -7,9 +7,11 @@
 <script>
     $(function() {
         $('[data-bedard-shop="driverconfig-form"]').mountDriverFormComponent({
+            driver: '<?= $driver ?>',
+            details: <?= json_encode($details) ?>,
             endpoint: '<?= Backend::url("bedard/shop/categories/reorder") ?>',
             lang: <?= $this->getLangJson([
-                'form@backend::lang.form' => ['apply', 'cancel', 'saving'],
+                'form@backend::lang.form' => ['cancel', 'save', 'saving'],
             ]); ?>,
             token: '<?= csrf_token() ?>',
         });

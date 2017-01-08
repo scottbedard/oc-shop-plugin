@@ -45,7 +45,7 @@ class DriverConfig extends FormWidgetBase
      */
     public function prepareVars()
     {
-        $this->vars['drivers'] = $this->getShippingDriverDetails();
+        $this->vars['drivers'] = $this->getShippingDrivers();
     }
 
     /**
@@ -89,16 +89,17 @@ class DriverConfig extends FormWidgetBase
      *
      * @return array
      */
-    protected function getShippingDriverDetails()
+    protected function getShippingDrivers()
     {
         foreach ($this->manager->getShippingDrivers() as $driver) {
-            $details[] = [
-                'class' => get_class($driver),
+
+            $drivers[]  = [
+                'driver' => get_class($driver),
                 'details' => $driver->driverDetails(),
             ];
         }
 
-        return $details;
+        return $drivers;
     }
 
     /**
@@ -108,13 +109,14 @@ class DriverConfig extends FormWidgetBase
      */
     public function onLoadDriverSettings()
     {
-        $input = input('driver');
-        $driver = new $input['class'];
+        $driverClass = input('driver');
+        $driver = new $driverClass;
 
         $form = $this->getDriverForm($driver);
 
         return $this->makePartial('popup', [
-            'driver' => $driver,
+            'driver' => $driverClass,
+            'details' => $driver->driverDetails(),
             'form' => $this->makeWidget('Backend\Widgets\Form', $form)->render(),
         ]);
     }

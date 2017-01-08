@@ -3,5 +3,6 @@
 # ===================================
 
 fields:
-    hello:
-        label: world
+    message:
+        type: partial
+        path: $/bedard/shop/drivers/noshipping/message.htm

@@ -177,6 +177,15 @@ return [
     ],
 
     //
+    // Drivers
+    //
+    'drivers' => [
+        'noshipping' => [
+            'message' => 'This driver allows users to check out without calculating shipping.',
+        ],
+    ],
+
+    //
     // Filters
     //
     'filters' => [

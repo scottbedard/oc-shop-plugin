@@ -1,21 +1,20 @@
 <template>
     <div>
-        <v-popup-header>header</v-popup-header>
+        <!-- Form header -->
+        <v-popup-header>{{ details.name }}</v-popup-header>
+
+        <!-- Form body -->
         <v-popup-body v-html="form"></v-popup-body>
+
+        <!-- Form controls -->
         <v-popup-footer>
             <v-loader v-if="isLoading">{{ lang.form.saving }}</v-loader>
             <div v-else>
-                <button
-                    type="button"
-                    class="btn btn-default"
-                    data-dismiss="modal">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
                     {{ lang.form.cancel }}
                 </button>
-                <button
-                    type="button"
-                    class="btn btn-primary"
-                    @click="onApplyClicked">
-                    {{ lang.form.apply }}
+                <button type="button" class="btn btn-primary" @click="onApplyClicked">
+                    {{ lang.form.save }}
                 </button>
             </div>
         </v-popup-footer>
@@ -41,6 +40,8 @@
             },
         },
         props: [
+            'details',
+            'driver',
             'lang',
         ],
     };
