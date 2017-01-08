@@ -186,7 +186,7 @@ class Plugin extends PluginBase
     public function registerShippingDrivers()
     {
         return [
-            'Bedard\Shop\Classes\NoShippingDriver',
+            'Bedard\Shop\Drivers\NoShippingDriver',
         ];
     }
 }

@@ -1,0 +1,17 @@
+<div data-bedard-shop="driverconfig-form"></div>
+
+<script data-bedard-shop="driverconfig-form-fields" type="text/html">
+    <?= $form ?>
+</script>
+
+<script>
+    $(function() {
+        $('[data-bedard-shop="driverconfig-form"]').mountDriverFormComponent({
+            endpoint: '<?= Backend::url("bedard/shop/categories/reorder") ?>',
+            lang: <?= $this->getLangJson([
+                'form@backend::lang.form' => ['apply', 'cancel', 'saving'],
+            ]); ?>,
+            token: '<?= csrf_token() ?>',
+        });
+    });
+</script>

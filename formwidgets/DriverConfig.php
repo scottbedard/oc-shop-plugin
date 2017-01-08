@@ -2,12 +2,16 @@
 
 use Backend\Classes\FormWidgetBase;
 use Bedard\Shop\Classes\DriverManager;
+use Bedard\Shop\Interfaces\DriverInterface;
+use Model;
 
 /**
  * DriverConfig Form Widget.
  */
 class DriverConfig extends FormWidgetBase
 {
+    use \Bedard\Shop\Traits\LangJsonable;
+
     /**
      * {@inheritdoc}
      */
@@ -54,6 +58,25 @@ class DriverConfig extends FormWidgetBase
     }
 
     /**
+     * Get the form for a driver.
+     *
+     * @param  DriverInterface $driver
+     * @return object
+     */
+    protected function getDriverForm(DriverInterface $driver)
+    {
+        $model = new Model;
+        // foreach (array_merge(array_keys($fields), array_keys($tabFields)) as $key) {
+        //     $model->$key = $driver->getConfig($key);
+        // }
+
+        $form = $this->makeConfigFromArray($driver->getFormFields());
+        $form->model = $model;
+
+        return $form;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getSaveValue($value)
@@ -69,9 +92,30 @@ class DriverConfig extends FormWidgetBase
     protected function getShippingDriverDetails()
     {
         foreach ($this->manager->getShippingDrivers() as $driver) {
-            $details[get_class($driver)] = $driver->driverDetails();
+            $details[]  = [
+                "class" => get_class($driver),
+                "details" => $driver->driverDetails(),
+            ];
         }
 
         return $details;
+    }
+
+    /**
+     * Load the driver settings.
+     *
+     * @return string
+     */
+    public function onLoadDriverSettings()
+    {
+        $input = input('driver');
+        $driver = new $input['class'];
+
+        $form = $this->getDriverForm($driver);
+
+        return $this->makePartial('popup', [
+            'driver' => $driver,
+            'form' => $this->makeWidget('Backend\Widgets\Form', $form)->render(),
+        ]);
     }
 }
