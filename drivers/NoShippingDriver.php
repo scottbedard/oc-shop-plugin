@@ -37,6 +37,6 @@ class NoShippingDriver implements ShippingDriverInterface
     {
         $yaml = new Yaml;
 
-        return $yaml->parseFile(__DIR__ . '/noshipping/fields.yaml');
+        return $yaml->parseFile(__DIR__.'/noshipping/fields.yaml');
     }
 }

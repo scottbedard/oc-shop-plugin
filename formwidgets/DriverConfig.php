@@ -1,9 +1,9 @@
 <?php namespace Bedard\Shop\FormWidgets;
 
+use Model;
 use Backend\Classes\FormWidgetBase;
 use Bedard\Shop\Classes\DriverManager;
 use Bedard\Shop\Interfaces\DriverInterface;
-use Model;
 
 /**
  * DriverConfig Form Widget.
@@ -92,9 +92,9 @@ class DriverConfig extends FormWidgetBase
     protected function getShippingDriverDetails()
     {
         foreach ($this->manager->getShippingDrivers() as $driver) {
-            $details[]  = [
-                "class" => get_class($driver),
-                "details" => $driver->driverDetails(),
+            $details[] = [
+                'class' => get_class($driver),
+                'details' => $driver->driverDetails(),
             ];
         }
 

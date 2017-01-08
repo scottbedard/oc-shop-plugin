@@ -1,6 +1,5 @@
 <?php namespace Bedard\Shop\Classes;
 
-use Lang;
 use Backend\Classes\Controller as BaseController;
 
 class BackendController extends BaseController
