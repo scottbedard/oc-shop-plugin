@@ -92,8 +92,7 @@ class DriverConfig extends FormWidgetBase
     protected function getShippingDrivers()
     {
         foreach ($this->manager->getShippingDrivers() as $driver) {
-
-            $drivers[]  = [
+            $drivers[] = [
                 'driver' => get_class($driver),
                 'details' => $driver->driverDetails(),
             ];
