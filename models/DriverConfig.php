@@ -3,7 +3,7 @@
 use Model;
 
 /**
- * DriverConfig Model
+ * DriverConfig Model.
  */
 class DriverConfig extends Model
 {
