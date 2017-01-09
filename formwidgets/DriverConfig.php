@@ -1,13 +1,13 @@
 <?php namespace Bedard\Shop\FormWidgets;
 
-use Bedard\Shop\Models\DriverConfig as ConfigModel;
 use Form;
 use Model;
+use Validator;
 use Backend\Classes\FormWidgetBase;
 use Bedard\Shop\Classes\DriverManager;
 use Bedard\Shop\Interfaces\DriverInterface;
 use October\Rain\Exception\ValidationException;
-use Validator;
+use Bedard\Shop\Models\DriverConfig as ConfigModel;
 
 /**
  * DriverConfig Form Widget.
@@ -154,10 +154,14 @@ class DriverConfig extends FormWidgetBase
         }
 
         // if the driver defined it's own save method, call it
-        if (method_exists($driver, 'save')) $driver->save($data);
+        if (method_exists($driver, 'save')) {
+            $driver->save($data);
+        }
 
         // otherwise just use the default save
-        else $this->save($driverClass, $data);
+        else {
+            $this->save($driverClass, $data);
+        }
     }
 
     /**
