@@ -47,4 +47,20 @@ class DriverConfig extends Model
     protected $jsonable = [
         'config',
     ];
+
+    /**
+     * Find a driver model and set it's values so we can render a form.
+     *
+     * @return void
+     */
+    public static function getDriver($driverClass)
+    {
+        $model = self::firstOrNew(['driver' => $driverClass]);
+
+        foreach ($model->config as $key => $value) {
+            $model->$key = $value;
+        }
+
+        return $model;
+    }
 }

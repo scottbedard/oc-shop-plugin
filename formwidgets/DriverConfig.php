@@ -65,13 +65,9 @@ class DriverConfig extends FormWidgetBase
      * @param  DriverInterface $driver
      * @return object
      */
-    protected function getDriverForm(DriverInterface $driver)
+    protected function getDriverForm(DriverInterface $driver, $driverClass)
     {
-        $model = new Model;
-        // foreach (array_merge(array_keys($fields), array_keys($tabFields)) as $key) {
-        //     $model->$key = $driver->getConfig($key);
-        // }
-
+        $model = ConfigModel::getDriver($driverClass);
         $form = $this->makeConfigFromArray($driver->getFormFields());
         $form->model = $model;
 
@@ -113,7 +109,7 @@ class DriverConfig extends FormWidgetBase
         $driverClass = input('driver');
         $driver = new $driverClass;
 
-        $config = $this->getDriverForm($driver);
+        $config = $this->getDriverForm($driver, $driverClass);
         $form = $this->makeWidget('Backend\Widgets\Form', $config);
 
         return $this->makePartial('popup', [
