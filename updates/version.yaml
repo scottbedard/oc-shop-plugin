@@ -18,4 +18,5 @@
     - 1.0/create_prices_table.php
     - 1.0/create_products_table.php
     - 1.0/create_promotions_table.php
+    - 1.0/create_driver_configs_table.php
     - dev_seeds.php

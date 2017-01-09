@@ -1,6 +1,9 @@
-<div data-bedard-shop="driverconfig-form"></div>
+<?= Form::open() ?>
+    <input type="hidden" name="_driver" value="<?= $driver ?>" />
+    <div data-bedard-shop="driverconfig-form"></div>
+<?= Form::close() ?>
 
-<script data-bedard-shop="driverconfig-form-fields" type="text/html">
+<script data-bedard-shop="driverconfig-form" type="text/html">
     <?= $form ?>
 </script>
 

@@ -13,7 +13,7 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">
                     {{ lang.form.cancel }}
                 </button>
-                <button type="button" class="btn btn-primary" @click="onApplyClicked">
+                <button type="submit" class="btn btn-primary">
                     {{ lang.form.save }}
                 </button>
             </div>
@@ -28,15 +28,32 @@
                 isLoading: false,
             };
         },
+        mounted() {
+            this.bindSubmitEventHandler();
+        },
         computed: {
             form() {
                 // grab our october form from the <script> block we stashed it in
-                return $('script[data-bedard-shop="driverconfig-form-fields"]').first().html();
+                return $('script[data-bedard-shop="driverconfig-form"]').first().html();
             },
         },
         methods: {
-            onApplyClicked() {
-                console.log ('ok...');
+            bindSubmitEventHandler() {
+                let $form = $(this.$el).closest('form');
+
+                $form.on('submit', this.onFormSubmitted);
+            },
+            onFormSubmitted(e) {
+                e.preventDefault();
+                this.isLoading = true;
+                $(e.target).request('onFormSubmitted', {
+                    success: data => this.onFormSuccess(data),
+                    complete: () => this.isLoading = false,
+                });
+            },
+            onFormSuccess(data) {
+                // hide the popup
+                $(this.$el).closest('.control-popup').modal('hide');
             },
         },
         props: [

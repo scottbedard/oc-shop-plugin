@@ -1,9 +1,12 @@
 <?php namespace Bedard\Shop\FormWidgets;
 
+use Bedard\Shop\Models\DriverConfig as ConfigModel;
+use Form;
 use Model;
 use Backend\Classes\FormWidgetBase;
 use Bedard\Shop\Classes\DriverManager;
 use Bedard\Shop\Interfaces\DriverInterface;
+use October\Rain\Exception\ValidationException;
 
 /**
  * DriverConfig Form Widget.
@@ -111,12 +114,55 @@ class DriverConfig extends FormWidgetBase
         $driverClass = input('driver');
         $driver = new $driverClass;
 
-        $form = $this->getDriverForm($driver);
+        $config = $this->getDriverForm($driver);
+        $form = $this->makeWidget('Backend\Widgets\Form', $config);
 
         return $this->makePartial('popup', [
             'driver' => $driverClass,
             'details' => $driver->driverDetails(),
-            'form' => $this->makeWidget('Backend\Widgets\Form', $form)->render(),
+            'form' => $form->render(),
         ]);
+    }
+
+    /**
+     * Validate the form.
+     *
+     * @return void
+     * @throws \AjaxException
+     */
+    public function onFormSubmitted()
+    {
+        // grab our relevant input data
+        $data = input();
+        $driverClass = $data['_driver'];
+        $driver = new $driverClass;
+
+        // clean up fields not needed for driver data
+        unset($data['_driver']);
+        unset($data['_session_key']);
+        unset($data['_token']);
+
+        // give the driver a change to validate this form if they want to
+        if (method_exists($driver, 'validate')) $driver->validate($data);
+
+        // if the driver defined it's own save method, call it
+        if (method_exists($driver, 'save')) $driver->save($data);
+
+        // otherwise just use the default save
+        else $this->save($driverClass, $data);
+    }
+
+    /**
+     * Save a driver.
+     *
+     * @param  name     $driver     The class name of the driver.
+     * @param  array    $config     Driver data to save.
+     * @return void
+     */
+    protected function save($driverClass, $config)
+    {
+        $model = ConfigModel::firstOrNew(['driver' => $driverClass]);
+        $model->config = $config;
+        $model->save();
     }
 }

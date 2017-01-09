@@ -3,6 +3,10 @@
 # ===================================
 
 fields:
-    message:
-        type: partial
-        path: $/bedard/shop/drivers/noshipping/message.htm
+    foo:
+        label: foo
+        span: left
+
+    bar:
+        label: bar
+        span: right
