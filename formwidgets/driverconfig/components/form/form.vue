@@ -52,8 +52,12 @@
                 });
             },
             onFormSuccess(data) {
-                // hide the popup
+                // hide the popup and display our success message
                 $(this.$el).closest('.control-popup').modal('hide');
+
+                // display our success message
+                let successMessage = this.lang['bedard.shop::lang.drivers.driver_updated'];
+                $.oc.flashMsg({ text: successMessage, class: 'success', interval: 3 });
             },
         },
         props: [

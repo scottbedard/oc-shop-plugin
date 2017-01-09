@@ -180,6 +180,7 @@ return [
     // Drivers
     //
     'drivers' => [
+        'driver_updated' => 'Driver successfully updated.',
         'noshipping' => [
             'message' => 'This driver allows users to check out without calculating shipping.',
         ],

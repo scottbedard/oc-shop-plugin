@@ -14,6 +14,7 @@
             details: <?= json_encode($details) ?>,
             endpoint: '<?= Backend::url("bedard/shop/categories/reorder") ?>',
             lang: <?= $this->getLangJson([
+                'bedard.shop::lang.drivers.driver_updated',
                 'form@backend::lang.form' => ['cancel', 'save', 'saving'],
             ]); ?>,
             token: '<?= csrf_token() ?>',

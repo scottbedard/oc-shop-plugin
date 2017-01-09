@@ -20,6 +20,5 @@ class Orders extends BackendController
         parent::__construct();
 
         BackendMenu::setContext('Bedard.Shop', 'shop', 'orders');
-        $this->addJs('/plugins/bedard/shop/assets/dist/orders.js');
     }
 }

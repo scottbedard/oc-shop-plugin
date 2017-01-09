@@ -1,5 +1,11 @@
+<style lang="scss" scoped>
+    .v-driver-config {
+        margin: -10px;
+    }
+</style>
+
 <template>
-    <div>
+    <div class="v-driver-config">
         <v-driver
             v-for="driver in drivers"
             :driver="driver"
@@ -15,14 +21,17 @@
         },
         methods: {
             onDriverClicked(driver) {
+                let lang = this.lang;
+
                 $(this.$el).popup({
                     handler: 'onLoadDriverSettings',
-                    extraData: { driver },
+                    extraData: { driver, lang },
                 });
             },
         },
         props: [
             'drivers',
+            'lang',
         ],
     };
 </script>

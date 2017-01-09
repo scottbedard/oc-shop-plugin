@@ -57,8 +57,10 @@ class DriverConfig extends Model
     {
         $model = self::firstOrNew(['driver' => $driverClass]);
 
-        foreach ($model->config as $key => $value) {
-            $model->$key = $value;
+        if (is_array($model->config)) {
+            foreach ($model->config as $key => $value) {
+                $model->$key = $value;
+            }
         }
 
         return $model;

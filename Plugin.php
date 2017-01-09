@@ -179,7 +179,6 @@ class Plugin extends PluginBase
 
     /**
      * Register shipping drivers.
-     * ['className' => 'alias'].
      *
      * @return array
      */

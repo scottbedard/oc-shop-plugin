@@ -1,11 +1,13 @@
 <?php namespace Bedard\Shop\FormWidgets;
 
+use Bedard\Shop\Models\DriverConfig as ConfigModel;
 use Form;
 use Model;
 use Backend\Classes\FormWidgetBase;
 use Bedard\Shop\Classes\DriverManager;
 use Bedard\Shop\Interfaces\DriverInterface;
-use Bedard\Shop\Models\DriverConfig as ConfigModel;
+use October\Rain\Exception\ValidationException;
+use Validator;
 
 /**
  * DriverConfig Form Widget.
@@ -68,6 +70,7 @@ class DriverConfig extends FormWidgetBase
     protected function getDriverForm(DriverInterface $driver, $driverClass)
     {
         $model = ConfigModel::getDriver($driverClass);
+
         $form = $this->makeConfigFromArray($driver->getFormFields());
         $form->model = $model;
 
@@ -138,19 +141,23 @@ class DriverConfig extends FormWidgetBase
         unset($data['_token']);
 
         // give the driver a change to validate this form if they want to
-        if (method_exists($driver, 'validate')) {
-            $driver->validate($data);
+        if (property_exists($driver, 'rules')) {
+            $customMessages = property_exists($driver, 'customMessages')
+                ? $driver->customMessages
+                : [];
+
+            $validator = Validator::make($data, $driver->rules, $customMessages);
+
+            if ($validator->fails()) {
+                throw new ValidationException($validator);
+            }
         }
 
         // if the driver defined it's own save method, call it
-        if (method_exists($driver, 'save')) {
-            $driver->save($data);
-        }
+        if (method_exists($driver, 'save')) $driver->save($data);
 
         // otherwise just use the default save
-        else {
-            $this->save($driverClass, $data);
-        }
+        else $this->save($driverClass, $data);
     }
 
     /**
