@@ -1,7 +1,7 @@
 <?php namespace Bedard\Shop\Models;
 
-use Flash;
 use Lang;
+use Flash;
 use Model;
 use October\Rain\Exception\ValidationException;
 
