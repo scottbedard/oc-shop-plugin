@@ -12,7 +12,8 @@ $.fn.mountDriverConfigComponent = function(params) {
         functional: true,
         components: { 'v-driverconfig': DriverConfigComponent },
         render: h => <v-driverconfig
-            drivers={ params.drivers }>
+            drivers={ params.drivers }
+            enabledDrivers={ params.enabledDrivers }>
         </v-driverconfig>,
     });
 };

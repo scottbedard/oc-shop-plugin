@@ -4,6 +4,7 @@
     $(function() {
         $('[data-bedard-shop="driverconfig-formwidget"]').mountDriverConfigComponent({
             drivers: <?= json_encode($drivers); ?>,
+            enabledDrivers: <?= json_encode($enabled_drivers); ?>,
             token: '<?= csrf_token() ?>',
         });
     });

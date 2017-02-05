@@ -353,6 +353,8 @@ return [
         'form' => [
             'comment' => 'Below are your installed shipping calculators.',
             'label' => 'Configure shipping drivers',
+            'validation_none' => 'A shipping driver must be selected.',
+            'validation_multiple' => 'Only one shipping driver may be enabled at a time.',
         ],
         'label' => 'Shipping calculators',
     ],

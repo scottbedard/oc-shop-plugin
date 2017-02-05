@@ -50,6 +50,7 @@ class DriverConfig extends FormWidgetBase
     public function prepareVars()
     {
         $this->vars['drivers'] = $this->getShippingDrivers();
+        $this->vars['enabled_drivers'] = $this->model->enabled_drivers;
     }
 
     /**
@@ -82,7 +83,7 @@ class DriverConfig extends FormWidgetBase
      */
     public function getSaveValue($value)
     {
-        return $value;
+        return array_keys(input('drivers') ?: []);
     }
 
     /**

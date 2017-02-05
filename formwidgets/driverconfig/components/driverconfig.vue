@@ -9,6 +9,7 @@
         <v-driver
             v-for="driver in drivers"
             :driver="driver"
+            :enabled-drivers="enabledDrivers"
             @click="onDriverClicked">
         </v-driver>
     </div>
@@ -31,6 +32,7 @@
         },
         props: [
             'drivers',
+            'enabledDrivers',
             'lang',
         ],
     };

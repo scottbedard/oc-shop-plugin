@@ -3,7 +3,7 @@
 # ===================================
 
 fields:
-    driver_config:
+    enabled_drivers:
         label: bedard.shop::lang.shipping.form.label
         commentAbove: bedard.shop::lang.shipping.form.comment
         type: driver-config
