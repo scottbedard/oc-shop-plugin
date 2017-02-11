@@ -90,6 +90,12 @@ class Plugin extends PluginBase
                         'url'           => Backend::url('bedard/shop/promotions'),
                         'permissions'   => ['bedard.shop.promotions.*'],
                     ],
+                    'settings' => [
+                        'label'         => 'bedard.shop::lang.plugin.navigation.settings',
+                        'icon'          => 'icon-cog',
+                        'url'           => Backend::url('/system/settings/update/bedard/shop/shipping'),
+                        'permissions'   => ['bedard.shop.settings.*'],
+                    ],
                 ],
             ],
         ];
@@ -103,11 +109,11 @@ class Plugin extends PluginBase
     public function registerPermissions()
     {
         return [
-            'bedard.shop.api.manage' => [
+            'bedard.shop.settings.api.manage' => [
                 'label' => 'bedard.shop::lang.plugin.permissions.api',
                 'tab' => 'bedard.shop::lang.plugin.details.name',
             ],
-            'bedard.shop.carts.manage' => [
+            'bedard.shop.settings.carts.manage' => [
                 'label' => 'bedard.shop::lang.plugin.permissions.carts',
                 'tab' => 'bedard.shop::lang.plugin.details.name',
             ],
@@ -135,7 +141,7 @@ class Plugin extends PluginBase
                 'label' => 'bedard.shop::lang.plugin.permissions.promotions',
                 'tab' => 'bedard.shop::lang.plugin.details.name',
             ],
-            'bedard.shop.shipping.manage' => [
+            'bedard.shop.settings.shipping.manage' => [
                 'label' => 'bedard.shop::lang.plugin.permissions.shipping',
                 'tab' => 'bedard.shop::lang.plugin.details.name',
             ],
@@ -155,7 +161,7 @@ class Plugin extends PluginBase
                 'description'   => 'bedard.shop::lang.api.description',
                 'category'      => 'bedard.shop::lang.plugin.details.name',
                 'class'         => 'Bedard\Shop\Models\ApiSettings',
-                'permissions'   => ['bedard.shop.api.manage'],
+                'permissions'   => ['bedard.shop.settings.api.manage'],
                 'icon'          => 'icon-cog',
             ],
             'carts' => [
@@ -163,7 +169,7 @@ class Plugin extends PluginBase
                 'description'   => 'bedard.shop::lang.carts.description',
                 'category'      => 'bedard.shop::lang.plugin.details.name',
                 'class'         => 'Bedard\Shop\Models\CartSettings',
-                'permissions'   => ['bedard.shop.carts.manage'],
+                'permissions'   => ['bedard.shop.settings.carts.manage'],
                 'icon'          => 'icon-shopping-cart',
             ],
             'shipping' => [
@@ -171,7 +177,7 @@ class Plugin extends PluginBase
                 'description'   => 'bedard.shop::lang.shipping.description',
                 'category'      => 'bedard.shop::lang.plugin.details.name',
                 'class'         => 'Bedard\Shop\Models\ShippingSettings',
-                'permissions'   => ['bedard.shop.shipping.manage'],
+                'permissions'   => ['bedard.shop.settings.shipping.manage'],
                 'icon'          => 'icon-truck',
             ],
         ];
