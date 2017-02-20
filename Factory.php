@@ -1,6 +1,7 @@
 <?php namespace Bedard\Shop;
 
 use Faker;
+use Faker\Provider\Lorem;
 use Model;
 
 class Factory
@@ -54,7 +55,7 @@ class Factory
         $faker = Faker\Factory::create();
 
         return array_merge([
-            'name' => $faker->words(3, true),
+            'name' => $faker->words(2, true),
             'slug' => $faker->slug,
         ], $data);
     }
@@ -70,7 +71,9 @@ class Factory
         $faker = Faker\Factory::create();
 
         return array_merge([
-            'name' => $faker->words(3, true),
+            'base_price' => rand(1, 100) + (rand(0, 100) / 100),
+            'description_html' => '<p>'.Lorem::paragraph().'</p>',
+            'name' => $faker->words(2, true),
             'slug' => $faker->slug,
         ], $data);
     }

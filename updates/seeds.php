@@ -2,6 +2,7 @@
 
 use Bedard\Shop\Factory;
 use Bedard\Shop\Models\Category;
+use Bedard\Shop\Models\Product;
 use October\Rain\Database\Updates\Seeder;
 
 class Seeds extends Seeder
@@ -18,6 +19,7 @@ class Seeds extends Seeder
         echo "\n";
 
         $this->seedCategories(10);
+        $this->seedProducts(10);
 
         echo "\n  Done.\n";
         echo "\n";
@@ -30,5 +32,14 @@ class Seeds extends Seeder
         }
 
         echo "  - Categories\n";
+    }
+
+    protected function seedProducts($quantity = 10)
+    {
+        for ($i = 0; $i < $quantity; $i++) {
+            Factory::create(new Product);
+        }
+
+        echo "  - Products\n";
     }
 }
