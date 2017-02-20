@@ -10,6 +10,7 @@ module.exports = {
     output: {
         filename: '[name].min.js',
         path: path.resolve(__dirname, '../assets/dist'),
+        publicPath: '/plugins/bedard/shop/assets/dist',
     },
     resolve: {
         extensions: ['.js', '.scss'],
