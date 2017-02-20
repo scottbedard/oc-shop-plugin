@@ -4,9 +4,56 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6dba37e7bb096ebfc3e08cdf2cb82a88",
-    "content-hash": "f581bb213322971a8998aa4c844a5d01",
-    "packages": [],
+    "hash": "33528385fe55c6a0f482dda0acec2baa",
+    "content-hash": "b66bc7faadb16ba956a73a8266ad7f7d",
+    "packages": [
+        {
+            "name": "owl/list-delete",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/october-widgets/list-delete.git",
+                "reference": "8b696a75b0b34a76c83d2511b2e9a720eef8088e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/october-widgets/list-delete/zipball/8b696a75b0b34a76c83d2511b2e9a720eef8088e",
+                "reference": "8b696a75b0b34a76c83d2511b2e9a720eef8088e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Owl\\Behaviors\\ListDelete\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Scott Bedard",
+                    "email": "scottbedard90@gmail.com"
+                }
+            ],
+            "description": "List delete behavior for OctoberCMS.",
+            "homepage": "http://github.com/october-widgets",
+            "keywords": [
+                "octobercms",
+                "owl"
+            ],
+            "time": "2015-07-12 17:55:48"
+        }
+    ],
     "packages-dev": [
         {
             "name": "doctrine/instantiator",
@@ -1769,6 +1816,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "owl/list-delete": 20,
         "phpunit/phpunit": 20
     },
     "prefer-stable": false,

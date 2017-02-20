@@ -2,6 +2,8 @@
     <a
         href="<?= Backend::url('bedard/shop/products/create') ?>"
         class="btn btn-primary oc-icon-plus">
-        New Product
+        <?= e(trans('backend::lang.form.create_title', [
+            'name' => trans('bedard.shop::lang.products.singular'),
+        ])); ?>
     </a>
 </div>

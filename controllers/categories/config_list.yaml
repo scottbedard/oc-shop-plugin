@@ -9,7 +9,7 @@ list: $/bedard/shop/models/category/columns.yaml
 modelClass: Bedard\Shop\Models\Category
 
 # List Title
-title: Manage Categories
+title: bedard.shop::lang.categories.list.title
 
 # Link URL for each record
 recordUrl: bedard/shop/categories/update/:id
@@ -32,7 +32,7 @@ showSorting: true
 #     direction: desc
 
 # Display checkboxes next to each record
-# showCheckboxes: true
+showCheckboxes: true
 
 # Toolbar widget configuration
 toolbar:

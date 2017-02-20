@@ -5,6 +5,11 @@ return [
     // categories
     //
     'categories' => [
+        'list' => [
+            'name' => 'Name',
+            'title' => 'Manage Categories',
+            'slug' => 'Slug',
+        ],
         'form' => [
             'name' => 'Name',
             'slug' => 'Slug',
@@ -42,6 +47,9 @@ return [
     // products
     //
     'products' => [
+        'list' => [
+            'title' => 'Manage Products',
+        ],
         'form' => [
             'base_price' => 'Base price',
             'description' => 'Description',

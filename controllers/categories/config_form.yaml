@@ -3,7 +3,7 @@
 # ===================================
 
 # Record name
-name: Category
+name: bedard.shop::lang.categories.singular
 
 # Model Form Field configuration
 form: $/bedard/shop/models/category/fields.yaml
@@ -16,16 +16,16 @@ defaultRedirect: bedard/shop/categories
 
 # Create page
 create:
-    title: Create Category
+    title: backend::lang.form.create_title
     redirect: bedard/shop/categories/update/:id
     redirectClose: bedard/shop/categories
 
 # Update page
 update:
-    title: Edit Category
+    title: backend::lang.form.update_title
     redirect: bedard/shop/categories
     redirectClose: bedard/shop/categories
 
 # Preview page
 preview:
-    title: Preview Category
+    title: backend::lang.form.preview_title

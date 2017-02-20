@@ -9,7 +9,7 @@ list: $/bedard/shop/models/product/columns.yaml
 modelClass: Bedard\Shop\Models\Product
 
 # List Title
-title: Manage Products
+title: bedard.shop::lang.products.list.title
 
 # Link URL for each record
 recordUrl: bedard/shop/products/update/:id

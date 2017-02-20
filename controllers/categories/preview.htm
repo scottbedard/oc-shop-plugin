@@ -1,6 +1,12 @@
 <?php Block::put('breadcrumb') ?>
     <ul>
-        <li><a href="<?= Backend::url('bedard/shop/categories') ?>">Categories</a></li>
+        <li>
+            <a href="<?= Backend::url('bedard/shop/categories') ?>">
+                <a href="<?= Backend::url('bedard/shop/categories') ?>">
+                    <?= e(trans('bedard.shop::lang.categories.plural')) ?>
+                </a>
+            </a>
+        </li>
         <li><?= e($this->pageTitle) ?></li>
     </ul>
 <?php Block::endPut() ?>

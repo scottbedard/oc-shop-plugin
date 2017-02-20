@@ -1,6 +1,10 @@
 <?php Block::put('breadcrumb') ?>
     <ul>
-        <li><a href="<?= Backend::url('bedard/shop/products') ?>">Products</a></li>
+        <li>
+            <a href="<?= Backend::url('bedard/shop/categories') ?>">
+                <?= e(trans('bedard.shop::lang.products.plural')) ?>
+            </a>
+        </li>
         <li><?= e($this->pageTitle) ?></li>
     </ul>
 <?php Block::endPut() ?>
@@ -19,21 +23,25 @@
                     type="submit"
                     data-request="onSave"
                     data-hotkey="ctrl+s, cmd+s"
-                    data-load-indicator="Creating Product..."
+                    data-load-indicator="<?= e(trans('backend::form.creating_name', [
+                        'name' => trans('bedard.shop::lang.products.singular'),
+                    ])) ?>"
                     class="btn btn-primary">
-                    Create
+                    <?= e(trans('backend::lang.form.create')) ?>
                 </button>
                 <button
                     type="button"
                     data-request="onSave"
                     data-request-data="close:1"
                     data-hotkey="ctrl+enter, cmd+enter"
-                    data-load-indicator="Creating Product..."
+                    data-load-indicator="<?= e(trans('backend::form.creating_name', [
+                        'name' => trans('bedard.shop::lang.products.singular'),
+                    ])) ?>"
                     class="btn btn-default">
-                    Create and Close
+                    <?= e(trans('backend::lang.form.create_and_close')) ?>
                 </button>
                 <span class="btn-text">
-                    or <a href="<?= Backend::url('bedard/shop/products') ?>">Cancel</a>
+                    <?= e(trans('backend::lang.form.or')) ?> <a href="<?= Backend::url('bedard/shop/products') ?>"><?= e(trans('backend::lang.form.cancel')) ?></a>
                 </span>
             </div>
         </div>

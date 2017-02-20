@@ -8,5 +8,7 @@
         "fzaninotto/faker": "1.5.*",
         "satooshi/php-coveralls": "~1.0"
     },
-    "require": {}
+    "require": {
+        "owl/list-delete": "~1.0@dev"
+    }
 }

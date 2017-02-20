@@ -3,7 +3,7 @@
 # ===================================
 
 # Record name
-name: Product
+name: bedard.shop::lang.products.singular
 
 # Model Form Field configuration
 form: $/bedard/shop/models/product/fields.yaml
@@ -16,16 +16,16 @@ defaultRedirect: bedard/shop/products
 
 # Create page
 create:
-    title: Create Product
+    title: backend::lang.form.create_title
     redirect: bedard/shop/products/update/:id
     redirectClose: bedard/shop/products
 
 # Update page
 update:
-    title: Edit Product
+    title: backend::lang.form.update_title
     redirect: bedard/shop/products
     redirectClose: bedard/shop/products
 
 # Preview page
 preview:
-    title: Preview Product
+    title: backend::lang.form.preview_title

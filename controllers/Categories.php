@@ -11,6 +11,7 @@ class Categories extends Controller
     public $implement = [
         'Backend.Behaviors.FormController',
         'Backend.Behaviors.ListController',
+        'Owl.Behaviors.ListDelete.Behavior',
     ];
 
     public $formConfig = 'config_form.yaml';
