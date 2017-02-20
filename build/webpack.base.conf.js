@@ -1,18 +1,18 @@
 'use strict';
 
-const { resolve } = require('./utilities');
 const path = require('path');
 
 module.exports = {
     entry: {
-        app: path.resolve(__dirname, '../assets/shop.js'),
+        categories: path.resolve(__dirname, '../controllers/categories'),
+        products: path.resolve(__dirname, '../controllers/products'),
     },
     output: {
         filename: '[name].min.js',
         path: path.resolve(__dirname, '../assets/dist'),
     },
     resolve: {
-        extensions: ['.js'],
+        extensions: ['.js', '.scss'],
         modules: [
             path.resolve(__dirname, '../'),
             path.resolve(__dirname, '../node_modules'),
@@ -28,6 +28,30 @@ module.exports = {
                 loader: 'babel-loader',
                 include: [
                     path.resolve(__dirname, '../'),
+                ],
+            },
+            {
+                test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+                loader: 'url-loader',
+                query: {
+                    limit: 10000,
+                    name: path.resolve(__dirname, '../assets/dist/img/[name].[ext]'),
+                },
+            },
+            {
+                test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+                loader: 'url-loader',
+                query: {
+                    limit: 10000,
+                    name: path.resolve(__dirname, '../assets/dist/fonts/[name].[ext]'),
+                },
+            },
+            {
+                test: /\.scss$/,
+                loaders: [
+                    'style-loader',
+                    'css-loader',
+                    'sass-loader',
                 ],
             },
         ],

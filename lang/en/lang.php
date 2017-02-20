@@ -48,6 +48,12 @@ return [
     //
     'products' => [
         'list' => [
+            'name' => 'Name',
+            'price' => 'Price',
+            'slug' => 'Slug',
+            'status_disabled' => 'Disabled',
+            'status_enabled' => 'Enabled',
+            'status' => 'Status',
             'title' => 'Manage Products',
         ],
         'form' => [

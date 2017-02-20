@@ -3,6 +3,18 @@
 # ===================================
 
 columns:
-    id:
-        label: ID
+    name:
+        label: bedard.shop::lang.products.list.name
         searchable: true
+
+    slug:
+        label: bedard.shop::lang.products.list.slug
+        searchable: true
+
+    base_price:
+        label: bedard.shop::lang.products.list.price
+
+    status:
+        label: bedard.shop::lang.products.list.status
+        type: partial
+        path: $/bedard/shop/models/product/_column_status.htm

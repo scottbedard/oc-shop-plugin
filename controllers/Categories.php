@@ -1,12 +1,12 @@
 <?php namespace Bedard\Shop\Controllers;
 
 use BackendMenu;
-use Backend\Classes\Controller;
+use Bedard\Shop\Classes\BackendController;
 
 /**
  * Categories Back-end Controller.
  */
-class Categories extends Controller
+class Categories extends BackendController
 {
     public $implement = [
         'Backend.Behaviors.FormController',
@@ -22,5 +22,7 @@ class Categories extends Controller
         parent::__construct();
 
         BackendMenu::setContext('Bedard.Shop', 'shop', 'categories');
+
+        $this->addJs('/plugins/bedard/shop/assets/dist/categories.min.js');
     }
 }

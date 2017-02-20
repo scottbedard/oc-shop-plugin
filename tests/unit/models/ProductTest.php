@@ -22,4 +22,13 @@ class ProductTest extends PluginTestCase
         $product = Factory::create(new Product, ['description_html' => '<b>Hello</b>']);
         $this->assertEquals('Hello', $product->description_plain);
     }
+
+    public function test_selecting_status()
+    {
+        $disabled = Factory::create(new Product, ['is_enabled' => false]);
+        $enabled = Factory::create(new Product, ['is_enabled' => true]);
+        $products = Product::selectStatus()->get();
+        $this->assertEquals(0, $products->find($disabled->id)->status);
+        $this->assertEquals(1, $products->find($enabled->id)->status);
+    }
 }
