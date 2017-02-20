@@ -24,8 +24,6 @@ try {
     process.exit();
 }
 
-console.log (octoberProxy);
-
 // create a server for our development assets
 const app = express();
 const compiler = webpack(webpackConfig);
