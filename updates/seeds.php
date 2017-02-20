@@ -14,7 +14,7 @@ class Seeds extends Seeder
         }
 
         echo "\n";
-        echo "  Seeding test data...";
+        echo '  Seeding test data...';
         echo "\n";
 
         $this->seedCategories(10);

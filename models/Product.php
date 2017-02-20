@@ -3,7 +3,7 @@
 use Model;
 
 /**
- * Product Model
+ * Product Model.
  */
 class Product extends Model
 {
@@ -59,7 +59,6 @@ class Product extends Model
         'base_price' => 'required|numeric|min:0',
         'slug' => 'required|unique:bedard_shop_products',
     ];
-
 
     /**
      * Before save.

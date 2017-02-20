@@ -3,7 +3,7 @@
 use Model;
 
 /**
- * Category Model
+ * Category Model.
  */
 class Category extends Model
 {

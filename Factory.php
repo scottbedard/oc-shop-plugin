@@ -2,7 +2,6 @@
 
 use Faker;
 use Model;
-use Faker\Provider\Lorem;
 
 class Factory
 {

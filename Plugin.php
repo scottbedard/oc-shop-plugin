@@ -4,7 +4,7 @@ use Backend;
 use System\Classes\PluginBase;
 
 /**
- * Shop Plugin Information File
+ * Shop Plugin Information File.
  */
 class Plugin extends PluginBase
 {
@@ -30,7 +30,6 @@ class Plugin extends PluginBase
      */
     public function register()
     {
-
     }
 
     /**
@@ -40,7 +39,6 @@ class Plugin extends PluginBase
      */
     public function boot()
     {
-
     }
 
     /**
@@ -69,7 +67,7 @@ class Plugin extends PluginBase
         return [
             'bedard.shop.some_permission' => [
                 'tab' => 'Shop',
-                'label' => 'Some permission'
+                'label' => 'Some permission',
             ],
         ];
     }

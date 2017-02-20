@@ -4,13 +4,13 @@ use BackendMenu;
 use Backend\Classes\Controller;
 
 /**
- * Categories Back-end Controller
+ * Categories Back-end Controller.
  */
 class Categories extends Controller
 {
     public $implement = [
         'Backend.Behaviors.FormController',
-        'Backend.Behaviors.ListController'
+        'Backend.Behaviors.ListController',
     ];
 
     public $formConfig = 'config_form.yaml';
