@@ -94,12 +94,14 @@ class Plugin extends PluginBase
      */
     public function registerPermissions()
     {
-        return []; // Remove this line to activate
-
         return [
-            'bedard.shop.some_permission' => [
-                'tab' => 'Shop',
-                'label' => 'Some permission',
+            'bedard.shop.categories.manage' => [
+                'label' => 'bedard.shop::lang.plugin.permissions.categories',
+                'tab' => 'bedard.shop::lang.plugin.name',
+            ],
+            'bedard.shop.products.manage' => [
+                'label' => 'bedard.shop::lang.plugin.permissions.products',
+                'tab' => 'bedard.shop::lang.plugin.name',
             ],
         ];
     }

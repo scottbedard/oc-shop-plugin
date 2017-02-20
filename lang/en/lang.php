@@ -41,6 +41,10 @@ return [
     'plugin' => [
         'description' => 'An ecommerce platform for October CMS.',
         'name' => 'Shop',
+        'permissions' => [
+            'categories' => 'Manage Categories',
+            'products' => 'Manage Products',
+        ],
     ],
 
     //

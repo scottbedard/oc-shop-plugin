@@ -8,13 +8,19 @@ use Bedard\Shop\Classes\BackendController;
  */
 class Products extends BackendController
 {
+    public $formConfig = 'config_form.yaml';
+
     public $implement = [
         'Backend.Behaviors.FormController',
         'Backend.Behaviors.ListController',
+        'Owl.Behaviors.ListDelete.Behavior',
     ];
 
-    public $formConfig = 'config_form.yaml';
     public $listConfig = 'config_list.yaml';
+
+    public $registerPermissions = [
+        'bedard.shop.products.manage',
+    ];
 
     public function __construct()
     {
