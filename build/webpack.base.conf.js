@@ -41,6 +41,7 @@ module.exports = {
                 include: [
                     path.resolve(__dirname, '../'),
                 ],
+                exclude: /node_modules/,
             },
             {
                 test: /\.json$/,
