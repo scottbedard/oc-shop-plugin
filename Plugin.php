@@ -24,20 +24,20 @@ class Plugin extends PluginBase
     }
 
     /**
-     * Register method, called when the plugin is first registered.
-     *
-     * @return void
-     */
-    public function register()
-    {
-    }
-
-    /**
      * Boot method, called right before the request route.
      *
      * @return array
      */
     public function boot()
+    {
+    }
+
+    /**
+     * Register method, called when the plugin is first registered.
+     *
+     * @return void
+     */
+    public function register()
     {
     }
 
@@ -52,23 +52,6 @@ class Plugin extends PluginBase
 
         return [
             'Bedard\Shop\Components\MyComponent' => 'myComponent',
-        ];
-    }
-
-    /**
-     * Registers any back-end permissions used by this plugin.
-     *
-     * @return array
-     */
-    public function registerPermissions()
-    {
-        return []; // Remove this line to activate
-
-        return [
-            'bedard.shop.some_permission' => [
-                'tab' => 'Shop',
-                'label' => 'Some permission',
-            ],
         ];
     }
 
@@ -100,6 +83,23 @@ class Plugin extends PluginBase
                         'url'           => Backend::url('bedard/shop/categories'),
                     ],
                 ],
+            ],
+        ];
+    }
+
+    /**
+     * Registers any back-end permissions used by this plugin.
+     *
+     * @return array
+     */
+    public function registerPermissions()
+    {
+        return []; // Remove this line to activate
+
+        return [
+            'bedard.shop.some_permission' => [
+                'tab' => 'Shop',
+                'label' => 'Some permission',
             ],
         ];
     }

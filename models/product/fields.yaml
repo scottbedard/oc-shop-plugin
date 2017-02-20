@@ -18,6 +18,10 @@ fields:
 tabs:
     stretch: true
     fields:
+        options_inventories:
+            type: Bedard\Shop\FormWidgets\OptionsInventories
+            tab: bedard.shop::lang.products.form.tab_options_inventories
+
         description_html:
             label: bedard.shop::lang.products.form.description
             tab: bedard.shop::lang.products.form.tab_general

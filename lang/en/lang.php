@@ -15,6 +15,22 @@ return [
     ],
 
     //
+    // inventories
+    //
+    'inventories' => [
+        'singular' => 'Inventory',
+        'plural' => 'Inventories',
+    ],
+
+    //
+    // options
+    //
+    'options' => [
+        'singular' => 'Option',
+        'plural' => 'Options',
+    ],
+
+    //
     // plugin
     //
     'plugin' => [
