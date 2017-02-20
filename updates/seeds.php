@@ -19,13 +19,13 @@ class Seeds extends Seeder
         echo "\n";
 
         $this->seedCategories(10);
-        $this->seedProducts(10);
+        $this->seedProducts(20);
 
         echo "\n  Done.\n";
         echo "\n";
     }
 
-    protected function seedCategories($quantity = 10)
+    protected function seedCategories($quantity)
     {
         for ($i = 0; $i < $quantity; $i++) {
             Factory::create(new Category);
@@ -34,10 +34,13 @@ class Seeds extends Seeder
         echo "  - Categories\n";
     }
 
-    protected function seedProducts($quantity = 10)
+    protected function seedProducts($quantity)
     {
+        $categories = Category::all();
+
         for ($i = 0; $i < $quantity; $i++) {
-            Factory::create(new Product);
+            $product = Factory::create(new Product);
+            $product->categories()->attach($categories->random(1));
         }
 
         echo "  - Products\n";
