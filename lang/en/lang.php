@@ -68,6 +68,7 @@ return [
             'name' => 'Name',
             'slug' => 'Slug',
             'tab_general' => 'General',
+            'tab_options_inventories' => 'Options & Inventories',
         ],
         'plural' => 'Products',
         'singular' => 'Product',

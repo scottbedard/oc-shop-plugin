@@ -44,8 +44,7 @@ class OptionsInventories extends FormWidgetBase
      */
     public function loadAssets()
     {
-        $this->addCss('css/optionsinventories.css', 'Bedard.Shop');
-        $this->addJs('js/optionsinventories.js', 'Bedard.Shop');
+        $this->addJs('/plugins/bedard/shop/assets/dist/options_inventories.min.js', 'Bedard.Shop');
     }
 
     /**

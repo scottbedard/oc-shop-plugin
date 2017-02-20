@@ -6,6 +6,7 @@ module.exports = {
     entry: {
         categories: path.resolve(__dirname, '../controllers/categories'),
         products: path.resolve(__dirname, '../controllers/products'),
+        options_inventories: path.resolve(__dirname, '../formwidgets/optionsinventories/assets/js/optionsinventories'),
     },
     output: {
         filename: '[name].min.js',
@@ -13,23 +14,37 @@ module.exports = {
         publicPath: '/plugins/bedard/shop/assets/dist',
     },
     resolve: {
-        extensions: ['.js', '.scss'],
+        extensions: ['.js', '.vue', '.scss'],
         modules: [
             path.resolve(__dirname, '../'),
+            path.resolve(__dirname, '../assets/scss'),
             path.resolve(__dirname, '../node_modules'),
         ],
-        alias: {
-            'assets': path.resolve(__dirname, '../assets'),
-        },
     },
     module: {
         rules: [
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader',
+                options: {
+                    loaders: {
+                        'scss': 'style!css!sass',
+                    },
+                    postcss: [
+                        require('autoprefixer')({ browsers: ['last 2 versions'] }),
+                    ],
+                },
+            },
             {
                 test: /\.js$/,
                 loader: 'babel-loader',
                 include: [
                     path.resolve(__dirname, '../'),
                 ],
+            },
+            {
+                test: /\.json$/,
+                loader: 'json-loader',
             },
             {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
