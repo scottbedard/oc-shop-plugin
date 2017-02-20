@@ -1,0 +1,12 @@
+{
+    "name": "scottbedard/oc-shop-plugin",
+    "description": "An ecommerce platform for October CMS.",
+    "type": "project",
+    "license": "MIT",
+    "require-dev": {
+        "phpunit/phpunit": "4.8.*@dev",
+        "fzaninotto/faker": "1.5.*",
+        "satooshi/php-coveralls": "~1.0"
+    },
+    "require": {}
+}

@@ -1,0 +1,37 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+
+    name:
+        label: bedard.shop::lang.products.form.name
+        span: left
+
+    slug:
+        label: bedard.shop::lang.products.form.slug
+        span: right
+        preset:
+            field: name
+            type: slug
+
+tabs:
+    stretch: true
+    fields:
+        description_html:
+            label: bedard.shop::lang.products.form.description
+            tab: bedard.shop::lang.products.form.tab_general
+            type: richeditor
+            span: left
+
+        is_enabled:
+            label: bedard.shop::lang.products.form.is_enabled
+            comment: bedard.shop::lang.products.form.is_enabled_comment
+            tab: bedard.shop::lang.products.form.tab_general
+            type: switch
+            span: right
+
+        base_price:
+            label: bedard.shop::lang.products.form.base_price
+            tab: bedard.shop::lang.products.form.tab_general
+            span: right

@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Category
+
+# Model Form Field configuration
+form: $/bedard/shop/models/category/fields.yaml
+
+# Model Class name
+modelClass: Bedard\Shop\Models\Category
+
+# Default redirect location
+defaultRedirect: bedard/shop/categories
+
+# Create page
+create:
+    title: Create Category
+    redirect: bedard/shop/categories/update/:id
+    redirectClose: bedard/shop/categories
+
+# Update page
+update:
+    title: Edit Category
+    redirect: bedard/shop/categories
+    redirectClose: bedard/shop/categories
+
+# Preview page
+preview:
+    title: Preview Category

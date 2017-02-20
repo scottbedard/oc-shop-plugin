@@ -1,0 +1,20 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+
+    name:
+        label: bedard.shop::lang.categories.form.name
+        span: left
+
+    slug:
+        label: bedard.shop::lang.categories.form.slug
+        span: right
+        preset:
+            field: name
+            type: slug
+
+tabs:
+    stretch: true
+    fields:
