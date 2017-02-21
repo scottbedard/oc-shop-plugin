@@ -17,16 +17,23 @@ class Options extends BackendController
      */
     public function create()
     {
-        // create our new option
-        $option = input('option');
-        unset($option['id']);
-        $option = Option::create($option);
+        try {
+            // create our new option
+            $option = input('option');
+            unset($option['id']);
+            $option = Option::create($option);
 
-        // attach it to the product with a deferred binding
-        $product = new Product;
-        $product->options()->add($option, uniqid('session_key', true));
+            // attach it to the product with a deferred binding
+            $product = new Product;
+            $product->options()->add($option, uniqid('session_key', true));
 
-        // return the option
-        return Response::make($option, 200);
+            // return the new option
+            return Response::make($option, 200);
+        }
+
+        catch (Exception $e) {
+            // if anything went wrong, send back the error message
+            return Response::make($e->getMessage(), 500);
+        }
     }
 }

@@ -3,7 +3,12 @@
         <!-- Options -->
         <div class="form-group span-left">
             <label>{{ 'bedard.shop.options.plural' | trans(lang) }}</label>
-            <v-option-list :lang="lang" :options="options" />
+            <v-option-list
+                :lang="lang"
+                :options="options"
+                @click="onOptionClicked"
+                @reorder="onOptionsReordered"
+            />
             <v-option-form
                 ref="optionForm"
                 :endpoints="endpoints"
@@ -13,8 +18,6 @@
             <v-create @click="onCreateOptionClicked">
                 {{ 'backend.relation.create_name' | trans(lang, { name: 'bedard.shop.options.singular' }) }}
             </v-create>
-
-            <pre>{{ $data }}</pre>
         </div>
 
         <!-- Inventories -->
@@ -51,8 +54,15 @@
             onCreateOptionClicked() {
                 this.$refs.optionForm.show();
             },
+            onOptionClicked(option) {
+                this.$refs.optionForm.show(option);
+            },
             onOptionCreated(option) {
                 this.options.push(option);
+            },
+            onOptionsReordered({ newIndex, oldIndex }) {
+                const option = this.options.splice(oldIndex, 1)[0];
+                this.options.splice(newIndex, 0, option);
             },
         },
         props: [

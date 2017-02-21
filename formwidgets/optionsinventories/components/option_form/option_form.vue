@@ -26,17 +26,15 @@
 
         <!-- Footer -->
         <v-modal-footer>
-            <transition name="fade" mode="out-in">
-                <v-spinner v-if="isLoading">
-                    {{ 'backend.form.saving_name' | trans(lang, { name: 'bedard.shop.options.singular' }) }}
-                </v-spinner>
-                <div v-else>
-                    <v-button @click="onSaveClicked">
-                        <template v-if="context === 'create'">{{ 'backend.form.create' | trans(lang) }}</template>
-                        <template v-else>{{ 'backend.form.save' | trans(lang) }}</template>
-                    </v-button>
-                </div>
-            </transition>
+            <v-spinner v-if="isLoading">
+                {{ 'backend.form.saving_name' | trans(lang, { name: 'bedard.shop.options.singular' }) }}
+            </v-spinner>
+            <div v-else>
+                <v-button @click="onSaveClicked">
+                    <template v-if="context === 'create'">{{ 'backend.form.create' | trans(lang) }}</template>
+                    <template v-else>{{ 'backend.form.save' | trans(lang) }}</template>
+                </v-button>
+            </div>
         </v-modal-footer>
     </v-modal>
 </template>
@@ -77,7 +75,7 @@
                 this.$emit('create', response.data);
             },
             onCreateFailed(error) {
-                // this.$emit('create', re)
+                $.oc.flashMsg({ text: error.response.data, class: 'error' });
             },
             onSaveClicked() {
                 if (this.context === 'create') {
