@@ -29,14 +29,17 @@ export default function(value, lang, data = {}) {
     }
 
     // find language strings in our value and replace them
-    for (let word of translatedValue.split(' ')) {
-        if (word.startsWith(':')) {
+    let words = translatedValue.match(/:([a-zA-Z]+)/g);
+
+    if (Array.isArray(words)) {
+        words.forEach(word => {
             let wordKey = word.slice(1);
             if (typeof data[wordKey] !== 'undefined') {
                 translatedValue = translatedValue.replace(word, data[wordKey]);
             }
-        }
+        });
     }
+
 
     // finally, return the translated string
     return translatedValue;

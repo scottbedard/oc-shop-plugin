@@ -12,8 +12,9 @@ class CreateOptionsTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('product_id')->unsigned()->index();
-            $table->integer('sort_order')->unsigned();
+            $table->integer('sort_order')->unsigned()->default(0);
             $table->string('name')->default('');
+            $table->string('placeholder')->default('');
             $table->timestamps();
         });
     }

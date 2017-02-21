@@ -13,6 +13,14 @@ class Option extends Model
     public $table = 'bedard_shop_options';
 
     /**
+     * @var array Default attributes
+     */
+    public $attributes = [
+        'name' => '',
+        'placeholder' => '',
+    ];
+
+    /**
      * @var array Guarded fields
      */
     protected $guarded = ['*'];

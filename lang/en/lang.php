@@ -33,6 +33,7 @@ return [
     'options' => [
         'form' => [
             'name' => 'Name',
+            'placeholder' => 'Placeholder',
         ],
         'singular' => 'Option',
         'plural' => 'Options',

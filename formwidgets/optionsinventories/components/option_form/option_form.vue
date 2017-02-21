@@ -16,14 +16,27 @@
 
         <!-- Body -->
         <v-modal-body>
-            <v-input v-model="option.name" required>
-                <label slot="label">{{ 'bedard.shop.options.form.name' | trans(lang) }}</label>
-            </v-input>
+            <v-form-input v-model="option.name" required>
+                {{ 'bedard.shop.options.form.name' | trans(lang) }}
+            </v-form-input>
+            <v-form-input v-model="option.placeholder">
+                {{ 'bedard.shop.options.form.placeholder' | trans(lang ) }}
+            </v-form-input>
         </v-modal-body>
 
         <!-- Footer -->
         <v-modal-footer>
-            Footer
+            <transition name="fade" mode="out-in">
+                <v-spinner v-if="isLoading">
+                    {{ 'backend.form.saving_name' | trans(lang, { name: 'bedard.shop.options.singular' }) }}
+                </v-spinner>
+                <div v-else>
+                    <v-button @click="onSaveClicked">
+                        <template v-if="context === 'create'">{{ 'backend.form.create' | trans(lang) }}</template>
+                        <template v-else>{{ 'backend.form.save' | trans(lang) }}</template>
+                    </v-button>
+                </div>
+            </transition>
         </v-modal-footer>
     </v-modal>
 </template>
@@ -32,17 +45,28 @@
     export default {
         data() {
             return {
+                isLoading: false,
                 option: {
+                    id: null,
                     name: '',
+                    placeholder: '',
                 },
-                context: 'create',
             };
         },
+        computed: {
+            context() {
+                return this.option.id ? 'update' : 'create';
+            },
+        },
         methods: {
+            onSaveClicked() {
+                this.isLoading = true;
+                console.log ('saving it...');
+            },
             show(option = {}) {
-                this.context = typeof option.id === 'undefined'
-                    ? 'create'
-                    : 'update';
+                this.option.id = option.id || null;
+                this.option.name = option.name || '';
+                this.option.placeholder = option.placeholder || '';
 
                 this.$refs.modal.show();
             },

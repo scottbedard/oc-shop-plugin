@@ -6,9 +6,12 @@
     <div class="form-group text-field" :class="{
         'is-required': required,
     }">
-        <slot name="label"></slot>
+        <label @click="onLabelClicked">
+            <slot></slot>
+        </label>
         <input
             class="form-control"
+            ref="input"
             :type="type"
             :value="value"
             @input="onInput"
@@ -21,6 +24,9 @@
         methods: {
             onInput(e) {
                 this.$emit('input', e.target.value);
+            },
+            onLabelClicked() {
+                this.$refs.input.focus();
             },
         },
         props: {
