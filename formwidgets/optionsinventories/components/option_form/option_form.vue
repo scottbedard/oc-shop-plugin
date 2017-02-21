@@ -42,6 +42,8 @@
 </template>
 
 <script>
+    import axios from 'axios';
+
     export default {
         data() {
             return {
@@ -59,9 +61,30 @@
             },
         },
         methods: {
-            onSaveClicked() {
+            create() {
                 this.isLoading = true;
-                console.log ('saving it...');
+
+                axios.post(this.endpoints.createOption, { option: this.option })
+                    .then(this.onCreateComplete)
+                    .catch(this.onCreateFailed)
+                    .then(() => this.isLoading = false);
+            },
+            hide() {
+                this.$refs.modal.hide();
+            },
+            onCreateComplete(response) {
+                this.hide();
+                this.$emit('create', response.data);
+            },
+            onCreateFailed(error) {
+                // this.$emit('create', re)
+            },
+            onSaveClicked() {
+                if (this.context === 'create') {
+                    this.create();
+                } else {
+                    this.update();
+                }
             },
             show(option = {}) {
                 this.option.id = option.id || null;
@@ -72,6 +95,7 @@
             },
         },
         props: [
+            'endpoints',
             'lang',
         ],
     };

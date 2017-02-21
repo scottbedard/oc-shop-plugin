@@ -1,5 +1,6 @@
 <?php namespace Bedard\Shop\FormWidgets;
 
+use Backend;
 use Backend\Classes\FormWidgetBase;
 
 /**
@@ -35,6 +36,10 @@ class OptionsInventories extends FormWidgetBase
     public function prepareVars()
     {
         $this->model->load('options');
+
+        $this->vars['endpoints'] = [
+            'createOption' => Backend::url('bedard/shop/options/create'),
+        ];
 
         $this->vars['product'] = $this->model;
     }

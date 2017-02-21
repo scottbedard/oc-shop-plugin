@@ -1,5 +1,6 @@
 <div
     data-component="options-inventories"
+    data-endpoints="<?= e(json_encode($endpoints)) ?>"
     data-lang="<?= e(json_encode([
         'bedard' => ['shop' => trans('bedard.shop::lang')],
         'backend' => [
@@ -7,5 +8,6 @@
             'relation' => trans('backend::lang.relation'),
         ],
     ])) ?>"
-    data-product="<?= e(json_encode($product)) ?>">
+    data-product="<?= e(json_encode($product)) ?>"
+    data-token="<?= csrf_token() ?>">
 </div>

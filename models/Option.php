@@ -18,6 +18,7 @@ class Option extends Model
     public $attributes = [
         'name' => '',
         'placeholder' => '',
+        'sort_order' => 0,
     ];
 
     /**
@@ -28,7 +29,11 @@ class Option extends Model
     /**
      * @var array Fillable fields
      */
-    protected $fillable = [];
+    protected $fillable = [
+        'name',
+        'placeholder',
+        'sort_order',
+    ];
 
     /**
      * @var array Relations
