@@ -5,7 +5,7 @@
         border: 2px dashed #ccc;
         color: #bdc3c7;
         display: flex;
-        font-size: 0.9em;
+        font-size: 0.85em;
         font-weight: 600;
         margin-top: 20px;
         padding: 15px;
@@ -22,7 +22,7 @@
     }
 
     i {
-        padding-right: 15px;
+        padding-right: 12px;
     }
 </style>
 
