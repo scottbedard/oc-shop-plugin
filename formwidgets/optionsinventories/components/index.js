@@ -2,9 +2,14 @@ import Vue from 'vue';
 import OptionsInventoriesComponent from './optionsinventories';
 
 $(() => {
-    console.log ('erm');
+
+    const el = document.querySelector('[data-component=options-inventories]');
+    const lang = JSON.parse(el.dataset.lang);
+
     new Vue({
-        el: '[data-component=options-inventories]',
-        render: h => h(OptionsInventoriesComponent),
+        el,
+        render: h => h(OptionsInventoriesComponent, {
+            props: { lang },
+        }),
     });
 });

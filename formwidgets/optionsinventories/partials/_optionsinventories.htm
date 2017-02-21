@@ -1,1 +1,11 @@
-<div class="bedard-shop" data-component="options-inventories"></div>
+<div
+    data-component="options-inventories"
+    data-lang="<?= e(json_encode([
+        'bedard' => [
+            'shop' => trans('bedard.shop::lang'),
+        ],
+        'backend' => [
+            'relation' => trans('backend::lang.relation'),
+        ],
+    ])) ?>">
+</div>

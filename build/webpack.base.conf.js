@@ -28,7 +28,7 @@ module.exports = {
                 loader: 'vue-loader',
                 options: {
                     loaders: {
-                        'scss': 'style!css!sass',
+                        'scss': 'style-loader!css-loader!sass-loader?includePaths[]=' + path.resolve(__dirname, '../assets/scss'),
                     },
                     postcss: [
                         require('autoprefixer')({ browsers: ['last 2 versions'] }),
@@ -66,9 +66,20 @@ module.exports = {
             {
                 test: /\.scss$/,
                 loaders: [
-                    'style-loader',
-                    'css-loader',
-                    'sass-loader',
+                    {
+                        loader: 'style-loader',
+                    },
+                    {
+                        loader: 'css-loader',
+                    },
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            includePaths: [
+                                path.resolve(__dirname, '../assets/scss'),
+                            ],
+                        },
+                    },
                 ],
             },
         ],
