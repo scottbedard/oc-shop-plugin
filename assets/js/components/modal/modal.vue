@@ -2,7 +2,7 @@
     <div class="control-popup modal fade" ref="modal" data-bedard-shop="popup-component">
         <div class="modal-dialog">
             <div class="modal-content">
-                <slot @dismiss="dismiss"></slot>
+                <slot></slot>
             </div>
         </div>
     </div>
