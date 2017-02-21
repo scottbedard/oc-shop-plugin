@@ -29,9 +29,7 @@ class Options extends BackendController
 
             // return the new option
             return Response::make($option, 200);
-        }
-
-        catch (Exception $e) {
+        } catch (Exception $e) {
             // if anything went wrong, send back the error message
             return Response::make($e->getMessage(), 500);
         }
