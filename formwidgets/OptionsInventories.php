@@ -34,9 +34,9 @@ class OptionsInventories extends FormWidgetBase
      */
     public function prepareVars()
     {
-        $this->vars['name'] = $this->formField->getName();
-        $this->vars['value'] = $this->getLoadValue();
-        $this->vars['model'] = $this->model;
+        $this->model->load('options');
+
+        $this->vars['product'] = $this->model;
     }
 
     /**

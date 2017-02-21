@@ -3,6 +3,7 @@
         <!-- Options -->
         <div class="form-group span-left">
             <label>{{ 'bedard.shop.options.plural' | trans(lang) }}</label>
+            <v-option-list :lang="lang" :options="options" />
             <v-option-form ref="optionForm" :lang="lang" />
             <v-create @click="onCreateOptionClicked">
                 {{ 'backend.relation.create_name' | trans(lang, { name: 'bedard.shop.options.singular' }) }}
@@ -22,15 +23,19 @@
 
 <script>
     export default {
+        created() {
+            this.options = JSON.parse(JSON.stringify(this.product.options));
+        },
         data() {
             return {
-                optionFormIsVisible: false,
+                options: [],
             };
         },
         components: {
             'v-create': require('./create/create'),
             'v-inventory-form': require('./inventory_form/inventory_form'),
             'v-option-form': require('./option_form/option_form'),
+            'v-option-list': require('./option_list/option_list'),
         },
         methods: {
             onCreateInventoryClicked() {
@@ -42,6 +47,7 @@
         },
         props: [
             'lang',
+            'product',
         ],
     };
 </script>

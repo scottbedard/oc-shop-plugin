@@ -3,4 +3,5 @@
     - 1.0/create_products_table.php
     - 1.0/create_categories_table.php
     - 1.0/create_category_product_table.php
+    - 1.0/create_options_table.php
     - seeds.php

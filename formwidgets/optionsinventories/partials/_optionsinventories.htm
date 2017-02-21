@@ -1,11 +1,8 @@
 <div
     data-component="options-inventories"
     data-lang="<?= e(json_encode([
-        'bedard' => [
-            'shop' => trans('bedard.shop::lang'),
-        ],
-        'backend' => [
-            'relation' => trans('backend::lang.relation'),
-        ],
-    ])) ?>">
+        'bedard' => ['shop' => trans('bedard.shop::lang')],
+        'backend' => ['relation' => trans('backend::lang.relation')],
+    ])) ?>"
+    data-product="<?= e(json_encode($product)) ?>">
 </div>

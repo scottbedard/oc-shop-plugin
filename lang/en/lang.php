@@ -31,6 +31,9 @@ return [
     // options
     //
     'options' => [
+        'form' => [
+            'name' => 'Name',
+        ],
         'singular' => 'Option',
         'plural' => 'Options',
     ],

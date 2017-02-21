@@ -16,7 +16,9 @@
 
         <!-- Body -->
         <v-modal-body>
-            Body
+            <v-input v-model="option.name" required>
+                <label slot="label">{{ 'bedard.shop.options.form.name' | trans(lang) }}</label>
+            </v-input>
         </v-modal-body>
 
         <!-- Footer -->
@@ -30,11 +32,18 @@
     export default {
         data() {
             return {
+                option: {
+                    name: '',
+                },
                 context: 'create',
             };
         },
         methods: {
-            show() {
+            show(option = {}) {
+                this.context = typeof option.id === 'undefined'
+                    ? 'create'
+                    : 'update';
+
                 this.$refs.modal.show();
             },
         },

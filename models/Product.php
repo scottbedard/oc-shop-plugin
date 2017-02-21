@@ -8,6 +8,7 @@ use Model;
 class Product extends Model
 {
     use \Bedard\Shop\Traits\Subqueryable,
+        \October\Rain\Database\Traits\Purgeable,
         \October\Rain\Database\Traits\Validation;
 
     /**
@@ -23,6 +24,15 @@ class Product extends Model
         'description_html' => '',
         'description_plain' => '',
         'is_enabled' => true,
+    ];
+
+    /**
+     * @var array Attribute casting
+     */
+    protected $casts = [
+        'price' => 'float',
+        'base_price' => 'float',
+        'is_enabled' => 'boolean',
     ];
 
     /**
@@ -43,12 +53,27 @@ class Product extends Model
     ];
 
     /**
+     * @var array Purgeable fields
+     */
+    public $purgeable = [
+        'options_inventories',
+    ];
+
+    /**
      * @var array Relations
      */
     public $belongsToMany = [
         'categories' => [
             'Bedard\Shop\Models\Category',
             'table' => 'bedard_shop_category_product',
+        ],
+    ];
+
+    public $hasMany = [
+        'options' => [
+            'Bedard\Shop\Models\Option',
+            'delete' => true,
+            'order' => 'sort_order',
         ],
     ];
 
