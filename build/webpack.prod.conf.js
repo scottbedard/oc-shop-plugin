@@ -11,6 +11,9 @@ module.exports = merge(webpackConfig, {
         // set our node environment to "production"
         new webpack.DefinePlugin({ 'process.env': { NODE_ENV: '"production"' }}),
 
+        // minify our javascript
+        new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false }}),
+
         // @todo: extract css chunks into their own files
         // new ExtractTextPlugin("style.css"),
 
