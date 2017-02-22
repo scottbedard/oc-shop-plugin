@@ -22,7 +22,7 @@
 
         <!-- Body -->
         <v-modal-body>
-            <v-form-input v-model="option.name" @keypress.enter.prevent="onSave" required>
+            <v-form-input ref="name" v-model="option.name" @keypress.enter.prevent="onSave" required>
                 {{ 'bedard.shop.options.form.name' | trans(lang) }}
             </v-form-input>
             <v-form-input v-model="option.placeholder" @keypress.enter.prevent="onSave">
@@ -144,6 +144,7 @@
                 this.option.values.forEach((value, i) => this.$set(value, '_key', i));
 
                 this.$refs.modal.show();
+                setTimeout(() => this.$refs.name.focus(), 250);
             },
         },
         props: [

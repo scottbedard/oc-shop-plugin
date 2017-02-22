@@ -8,7 +8,7 @@
 
 <template>
     <div class="form-group text-field" :class="{ 'is-required': required }">
-        <label @click="onLabelClicked"><slot></slot></label>
+        <label @click="focus"><slot></slot></label>
         <input
             class="form-control"
             ref="input"
@@ -25,6 +25,9 @@
 <script>
     export default {
         methods: {
+            focus() {
+                this.$refs.input.focus();
+            },
             onKeydown(e) {
                 this.$emit('keydown', e);
             },
@@ -33,9 +36,6 @@
             },
             onInput(e) {
                 this.$emit('input', e.target.value);
-            },
-            onLabelClicked() {
-                this.$refs.input.focus();
             },
         },
         props: {
