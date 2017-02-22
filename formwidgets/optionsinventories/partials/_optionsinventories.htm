@@ -8,6 +8,7 @@
             'relation' => trans('backend::lang.relation'),
         ],
     ])) ?>"
+    data-name="<?= $name ?>"
     data-product="<?= e(json_encode($product)) ?>"
     data-token="<?= csrf_token() ?>">
 </div>

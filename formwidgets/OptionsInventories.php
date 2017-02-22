@@ -16,13 +16,6 @@ class OptionsInventories extends FormWidgetBase
     /**
      * {@inheritdoc}
      */
-    public function init()
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function render()
     {
         $this->prepareVars();
@@ -35,7 +28,9 @@ class OptionsInventories extends FormWidgetBase
      */
     public function prepareVars()
     {
-        $this->model->load('options');
+        $this->model->load('options.values');
+
+        $this->vars['name'] = $this->formField->getName();
 
         $this->vars['endpoints'] = [
             'createOption' => Backend::url('bedard/shop/options/create'),

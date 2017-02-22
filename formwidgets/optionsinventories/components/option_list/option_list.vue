@@ -17,7 +17,7 @@
             <i class="icon-plus" slot="icon"></i>
             <div slot="content">
                 <div>{{ option.name }}</div>
-                <div class="v-small">Option values will go here</div>
+                <div class="v-small">{{ getValues(option) }}</div>
             </div>
             <div slot="actions">
                 <i class="icon-bars"></i>
@@ -34,6 +34,13 @@
             'v-list-item': require('../list/item/item'),
         },
         methods: {
+            getValues(option) {
+                if (option.values.length === 0) {
+                    return;
+                }
+
+                return option.values.map(value => value.name).join(', ');
+            },
             onOptionClicked(option) {
                 this.$emit('click', option);
             },

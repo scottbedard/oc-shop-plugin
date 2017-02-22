@@ -1,7 +1,7 @@
 <?php namespace Bedard\Shop\Tests\Unit\Models;
 
 use PluginTestCase;
-use Bedard\Shop\Factory;
+use Bedard\Shop\Classes\Factory;
 use Bedard\Shop\Models\Product;
 use Bedard\Shop\Models\Category;
 

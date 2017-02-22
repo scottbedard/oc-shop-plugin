@@ -7,6 +7,9 @@ use Model;
  */
 class OptionValue extends Model
 {
+    use \October\Rain\Database\Traits\Purgeable,
+        \October\Rain\Database\Traits\Validation;
+
     /**
      * @var string The database table used by the model.
      */
@@ -20,18 +23,32 @@ class OptionValue extends Model
     /**
      * @var array Fillable fields
      */
-    protected $fillable = [];
+    protected $fillable = [
+        '_key',
+        'name',
+        'sort_order',
+    ];
+
+    /**
+     * @var array Purgeable fields
+     */
+    public $purgeable = [
+        '_key',
+    ];
 
     /**
      * @var array Relations
      */
-    public $hasOne = [];
-    public $hasMany = [];
-    public $belongsTo = [];
-    public $belongsToMany = [];
-    public $morphTo = [];
-    public $morphOne = [];
-    public $morphMany = [];
-    public $attachOne = [];
-    public $attachMany = [];
+    public $belongsTo = [
+        'option' => [
+            'Bedard\Shop\Models\Option',
+        ],
+    ];
+
+    /**
+     * @var array Validation
+     */
+    public $rules = [
+        'name' => 'required|min:1',
+    ];
 }

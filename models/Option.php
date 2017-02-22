@@ -1,5 +1,8 @@
 <?php namespace Bedard\Shop\Models;
 
+use Bedard\Shop\Models\OptionValue;
+use Exception;
+use Lang;
 use Model;
 
 /**
@@ -7,7 +10,8 @@ use Model;
  */
 class Option extends Model
 {
-    use \October\Rain\Database\Traits\Validation;
+    use \October\Rain\Database\Traits\Purgeable,
+        \October\Rain\Database\Traits\Validation;
 
     /**
      * @var string The database table used by the model.
@@ -38,11 +42,26 @@ class Option extends Model
     ];
 
     /**
+     * @var array Purgeable fields
+     */
+    public $purgeable = [
+        'value_data',
+    ];
+
+    /**
      * @var array Relations
      */
     public $belongsTo = [
         'product' => [
             'Bedard\Shop\Models\Product',
+        ],
+    ];
+
+    public $hasMany = [
+        'values' => [
+            'Bedard\Shop\Models\OptionValue',
+            'delete' => true,
+            'order' => 'sort_order asc',
         ],
     ];
 
@@ -52,4 +71,70 @@ class Option extends Model
     public $rules = [
         'name' => 'required',
     ];
+
+    /**
+     * After save.
+     *
+     * @return void
+     */
+    public function afterSave()
+    {
+        $this->saveValues();
+    }
+
+    /**
+     * Before save.
+     *
+     * @return void
+     */
+    public function beforeSave()
+    {
+        $this->validateValues();
+    }
+
+    /**
+     * Save related values.
+     *
+     * @return void
+     */
+    protected function saveValues()
+    {
+        $values = $this->getOriginalPurgeValue('value_data') ?: [];
+
+        foreach ($values as $value) {
+            $model = $value['id'] !== null
+                ? OptionValue::findOrNew($value['id'])
+                : new OptionValue;
+
+            $model->name = $value['name'];
+            $model->option_id = $this->id;
+            $model->sort_order = $value['sort_order'];
+            $model->save();
+        }
+    }
+
+    /**
+     * Validate option values.
+     *
+     * @return void
+     */
+    protected function validateValues()
+    {
+        $values = $this->getOriginalPurgeValue('value_data') ?: [];
+
+        $names = [];
+        foreach ($values as $value) {
+
+            // validate each value individually
+            $model = new OptionValue($value);
+            $model->validate();
+
+            // ensure that the name is unique to this option
+            if (in_array($value['name'], $names)) {
+                throw new Exception(Lang::get('bedard.shop::lang.options.form.values_unique'));
+            }
+
+            $names[] = $value['name'];
+        }
+    }
 }

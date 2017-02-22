@@ -1,4 +1,4 @@
-<?php namespace Bedard\Shop;
+<?php namespace Bedard\Shop\Classes;
 
 use Faker;
 use Model;
@@ -30,12 +30,15 @@ class Factory
      */
     public static function fill(Model $model, array $data = [], array $omit = [])
     {
+        $seedData = [];
+
         switch (get_class($model)) {
-            case "Bedard\Shop\Models\Category": $data = self::getCategoryData($data); break;
-            case "Bedard\Shop\Models\Product":  $data = self::getProductData($data); break;
+            case 'Bedard\Shop\Models\Category': $seedData = self::getCategoryData($data); break;
+            case 'Bedard\Shop\Models\Option':   $seedData = self::getOptionData($data); break;
+            case 'Bedard\Shop\Models\Product':  $seedData = self::getProductData($data); break;
         }
 
-        $model->fill($data);
+        $model->fill(array_merge($seedData, $data));
 
         foreach ($omit as $key) {
             unset($model->attributes[$key]);
@@ -54,10 +57,26 @@ class Factory
     {
         $faker = Faker\Factory::create();
 
-        return array_merge([
+        return [
             'name' => $faker->words(2, true),
             'slug' => $faker->slug,
-        ], $data);
+        ];
+    }
+
+    /**
+     * Option.
+     *
+     * @param  array $data
+     * @return array
+     */
+    public static function getOptionData(array $data = [])
+    {
+        $faker = Faker\Factory::create();
+
+        return [
+            'name' => $faker->words(2, true),
+            'placeholder' => $faker->words(3, true),
+        ];
     }
 
     /**
@@ -70,11 +89,11 @@ class Factory
     {
         $faker = Faker\Factory::create();
 
-        return array_merge([
+        return [
             'base_price' => rand(1, 100) + (rand(0, 100) / 100),
             'description_html' => '<p>'.Lorem::paragraph().'</p>',
             'name' => $faker->words(2, true),
             'slug' => $faker->slug,
-        ], $data);
+        ];
     }
 }

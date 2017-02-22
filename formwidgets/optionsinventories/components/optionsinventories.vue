@@ -28,13 +28,18 @@
                 {{ 'backend.relation.create_name' | trans(lang, { name: 'bedard.shop.inventories.singular' }) }}
             </v-create>
         </div>
+
+        <!-- This field passes our data back to the form widget -->
+        <input type="hidden" :name="name" :value="formData" />
     </div>
 </template>
 
 <script>
+    import { clone, renameKey } from 'assets/js/utilities/helpers';
+
     export default {
         created() {
-            this.options = JSON.parse(JSON.stringify(this.product.options));
+            this.options = clone(this.product.options);
         },
         data() {
             return {
@@ -46,6 +51,15 @@
             'v-inventory-form': require('./inventory_form/inventory_form'),
             'v-option-form': require('./option_form/option_form'),
             'v-option-list': require('./option_list/option_list'),
+        },
+        computed: {
+            formData() {
+                return JSON.stringify(this.options.map(option => {
+                    // clone the option object and rename the values
+                    // key so our option can be validated and saved
+                    return renameKey(clone(option), 'values', 'value_data');
+                }));
+            },
         },
         methods: {
             onCreateInventoryClicked() {
@@ -68,6 +82,7 @@
         props: [
             'endpoints',
             'lang',
+            'name',
             'product',
         ],
     };

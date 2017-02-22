@@ -10,9 +10,10 @@ $(function() {
     const el = document.querySelector('[data-component=options-inventories]');
 
     // parse our props from data attributes
-    const lang = JSON.parse(el.dataset.lang);
-    const product = JSON.parse(el.dataset.product);
     const endpoints = JSON.parse(el.dataset.endpoints);
+    const lang = JSON.parse(el.dataset.lang);
+    const name = el.dataset.name;
+    const product = JSON.parse(el.dataset.product);
 
     // configure axios with our csrf token
     axios.defaults.headers.common['X-CSRF-TOKEN'] = el.dataset.token;
@@ -21,7 +22,7 @@ $(function() {
     new Vue({
         el,
         render: h => h(OptionsInventoriesComponent, {
-            props: { endpoints, lang, product },
+            props: { endpoints, lang, name, product },
         }),
     });
 });
