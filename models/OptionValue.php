@@ -3,7 +3,7 @@
 use Model;
 
 /**
- * OptionValue Model
+ * OptionValue Model.
  */
 class OptionValue extends Model
 {
