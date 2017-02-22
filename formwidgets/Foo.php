@@ -3,33 +3,34 @@
 use Backend\Classes\FormWidgetBase;
 
 /**
- * Foo Form Widget
+ * Foo Form Widget.
  */
 class Foo extends FormWidgetBase
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected $defaultAlias = 'bedard_shop_foo';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function init()
     {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function render()
     {
         $this->prepareVars();
+
         return $this->makePartial('foo');
     }
 
     /**
-     * Prepares the form widget view data
+     * Prepares the form widget view data.
      */
     public function prepareVars()
     {
@@ -39,7 +40,7 @@ class Foo extends FormWidgetBase
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function loadAssets()
     {
@@ -48,7 +49,7 @@ class Foo extends FormWidgetBase
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getSaveValue($value)
     {

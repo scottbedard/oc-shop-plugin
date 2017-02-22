@@ -1,10 +1,9 @@
 <?php namespace Bedard\Shop\Tests\Unit\Models;
 
-use PluginTestCase;
-use Bedard\Shop\Classes\Factory;
-use Bedard\Shop\Models\Option;
-use Bedard\Shop\Models\OptionValue;
 use Exception;
+use PluginTestCase;
+use Bedard\Shop\Models\Option;
+use Bedard\Shop\Classes\Factory;
 
 class OptionTest extends PluginTestCase
 {
@@ -14,8 +13,8 @@ class OptionTest extends PluginTestCase
     {
         $option = Factory::create(new Option);
         $option->value_data = [
-            [ '_key' => 1, 'id' => null, 'name' => 'a', 'option_id' => $option->id, 'sort_order' => 0 ],
-            [ '_key' => 2, 'id' => null, 'name' => 'a', 'option_id' => $option->id, 'sort_order' => 1 ],
+            ['_key' => 1, 'id' => null, 'name' => 'a', 'option_id' => $option->id, 'sort_order' => 0],
+            ['_key' => 2, 'id' => null, 'name' => 'a', 'option_id' => $option->id, 'sort_order' => 1],
         ];
 
         try {
@@ -30,8 +29,8 @@ class OptionTest extends PluginTestCase
     {
         $option = Factory::create(new Option);
         $option->value_data = [
-            [ '_key' => 1, 'id' => null, 'name' => 'a', 'option_id' => $option->id, 'sort_order' => 0 ],
-            [ '_key' => 2, 'id' => null, 'name' => 'b', 'option_id' => $option->id, 'sort_order' => 1 ],
+            ['_key' => 1, 'id' => null, 'name' => 'a', 'option_id' => $option->id, 'sort_order' => 0],
+            ['_key' => 2, 'id' => null, 'name' => 'b', 'option_id' => $option->id, 'sort_order' => 1],
         ];
 
         $option->save();
