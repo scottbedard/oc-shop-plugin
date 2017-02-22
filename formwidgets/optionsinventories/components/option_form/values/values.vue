@@ -21,7 +21,9 @@
         </label>
         <v-value-input
             v-for="value in values"
-            :value="value">
+            :value="value"
+            @input="onInput"
+            @remove="onRemove">
         </v-value-input>
         <v-form-input
             v-model="input"
@@ -57,6 +59,12 @@
                     this.input = '';
                     this.$emit('add', trimmedValue);
                 }
+            },
+            onInput(e, value) {
+                this.$emit('input', e, value);
+            },
+            onRemove(value) {
+                this.$emit('remove', value);
             },
         },
         props: [

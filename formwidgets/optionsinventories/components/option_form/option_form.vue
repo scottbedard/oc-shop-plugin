@@ -31,7 +31,9 @@
             <v-values
                 :lang="lang"
                 :values="option.values"
-                @add="onValueAdded">
+                @add="onValueAdded"
+                @input="onValueInput"
+                @remove="onValueRemoved">
             </v-values>
         </v-modal-body>
 
@@ -112,6 +114,12 @@
                     option_id: this.option.id,
                     sort_order: this.option.values.length,
                 });
+            },
+            onValueInput(e, value) {
+                value.name = e.target.value;
+            },
+            onValueRemoved(value) {
+                this.option.values.splice(this.option.values.indexOf(value), 1);
             },
             show(option = {}) {
                 this.option.id = option.id || null;
