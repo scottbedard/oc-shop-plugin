@@ -20,7 +20,7 @@
         },
         methods: {
             onClicked(e) {
-                this.$emit('click', e)
+                this.$emit('click', e);
             },
         },
         props: {

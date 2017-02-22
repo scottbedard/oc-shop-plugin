@@ -1,6 +1,8 @@
 'use strict';
 
+const autoprefixer = require('autoprefixer');
 const path = require('path');
+const eslintFriendlyFormatter = require('eslint-friendly-formatter');
 
 module.exports = {
     entry: {
@@ -24,6 +26,18 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.(js|vue)$/,
+                loader: 'eslint-loader',
+                enforce: "pre",
+                include: [
+                    path.resolve(__dirname, '../'),
+                ],
+                options: {
+                    fix: true,
+                    formatter: eslintFriendlyFormatter,
+                },
+            },
+            {
                 test: /\.vue$/,
                 loader: 'vue-loader',
                 options: {
@@ -31,7 +45,7 @@ module.exports = {
                         'scss': 'style-loader!css-loader!sass-loader?includePaths[]=' + path.resolve(__dirname, '../assets/scss'),
                     },
                     postcss: [
-                        require('autoprefixer')({ browsers: ['last 2 versions'] }),
+                        autoprefixer({ browsers: ['last 2 versions'] }),
                     ],
                 },
             },
