@@ -49,7 +49,7 @@
                     <template v-else>{{ 'backend.form.save' | trans(lang) }}</template>
                 </v-button>
                 <v-button @click="onCancel">
-                    Cancel
+                    {{ 'backend.form.cancel' | trans(lang) }}
                 </v-button>
             </div>
         </v-modal-footer>
