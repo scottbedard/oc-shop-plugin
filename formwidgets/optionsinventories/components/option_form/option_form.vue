@@ -26,15 +26,17 @@
                 {{ 'bedard.shop.options.form.name' | trans(lang) }}
             </v-form-input>
             <v-form-input v-model="option.placeholder" @keypress.enter.prevent="onSave">
-                {{ 'bedard.shop.options.form.placeholder' | trans(lang ) }}
+                {{ 'bedard.shop.options.form.placeholder' | trans(lang) }}
             </v-form-input>
             <v-values
                 :lang="lang"
                 :values="option.values"
                 @add="onValueAdded"
                 @input="onValueInput"
-                @remove="onValueRemoved">
+                @remove="onValueRemoved"
+                @reorder="onValuesReordered">
             </v-values>
+            <pre>{{ option.values }}</pre>
         </v-modal-body>
 
         <!-- Footer -->
@@ -108,7 +110,10 @@
                 }
             },
             onValueAdded(value) {
+                let { values } = this.option;
+
                 this.option.values.push({
+                    _key: Math.max(values.length, ...values.map(v => v._key)) + 1,
                     id: null,
                     name: value,
                     option_id: this.option.id,
@@ -121,10 +126,22 @@
             onValueRemoved(value) {
                 this.option.values.splice(this.option.values.indexOf(value), 1);
             },
+            onValuesReordered({ newIndex, oldIndex }) {
+                const value = this.option.values.splice(oldIndex, 1)[0];
+
+                this.option.values.splice(newIndex, 0, value);
+                this.option.values.forEach((value, index) => {
+                    value.sort_order = index;
+                });
+            },
             show(option = {}) {
                 this.option.id = option.id || null;
                 this.option.name = option.name || '';
                 this.option.placeholder = option.placeholder || '';
+
+                // in order to make values sortable, they each need a
+                // unique key so Vue is able to track their indexes
+                this.option.values.forEach((value, index) => this.$set(value, '_key', index));
 
                 this.$refs.modal.show();
             },

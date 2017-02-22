@@ -19,12 +19,15 @@
         <label class="v-required-label">
             {{ 'bedard.shop.options.form.values' | trans(lang) }}
         </label>
-        <v-value-input
-            v-for="value in values"
-            :value="value"
-            @input="onInput"
-            @remove="onRemove">
-        </v-value-input>
+        <div v-sortable="{ onEnd: onReorder }">
+            <v-value-input
+                v-for="value in values"
+                :key="value._key"
+                :value="value"
+                @input="onInput"
+                @remove="onRemove">
+            </v-value-input>
+        </div>
         <v-form-input
             v-model="input"
             :placeholder="placeholder"
@@ -36,6 +39,7 @@
 
 <script>
     import trans from 'assets/js/filters/trans/trans';
+    import Sortable from 'sortablejs';
 
     export default {
         data() {
@@ -49,6 +53,13 @@
         computed: {
             placeholder() {
                 return trans('bedard.shop.options.form.values_placeholder', this.lang);
+            },
+        },
+        directives: {
+            sortable: {
+                inserted(el, binding) {
+                    new Sortable(el, binding.value || {});
+                },
             },
         },
         methods: {
@@ -65,6 +76,9 @@
             },
             onRemove(value) {
                 this.$emit('remove', value);
+            },
+            onReorder(indexes) {
+                this.$emit('reorder', indexes);
             },
         },
         props: [
