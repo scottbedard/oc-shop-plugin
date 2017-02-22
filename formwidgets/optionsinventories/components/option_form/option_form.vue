@@ -36,7 +36,6 @@
                 @remove="onValueRemoved"
                 @reorder="onValuesReordered">
             </v-values>
-            <pre>{{ option.values }}</pre>
         </v-modal-body>
 
         <!-- Footer -->
