@@ -15,6 +15,7 @@
             :type="type"
             :value="value"
             @input="onInput"
+            @keypress.enter="onEnter"
         />
     </div>
 </template>
@@ -22,6 +23,9 @@
 <script>
     export default {
         methods: {
+            onEnter(e) {
+                this.$emit('enter', e);
+            },
             onInput(e) {
                 this.$emit('input', e.target.value);
             },
