@@ -137,10 +137,11 @@
                 this.option.id = option.id || null;
                 this.option.name = option.name || '';
                 this.option.placeholder = option.placeholder || '';
+                this.option.values = option.values || [];
 
                 // in order to make values sortable, they each need a
                 // unique key so Vue is able to track their indexes
-                this.option.values.forEach((value, index) => this.$set(value, '_key', index));
+                this.option.values.forEach((value, i) => this.$set(value, '_key', i));
 
                 this.$refs.modal.show();
             },
