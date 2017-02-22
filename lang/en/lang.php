@@ -34,6 +34,8 @@ return [
         'form' => [
             'name' => 'Name',
             'placeholder' => 'Placeholder',
+            'values' => 'Values',
+            'values_placeholder' => 'Type a value and press "enter" or "tab"',
         ],
         'singular' => 'Option',
         'plural' => 'Options',

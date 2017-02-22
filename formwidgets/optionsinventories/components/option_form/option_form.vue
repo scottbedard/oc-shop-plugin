@@ -22,12 +22,17 @@
 
         <!-- Body -->
         <v-modal-body>
-            <v-form-input v-model="option.name" @enter.prevent="onSave" required>
+            <v-form-input v-model="option.name" @keypress.enter.prevent="onSave" required>
                 {{ 'bedard.shop.options.form.name' | trans(lang) }}
             </v-form-input>
-            <v-form-input v-model="option.placeholder" @enter.prevent="onSave">
+            <v-form-input v-model="option.placeholder" @keypress.enter.prevent="onSave">
                 {{ 'bedard.shop.options.form.placeholder' | trans(lang ) }}
             </v-form-input>
+            <v-values
+                :lang="lang"
+                :values="option.values"
+                @add="onValueAdded">
+            </v-values>
         </v-modal-body>
 
         <!-- Footer -->
@@ -59,8 +64,12 @@
                     id: null,
                     name: '',
                     placeholder: '',
+                    values: [],
                 },
             };
+        },
+        components: {
+            'v-values': require('./values/values'),
         },
         computed: {
             context() {
@@ -95,6 +104,14 @@
                 } else {
                     this.update();
                 }
+            },
+            onValueAdded(value) {
+                this.option.values.push({
+                    id: null,
+                    name: value,
+                    option_id: this.option.id,
+                    sort_order: this.option.values.length,
+                });
             },
             show(option = {}) {
                 this.option.id = option.id || null;
