@@ -34,6 +34,7 @@ class OptionsInventories extends FormWidgetBase
 
         $this->vars['endpoints'] = [
             'createOption' => Backend::url('bedard/shop/options/create'),
+            'validateOption' => Backend::url('bedard/shop/options/validate'),
         ];
 
         $this->vars['product'] = $this->model;

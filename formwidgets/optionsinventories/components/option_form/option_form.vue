@@ -32,6 +32,7 @@
                 :lang="lang"
                 :values="option.values"
                 @add="onValueAdded"
+                @enter.prevent="onSave"
                 @input="onValueInput"
                 @remove="onValueRemoved"
                 @reorder="onValuesReordered">
@@ -58,6 +59,7 @@
 
 <script>
     import axios from 'axios';
+    import { clone, renameKey } from 'assets/js/utilities/helpers';
 
     export default {
         data() {
@@ -83,10 +85,16 @@
             create() {
                 this.isLoading = true;
 
-                axios.post(this.endpoints.createOption, { option: this.option })
-                    .then(this.onCreateComplete)
-                    .catch(this.onCreateFailed)
-                    .then(() => this.isLoading = false);
+                axios.post(this.endpoints.createOption, { option: this.getPostData() })
+                    .then(response => {
+                        this.hide();
+                        this.$emit('create', response.data);
+                    })
+                    .catch(this.onRequestFailed)
+                    .then(this.onRequestComplete);
+            },
+            getPostData() {
+                return renameKey(clone(this.option), 'values', 'value_data');
             },
             hide() {
                 this.$refs.modal.hide();
@@ -94,11 +102,10 @@
             onCancel() {
                 this.hide();
             },
-            onCreateComplete(response) {
-                this.hide();
-                this.$emit('create', response.data);
+            onRequestComplete() {
+                this.isLoading = false;
             },
-            onCreateFailed(error) {
+            onRequestFailed(error) {
                 $.oc.flashMsg({ text: error.response.data, class: 'error' });
             },
             onSave() {
@@ -129,15 +136,13 @@
                 const value = this.option.values.splice(oldIndex, 1)[0];
 
                 this.option.values.splice(newIndex, 0, value);
-                this.option.values.forEach((value, index) => {
-                    value.sort_order = index;
-                });
+                this.option.values.forEach((value, i) => value.sort_order = i);
             },
             show(option = {}) {
                 this.option.id = option.id || null;
                 this.option.name = option.name || '';
                 this.option.placeholder = option.placeholder || '';
-                this.option.values = option.values || [];
+                this.option.values = clone(option.values) || [];
 
                 // in order to make values sortable, they each need a
                 // unique key so Vue is able to track their indexes
@@ -145,6 +150,17 @@
 
                 this.$refs.modal.show();
                 setTimeout(() => this.$refs.name.focus(), 250);
+            },
+            update() {
+                this.isLoading = true;
+
+                axios.post(this.endpoints.validateOption, { option: this.getPostData() })
+                    .then(response => {
+                        this.hide();
+                        this.$emit('update', this.option);
+                    })
+                    .catch(this.onRequestFailed)
+                    .then(this.onRequestComplete);
             },
         },
         props: [

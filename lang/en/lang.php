@@ -36,6 +36,7 @@ return [
             'placeholder' => 'Placeholder',
             'values' => 'Values',
             'values_placeholder' => 'Type a value and press "enter" or "tab"',
+            'values_required' => 'Options must have at least one value.',
             'values_unique' => 'Value names must be unique.',
         ],
         'singular' => 'Option',

@@ -49,6 +49,7 @@
                 type="text"
                 :value="value.name"
                 @input="onInput"
+                @keypress.enter="onEnter"
             />
         </div>
         <a
@@ -62,6 +63,9 @@
 <script>
     export default {
         methods: {
+            onEnter(e) {
+                this.$emit('enter', e);
+            },
             onInput(e) {
                 this.$emit('input', e, this.value);
             },

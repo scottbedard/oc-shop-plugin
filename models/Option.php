@@ -27,6 +27,13 @@ class Option extends Model
     ];
 
     /**
+     * @var array Attribute casting
+     */
+    protected $casts = [
+        'id' => 'integer',
+    ];
+
+    /**
      * @var array Guarded fields
      */
     protected $guarded = ['*'];
@@ -38,6 +45,7 @@ class Option extends Model
         'name',
         'placeholder',
         'sort_order',
+        'value_data',
     ];
 
     /**
@@ -98,7 +106,7 @@ class Option extends Model
      */
     protected function saveValues()
     {
-        $values = $this->getOriginalPurgeValue('value_data') ?: [];
+        $values = $this->getOriginalPurgeValue('value_data');
 
         foreach ($values as $value) {
             $model = $value['id'] !== null
@@ -119,7 +127,7 @@ class Option extends Model
      */
     protected function validateValues()
     {
-        $values = $this->getOriginalPurgeValue('value_data') ?: [];
+        $values = $this->getOriginalPurgeValue('value_data');
 
         $names = [];
         foreach ($values as $value) {
@@ -134,6 +142,11 @@ class Option extends Model
             }
 
             $names[] = $value['name'];
+        }
+
+        // ensure that at least one value was provided
+        if (count($names) < 1) {
+            throw new Exception(Lang::get('bedard.shop::lang.options.form.values_required'));
         }
     }
 }

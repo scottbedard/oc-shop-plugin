@@ -22,16 +22,36 @@ class Options extends BackendController
             // create our new option
             $option = input('option');
             unset($option['id']);
-            $option = Option::create($option);
+            $model = Option::create($option);
+            $model->load('values');
 
             // attach it to the product with a deferred binding
             $product = new Product;
-            $product->options()->add($option, uniqid('session_key', true));
+            $product->options()->add($model, uniqid('session_key', true));
 
             // return the new option
-            return Response::make($option, 200);
+            return Response::make($model, 200);
         } catch (Exception $e) {
             // if anything went wrong, send back the error message
+            return Response::make($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * Validate an option.
+     *
+     * @return Response
+     */
+    public function validate()
+    {
+        try {
+            $option = input('option');
+            $model = Option::with('values')->findOrNew($option['id']);
+            $model->fill($option);
+            $model->validate();
+
+            return Response::make($model, 200);
+        } catch (Exception $e) {
             return Response::make($e->getMessage(), 500);
         }
     }

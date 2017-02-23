@@ -24,6 +24,7 @@
                 v-for="value in values"
                 :key="value._key"
                 :value="value"
+                @enter="onEnter"
                 @input="onInput"
                 @remove="onRemove">
             </v-value-input>
@@ -70,6 +71,9 @@
                     this.input = '';
                     this.$emit('add', trimmedValue);
                 }
+            },
+            onEnter(e) {
+                this.$emit('enter', e);
             },
             onInput(e, value) {
                 this.$emit('input', e, value);

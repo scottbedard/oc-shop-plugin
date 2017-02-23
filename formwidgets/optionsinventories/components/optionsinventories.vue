@@ -14,6 +14,7 @@
                 :endpoints="endpoints"
                 :lang="lang"
                 @create="onOptionCreated"
+                @update="onOptionUpdated"
             />
             <v-create @click="onCreateOptionClicked">
                 {{ 'backend.relation.create_name' | trans(lang, { name: 'bedard.shop.options.singular' }) }}
@@ -54,11 +55,9 @@
         },
         computed: {
             formData() {
-                return JSON.stringify(this.options.map(option => {
-                    // clone the option object and rename the values
-                    // key so our option can be validated and saved
-                    return renameKey(clone(option), 'values', 'value_data');
-                }));
+                // clone the option object and rename the values
+                // key so our option can be validated and saved
+                return this.options.map(option => renameKey(clone(option), 'values', 'value_data'));
             },
         },
         methods: {
@@ -77,6 +76,12 @@
             onOptionsReordered({ newIndex, oldIndex }) {
                 const option = this.options.splice(oldIndex, 1)[0];
                 this.options.splice(newIndex, 0, option);
+            },
+            onOptionUpdated(newOption) {
+                let oldOption = this.options.find(option => option.id === newOption.id);
+                let index = this.options.indexOf(oldOption);
+                this.options.splice(index);
+                this.options.splice(index, 0, newOption);
             },
         },
         props: [

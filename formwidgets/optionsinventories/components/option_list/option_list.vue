@@ -35,10 +35,6 @@
         },
         methods: {
             getValues(option) {
-                if (option.values.length === 0) {
-                    return;
-                }
-
                 return option.values.map(value => value.name).join(', ');
             },
             onOptionClicked(option) {
