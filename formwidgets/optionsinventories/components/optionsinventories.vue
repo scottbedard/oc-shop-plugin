@@ -44,6 +44,7 @@
         },
         data() {
             return {
+                inventories: [],
                 options: [],
             };
         },
@@ -55,9 +56,14 @@
         },
         computed: {
             formData() {
-                // clone the option object and rename the values
-                // key so our option can be validated and saved
-                return this.options.map(option => renameKey(clone(option), 'values', 'value_data'));
+                return JSON.stringify({
+                    inventories: this.inventories.map(inventory => {
+                        return clone(inventory);
+                    }),
+                    options: this.options.map(option => {
+                        return renameKey(clone(option), 'values', 'value_data');
+                    }),
+                });
             },
         },
         methods: {

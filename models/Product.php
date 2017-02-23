@@ -1,5 +1,6 @@
 <?php namespace Bedard\Shop\Models;
 
+use Bedard\Shop\Models\Option;
 use Model;
 
 /**
@@ -30,6 +31,7 @@ class Product extends Model
      * @var array Attribute casting
      */
     protected $casts = [
+        'id' => 'integer',
         'price' => 'float',
         'base_price' => 'float',
         'is_enabled' => 'boolean',
@@ -49,6 +51,7 @@ class Product extends Model
         'description_plain',
         'is_enabled',
         'name',
+        'options_inventories',
         'slug',
     ];
 
@@ -87,6 +90,16 @@ class Product extends Model
     ];
 
     /**
+     * After save.
+     *
+     * @return void
+     */
+    public function afterSave()
+    {
+        $this->saveOptionsAndInventories();
+    }
+
+    /**
      * Before save.
      *
      * @return void
@@ -94,6 +107,41 @@ class Product extends Model
     public function beforeSave()
     {
         $this->setPlainDescription();
+        $this->validateOptionsAndInventories();
+    }
+
+    /**
+     * Save related options.
+     *
+     * @param  array $options
+     * @return void
+     */
+    protected function saveOptions($options)
+    {
+        foreach ($options as $index => $option) {
+            $model = Option::findOrFail($option['id']);
+            $model->fill($option);
+            $model->product_id = $this->id;
+            $model->sort_order = $index;
+
+            $model->save();
+        }
+    }
+
+    /**
+     * Save related options and inventories.
+     *
+     * @return void
+     */
+    protected function saveOptionsAndInventories()
+    {
+        if (! $data = $this->getOriginalPurgeValue('options_inventories')) {
+            return;
+        }
+
+        $data = json_decode($data, true);
+        $this->saveOptions($data['options']);
+        // $this->saveInventories($data['inventories']);
     }
 
     /**
@@ -129,5 +177,38 @@ class Product extends Model
         'END';
 
         return $query->selectSubquery($subquery, 'status');
+    }
+
+    /**
+     * Validate a product's options.
+     *
+     * @param  array $options
+     * @return void
+     */
+    protected function validateOptions($options)
+    {
+        // validate each option individually
+        foreach ($options as $option) {
+            $model = new Option($option);
+            $model->validate();
+        }
+
+        // @todo: prevent duplicate options
+    }
+
+    /**
+     * Call validate for options and inventories.
+     *
+     * @return void
+     */
+    protected function validateOptionsAndInventories()
+    {
+        if (! $data = $this->getOriginalPurgeValue('options_inventories')) {
+            return;
+        }
+
+        $data = json_decode($data, true);
+        $this->validateOptions($data['options']);
+        // $this->validateInventories($data['inventories']);
     }
 }
