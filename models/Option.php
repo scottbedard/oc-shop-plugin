@@ -1,9 +1,8 @@
 <?php namespace Bedard\Shop\Models;
 
-use Bedard\Shop\Models\OptionValue;
-use Exception;
 use Lang;
 use Model;
+use Exception;
 
 /**
  * Option Model.
