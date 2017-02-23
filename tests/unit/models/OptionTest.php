@@ -27,7 +27,6 @@ class OptionTest extends PluginTestCase
 
     public function test_saving_option_with_no_values_throws_error()
     {
-
         try {
             $option = Factory::create(new Option);
             $option->value_data = [];
