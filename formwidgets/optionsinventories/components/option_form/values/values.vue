@@ -64,6 +64,9 @@
             },
         },
         methods: {
+            clearInput() {
+                this.input = '';
+            },
             onAdd() {
                 let trimmedValue = this.input.trim();
 

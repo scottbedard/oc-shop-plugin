@@ -29,6 +29,7 @@
                 {{ 'bedard.shop.options.form.placeholder' | trans(lang) }}
             </v-form-input>
             <v-values
+                ref="values"
                 :lang="lang"
                 :values="option.values"
                 @add="onValueAdded"
@@ -138,16 +139,18 @@
                 this.option.values.splice(newIndex, 0, value);
                 this.option.values.forEach((value, i) => value.sort_order = i);
             },
-            show(option = {}) {
+            show(option) {
+                option = clone(option || {});
                 this.option.id = option.id || null;
                 this.option.name = option.name || '';
                 this.option.placeholder = option.placeholder || '';
-                this.option.values = clone(option.values) || [];
+                this.option.values = option.values || [];
 
                 // in order to make values sortable, they each need a
                 // unique key so Vue is able to track their indexes
                 this.option.values.forEach((value, i) => this.$set(value, '_key', i));
 
+                this.$refs.values.clearInput();
                 this.$refs.modal.show();
                 setTimeout(() => this.$refs.name.focus(), 250);
             },
@@ -157,7 +160,7 @@
                 axios.post(this.endpoints.validateOption, { option: this.getPostData() })
                     .then(response => {
                         this.hide();
-                        this.$emit('update', this.option);
+                        this.$emit('update', clone(this.option));
                     })
                     .catch(this.onRequestFailed)
                     .then(this.onRequestComplete);

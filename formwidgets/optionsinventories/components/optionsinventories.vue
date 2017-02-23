@@ -79,9 +79,7 @@
             },
             onOptionUpdated(newOption) {
                 let oldOption = this.options.find(option => option.id === newOption.id);
-                let index = this.options.indexOf(oldOption);
-                this.options.splice(index);
-                this.options.splice(index, 0, newOption);
+                this.options.splice(this.options.indexOf(oldOption), 1, newOption);
             },
         },
         props: [

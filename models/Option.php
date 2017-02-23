@@ -106,17 +106,19 @@ class Option extends Model
      */
     protected function saveValues()
     {
-        $values = $this->getOriginalPurgeValue('value_data');
+        $values = $this->getOriginalPurgeValue('value_data') ?: [];
 
-        foreach ($values as $value) {
-            $model = $value['id'] !== null
-                ? OptionValue::findOrNew($value['id'])
-                : new OptionValue;
+        if (count($values)) {
+            foreach ($values as $value) {
+                $model = $value['id'] !== null
+                    ? OptionValue::findOrNew($value['id'])
+                    : new OptionValue;
 
-            $model->name = $value['name'];
-            $model->option_id = $this->id;
-            $model->sort_order = $value['sort_order'];
-            $model->save();
+                $model->name = $value['name'];
+                $model->option_id = $this->id;
+                $model->sort_order = $value['sort_order'];
+                $model->save();
+            }
         }
     }
 
@@ -127,11 +129,10 @@ class Option extends Model
      */
     protected function validateValues()
     {
-        $values = $this->getOriginalPurgeValue('value_data');
-
         $names = [];
-        foreach ($values as $value) {
+        $values = $this->getOriginalPurgeValue('value_data') ?: [];
 
+        foreach ($values as $value) {
             // validate each value individually
             $model = new OptionValue($value);
             $model->validate();
