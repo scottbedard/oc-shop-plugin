@@ -18,9 +18,7 @@
     export default {
         directives: {
             sortable: {
-                inserted(el, binding) {
-                    new Sortable(el, binding.value || {});
-                },
+                inserted: (el, binding) => new Sortable(el, binding.value || {}),
             },
         },
         methods: {

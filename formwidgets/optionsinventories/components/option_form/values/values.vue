@@ -19,7 +19,7 @@
         <label class="v-required-label">
             {{ 'bedard.shop.options.form.values' | trans(lang) }}
         </label>
-        <div v-sortable="{ onEnd: onReorder }">
+        <div v-sortable="{ handle: '.oc-icon-bars', onEnd: onReorder }">
             <v-value-input
                 v-for="value in values"
                 :key="value._key"
@@ -58,9 +58,7 @@
         },
         directives: {
             sortable: {
-                inserted(el, binding) {
-                    new Sortable(el, binding.value || {});
-                },
+                inserted: (el, binding) => new Sortable(el, binding.value || {}),
             },
         },
         methods: {
