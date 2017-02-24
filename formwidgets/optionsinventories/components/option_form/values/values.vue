@@ -22,9 +22,10 @@
         <div v-sortable="{ handle: '.oc-icon-bars', onEnd: onReorder }">
             <v-value-input
                 ref="values"
-                v-for="value in values"
+                v-for="value in currentValues"
                 :key="value._key"
                 :value="value"
+                @delete="onDelete"
                 @enter="onEnter"
                 @input="onInput"
                 @remove="onRemove"
@@ -55,6 +56,9 @@
             'v-value-input': require('./value_input/value_input'),
         },
         computed: {
+            currentValues() {
+                return this.values.filter(value => ! value._deleted);
+            },
             placeholder() {
                 return trans('bedard.shop.options.form.values_placeholder', this.lang);
             },
@@ -105,6 +109,9 @@
                     this.input = '';
                     this.$emit('add', trimmedValue);
                 }
+            },
+            onDelete(value) {
+                this.$emit('delete', value);
             },
             onEnter(e) {
                 this.$emit('enter', e);

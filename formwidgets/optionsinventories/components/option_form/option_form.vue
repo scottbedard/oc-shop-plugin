@@ -41,6 +41,7 @@
                 :lang="lang"
                 :values="option.values"
                 @add="onValueAdded"
+                @delete="onValueDeleted"
                 @enter.prevent="onSave"
                 @focus-placeholder="onFocusPlaceholder"
                 @input="onValueInput"
@@ -144,6 +145,9 @@
                     option_id: this.option.id,
                     sort_order: this.option.values.length,
                 });
+            },
+            onValueDeleted(value) {
+                this.$set(value, '_deleted', true);
             },
             onValueInput(e, value) {
                 value.name = e.target.value;

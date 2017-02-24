@@ -84,12 +84,8 @@
                 this.options.splice(newIndex, 0, option);
             },
             onOptionUpdated(newOption) {
-                // @todo: possibly use Array.prototype.findIndex()
-                // let index = this.options.findIndex(option => option.id === newOption.id);
-                // this.options.splice(index, 1, newOption);
-                
-                let oldOption = this.options.find(option => option.id === newOption.id);
-                this.options.splice(this.options.indexOf(oldOption), 1, newOption);
+                let index = this.options.findIndex(option => option.id === newOption.id);
+                this.options.splice(index, 1, newOption);
             },
         },
         props: [
