@@ -23,6 +23,7 @@
                     type="submit"
                     data-request="onSave"
                     data-request-data="redirect:0"
+                    data-request-success="window.BedardShop.$emit('save')"
                     data-hotkey="ctrl+s, cmd+s"
                     data-load-indicator="<?= e(trans('backend::lang.form.saving_name', [
                         'name' => trans('bedard.shop::lang.products.singular'),

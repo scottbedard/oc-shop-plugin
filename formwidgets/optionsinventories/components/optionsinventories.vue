@@ -7,6 +7,7 @@
                 :lang="lang"
                 :options="options"
                 @click="onOptionClicked"
+                @delete="onOptionDeleted"
                 @reorder="onOptionsReordered"
             />
             <v-option-form
@@ -41,6 +42,8 @@
     export default {
         created() {
             this.options = clone(this.product.options);
+
+            window.BedardShop.$on('save', this.onFormSaved);
         },
         data() {
             return {
@@ -73,11 +76,18 @@
             onCreateOptionClicked() {
                 this.$refs.optionForm.show();
             },
+            onFormSaved() {
+                // remove deleted options that no longer exist
+                this.options = this.options.filter(option => ! option._deleted);
+            },
             onOptionClicked(option) {
                 this.$refs.optionForm.show(option);
             },
             onOptionCreated(option) {
                 this.options.push(option);
+            },
+            onOptionDeleted(option) {
+                this.$set(option, '_deleted', ! option._deleted);
             },
             onOptionsReordered({ newIndex, oldIndex }) {
                 const option = this.options.splice(oldIndex, 1)[0];

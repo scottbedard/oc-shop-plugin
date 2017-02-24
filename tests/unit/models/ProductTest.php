@@ -51,4 +51,28 @@ class ProductTest extends PluginTestCase
         $this->assertEquals(1, $product->options()->count());
         $this->assertEquals($option->id, $product->options()->first()->id);
     }
+
+    public function test_deleting_options()
+    {
+        $option = Factory::create(new Option);
+        $option->load('values');
+        $optionData = $option->toArray();
+        $optionData['value_data'] = $optionData['values'];
+        unset($optionData['values']);
+
+        $product = Factory::create(new Product, [
+            'options_inventories' => json_encode([
+                'inventories' => [],
+                'options' => [$optionData],
+            ]),
+        ]);
+
+        $product->options_inventories = json_encode([
+            'inventories' => [],
+            'options' => [['_deleted' => true, 'id' => $option->id, 'name' => $option->name]],
+        ]);
+
+        $product->save();
+        $this->assertEquals(0, $product->options()->count());
+    }
 }

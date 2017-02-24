@@ -8,7 +8,9 @@
         font-size: 0.85em;
         font-weight: 600;
         margin-top: 20px;
+        outline: none;
         padding: 15px;
+        text-decoration: none;
         text-transform: uppercase;
         transition:
             border-color $transition-duration $transition-timing-function,

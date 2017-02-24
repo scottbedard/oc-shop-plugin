@@ -119,11 +119,16 @@ class Product extends Model
     {
         foreach ($options as $index => $option) {
             $model = Option::findOrFail($option['id']);
-            $model->fill($option);
-            $model->product_id = $this->id;
-            $model->sort_order = $index;
 
-            $model->save();
+            if (array_key_exists('_deleted', $option) && $option['_deleted']) {
+                $model->delete();
+            } else {
+                $model->fill($option);
+                $model->product_id = $this->id;
+                $model->sort_order = $index;
+
+                $model->save();
+            }
         }
     }
 

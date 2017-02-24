@@ -35,19 +35,20 @@
     }
 
     .restore-icon {
-        &:hover { color: $light-blue }
+        &:hover { color: $green }
     }
 
     a {
         color: #ccc;
+        outline: none;
         text-decoration: none;
         transition: color $transition-duration $transition-timing-function;
     }
 
     input {
         appearance: none;
-        border: 0;
         background-color: transparent;
+        border: 0;
         width: 100%;
     }
 </style>

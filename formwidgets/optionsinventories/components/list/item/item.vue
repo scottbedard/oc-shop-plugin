@@ -6,10 +6,12 @@
         color: #333;
         display: flex;
         height: $size;
+        outline: none;
         overflow: hidden;
         text-decoration: none;
+        transition: opacity $transition-duration $transition-timing-function;
 
-        &:hover {
+        &:not(.is-deleted):hover {
             background-color: $light-blue;
             color: #fff;
 
@@ -51,6 +53,10 @@
             justify-content: center;
             width: $size;
         }
+    }
+
+    .is-deleted {
+        opacity: 0.5;
     }
 </style>
 
