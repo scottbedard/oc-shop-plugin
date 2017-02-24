@@ -25,7 +25,11 @@
         <!-- Inventories -->
         <div class="form-group span-right">
             <label>{{ 'bedard.shop.inventories.plural' | trans(lang) }}</label>
-            <v-inventory-form ref="inventoryForm" :lang="lang" />
+            <v-inventory-form
+                ref="inventoryForm"
+                :lang="lang"
+                :options="options"
+            />
             <v-create @click="onCreateInventoryClicked">
                 {{ 'backend.relation.create_name' | trans(lang, { name: 'bedard.shop.inventories.singular' }) }}
             </v-create>

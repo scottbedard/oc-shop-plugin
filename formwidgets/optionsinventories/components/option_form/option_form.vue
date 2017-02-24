@@ -26,7 +26,7 @@
                 required
                 ref="name"
                 v-model="option.name"
-                @keypress.enter.prevent="onSave" >
+                @keypress.enter.prevent="onSave">
                 {{ 'bedard.shop.options.form.name' | trans(lang) }}
             </v-form-input>
             <v-form-input

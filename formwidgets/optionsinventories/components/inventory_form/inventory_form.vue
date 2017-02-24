@@ -16,7 +16,18 @@
 
         <!-- Body -->
         <v-modal-body>
-            Body
+            <v-option-selector
+                :options="options"
+            />
+            <v-form-input
+                ref="sku">
+                {{ 'bedard.shop.inventories.form.sku' | trans(lang) }}
+            </v-form-input>
+            <v-form-input
+                required
+                ref="price">
+                {{ 'bedard.shop.inventories.form.price' | trans(lang) }}
+            </v-form-input>
         </v-modal-body>
 
         <!-- Footer -->
@@ -33,6 +44,9 @@
                 context: 'create',
             };
         },
+        components: {
+            'v-option-selector': require('./option_selector/option_selector'),
+        },
         methods: {
             show() {
                 this.$refs.modal.show();
@@ -40,6 +54,7 @@
         },
         props: [
             'lang',
+            'options',
         ],
     };
 </script>

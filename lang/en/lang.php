@@ -23,6 +23,10 @@ return [
     // inventories
     //
     'inventories' => [
+        'form' => [
+            'price' => 'Price',
+            'sku' => 'Stock keeping unit',
+        ],
         'singular' => 'Inventory',
         'plural' => 'Inventories',
     ],
