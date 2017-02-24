@@ -76,6 +76,10 @@ class Factory
         return [
             'name' => $faker->words(2, true),
             'placeholder' => $faker->words(3, true),
+            'sort_order' => 0,
+            'value_data' => [
+                ['_key' => 1, 'id' => null, 'name' => 'a', 'sort_order' => 0],
+            ],
         ];
     }
 
