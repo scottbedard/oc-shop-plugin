@@ -8,7 +8,7 @@ class CreateInventoriesTable extends Migration
 {
     public function up()
     {
-        Schema::create('bedard_shop_inventories', function(Blueprint $table) {
+        Schema::create('bedard_shop_inventories', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->timestamps();

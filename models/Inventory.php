@@ -3,7 +3,7 @@
 use Model;
 
 /**
- * Inventory Model
+ * Inventory Model.
  */
 class Inventory extends Model
 {
