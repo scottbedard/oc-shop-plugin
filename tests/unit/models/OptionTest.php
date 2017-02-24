@@ -48,4 +48,24 @@ class OptionTest extends PluginTestCase
 
         $this->assertEquals(2, $option->values()->count());
     }
+
+    public function test_deleting_a_value()
+    {
+        $option = Factory::create(new Option, [
+            'value_data' => [
+                ['_key' => 1, 'id' => null, 'name' => 'a', 'sort_order' => 0],
+                ['_key' => 2, 'id' => null, 'name' => 'b', 'sort_order' => 1],
+            ],
+        ]);
+
+        $option->value_data = [
+            ['_deleted' => true, 'id' => 1, 'name' => 'a', 'sort_order' => 0],
+            ['id' => 2, 'name' => 'b', 'sort_order' => 1],
+        ];
+
+        $option->save();
+        $this->assertEquals(1, $option->values()->count());
+        $this->assertEquals(0, $option->values()->where('name', 'a')->count());
+        $this->assertEquals(1, $option->values()->where('name', 'b')->count());
+    }
 }

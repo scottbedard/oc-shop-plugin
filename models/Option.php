@@ -111,13 +111,19 @@ class Option extends Model
         if (count($values)) {
             foreach ($values as $value) {
                 $model = $value['id'] !== null
-                    ? OptionValue::findOrNew($value['id'])
-                    : new OptionValue;
+                        ? OptionValue::findOrNew($value['id'])
+                        : new OptionValue;
 
-                $model->name = $value['name'];
-                $model->option_id = $this->id;
-                $model->sort_order = $value['sort_order'];
-                $model->save();
+                if (array_key_exists('_deleted', $value) && $value['_deleted'] && $model->exists()) {
+                    // delete the model if it has the _deleted flag
+                    $model->delete();
+                } else {
+                    // otherwise update the model's values
+                    $model->name = $value['name'];
+                    $model->option_id = $this->id;
+                    $model->sort_order = $value['sort_order'];
+                    $model->save();
+                }
             }
         }
     }
