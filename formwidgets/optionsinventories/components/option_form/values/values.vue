@@ -24,6 +24,7 @@
                 ref="values"
                 v-for="value in values"
                 :key="value._key"
+                :lang="lang"
                 :value="value"
                 @delete="onDelete"
                 @enter="onEnter"

@@ -60,6 +60,7 @@
         <a
             class="oc-icon-bars"
             href="#"
+            :title="reorderTitle"
             @click.prevent.stop>
         </a>
         <div class="v-value-input-container">
@@ -78,13 +79,26 @@
                 'delete-icon oc-icon-trash-o': ! value._deleted,
                 'restore-icon oc-icon-undo': value._deleted,
             }"
+            :title="deleteTitle"
             @click.prevent.stop="onDeleteClicked">
         </a>
     </div>
 </template>
 
 <script>
+    import trans from 'assets/js/filters/trans/trans';
+
     export default {
+        computed: {
+            deleteTitle() {
+                return this.value._deleted
+                    ? trans('bedard.shop.options.form.values_restore_title', this.lang)
+                    : trans('bedard.shop.options.form.values_delete_title', this.lang);
+            },
+            reorderTitle() {
+                return trans('bedard.shop.options.form.values_reorder_title', this.lang);
+            },
+        },
         methods: {
             focus() {
                 this.$refs.input.focus();
@@ -103,6 +117,7 @@
             },
         },
         props: [
+            'lang',
             'value',
         ],
     };
