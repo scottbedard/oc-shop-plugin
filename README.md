@@ -27,7 +27,7 @@ To see the progress being made toward the first release, check out the [first re
 To properly configure the dev environment, create an `.october_proxy` file in `/plugins/bedard/shop` that contains the application URL of your October site.
 
 ```bash
-# start the development server and watch
+# start the development server
 $ yarn run dev
 
 # build production assets
