@@ -139,6 +139,7 @@
                 let { values } = this.option;
 
                 this.option.values.push({
+                    _deleted: false,
                     _key: Math.max(values.length, ...values.map(v => v._key)) + 1,
                     id: null,
                     name: value,
@@ -147,7 +148,7 @@
                 });
             },
             onValueDeleted(value) {
-                this.$set(value, '_deleted', true);
+                value._deleted = ! value._deleted;
             },
             onValueInput(e, value) {
                 value.name = e.target.value;
@@ -168,9 +169,14 @@
                 this.option.placeholder = option.placeholder || '';
                 this.option.values = option.values || [];
 
-                // in order to make values sortable, they each need a
-                // unique key so Vue is able to track their indexes
-                this.option.values.forEach((value, i) => this.$set(value, '_key', i));
+                this.option.values.forEach((value, i) => {
+                    // attach a _deleted flag to each value
+                    this.$set(value, '_deleted', value._deleted || false);
+
+                    // in order to make values sortable, they each need a
+                    // unique key so Vue is able to track their indexes
+                    this.$set(value, '_key', i);
+                });
 
                 this.$refs.values.clearInput();
                 this.$refs.modal.show();

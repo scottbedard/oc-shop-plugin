@@ -22,7 +22,7 @@
         <div v-sortable="{ handle: '.oc-icon-bars', onEnd: onReorder }">
             <v-value-input
                 ref="values"
-                v-for="value in currentValues"
+                v-for="value in values"
                 :key="value._key"
                 :value="value"
                 @delete="onDelete"

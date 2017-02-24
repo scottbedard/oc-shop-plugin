@@ -4,6 +4,12 @@
         cursor: text;
         display: flex;
         margin-bottom: 10px;
+        padding-right: 8px;
+        transition: opacity $transition-duration $transition-timing-function;
+    }
+
+    .is-deleted {
+        opacity: 0.5;
     }
 
     .v-value-input-container {
@@ -17,9 +23,19 @@
         &:hover { color: #999 }
     }
 
-    .oc-icon-trash-o {
+    .is-deleted-icon {
+        text-align: center;
+        width: 18px;
+
         &:before { margin-right: 0 }
+    }
+
+    .delete-icon {
         &:hover { color: $red }
+    }
+
+    .restore-icon {
+        &:hover { color: $light-blue }
     }
 
     a {
@@ -37,7 +53,10 @@
 </style>
 
 <template>
-    <div class="v-value-input form-control" @click="onWrapperClicked">
+    <div
+        class="v-value-input form-control"
+        :class="{ 'is-deleted': value._deleted }"
+        @click="onWrapperClicked">
         <a
             class="oc-icon-bars"
             href="#"
@@ -47,13 +66,18 @@
             <input
                 ref="input"
                 type="text"
+                :disabled="value._deleted"
                 :value="value.name"
                 @input="onInput"
                 @keydown="onKeydown">
         </div>
         <a
-            class="oc-icon-trash-o"
             href="#"
+            class="is-deleted-icon"
+            :class="{
+                'delete-icon oc-icon-trash-o': ! value._deleted,
+                'restore-icon oc-icon-undo': value._deleted,
+            }"
             @click.prevent.stop="onDeleteClicked">
         </a>
     </div>

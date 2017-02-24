@@ -35,7 +35,9 @@
         },
         methods: {
             getValues(option) {
-                return option.values.map(value => value.name).join(', ');
+                return option.values
+                    .filter(value => ! value._deleted)
+                    .map(value => value.name).join(', ');
             },
             onOptionClicked(option) {
                 this.$emit('click', option);
