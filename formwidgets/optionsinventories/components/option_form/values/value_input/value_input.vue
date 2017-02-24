@@ -10,9 +10,20 @@
     }
 
     .oc-icon-bars {
-        &:after {
-            margin-right: 12px
-        }
+        cursor: move;
+
+        &:after { margin-right: 12px }
+        &:hover { color: #999 }
+    }
+
+    .oc-icon-trash-o {
+        &:hover { color: $red }
+    }
+
+    a {
+        color: #ccc;
+        text-decoration: none;
+        transition: color $transition-duration $transition-timing-function;
     }
 
     input {
