@@ -18,6 +18,7 @@
             @input="onInput"
             @keydown="onKeydown"
             @keypress="onKeypress"
+            @keyup="onKeyup"
         />
     </div>
 </template>
@@ -33,6 +34,9 @@
             },
             onKeypress(e) {
                 this.$emit('keypress', e);
+            },
+            onKeyup(e) {
+                this.$emit('keyup', e);
             },
             onInput(e) {
                 this.$emit('input', e.target.value);

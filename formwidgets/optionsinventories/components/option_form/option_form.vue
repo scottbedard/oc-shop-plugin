@@ -22,10 +22,18 @@
 
         <!-- Body -->
         <v-modal-body>
-            <v-form-input ref="name" v-model="option.name" @keypress.enter.prevent="onSave" required>
+            <v-form-input
+                required
+                ref="name"
+                v-model="option.name"
+                @keypress.enter.prevent="onSave" >
                 {{ 'bedard.shop.options.form.name' | trans(lang) }}
             </v-form-input>
-            <v-form-input v-model="option.placeholder" @keypress.enter.prevent="onSave">
+            <v-form-input
+                ref="placeholder"
+                v-model="option.placeholder"
+                @keydown.tab="onPlaceholderTab"
+                @keypress.enter.prevent="onSave">
                 {{ 'bedard.shop.options.form.placeholder' | trans(lang) }}
             </v-form-input>
             <v-values
@@ -34,6 +42,7 @@
                 :values="option.values"
                 @add="onValueAdded"
                 @enter.prevent="onSave"
+                @focus-placeholder="onFocusPlaceholder"
                 @input="onValueInput"
                 @remove="onValueRemoved"
                 @reorder="onValuesReordered">
@@ -102,6 +111,15 @@
             },
             onCancel() {
                 this.hide();
+            },
+            onFocusPlaceholder() {
+                this.$refs.placeholder.focus();
+            },
+            onPlaceholderTab(e) {
+                if (! e.shiftKey) {
+                    e.preventDefault();
+                    this.$refs.values.focus();
+                }
             },
             onRequestComplete() {
                 this.isLoading = false;

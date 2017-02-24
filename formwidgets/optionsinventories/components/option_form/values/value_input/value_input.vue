@@ -1,7 +1,6 @@
 <style lang="scss" scoped>@import 'core';
     .v-value-input {
         align-items: center;
-        cursor: text;
         display: flex;
         margin-bottom: 10px;
     }
@@ -11,69 +10,40 @@
     }
 
     .oc-icon-bars {
-        cursor: move;
-    }
-
-    .oc-icon-trash-o {
-        cursor: pointer;
-        text-decoration: none;
-        &:hover { color: $red }
-    }
-
-    a {
-        color: #999;
-        font-size: 16px;
-        text-decoration: none;
-        &:before { margin-right: 0 }
+        &:after {
+            margin-right: 12px
+        }
     }
 
     input {
         appearance: none;
-        background-color: transparent;
         border: 0;
-        padding: 0 10px;
-        width: 100%;
+        background-color: transparent;
     }
 </style>
 
 <template>
-    <div class="v-value-input form-control" @click="onWrapperClicked">
-        <a
-            class="oc-icon-bars"
-            href="#"
-            @click.prevent.stop>
-        </a>
-        <div class="v-value-input-container" @click.stop>
+    <div class="v-value-input form-control">
+        <a class="oc-icon-bars" href="#" @click.prevent></a>
+        <div class="v-value-input-container">
             <input
                 ref="input"
                 type="text"
                 :value="value.name"
-                @input="onInput"
-                @keypress.enter="onEnter"
-            />
+                @keydown="onKeydown">
         </div>
-        <a
-            class="oc-icon-trash-o"
-            href="#"
-            @click.prevent.stop="onRemoveClicked">
-        </a>
+        <a class="oc-icon-trash-o" href="#" @click.prevent></a>
     </div>
 </template>
 
 <script>
     export default {
         methods: {
-            onEnter(e) {
-                this.$emit('enter', e);
-            },
-            onInput(e) {
-                this.$emit('input', e, this.value);
-            },
-            onRemoveClicked() {
-                this.$emit('remove', this.value);
-            },
-            onWrapperClicked() {
+            focus() {
                 this.$refs.input.focus();
+            },
+            onKeydown(e) {
+                this.$emit('keydown', e);
             },
         },
         props: [
