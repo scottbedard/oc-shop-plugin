@@ -14,7 +14,7 @@
     export default {
         mounted() {
             $(this.$refs.select).select2({
-                dropdownCssClass: 'ocInspectorDropdown'
+                dropdownCssClass: 'ocInspectorDropdown',
                 placeholder: this.placeholder,
             });
 
