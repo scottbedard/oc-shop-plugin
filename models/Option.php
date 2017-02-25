@@ -90,11 +90,11 @@ class Option extends Model
     }
 
     /**
-     * Before save.
+     * After validate.
      *
      * @return void
      */
-    public function beforeSave()
+    public function afterValidate()
     {
         $this->validateValues();
     }
@@ -136,7 +136,7 @@ class Option extends Model
     protected function validateValues()
     {
         $names = [];
-        $values = $this->getOriginalPurgeValue('value_data') ?: [];
+        $values = $this->value_data ?: [];
 
         // don't validate deleted values
         $nonDeletedValues = array_filter($values, function ($value) {
