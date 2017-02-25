@@ -1,8 +1,8 @@
 <?php namespace Bedard\Shop\Models;
 
+use Carbon\Carbon;
 use Model;
 use Queue;
-use Carbon\Carbon;
 
 /**
  * Discount Model.

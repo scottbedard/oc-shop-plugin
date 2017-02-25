@@ -1,9 +1,9 @@
 <?php namespace Bedard\Shop\Api;
 
-use Log;
-use Exception;
 use Bedard\Shop\Classes\ApiController;
 use Bedard\Shop\Repositories\ProductRepository;
+use Exception;
+use Log;
 
 class Products extends ApiController
 {

@@ -1,9 +1,9 @@
 <?php namespace Bedard\Shop\Models;
 
+use Bedard\Shop\Classes\ProductsQuery;
 use DB;
 use Lang;
 use Model;
-use Bedard\Shop\Classes\ProductsQuery;
 
 /**
  * Category Model.

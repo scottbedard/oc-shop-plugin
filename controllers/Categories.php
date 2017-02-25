@@ -1,14 +1,14 @@
 <?php namespace Bedard\Shop\Controllers;
 
-use Log;
-use Lang;
-use Flash;
-use Response;
-use Exception;
 use BackendMenu;
-use Bedard\Shop\Models\Product;
-use Bedard\Shop\Models\Category;
 use Bedard\Shop\Classes\BackendController;
+use Bedard\Shop\Models\Category;
+use Bedard\Shop\Models\Product;
+use Exception;
+use Flash;
+use Lang;
+use Log;
+use Response;
 
 /**
  * Categories Back-end Controller.

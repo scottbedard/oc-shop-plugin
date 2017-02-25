@@ -1,8 +1,8 @@
 <?php namespace Bedard\Shop\Drivers;
 
+use Bedard\Shop\Interfaces\ShippingDriverInterface;
 use Bedard\Shop\Models\Cart;
 use October\Rain\Parse\Yaml;
-use Bedard\Shop\Interfaces\ShippingDriverInterface;
 
 class NoShippingDriver implements ShippingDriverInterface
 {

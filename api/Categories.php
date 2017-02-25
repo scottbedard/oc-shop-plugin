@@ -1,10 +1,10 @@
 <?php namespace Bedard\Shop\Api;
 
-use Log;
-use Exception;
-use Bedard\Shop\Models\ApiSettings;
 use Bedard\Shop\Classes\ApiController;
+use Bedard\Shop\Models\ApiSettings;
 use Bedard\Shop\Repositories\CategoryRepository;
+use Exception;
+use Log;
 
 class Categories extends ApiController
 {

@@ -1,9 +1,9 @@
 <?php namespace Bedard\Shop\Controllers;
 
-use Response;
-use Exception;
-use Bedard\Shop\Models\Filter;
 use Bedard\Shop\Classes\BackendController;
+use Bedard\Shop\Models\Filter;
+use Exception;
+use Response;
 
 /**
  * Filters Back-end Controller.

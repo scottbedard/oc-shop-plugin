@@ -1,7 +1,7 @@
 <?php namespace Bedard\Shop\Traits;
 
-use Lang;
 use Flash;
+use Lang;
 use October\Rain\Database\ModelException;
 
 trait StartEndable

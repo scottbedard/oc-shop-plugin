@@ -1,7 +1,7 @@
 <?php namespace Bedard\Shop\Traits;
 
-use DB;
 use Carbon\Carbon;
+use DB;
 use October\Rain\Database\Builder;
 
 trait Timeable

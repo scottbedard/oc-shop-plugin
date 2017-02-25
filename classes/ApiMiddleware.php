@@ -1,7 +1,7 @@
 <?php namespace Bedard\Shop\Classes;
 
-use Closure;
 use Bedard\Shop\Models\ApiSettings;
+use Closure;
 
 class ApiMiddleware
 {

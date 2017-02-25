@@ -1,10 +1,10 @@
 <?php namespace Bedard\Shop\Tet\Unit\Repositories;
 
-use Bedard\Shop\Tests\Factory;
-use Bedard\Shop\Models\Product;
 use Bedard\Shop\Models\Category;
-use Bedard\Shop\Tests\PluginTestCase;
+use Bedard\Shop\Models\Product;
 use Bedard\Shop\Repositories\CategoryRepository;
+use Bedard\Shop\Tests\Factory;
+use Bedard\Shop\Tests\PluginTestCase;
 
 class CategoryRepositoryTest extends PluginTestCase
 {

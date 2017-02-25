@@ -1,7 +1,7 @@
 <?php namespace Bedard\Shop\Classes;
 
-use Bedard\Shop\Models\Product;
 use Bedard\Shop\Models\Category;
+use Bedard\Shop\Models\Product;
 
 class ProductsQuery
 {

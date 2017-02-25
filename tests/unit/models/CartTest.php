@@ -1,10 +1,10 @@
 <?php namespace Bedard\Shop\Tests\Unit\Models;
 
-use Carbon\Carbon;
 use Bedard\Shop\Models\Cart;
-use Bedard\Shop\Tests\Factory;
 use Bedard\Shop\Models\Promotion;
+use Bedard\Shop\Tests\Factory;
 use Bedard\Shop\Tests\PluginTestCase;
+use Carbon\Carbon;
 
 class CartTest extends PluginTestCase
 {

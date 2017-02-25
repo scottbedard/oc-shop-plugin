@@ -1,13 +1,13 @@
 <?php namespace Bedard\Shop\FormWidgets;
 
-use Form;
-use Model;
-use Validator;
 use Backend\Classes\FormWidgetBase;
 use Bedard\Shop\Classes\DriverManager;
 use Bedard\Shop\Interfaces\DriverInterface;
-use October\Rain\Exception\ValidationException;
 use Bedard\Shop\Models\DriverConfig as ConfigModel;
+use Form;
+use Model;
+use October\Rain\Exception\ValidationException;
+use Validator;
 
 /**
  * DriverConfig Form Widget.
