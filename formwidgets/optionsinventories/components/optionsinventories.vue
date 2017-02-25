@@ -25,11 +25,20 @@
         <!-- Inventories -->
         <div class="form-group span-right">
             <label>{{ 'bedard.shop.inventories.plural' | trans(lang) }}</label>
+            <v-inventory-list
+                :inventories="inventories"
+                :lang="lang"
+                :options="options"
+                @click="onInventoryClicked"
+                @delete="onInventoryDeleted"
+            />
             <v-inventory-form
                 ref="inventoryForm"
                 :endpoints="endpoints"
                 :lang="lang"
                 :options="options"
+                @create="onInventoryCreated"
+                @update="onInventoryUpdated"
             />
             <v-create @click="onCreateInventoryClicked">
                 {{ 'backend.relation.create_name' | trans(lang, { name: 'bedard.shop.inventories.singular' }) }}
@@ -46,6 +55,7 @@
 
     export default {
         created() {
+            this.inventories = clone(this.product.inventories);
             this.options = clone(this.product.options);
 
             window.BedardShop.$on('save', this.onFormSaved);
@@ -59,6 +69,7 @@
         components: {
             'v-create': require('./create/create'),
             'v-inventory-form': require('./inventory_form/inventory_form'),
+            'v-inventory-list': require('./inventory_list/inventory_list'),
             'v-option-form': require('./option_form/option_form'),
             'v-option-list': require('./option_list/option_list'),
         },
@@ -89,6 +100,18 @@
                 this.options.forEach(option => {
                     option.values = option.values.filter(value => ! value._deleted);
                 });
+            },
+            onInventoryClicked(inventory) {
+                this.$refs.inventoryForm.show(inventory);
+            },
+            onInventoryCreated(inventory) {
+                this.inventories.push(inventory);
+            },
+            onInventoryDeleted(inventory) {
+                this.$set(inventory, '_deleted', ! inventory._deleted);
+            },
+            onInventoryUpdated(inventory) {
+                // @todo
             },
             onOptionClicked(option) {
                 this.$refs.optionForm.show(option);

@@ -11,6 +11,7 @@ class CreateInventoriesTable extends Migration
         Schema::create('bedard_shop_inventories', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
+            $table->integer('product_id')->unsigned()->nullable()->index();
             $table->string('sku')->nullable()->unique();
             $table->integer('quantity')->unsigned()->default(0);
             $table->timestamps();

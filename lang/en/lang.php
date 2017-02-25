@@ -27,6 +27,12 @@ return [
             'quantity' => 'Quantity',
             'sku' => 'Stock keeping unit',
         ],
+        'list' => [
+            'default_name' => 'Default inventory',
+            'delete_title' => 'Delete inventory',
+            'restore_title' => 'Restore inventory',
+            'restore_warning' => 'Deleted inventories cannot be edited, it must first be restored.',
+        ],
         'singular' => 'Inventory',
         'plural' => 'Inventories',
     ],

@@ -1,13 +1,15 @@
 <?php namespace Bedard\Shop\Models;
 
 use Model;
+use October\Rain\Exception\ValidationException;
 
 /**
  * Inventory Model.
  */
 class Inventory extends Model
 {
-    use \October\Rain\Database\Traits\Purgeable,
+    use \October\Rain\Database\Traits\Nullable,
+        \October\Rain\Database\Traits\Purgeable,
         \October\Rain\Database\Traits\Validation;
 
     /**
@@ -30,6 +32,13 @@ class Inventory extends Model
     ];
 
     /**
+     * @var array Nullable attributes.
+     */
+    protected $nullable = [
+        'sku',
+    ];
+
+    /**
      * @var array Purgeable fields
      */
     public $purgeable = [
@@ -39,6 +48,12 @@ class Inventory extends Model
     /**
      * @var array Relations
      */
+    public $belongsTo = [
+        'product' => [
+            'Bedard\Shop\Models\Product',
+        ],
+    ];
+
     public $belongsToMany = [
         'values' => [
             'Bedard\Shop\Models\OptionValue',

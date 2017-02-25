@@ -85,7 +85,8 @@
 
                 axios.post(this.endpoints.createInventory, { inventory: this.inventory })
                     .then(response => {
-                        console.log (response);
+                        this.hide();
+                        this.$emit('create', response.data);
                     })
                     .catch(this.onRequestFailed)
                     .then(this.onRequestComplete);
@@ -141,6 +142,17 @@
 
                 this.$refs.modal.show();
                 this.$refs.optionSelector.refresh();
+            },
+            update() {
+                this.isLoading = true;
+
+                axios.post(this.endpoints.validateInventory, { inventory: this.inventory })
+                    .then(response => {
+                        this.hide();
+                        this.$emit('update', clone(this.option));
+                    })
+                    .catch(this.onRequestFailed)
+                    .then(this.onRequestComplete);
             },
         },
         props: [

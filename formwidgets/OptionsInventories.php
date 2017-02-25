@@ -28,7 +28,7 @@ class OptionsInventories extends FormWidgetBase
      */
     public function prepareVars()
     {
-        $this->model->load('options.values');
+        $this->model->load('inventories.values', 'options.values');
 
         $this->vars['name'] = $this->formField->getName();
 

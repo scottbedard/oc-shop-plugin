@@ -22,7 +22,7 @@ class Inventories extends BackendController
             $data = input('inventory');
             unset($data['id']);
             $inventory = Inventory::create($data);
-            // $model->load('values');
+            $inventory->load('values');
 
             // return the new option
             return Response::make($inventory, 200);

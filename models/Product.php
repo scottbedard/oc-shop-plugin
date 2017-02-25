@@ -72,6 +72,10 @@ class Product extends Model
     ];
 
     public $hasMany = [
+        'inventories' => [
+            'Bedard\Shop\Models\Inventory',
+            'delete' => true,
+        ],
         'options' => [
             'Bedard\Shop\Models\Option',
             'delete' => true,
@@ -99,6 +103,16 @@ class Product extends Model
     }
 
     /**
+     * After validate.
+     *
+     * @return void
+     */
+    public function afterValidate()
+    {
+        $this->validateOptionsAndInventories();
+    }
+
+    /**
      * Before save.
      *
      * @return void
@@ -106,7 +120,28 @@ class Product extends Model
     public function beforeSave()
     {
         $this->setPlainDescription();
-        $this->validateOptionsAndInventories();
+    }
+
+    /**
+     * Save related inventories.
+     *
+     * @param  array $inventories
+     * @return void
+     */
+    protected function saveInventories($inventories)
+    {
+        foreach ($inventories as $inventory) {
+            $model = Inventory::findOrFail($inventory['id']);
+
+            if (array_key_exists('_deleted', $inventory) && $inventory['_deleted']) {
+                $model->delete();
+            } else {
+                $model->fill($inventory);
+                $model->product_id = $this->id;
+
+                $model->save();
+            }
+        }
     }
 
     /**
@@ -145,7 +180,7 @@ class Product extends Model
 
         $data = json_decode($data, true);
         $this->saveOptions($data['options']);
-        // $this->saveInventories($data['inventories']);
+        $this->saveInventories($data['inventories']);
     }
 
     /**
@@ -184,6 +219,17 @@ class Product extends Model
     }
 
     /**
+     * Validate inventories.
+     *
+     * @param  array $inventories
+     * @return void
+     */
+    protected function validateInventories($inventories)
+    {
+        // @todo
+    }
+
+    /**
      * Validate a product's options.
      *
      * @param  array $options
@@ -213,6 +259,6 @@ class Product extends Model
 
         $data = json_decode($data, true);
         $this->validateOptions($data['options']);
-        // $this->validateInventories($data['inventories']);
+        $this->validateInventories($data['inventories']);
     }
 }

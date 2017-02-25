@@ -1,10 +1,11 @@
 <?php namespace Bedard\Shop\Tests\Unit\Models;
 
-use PluginTestCase;
-use Bedard\Shop\Models\Option;
-use Bedard\Shop\Models\Product;
 use Bedard\Shop\Classes\Factory;
 use Bedard\Shop\Models\Category;
+use Bedard\Shop\Models\Inventory;
+use Bedard\Shop\Models\Option;
+use Bedard\Shop\Models\Product;
+use PluginTestCase;
 
 class ProductTest extends PluginTestCase
 {
@@ -81,5 +82,22 @@ class ProductTest extends PluginTestCase
 
         $product->save();
         $this->assertEquals(0, $product->options()->count());
+    }
+
+    public function test_saving_inventories()
+    {
+        $inventory = Factory::create(new Inventory);
+        $inventoryData = $inventory->toArray();
+        $inventoryData['value_ids'] = [];
+
+        $product = Factory::create(new Product, [
+            'options_inventories' => json_encode([
+                'inventories' => [$inventoryData],
+                'options' => [],
+            ]),
+        ]);
+
+        $this->assertEquals(1, $product->inventories()->count());
+        $this->assertEquals($inventory->id, $product->inventories()->first()->id);
     }
 }
