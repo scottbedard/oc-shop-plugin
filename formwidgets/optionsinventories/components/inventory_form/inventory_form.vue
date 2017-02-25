@@ -17,6 +17,7 @@
         <!-- Body -->
         <v-modal-body>
             <v-option-selector
+                ref="optionSelector"
                 :options="options"
             />
             <v-form-input
@@ -50,6 +51,7 @@
         methods: {
             show() {
                 this.$refs.modal.show();
+                this.$refs.optionSelector.refresh();
             },
         },
         props: [
