@@ -138,7 +138,12 @@ class Option extends Model
         $names = [];
         $values = $this->getOriginalPurgeValue('value_data') ?: [];
 
-        foreach ($values as $value) {
+        // don't validate deleted values
+        $nonDeletedValues = array_filter($values, function($value) {
+            return ! array_key_exists('_deleted', $value) || ! $value['_deleted'];
+        });
+
+        foreach ($nonDeletedValues as $value) {
             // validate each value individually
             $model = new OptionValue($value);
             $model->validate();

@@ -68,4 +68,19 @@ class OptionTest extends PluginTestCase
         $this->assertEquals(0, $option->values()->where('name', 'a')->count());
         $this->assertEquals(1, $option->values()->where('name', 'b')->count());
     }
+
+    public function test_options_cant_be_created_with_only_deleted_values()
+    {
+        try {
+            $option = Factory::create(new Option, [
+                'value_data' => [
+                    ['_deleted' => true, 'id' => null, 'name' => 'a', 'sort_order' => 0],
+                ],
+            ]);
+
+            $this->fail('Expected an exception to be thrown, but none was');
+        } catch (Exception $e) {
+            $this->assertEquals('bedard.shop::lang.options.form.values_required', $e->getMessage());
+        }
+    }
 }
