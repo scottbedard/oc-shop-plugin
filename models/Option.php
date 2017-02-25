@@ -139,7 +139,7 @@ class Option extends Model
         $values = $this->getOriginalPurgeValue('value_data') ?: [];
 
         // don't validate deleted values
-        $nonDeletedValues = array_filter($values, function($value) {
+        $nonDeletedValues = array_filter($values, function ($value) {
             return ! array_key_exists('_deleted', $value) || ! $value['_deleted'];
         });
 
