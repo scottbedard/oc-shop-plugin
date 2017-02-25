@@ -35,6 +35,7 @@
 
                 // emit an input event so our component works with v-model
                 $(this.$refs.select).on('select2:select', e => {
+                    // @todo: fix a bug where this event is fire twice
                     this.$emit('input', e.target.value);
                 });
             },

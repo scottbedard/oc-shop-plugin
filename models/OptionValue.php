@@ -46,6 +46,18 @@ class OptionValue extends Model
     ];
 
     /**
+     * @var array Relations
+     */
+    public $belongsToMany = [
+        'inventories' => [
+            'Bedard\Shop\Models\OptionValue',
+            'table' => 'bedard_shop_inventory_option_value',
+            'key' => 'option_value_id',
+            'otherKey' => 'inventory_id',
+        ],
+    ];
+
+    /**
      * @var array Validation
      */
     public $rules = [

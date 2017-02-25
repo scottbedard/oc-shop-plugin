@@ -15,7 +15,10 @@
     <div class="v-option-selector">
         <div v-for="option in options" class="v-option">
             <label>{{ option.name }}</label>
-            <v-select ref="select" v-model="foo" :placeholder="option.placeholder">
+            <v-select
+                ref="select"
+                :placeholder="option.placeholder"
+                @input="onInput">
                 <option
                     v-for="value in option.values"
                     :class="{ 'is-deleted': value._deleted }"
@@ -29,12 +32,10 @@
 
 <script>
     export default {
-        data() {
-            return {
-                foo: '',
-            };
-        },
         methods: {
+            onInput(value) {
+                this.$emit('change', parseInt(value));
+            },
             refresh() {
                 // give our modal some time to enter, than refresh
                 // the select boxes so they can match the width

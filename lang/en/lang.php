@@ -24,7 +24,7 @@ return [
     //
     'inventories' => [
         'form' => [
-            'price' => 'Price',
+            'quantity' => 'Quantity',
             'sku' => 'Stock keeping unit',
         ],
         'singular' => 'Inventory',

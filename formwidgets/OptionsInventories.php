@@ -33,7 +33,9 @@ class OptionsInventories extends FormWidgetBase
         $this->vars['name'] = $this->formField->getName();
 
         $this->vars['endpoints'] = [
+            'createInventory' => Backend::url('bedard/shop/inventories/create'),
             'createOption' => Backend::url('bedard/shop/options/create'),
+            'validateInventory' => Backend::url('bedard/shop/inventories/validate'),
             'validateOption' => Backend::url('bedard/shop/options/validate'),
         ];
 

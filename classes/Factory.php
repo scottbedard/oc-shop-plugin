@@ -34,8 +34,9 @@ class Factory
 
         switch (get_class($model)) {
             case 'Bedard\Shop\Models\Category': $seedData = self::getCategoryData($data); break;
-            case 'Bedard\Shop\Models\Option':   $seedData = self::getOptionData($data); break;
-            case 'Bedard\Shop\Models\Product':  $seedData = self::getProductData($data); break;
+            case 'Bedard\Shop\Models\Inventory': $seedData = self::getInventoryData($data); break;
+            case 'Bedard\Shop\Models\Option': $seedData = self::getOptionData($data); break;
+            case 'Bedard\Shop\Models\Product': $seedData = self::getProductData($data); break;
         }
 
         $model->fill(array_merge($seedData, $data));
@@ -60,6 +61,16 @@ class Factory
         return [
             'name' => $faker->words(2, true),
             'slug' => $faker->slug,
+        ];
+    }
+
+    public static function getInventoryData(array $data = [])
+    {
+        $faker = Faker\Factory::create();
+
+        return [
+            'sku' => null,
+            'quantity' => rand(0, 10),
         ];
     }
 

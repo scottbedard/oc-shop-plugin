@@ -27,6 +27,7 @@
             <label>{{ 'bedard.shop.inventories.plural' | trans(lang) }}</label>
             <v-inventory-form
                 ref="inventoryForm"
+                :endpoints="endpoints"
                 :lang="lang"
                 :options="options"
             />

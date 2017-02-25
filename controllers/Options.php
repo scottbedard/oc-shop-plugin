@@ -45,12 +45,12 @@ class Options extends BackendController
     public function validate()
     {
         try {
-            $option = input('option');
-            $model = Option::with('values')->findOrNew($option['id']);
-            $model->fill($option);
-            $model->validate();
+            $data = input('option');
+            $option = Option::with('values')->findOrNew($data['id']);
+            $option->fill($data);
+            $option->validate();
 
-            return Response::make($model, 200);
+            return Response::make($option, 200);
         } catch (Exception $e) {
             return Response::make($e->getMessage(), 500);
         }
