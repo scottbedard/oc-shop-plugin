@@ -83,6 +83,11 @@
             onFormSaved() {
                 // remove deleted options that no longer exist
                 this.options = this.options.filter(option => ! option._deleted);
+
+                // remove values that no longer exist
+                this.options.forEach(option => {
+                    option.values = option.values.filter(value => ! value._deleted);
+                });
             },
             onOptionClicked(option) {
                 this.$refs.optionForm.show(option);
