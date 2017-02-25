@@ -69,7 +69,14 @@ class ProductTest extends PluginTestCase
 
         $product->options_inventories = json_encode([
             'inventories' => [],
-            'options' => [['_deleted' => true, 'id' => $option->id, 'name' => $option->name]],
+            'options' => [
+                [
+                    '_deleted' => true,
+                    'id' => $option->id,
+                    'name' => $option->name,
+                    'value_data' => [['id' => null, 'name' => 'a']],
+                ],
+            ],
         ]);
 
         $product->save();
