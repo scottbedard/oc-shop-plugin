@@ -30,8 +30,11 @@ return [
         'list' => [
             'default_name' => 'Default inventory',
             'delete_title' => 'Delete inventory',
+            'multiple_in_stock' => ':quantity in stock',
+            'out_of_stock' => 'Out of stock',
             'restore_title' => 'Restore inventory',
             'restore_warning' => 'Deleted inventories cannot be edited, it must first be restored.',
+            'single_in_stock' => ':quantity in stock',
         ],
         'singular' => 'Inventory',
         'plural' => 'Inventories',

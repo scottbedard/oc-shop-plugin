@@ -12,6 +12,7 @@
             <i class="icon-cube" slot="icon"></i>
             <div slot="content">
                 <div>{{ getValues(inventory) }}</div>
+                <small>{{ getQuantity(inventory) }}</small>
             </div>
             <div slot="actions">
                 <i
@@ -40,6 +41,20 @@
                 return inventory._deleted
                     ? trans('bedard.shop.inventories.list.restore_title', this.lang)
                     : trans('bedard.shop.inventories.list.delete_title', this.lang);
+            },
+            getQuantity(inventory) {
+                let translationData = { quantity: inventory.quantity };
+
+                // multiple in stock
+                if (inventory.quantity > 1) {
+                    console.log (translationData);
+                    return trans('bedard.shop.inventories.list.multiple_in_stock', this.lang, translationData);
+                }
+
+                // one or none in stock
+                return inventory.quantity
+                    ? trans('bedard.shop.inventories.list.single_in_stock', this.lang, translationData)
+                    : trans('bedard.shop.inventories.list.out_of_stock', this.lang, translationData);
             },
             getValues(inventory) {
                 if (! inventory.values.length) {
