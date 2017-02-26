@@ -138,7 +138,6 @@ class Product extends Model
             } else {
                 $model->fill($inventory);
                 $model->product_id = $this->id;
-
                 $model->save();
             }
         }

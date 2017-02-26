@@ -84,7 +84,7 @@ class ProductTest extends PluginTestCase
         $this->assertEquals(0, $product->options()->count());
     }
 
-    public function test_saving_inventories()
+    public function test_saving_default_inventory()
     {
         $inventory = Factory::create(new Inventory);
         $inventoryData = $inventory->toArray();

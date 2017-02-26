@@ -1,5 +1,6 @@
 <template>
     <div class="bedard-shop options-inventories">
+        <!-- <pre>{{ JSON.parse(formData) }}</pre> -->
         <!-- Options -->
         <div class="form-group span-left">
             <label>{{ 'bedard.shop.options.plural' | trans(lang) }}</label>
@@ -77,7 +78,11 @@
             formData() {
                 return JSON.stringify({
                     inventories: this.inventories.map(inventory => {
-                        return clone(inventory);
+                        inventory = clone(inventory);
+                        inventory.value_ids = inventory.values.map(value => value.id);
+                        delete inventory.values;
+
+                        return inventory;
                     }),
                     options: this.options.map(option => {
                         return renameKey(clone(option), 'values', 'value_data');

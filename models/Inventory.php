@@ -71,6 +71,16 @@ class Inventory extends Model
     ];
 
     /**
+     * After save.
+     *
+     * @return void
+     */
+    public function afterSave()
+    {
+        $this->saveValues();
+    }
+
+    /**
      * Before validate.
      *
      * @return void
@@ -90,5 +100,17 @@ class Inventory extends Model
         if ($this->id) {
             $this->rules['sku'] = 'unique:bedard_shop_inventories,sku,'.$this->id;
         }
+    }
+
+    /**
+     * Save related values.
+     *
+     * @return void
+     */
+    protected function saveValues()
+    {
+        $values = $this->getOriginalPurgeValue('value_ids') ?: [];
+
+        $this->values()->sync($values);
     }
 }

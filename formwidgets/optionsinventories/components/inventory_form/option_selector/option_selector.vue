@@ -22,6 +22,7 @@
                 <option
                     v-for="value in option.values"
                     :class="{ 'is-deleted': value._deleted }"
+                    :selected="inventory.value_ids.indexOf(value.id) !== -1"
                     :value="value.id">
                     {{ value.name }}
                 </option>
@@ -45,6 +46,7 @@
             },
         },
         props: [
+            'inventory',
             'options',
         ],
     };

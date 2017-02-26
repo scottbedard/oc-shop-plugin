@@ -37,7 +37,7 @@ class OptionTest extends PluginTestCase
         }
     }
 
-    public function test_saving_related_values()
+    public function test_saving_related_option_values()
     {
         $option = Factory::create(new Option, [
             'value_data' => [

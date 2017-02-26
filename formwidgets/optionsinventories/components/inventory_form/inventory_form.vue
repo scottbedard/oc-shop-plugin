@@ -22,9 +22,9 @@
 
         <!-- Body -->
         <v-modal-body>
-            <pre>{{ inventory }}</pre>
             <v-option-selector
                 ref="optionSelector"
+                :inventory="inventory"
                 :options="options"
                 @change="onValueChanged"
             />
@@ -83,13 +83,19 @@
             create() {
                 this.isLoading = true;
 
-                axios.post(this.endpoints.createInventory, { inventory: this.inventory })
+                axios.post(this.endpoints.createInventory, { inventory: this.getFormData() })
                     .then(response => {
                         this.hide();
                         this.$emit('create', response.data);
                     })
                     .catch(this.onRequestFailed)
                     .then(this.onRequestComplete);
+            },
+            getFormData() {
+                let data = clone(this.inventory);
+                delete data.values;
+
+                return data;
             },
             hide() {
                 this.$refs.modal.hide();
@@ -146,7 +152,7 @@
             update() {
                 this.isLoading = true;
 
-                axios.post(this.endpoints.validateInventory, { inventory: this.inventory })
+                axios.post(this.endpoints.validateInventory, { inventory: this.getFormData() })
                     .then(response => {
                         this.hide();
                         this.$emit('update', clone(this.option));
