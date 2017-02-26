@@ -1,8 +1,8 @@
 <?php namespace Bedard\Shop\Classes;
 
 use Faker;
-use Model;
 use Faker\Provider\Lorem;
+use Model;
 
 class Factory
 {

@@ -1,9 +1,9 @@
 <?php namespace Bedard\Shop\Updates;
 
-use Bedard\Shop\Models\Option;
-use Bedard\Shop\Models\Product;
 use Bedard\Shop\Classes\Factory;
 use Bedard\Shop\Models\Category;
+use Bedard\Shop\Models\Option;
+use Bedard\Shop\Models\Product;
 use October\Rain\Database\Updates\Seeder;
 
 class Seeds extends Seeder

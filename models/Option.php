@@ -1,8 +1,8 @@
 <?php namespace Bedard\Shop\Models;
 
+use Exception;
 use Lang;
 use Model;
-use Exception;
 
 /**
  * Option Model.

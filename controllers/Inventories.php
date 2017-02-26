@@ -1,9 +1,9 @@
 <?php namespace Bedard\Shop\Controllers;
 
-use Response;
-use Exception;
-use Bedard\Shop\Models\Inventory;
 use Bedard\Shop\Classes\BackendController;
+use Bedard\Shop\Models\Inventory;
+use Exception;
+use Response;
 
 /**
  * Categories Back-end Controller.

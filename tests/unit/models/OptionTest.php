@@ -1,9 +1,9 @@
 <?php namespace Bedard\Shop\Tests\Unit\Models;
 
+use Bedard\Shop\Classes\Factory;
+use Bedard\Shop\Models\Option;
 use Exception;
 use PluginTestCase;
-use Bedard\Shop\Models\Option;
-use Bedard\Shop\Classes\Factory;
 
 class OptionTest extends PluginTestCase
 {
