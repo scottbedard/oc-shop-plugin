@@ -27,6 +27,7 @@
                 :inventory="inventory"
                 :options="options"
                 @change="onValueChanged"
+                @clear="onValueCleared"
             />
             <v-form-input ref="sku" v-model="inventory.sku">
                 {{ 'bedard.shop.inventories.form.sku' | trans(lang) }}
@@ -55,9 +56,10 @@
 </template>
 
 <script>
+    import { clone, renameKey } from 'assets/js/utilities/helpers';
+    import { inventoryCollsionCheck } from '../helpers';
     import axios from 'axios';
     import trans from 'assets/js/filters/trans/trans';
-    import { clone, renameKey } from 'assets/js/utilities/helpers';
 
     export default {
         data() {
@@ -119,11 +121,6 @@
 
                 return values;
             },
-            getValueSignature(inventory) {
-                return typeof inventory.value_ids !== 'undefined'
-                    ? inventory.value_ids.sort().join('.')
-                    : inventory.values.map(value => value.id).sort().join('.');
-            },
             hide() {
                 this.$refs.modal.hide();
             },
@@ -151,6 +148,17 @@
 
                 // remove the sibling value
                 let option = this.options.find(option => option.values.find(value => value.id === id));
+                this.removeOptionValue(option);
+
+                // add our new id to the array
+                this.inventory.value_ids.push(id);
+            },
+            onValueCleared(option) {
+                this.removeOptionValue(option);
+            },
+            removeOptionValue(option) {
+                let valueIndex = this.inventory.values.findIndex(value => value.option_id === option.id);
+                this.inventory.values.splice(valueIndex, 1);
 
                 option.values.map(value => value.id).forEach(siblingId => {
                     let siblingIndex = this.inventory.value_ids.indexOf(siblingId);
@@ -159,9 +167,6 @@
                         this.inventory.value_ids.splice(siblingIndex, 1);
                     }
                 });
-
-                // add our new id to the array
-                this.inventory.value_ids.push(id);
             },
             show(inventory = {}) {
                 inventory = clone(inventory);
@@ -196,16 +201,7 @@
                     .then(this.onRequestComplete);
             },
             valuesAreNotUnique() {
-                let valueSignature = this.getValueSignature(this.inventory);
-
-                let otherInventories = this.inventories.filter(inventory => {
-                    return inventory.id !== this.inventory.id
-                        && ! inventory._deleted;
-                });
-
-                let isCollision = otherInventories.find(inventory => {
-                    return this.getValueSignature(inventory) === valueSignature;
-                });
+                let isCollision = inventoryCollsionCheck(this.inventory, this.inventories);
 
                 if (isCollision) {
                     let text = this.inventory.value_ids.length

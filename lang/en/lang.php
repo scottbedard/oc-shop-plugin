@@ -34,6 +34,8 @@ return [
             'delete_title' => 'Delete inventory',
             'multiple_in_stock' => ':quantity in stock',
             'out_of_stock' => 'Out of stock',
+            'restore_collision_default' => 'This inventory cannot be restored because a default inventory already exists.',
+            'restore_collision_values' => 'This inventory cannot be restored because an inventory with those options already exists.',
             'restore_title' => 'Restore inventory',
             'restore_warning' => 'Deleted inventories cannot be edited, it must first be restored.',
             'single_in_stock' => ':quantity in stock',

@@ -1,5 +1,5 @@
 <style lang="scss" scoped>@import 'core';
-    .v-small {
+    small {
         font-size: 0.75em;
     }
 
@@ -24,7 +24,7 @@
             <i class="icon-plus" slot="icon"></i>
             <div slot="content">
                 <div>{{ option.name }}</div>
-                <div class="v-small">{{ getValues(option) }}</div>
+                <small>{{ getValues(option) }}</small>
             </div>
             <div slot="actions">
                 <i class="icon-bars" :title="reorderTitle"></i>

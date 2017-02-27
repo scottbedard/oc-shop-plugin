@@ -1,15 +1,40 @@
 <style lang="scss" scoped>@import 'core';
+    .v-select {
+        position: relative;
+    }
+
     select {
         width: 100%;
+    }
+
+    .v-select-clear {
+        color: #666;
+        font-size: 16px;
+        position: absolute;
+        right: 32px;
+        text-decoration: none;
+        top: 50%;
+        transform: translateY(-50%);
+
+        &:hover {
+            color: $red;
+        }
     }
 </style>
 
 <template>
-    <div>
-        <select class="bedard-shop-select" ref="select">
+    <div class="v-select">
+        <select ref="select">
             <option v-if="placeholder.length"></option>
             <slot></slot>
         </select>
+        <a
+            class="v-select-clear"
+            href="#"
+            v-if="clearable"
+            @click.prevent="onClearClicked">
+            &times;
+        </a>
     </div>
 </template>
 
@@ -33,11 +58,13 @@
                     },
                 });
 
-                // emit an input event so our component works with v-model
-                $(this.$refs.select).on('select2:select', e => {
-                    // @todo: fix a bug where this event is fire twice
-                    this.$emit('input', e.target.value);
-                });
+                // @todo: fix a bug where these events are fired twice
+                // emit input event so our component works with v-model
+                $(this.$refs.select).on('select2:select', e => this.$emit('input', e.target.value));
+            },
+            onClearClicked() {
+                this.$emit('clear');
+                $(this.$refs.select).val('').trigger('change');
             },
             refresh() {
                 this.unbind();
@@ -52,6 +79,7 @@
             },
         },
         props: {
+            clearable: { default: false, type: Boolean },
             placeholder: { default: '' },
         },
     };

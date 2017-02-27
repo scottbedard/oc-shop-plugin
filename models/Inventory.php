@@ -17,6 +17,13 @@ class Inventory extends Model
     public $table = 'bedard_shop_inventories';
 
     /**
+     * @var array Attribute casting
+     */
+    protected $casts = [
+        'quantity' => 'integer',
+    ];
+
+    /**
      * @var array Guarded fields
      */
     protected $guarded = ['*'];

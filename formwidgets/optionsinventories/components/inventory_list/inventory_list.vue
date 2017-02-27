@@ -1,5 +1,7 @@
 <style lang="scss" scoped>@import 'core';
-
+    small {
+        font-size: 0.75em;
+    }
 </style>
 
 <template>
@@ -29,6 +31,7 @@
 </template>
 
 <script>
+    import { inventoryCollsionCheck } from '../helpers';
     import trans from 'assets/js/filters/trans/trans';
 
     export default {
@@ -65,14 +68,25 @@
                     .join(', ');
             },
             onDeleteClicked(inventory) {
+                // check if the inventory can be restored, and if not throw a warning
+                if (inventory._deleted && inventoryCollsionCheck(inventory, this.inventories)) {
+                    let text = inventory.values.length
+                        ? trans('bedard.shop.inventories.list.restore_collision_values', this.lang)
+                        : trans('bedard.shop.inventories.list.restore_collision_default', this.lang);
+
+                    $.oc.flashMsg({ text, class: 'warning' });
+                    return;
+                }
+
+                // otherwise emit our delete event
                 this.$emit('delete', inventory);
             },
             onInventoryClicked(inventory) {
-                if (! inventory._deleted) {
-                    this.$emit('click', inventory);
-                } else {
+                if (inventory._deleted) {
                     let text = trans('bedard.shop.inventories.list.restore_warning', this.lang);
                     $.oc.flashMsg({ text, class: 'warning' });
+                } else {
+                    this.$emit('click', inventory);
                 }
             },
         },

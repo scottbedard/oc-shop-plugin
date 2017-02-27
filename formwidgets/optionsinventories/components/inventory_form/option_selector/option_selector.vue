@@ -17,12 +17,14 @@
             <label>{{ option.name }}</label>
             <v-select
                 ref="select"
+                :clearable="isClearable(option)"
                 :placeholder="option.placeholder"
-                @input="onInput">
+                @input="onInput"
+                @clear="onClear(option)">
                 <option
                     v-for="value in option.values"
                     :class="{ 'is-deleted': value._deleted }"
-                    :selected="inventory.value_ids.indexOf(value.id) !== -1"
+                    :selected="inventory.value_ids.indexOf(value.id) > -1"
                     :value="value.id">
                     {{ value.name }}
                 </option>
@@ -34,15 +36,21 @@
 <script>
     export default {
         methods: {
+            isClearable(option) {
+                return Boolean(option.values.find(value => {
+                    return this.inventory.value_ids.indexOf(value.id) > -1;
+                }));
+            },
+            onClear(option) {
+                this.$emit('clear', option);
+            },
             onInput(value) {
                 this.$emit('change', parseInt(value));
             },
             refresh() {
                 // give our modal some time to enter, than refresh
                 // the select boxes so they can match the width
-                setTimeout(() => {
-                    this.$refs.select.forEach(select => select.refresh());
-                }, 300);
+                setTimeout(() => this.$refs.select.forEach(select => select.refresh()), 300);
             },
         },
         props: [
