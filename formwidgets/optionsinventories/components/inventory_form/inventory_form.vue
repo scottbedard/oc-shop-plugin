@@ -95,6 +95,8 @@
                 let data = clone(this.inventory);
                 delete data.values;
 
+                data.quantity = Number(data.quantity);
+
                 return data;
             },
             hide() {
@@ -154,8 +156,11 @@
 
                 axios.post(this.endpoints.validateInventory, { inventory: this.getFormData() })
                     .then(response => {
+                        let inventory = clone(this.inventory);
+                        inventory.quantity = Number(inventory.quantity);
+
                         this.hide();
-                        this.$emit('update', clone(this.option));
+                        this.$emit('update', inventory);
                     })
                     .catch(this.onRequestFailed)
                     .then(this.onRequestComplete);

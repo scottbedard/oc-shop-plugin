@@ -1,6 +1,5 @@
 <template>
     <div class="bedard-shop options-inventories">
-        <!-- <pre>{{ JSON.parse(formData) }}</pre> -->
         <!-- Options -->
         <div class="form-group span-left">
             <label>{{ 'bedard.shop.options.plural' | trans(lang) }}</label>
@@ -115,8 +114,9 @@
             onInventoryDeleted(inventory) {
                 this.$set(inventory, '_deleted', ! inventory._deleted);
             },
-            onInventoryUpdated(inventory) {
-                // @todo
+            onInventoryUpdated(newInventory) {
+                let index = this.inventories.findIndex(inventory => inventory.id === newInventory.id);
+                this.inventories.splice(index, 1, newInventory);
             },
             onOptionClicked(option) {
                 this.$refs.optionForm.show(option);

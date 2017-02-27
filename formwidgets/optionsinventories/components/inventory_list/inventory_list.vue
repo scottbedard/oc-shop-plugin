@@ -47,7 +47,6 @@
 
                 // multiple in stock
                 if (inventory.quantity > 1) {
-                    console.log (translationData);
                     return trans('bedard.shop.inventories.list.multiple_in_stock', this.lang, translationData);
                 }
 
