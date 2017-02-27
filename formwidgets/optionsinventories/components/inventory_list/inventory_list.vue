@@ -60,7 +60,9 @@
                     return trans('bedard.shop.inventories.list.default_name', this.lang);
                 }
 
-                return '@todo';
+                return inventory.values
+                    .map(value => value.name)
+                    .join(', ');
             },
             onDeleteClicked(inventory) {
                 this.$emit('delete', inventory);

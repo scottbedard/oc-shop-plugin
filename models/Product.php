@@ -136,6 +136,7 @@ class Product extends Model
             if (array_key_exists('_deleted', $inventory) && $inventory['_deleted']) {
                 $model->delete();
             } else {
+                // print_r ($inventory);
                 $model->fill($inventory);
                 $model->product_id = $this->id;
                 $model->save();

@@ -99,6 +99,21 @@
 
                 return data;
             },
+            getValues(inventory) {
+                let values = [];
+                inventory.value_ids.map(id => {
+                    this.options.find(option => {
+                        option.values.find(value => {
+                            if (value.id === id) {
+                                values.push(value);
+                                return true;
+                            }
+                        });
+                    });
+                });
+
+                return values;
+            },
             hide() {
                 this.$refs.modal.hide();
             },
@@ -158,6 +173,7 @@
                     .then(response => {
                         let inventory = clone(this.inventory);
                         inventory.quantity = Number(inventory.quantity);
+                        inventory.values = this.getValues(inventory);
 
                         this.hide();
                         this.$emit('update', inventory);
