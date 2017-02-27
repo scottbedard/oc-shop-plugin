@@ -16,7 +16,7 @@ module.exports = merge(webpackConfig, {
         // set our node environment to "development"
         new webpack.DefinePlugin({ 'process.env': { NODE_ENV: '"development"' }}),
 
-        // @todo: turn on hot reloading
+        // enable hot reloading
         new webpack.HotModuleReplacementPlugin(),
 
         // disable default errors and replace them with friendly errors
