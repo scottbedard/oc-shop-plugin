@@ -35,6 +35,7 @@
             <v-inventory-form
                 ref="inventoryForm"
                 :endpoints="endpoints"
+                :inventories="inventories"
                 :lang="lang"
                 :options="options"
                 @create="onInventoryCreated"

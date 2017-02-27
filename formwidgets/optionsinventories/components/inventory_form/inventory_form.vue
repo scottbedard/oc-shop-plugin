@@ -56,6 +56,7 @@
 
 <script>
     import axios from 'axios';
+    import trans from 'assets/js/filters/trans/trans';
     import { clone, renameKey } from 'assets/js/utilities/helpers';
 
     export default {
@@ -81,6 +82,10 @@
         },
         methods: {
             create() {
+                if (this.valuesAreNotUnique()) {
+                    return;
+                }
+
                 this.isLoading = true;
 
                 axios.post(this.endpoints.createInventory, { inventory: this.getFormData() })
@@ -113,6 +118,11 @@
                 });
 
                 return values;
+            },
+            getValueSignature(inventory) {
+                return typeof inventory.value_ids !== 'undefined'
+                    ? inventory.value_ids.sort().join('.')
+                    : inventory.values.map(value => value.id).sort().join('.');
             },
             hide() {
                 this.$refs.modal.hide();
@@ -167,6 +177,10 @@
                 this.$refs.optionSelector.refresh();
             },
             update() {
+                if (this.valuesAreNotUnique()) {
+                    return;
+                }
+
                 this.isLoading = true;
 
                 axios.post(this.endpoints.validateInventory, { inventory: this.getFormData() })
@@ -181,9 +195,32 @@
                     .catch(this.onRequestFailed)
                     .then(this.onRequestComplete);
             },
+            valuesAreNotUnique() {
+                let valueSignature = this.getValueSignature(this.inventory);
+
+                let otherInventories = this.inventories.filter(inventory => {
+                    return inventory.id !== this.inventory.id
+                        && ! inventory._deleted;
+                });
+
+                let isCollision = otherInventories.find(inventory => {
+                    return this.getValueSignature(inventory) === valueSignature;
+                });
+
+                if (isCollision) {
+                    let text = this.inventory.value_ids.length
+                        ? trans('bedard.shop.inventories.form.collision_values', this.lang)
+                        : trans('bedard.shop.inventories.form.collision_default', this.lang);
+
+                    $.oc.flashMsg({ text, class: 'error' });
+                }
+
+                return isCollision;
+            },
         },
         props: [
             'endpoints',
+            'inventories',
             'lang',
             'options',
         ],

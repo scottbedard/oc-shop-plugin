@@ -1,4 +1,5 @@
 import Vue from 'vue';
+Vue.config.productionTip = false;
 
 // register global components
 import components from './components/global';
