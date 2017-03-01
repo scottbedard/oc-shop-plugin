@@ -24,10 +24,11 @@
 
     .v-icon {
         align-items: center;
-        display: flex;
+        display: none;
         height: 100%;
         justify-content: center;
         width: $size;
+        @include bp(desktop) { display: inline-flex }
     }
 
     .v-content {

@@ -1,0 +1,20 @@
+// Breakpoint mixin for predefined or custom values
+//
+// Example usage...
+// .foo {
+//     color: red;
+//     @include bp(desktop) { color: blue }
+//     @include bp('min-width: 1600px') { color: orange }
+// }
+
+@mixin bp($bp) {
+    @if map-get($breakpoints, $bp) {
+        @media screen and (map-get($breakpoints, $bp)) {
+            @content;
+        }
+    } @else {
+        @media screen and ($bp) {
+            @content;
+        }
+    }
+}

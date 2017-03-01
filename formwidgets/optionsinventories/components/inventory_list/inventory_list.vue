@@ -18,10 +18,7 @@
             </div>
             <div slot="actions">
                 <i
-                    :class="{
-                        'icon-undo': inventory._deleted,
-                        'icon-trash-o': ! inventory._deleted,
-                    }"
+                    :class="[inventory._deleted ? 'icon-undo' : 'icon-trash-o']"
                     :title="getDeleteTitle(inventory)"
                     @click.prevent.stop="onDeleteClicked(inventory)">
                 </i>

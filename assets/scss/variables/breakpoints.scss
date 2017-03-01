@@ -1,0 +1,8 @@
+//
+// Breakpoints
+//
+$breakpoints: (
+    portrait: 'orientation: portrait',
+    landscape: 'orientation: landscape',
+    desktop: 'min-width: 770px',
+);

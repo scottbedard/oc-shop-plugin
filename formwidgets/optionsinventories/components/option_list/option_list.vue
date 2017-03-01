@@ -29,10 +29,7 @@
             <div slot="actions">
                 <i class="icon-bars" :title="reorderTitle"></i>
                 <i
-                    :class="{
-                        'icon-undo': option._deleted,
-                        'icon-trash-o': ! option._deleted,
-                    }"
+                    :class="[option._deleted ? 'icon-undo' : 'icon-trash-o']"
                     :title="getDeleteTitle(option)"
                     @click.prevent.stop="onDeleteClicked(option)">
                 </i>
