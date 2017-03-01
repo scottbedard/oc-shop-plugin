@@ -25,7 +25,7 @@
 <template>
     <div class="v-select">
         <select ref="select">
-            <option v-if="placeholder.length"></option>
+            <option></option>
             <slot></slot>
         </select>
         <a
