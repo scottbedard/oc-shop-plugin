@@ -10,3 +10,9 @@ columns:
     slug:
         label: bedard.shop::lang.categories.list.slug
         searchable: true
+
+    product_count:
+        label: bedard.shop::lang.products.plural
+        path: $/bedard/shop/models/category/_column_product_count.htm
+        sortable: false
+        type: partial

@@ -30,4 +30,15 @@ class Categories extends BackendController
 
         $this->addJs('/plugins/bedard/shop/assets/dist/categories.min.js');
     }
+
+    /**
+     * Extend the list query.
+     *
+     * @param  \Illuminate\Database\Query\Builder $query
+     * @return \Illuminate\Database\Query\Builder
+     */
+    public function listExtendQuery($query)
+    {
+        $query->with('products');
+    }
 }
