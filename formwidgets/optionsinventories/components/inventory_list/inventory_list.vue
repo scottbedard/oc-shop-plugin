@@ -63,7 +63,8 @@
                     return trans('bedard.shop.inventories.list.default_name', this.lang);
                 }
 
-                return inventory.values
+                return inventory.values.slice()
+                    .sort((a, b) => a.option_id - b.option_id)
                     .map(value => value.name)
                     .join(', ');
             },
