@@ -71,7 +71,8 @@
                 :disabled="value._deleted"
                 :value="value.name"
                 @input="onInput"
-                @keydown="onKeydown">
+                @keydown="onKeydown"
+                @keypress.enter.prevent="onEnter">
         </div>
         <a
             href="#"
@@ -106,6 +107,9 @@
             },
             onDeleteClicked() {
                 this.$emit('delete', this.value);
+            },
+            onEnter() {
+                this.$emit('enter');
             },
             onInput(e) {
                 this.$emit('input', e, this.value);

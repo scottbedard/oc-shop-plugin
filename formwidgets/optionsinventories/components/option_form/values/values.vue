@@ -115,7 +115,7 @@
                 this.$emit('delete', value);
             },
             onEnter(e) {
-                this.$emit('enter', e);
+                this.$emit('enter');
             },
             onInput(e, value) {
                 this.$emit('input', e, value);

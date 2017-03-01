@@ -42,7 +42,7 @@
                 :values="option.values"
                 @add="onValueAdded"
                 @delete="onValueDeleted"
-                @enter.prevent="onSave"
+                @enter="onSave"
                 @focus-placeholder="onFocusPlaceholder"
                 @input="onValueInput"
                 @remove="onValueRemoved"
