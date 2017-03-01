@@ -50,7 +50,7 @@ class OptionValue extends Model
      */
     public $belongsToMany = [
         'inventories' => [
-            'Bedard\Shop\Models\OptionValue',
+            'Bedard\Shop\Models\Inventory',
             'delete' => true,
             'key' => 'option_value_id',
             'otherKey' => 'inventory_id',

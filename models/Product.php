@@ -124,7 +124,7 @@ class Product extends Model
     }
 
     /**
-     * Left joins a subquery containing the available inventory.
+     * Joins the sum of available inventories.
      *
      * @param  \October\Rain\Database\Builder   $query
      * @return \October\Rain\Database\Builder

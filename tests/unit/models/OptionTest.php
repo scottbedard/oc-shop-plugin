@@ -1,6 +1,7 @@
 <?php namespace Bedard\Shop\Tests\Unit\Models;
 
 use Bedard\Shop\Classes\Factory;
+use Bedard\Shop\Models\Inventory;
 use Bedard\Shop\Models\Option;
 use Exception;
 use PluginTestCase;
@@ -82,5 +83,14 @@ class OptionTest extends PluginTestCase
         } catch (Exception $e) {
             $this->assertEquals('bedard.shop::lang.options.form.values_required', $e->getMessage());
         }
+    }
+
+    public function test_deleting_an_option_deletes_related_inventories()
+    {
+        $option = Factory::create(new Option, ['value_data' => [['id' => null, 'name' => 'a', 'sort_order' => 0]]]);
+        $inventory = Factory::create(new Inventory, ['value_ids' => [1]]);
+
+        $option->delete();
+        $this->assertEquals(0, Inventory::whereId($inventory->id)->count());
     }
 }
