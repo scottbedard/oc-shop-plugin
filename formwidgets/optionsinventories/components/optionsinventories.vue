@@ -135,6 +135,23 @@
             onOptionUpdated(newOption) {
                 let index = this.options.findIndex(option => option.id === newOption.id);
                 this.options.splice(index, 1, newOption);
+
+                this.syncInventoryValues();
+            },
+            syncInventoryValues() {
+                // create a flattened array of our current values
+                let currentValues = [];
+                this.options.forEach(o => o.values.forEach(v => currentValues.push(v)));
+
+                // itterate over each value in our inventories
+                this.inventories.forEach(inventory => {
+                    inventory.values.forEach((value, index) => {
+
+                        // make sure the inventory's value matches our current value
+                        let currentValue = currentValues.find(v => v.id == value.id);
+                        value.name = currentValue.name;
+                    });
+                });
             },
         },
         props: [

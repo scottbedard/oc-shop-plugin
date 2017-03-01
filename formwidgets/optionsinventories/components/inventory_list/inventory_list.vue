@@ -91,6 +91,7 @@
         props: [
             'inventories',
             'lang',
+            'options',
         ],
     };
 </script>
