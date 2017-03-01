@@ -11,7 +11,7 @@
             :class="{ 'is-deleted': Boolean(inventory._deleted) }"
             :key="inventory.id"
             @click="onInventoryClicked(inventory)">
-            <i class="icon-cube" slot="icon"></i>
+            <i :class="[getInventoryIcon(inventory)]" slot="icon"></i>
             <div slot="content">
                 <div>{{ getValues(inventory) }}</div>
                 <small>{{ getQuantity(inventory) }}</small>
@@ -41,6 +41,15 @@
                 return inventory._deleted
                     ? trans('bedard.shop.inventories.list.restore_title', this.lang)
                     : trans('bedard.shop.inventories.list.delete_title', this.lang);
+            },
+            getInventoryIcon(inventory) {
+                if (inventory.quantity <= 0) {
+                    return 'icon-exclamation-circle';
+                } else if (inventory.quantity === 1) {
+                    return 'icon-cube';
+                } else {
+                    return 'icon-cubes';
+                }
             },
             getQuantity(inventory) {
                 let translationData = { quantity: inventory.quantity };
