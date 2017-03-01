@@ -50,7 +50,9 @@
             refresh() {
                 // give our modal some time to enter, than refresh
                 // the select boxes so they can match the width
-                setTimeout(() => this.$refs.select.forEach(select => select.refresh()), 300);
+                if (this.$refs.select) {
+                    setTimeout(() => this.$refs.select.forEach(select => select.refresh()), 300);
+                }
             },
         },
         props: [

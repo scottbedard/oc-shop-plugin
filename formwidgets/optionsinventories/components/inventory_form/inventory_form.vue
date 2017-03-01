@@ -29,10 +29,17 @@
                 @change="onValueChanged"
                 @clear="onValueCleared"
             />
-            <v-form-input ref="sku" v-model="inventory.sku">
+            <v-form-input
+                ref="sku"
+                v-model="inventory.sku"
+                @keypress.enter.prevent="onSave">
                 {{ 'bedard.shop.inventories.form.sku' | trans(lang) }}
             </v-form-input>
-            <v-form-input ref="price" v-model="inventory.quantity" required>
+            <v-form-input
+                ref="price"
+                v-model="inventory.quantity"
+                required
+                @keypress.enter.prevent="onSave">
                 {{ 'bedard.shop.inventories.form.quantity' | trans(lang) }}
             </v-form-input>
         </v-modal-body>
