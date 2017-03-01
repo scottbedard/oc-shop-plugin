@@ -30,10 +30,11 @@ class Product extends Model
      * @var array Attribute casting
      */
     protected $casts = [
-        'id' => 'integer',
-        'price' => 'float',
         'base_price' => 'float',
+        'id' => 'integer',
+        'inventory_count' => 'integer',
         'is_enabled' => 'boolean',
+        'price' => 'float',
     ];
 
     /**
@@ -120,6 +121,26 @@ class Product extends Model
     public function beforeSave()
     {
         $this->setPlainDescription();
+    }
+
+    /**
+     * Left joins a subquery containing the available inventory.
+     *
+     * @param  \October\Rain\Database\Builder   $query
+     * @return \October\Rain\Database\Builder
+     */
+    public function scopeJoinInventoryCount($query)
+    {
+        $alias = 'inventories';
+        $grammar = $query->getQuery()->getGrammar();
+
+        $subquery = Inventory::addSelect('bedard_shop_inventories.product_id')
+            ->selectRaw('SUM('.$grammar->wrap('bedard_shop_inventories.quantity').') as '.$grammar->wrap('inventory_count'))
+            ->groupBy('bedard_shop_inventories.product_id');
+
+        return $query
+            ->addSelect($alias.'.inventory_count')
+            ->joinSubquery($subquery, $alias, 'bedard_shop_products.id', '=', $alias.'.product_id', 'leftJoin');
     }
 
     /**

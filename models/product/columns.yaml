@@ -14,6 +14,11 @@ columns:
     base_price:
         label: bedard.shop::lang.products.list.price
 
+    inventory_count:
+        label: bedard.shop::lang.products.list.inventory
+        path: $/bedard/shop/models/product/_column_inventory_count.htm
+        type: partial
+
     status:
         label: bedard.shop::lang.products.list.status
         type: partial

@@ -86,7 +86,11 @@ return [
     //
     'products' => [
         'list' => [
+            'in_stock_plural' => ':quantity in stock',
+            'in_stock_singular' => ':quantity in stock',
+            'inventory' => 'Inventory',
             'name' => 'Name',
+            'out_of_stock' => 'Out of stock',
             'price' => 'Price',
             'slug' => 'Slug',
             'status_disabled' => 'Disabled',

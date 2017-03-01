@@ -1,0 +1,10 @@
+<?php if ($record->inventory_count <= 0): ?>
+    <i class="list-icon icon-exclamation-circle"></i>
+    <?= e(trans('bedard.shop::lang.products.list.out_of_stock')); ?>
+<?php elseif ($record->inventory_count === 1): ?>
+    <i class="list-icon icon-cube"></i>
+    <span><?= e(trans('bedard.shop::lang.products.list.in_stock_singular', ['quantity' => $record->inventory_count])); ?></span>
+<?php else: ?>
+    <i class="list-icon icon-cubes"></i>
+    <span><?= e(trans('bedard.shop::lang.products.list.in_stock_plural', ['quantity' => $record->inventory_count])); ?></span>
+<?php endif; ?>
