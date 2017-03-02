@@ -1,14 +1,21 @@
-<style lang="scss" scoped>@import 'core';
-
+<style lang="scss">@import 'core';
+    .bedard-shop {
+        .v-options-inventories-list {
+            small {
+                font-size: 0.75em;
+            }
+        }
+    }
 </style>
 
 <template>
-    <div v-if="sortable" v-sortable="{ onEnd: onReorder }">
-        <slot></slot>
-    </div>
-
-    <div v-else>
-        <slot></slot>
+    <div class="v-options-inventories-list">
+        <div v-if="sortable" v-sortable="{ onEnd: onReorder }">
+            <slot></slot>
+        </div>
+        <div v-else>
+            <slot></slot>
+        </div>
     </div>
 </template>
 

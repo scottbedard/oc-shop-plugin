@@ -1,9 +1,3 @@
-<style lang="scss" scoped>@import 'core';
-    small {
-        font-size: 0.75em;
-    }
-</style>
-
 <template>
     <v-list>
         <v-list-item
