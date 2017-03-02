@@ -8,7 +8,9 @@
     <v-list>
         <v-list-item
             v-for="inventory in inventories"
-            :class="{ 'is-deleted': Boolean(inventory._deleted) }"
+            :class="{
+                'is-deleted': Boolean(inventory._deleted) || hasDeletedRelation(inventory),
+            }"
             :key="inventory.id"
             @click="onInventoryClicked(inventory)">
             <i :class="[getInventoryIcon(inventory)]" slot="icon"></i>
@@ -74,6 +76,24 @@
                     .map(value => value.name)
                     .join(', ');
             },
+            hasDeletedRelation(inventory) {
+                // if any of our values are being deleted, return true
+                if (inventory.values.find(value => value._deleted)) {
+                    return true;
+                }
+
+                // loop through our option ids and see if we find one being deleted
+                for (let id of inventory.values.map(value => value.option_id)) {
+                    let option = this.options.find(opt => opt.id == id);
+
+                    // if one was found, return true
+                    if (option && option._deleted) {
+                        return true;
+                    }
+                }
+
+                return false;
+            },
             onDeleteClicked(inventory) {
                 // check if the inventory can be restored, and if not throw a warning
                 if (inventory._deleted && inventoryCollsionCheck(inventory, this.inventories)) {
@@ -90,8 +110,15 @@
             },
             onInventoryClicked(inventory) {
                 if (inventory._deleted) {
-                    let text = trans('bedard.shop.inventories.list.restore_warning', this.lang);
-                    $.oc.flashMsg({ text, class: 'warning' });
+                    $.oc.flashMsg({
+                        class: 'warning',
+                        text: trans('bedard.shop.inventories.list.restore_warning', this.lang),
+                    });
+                } else if (this.hasDeletedRelation(inventory)) {
+                    $.oc.flashMsg({
+                        class: 'warning',
+                        text: trans('bedard.shop.inventories.list.deleted_option_warning', this.lang),
+                    });
                 } else {
                     this.$emit('click', inventory);
                 }

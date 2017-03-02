@@ -14,9 +14,18 @@
     }
 </style>
 
+<style lang="scss">@import 'core';
+    // gray out the deleted option values
+    .bedard-shop {
+        .v-option-list .is-deleted { color: #ccc }
+        .v-option-list-item:not(.is-deleted):hover span { color: #fff }
+    }
+</style>
+
 <template>
-    <v-list @reorder="onReorder" sortable>
+    <v-list class="v-option-list" @reorder="onReorder" sortable>
         <v-list-item
+            class="v-option-list-item"
             v-for="option in options"
             :class="{ 'is-deleted': Boolean(option._deleted) }"
             :key="option.id"
@@ -24,7 +33,7 @@
             <i class="icon-plus" slot="icon"></i>
             <div slot="content">
                 <div>{{ option.name }}</div>
-                <small>{{ getValues(option) }}</small>
+                <small v-html="getValues(option)"></small>
             </div>
             <div slot="actions">
                 <i class="icon-bars" :title="reorderTitle"></i>
@@ -39,6 +48,7 @@
 </template>
 
 <script>
+    import e from 'escape-html';
     import trans from 'assets/js/filters/trans/trans';
 
     export default {
@@ -59,8 +69,12 @@
             },
             getValues(option) {
                 return option.values
-                    .filter(value => ! value._deleted)
-                    .map(value => value.name).join(', ');
+                    .map(value => {
+                        return value._deleted
+                            ? `<span class="is-deleted">${ e(value.name) }</span>`
+                            : e(value.name);
+                    })
+                    .join(', ');
             },
             onDeleteClicked(option) {
                 this.$emit('delete', option);

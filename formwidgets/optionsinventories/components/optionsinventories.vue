@@ -149,6 +149,7 @@
 
                         // make sure the inventory's value matches our current value
                         let currentValue = currentValues.find(v => v.id == value.id);
+                        this.$set(value, '_deleted', Boolean(currentValue._deleted));
                         value.name = currentValue.name;
                     });
                 });

@@ -33,6 +33,7 @@ return [
         'list' => [
             'default_name' => 'Default inventory',
             'delete_title' => 'Delete inventory',
+            'deleted_option_warning' => 'Cannot edit inventory because it has an option that is being deleted.',
             'multiple_in_stock' => ':quantity in stock',
             'out_of_stock' => 'Out of stock',
             'restore_collision_default' => 'This inventory cannot be restored because a default inventory already exists.',
