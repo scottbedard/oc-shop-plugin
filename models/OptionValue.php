@@ -67,7 +67,7 @@ class OptionValue extends Model
 
     public function beforeDelete()
     {
-        $this->inventories->each(function($inventory) {
+        $this->inventories->each(function ($inventory) {
             $inventory->delete();
         });
     }
