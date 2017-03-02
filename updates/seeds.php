@@ -2,6 +2,7 @@
 
 use Bedard\Shop\Classes\Factory;
 use Bedard\Shop\Models\Category;
+use Bedard\Shop\Models\Inventory;
 use Bedard\Shop\Models\Option;
 use Bedard\Shop\Models\Product;
 use October\Rain\Database\Updates\Seeder;
@@ -19,9 +20,10 @@ class Seeds extends Seeder
         echo '  Seeding test data...';
         echo "\n";
 
-        $this->seedCategories(10);
-        $this->seedProducts(20);
+        $this->seedCategories(5);
+        $this->seedProducts(5);
         $this->seedOptions();
+        $this->seedInventories();
 
         echo "\n  Done.\n";
         echo "\n";
@@ -36,6 +38,26 @@ class Seeds extends Seeder
         echo "  - Categories\n";
     }
 
+    protected function seedInventories()
+    {
+        Product::with('options.values')->get()->each(function ($product) {
+            // create a default inventory
+            Factory::create(new Inventory, ['product_id' => $product->id, 'quantity' => rand(0, 5)]);
+
+            // create an inventory for each of our options
+            $product->options->each(function ($option) use ($product) {
+                $option->values->each(function ($value) use ($product) {
+                    Factory::create(new Inventory, [
+                        'product_id' => $product->id,
+                        'quantity' => rand(0, 5),
+                    ])->values()->attach($value);
+                });
+            });
+        });
+
+        echo "  - Inventories\n";
+    }
+
     protected function seedOptions()
     {
         Product::all()->each(function ($product) {
@@ -47,19 +69,6 @@ class Seeds extends Seeder
                     ['id' => null, 'name' => 'Small', 'sort_order' => 0],
                     ['id' => null, 'name' => 'Medium', 'sort_order' => 1],
                     ['id' => null, 'name' => 'Large', 'sort_order' => 2],
-                ],
-            ]);
-
-            Factory::create(new Option, [
-                'product_id' => $product->id,
-                'name' => 'Color',
-                'placeholder' => '-- select color --',
-                'value_data' => [
-                    ['id' => null, 'name' => 'Blue', 'sort_order' => 2],
-                    ['id' => null, 'name' => 'Green', 'sort_order' => 1],
-                    ['id' => null, 'name' => 'Orange', 'sort_order' => 2],
-                    ['id' => null, 'name' => 'Purple', 'sort_order' => 2],
-                    ['id' => null, 'name' => 'Red', 'sort_order' => 0],
                 ],
             ]);
         });

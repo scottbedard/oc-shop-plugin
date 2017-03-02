@@ -30,16 +30,16 @@ class Factory
      */
     public static function fill(Model $model, array $data = [], array $omit = [])
     {
-        $seedData = [];
+        $seed = [];
 
         switch (get_class($model)) {
-            case 'Bedard\Shop\Models\Category': $seedData = self::getCategoryData($data); break;
-            case 'Bedard\Shop\Models\Inventory': $seedData = self::getInventoryData($data); break;
-            case 'Bedard\Shop\Models\Option': $seedData = self::getOptionData($data); break;
-            case 'Bedard\Shop\Models\Product': $seedData = self::getProductData($data); break;
+            case 'Bedard\Shop\Models\Category': $seed = self::getCategoryData($data); break;
+            case 'Bedard\Shop\Models\Inventory': $seed = self::getInventoryData($data); break;
+            case 'Bedard\Shop\Models\Option': $seed = self::getOptionData($data); break;
+            case 'Bedard\Shop\Models\Product': $seed = self::getProductData($data); break;
         }
 
-        $model->fill(array_merge($seedData, $data));
+        $model->fill(array_merge($seed, $data));
 
         foreach ($omit as $key) {
             unset($model->attributes[$key]);
