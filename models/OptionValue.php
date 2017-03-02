@@ -64,4 +64,11 @@ class OptionValue extends Model
     public $rules = [
         'name' => 'required|min:1',
     ];
+
+    public function beforeDelete()
+    {
+        $this->inventories->each(function($inventory) {
+            $inventory->delete();
+        });
+    }
 }

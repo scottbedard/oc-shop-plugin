@@ -152,14 +152,14 @@ class Product extends Model
     protected function saveInventories($inventories)
     {
         foreach ($inventories as $inventory) {
-            $model = Inventory::findOrFail($inventory['id']);
-
-            if (array_key_exists('_deleted', $inventory) && $inventory['_deleted']) {
-                $model->delete();
-            } else {
-                $model->fill($inventory);
-                $model->product_id = $this->id;
-                $model->save();
+            if ($model = Inventory::find($inventory['id'])) {
+                if (array_key_exists('_deleted', $inventory) && $inventory['_deleted']) {
+                    $model->delete();
+                } else {
+                    $model->fill($inventory);
+                    $model->product_id = $this->id;
+                    $model->save();
+                }
             }
         }
     }
@@ -173,16 +173,15 @@ class Product extends Model
     protected function saveOptions($options)
     {
         foreach ($options as $index => $option) {
-            $model = Option::findOrFail($option['id']);
-
-            if (array_key_exists('_deleted', $option) && $option['_deleted']) {
-                $model->delete();
-            } else {
-                $model->fill($option);
-                $model->product_id = $this->id;
-                $model->sort_order = $index;
-
-                $model->save();
+            if ($model = Option::find($option['id'])) {
+                if (array_key_exists('_deleted', $option) && $option['_deleted']) {
+                    $model->delete();
+                } else {
+                    $model->fill($option);
+                    $model->product_id = $this->id;
+                    $model->sort_order = $index;
+                    $model->save();
+                }
             }
         }
     }
