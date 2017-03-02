@@ -41,6 +41,7 @@
                 :lang="lang"
                 :values="option.values"
                 @add="onValueAdded"
+                @focus-button="onFocusButton"
                 @delete="onValueDeleted"
                 @enter="onSave"
                 @focus-placeholder="onFocusPlaceholder"
@@ -56,7 +57,7 @@
                 {{ 'backend.form.saving_name' | trans(lang, { name: 'bedard.shop.options.singular' }) }}
             </v-spinner>
             <div class="v-footer-buttons" v-else>
-                <v-button @click="onSave" primary>
+                <v-button ref="save" @click="onSave" primary>
                     <template v-if="context === 'create'">{{ 'backend.form.create' | trans(lang) }}</template>
                     <template v-else>{{ 'backend.form.save' | trans(lang) }}</template>
                 </v-button>
@@ -112,6 +113,9 @@
             },
             onCancel() {
                 this.hide();
+            },
+            onFocusButton() {
+                this.$refs.save.focus();
             },
             onFocusPlaceholder() {
                 this.$refs.placeholder.focus();

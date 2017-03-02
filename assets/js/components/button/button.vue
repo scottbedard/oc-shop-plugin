@@ -1,6 +1,7 @@
 <template>
     <button
         class="btn"
+        ref="button"
         :class="{
             'btn-default': isDefault,
             'btn-primary': primary,
@@ -19,6 +20,9 @@
             },
         },
         methods: {
+            focus() {
+                this.$refs.button.focus();
+            },
             onClicked(e) {
                 this.$emit('click', e);
             },

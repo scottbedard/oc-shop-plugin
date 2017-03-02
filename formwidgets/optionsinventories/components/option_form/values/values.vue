@@ -123,6 +123,10 @@
             onInputTab(e) {
                 if (e.shiftKey) {
                     this.focusLastValue();
+                } else if (this.input.trim().length) {
+                    this.onAdd();
+                } else {
+                    this.$emit('focus-button');
                 }
             },
             onRemove(value) {
