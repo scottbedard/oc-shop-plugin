@@ -80,6 +80,16 @@
                 return inventoryHasDeletedRelation(inventory, this.options);
             },
             onDeleteClicked(inventory) {
+                // do nothing if we have a deleted relation
+                if (this.hasDeletedRelation(inventory)) {
+                    $.oc.flashMsg({
+                        class: 'warning',
+                        text: trans('bedard.shop.inventories.list.deleted_option_warning', this.lang),
+                    });
+
+                    return;
+                }
+
                 // check if the inventory can be restored, and if not throw a warning
                 if (inventory._deleted && inventoryCollsionCheck(inventory, this.inventories)) {
                     let text = inventory.values.length
@@ -87,6 +97,7 @@
                         : trans('bedard.shop.inventories.list.restore_collision_default', this.lang);
 
                     $.oc.flashMsg({ text, class: 'warning' });
+
                     return;
                 }
 
