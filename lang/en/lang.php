@@ -24,8 +24,8 @@ return [
     //
     'inventories' => [
         'form' => [
-            'collision_default' => 'A default inventory is already defined.',
-            'collision_values' => 'An inventory with these options is already defined.',
+            'collision_default' => 'A default inventory already exists for this product.',
+            'collision_values' => 'An inventory with those options already exists.',
             'quantity' => 'Quantity',
             'sku' => 'Stock keeping unit',
             'sku_unique' => 'An inventory with that sku already exists.',

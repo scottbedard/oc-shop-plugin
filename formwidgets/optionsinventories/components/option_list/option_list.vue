@@ -17,7 +17,7 @@
 <style lang="scss">@import 'core';
     // gray out the deleted option values
     .bedard-shop {
-        .v-option-list .is-deleted { color: #ccc }
+        .v-option-list .value-is-deleted { color: #ccc }
         .v-option-list-item:not(.is-deleted):hover span { color: #fff }
     }
 </style>
@@ -71,7 +71,7 @@
                 return option.values
                     .map(value => {
                         return value._deleted
-                            ? `<span class="is-deleted">${ e(value.name) }</span>`
+                            ? `<span class="value-is-deleted">${ e(value.name) }</span>`
                             : e(value.name);
                     })
                     .join(', ');
