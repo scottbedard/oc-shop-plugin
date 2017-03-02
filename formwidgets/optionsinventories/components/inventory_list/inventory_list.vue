@@ -30,7 +30,7 @@
 </template>
 
 <script>
-    import { inventoryCollsionCheck } from '../helpers';
+    import { inventoryCollsionCheck, inventoryHasDeletedRelation } from '../helpers';
     import trans from 'assets/js/filters/trans/trans';
 
     export default {
@@ -77,22 +77,7 @@
                     .join(', ');
             },
             hasDeletedRelation(inventory) {
-                // if any of our values are being deleted, return true
-                if (inventory.values.find(value => value._deleted)) {
-                    return true;
-                }
-
-                // loop through our option ids and see if we find one being deleted
-                for (let id of inventory.values.map(value => value.option_id)) {
-                    let option = this.options.find(opt => opt.id == id);
-
-                    // if one was found, return true
-                    if (option && option._deleted) {
-                        return true;
-                    }
-                }
-
-                return false;
+                return inventoryHasDeletedRelation(inventory, this.options);
             },
             onDeleteClicked(inventory) {
                 // check if the inventory can be restored, and if not throw a warning

@@ -52,6 +52,7 @@
 </template>
 
 <script>
+    import { inventoryHasDeletedRelation } from './helpers';
     import { clone, renameKey } from 'assets/js/utilities/helpers';
 
     export default {
@@ -98,6 +99,11 @@
                 this.$refs.optionForm.show();
             },
             onFormSaved() {
+                // remove inventories that no longer exist
+                this.inventories = this.inventories.filter(inventory => {
+                    return ! inventory._deleted && ! inventoryHasDeletedRelation(inventory, this.options);
+                });
+
                 // remove deleted options that no longer exist
                 this.options = this.options.filter(option => ! option._deleted);
 
