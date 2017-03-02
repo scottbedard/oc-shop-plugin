@@ -103,6 +103,29 @@ class Plugin extends PluginBase
                 'label' => 'bedard.shop::lang.plugin.permissions.products',
                 'tab' => 'bedard.shop::lang.plugin.name',
             ],
+            'bedard.shop.settings.manage' => [
+                'label' => 'bedard.shop::lang.plugin.permissions.settings',
+                'tab' => 'bedard.shop::lang.plugin.name',
+            ],
+        ];
+    }
+
+    /**
+     * Register settings models.
+     *
+     * @return array
+     */
+    public function registerSettings()
+    {
+        return [
+            'api' => [
+                'category'      => 'bedard.shop::lang.plugin.name',
+                'class'         => 'Bedard\Shop\Models\ApiSettings',
+                'description'   => 'bedard.shop::lang.api.title',
+                'icon'          => 'icon-cog',
+                'label'         => 'bedard.shop::lang.api.label',
+                'permissions'   => ['bedard.shop.settings.manage'],
+            ],
         ];
     }
 }

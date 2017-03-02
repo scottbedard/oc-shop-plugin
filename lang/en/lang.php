@@ -2,6 +2,18 @@
 
 return [
     //
+    // api
+    //
+    'api' => [
+        'form' => [
+            'is_enabled_comment' => 'When disabled, there will be no access to your api endpoints.',
+            'is_enabled' => 'API Endpoints',
+        ],
+        'label' => 'API Settings',
+        'title' => 'Configure access to API endpoints',
+    ],
+
+    //
     // categories
     //
     'categories' => [
@@ -80,6 +92,7 @@ return [
         'permissions' => [
             'categories' => 'Manage Categories',
             'products' => 'Manage Products',
+            'settings' => 'Manage Settings',
         ],
     ],
 

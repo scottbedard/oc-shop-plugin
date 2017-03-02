@@ -1,0 +1,9 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    is_enabled:
+        label: bedard.shop::lang.api.form.is_enabled
+        comment: bedard.shop::lang.api.form.is_enabled_comment
+        type: switch
