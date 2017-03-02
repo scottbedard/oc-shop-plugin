@@ -1,7 +1,7 @@
 <?php namespace Bedard\Shop\Repositories;
 
-use Bedard\Shop\Models\Product;
 use Bedard\Shop\Classes\Repository;
+use Bedard\Shop\Models\Product;
 
 class ProductRepository extends Repository
 {

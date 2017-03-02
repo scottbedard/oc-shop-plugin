@@ -1,5 +1,6 @@
 <?php namespace Bedard\Shop\Models;
 use Model;
+
 /**
  * Api Settings Model.
  */
@@ -23,7 +24,7 @@ class ApiSettings extends Model
     /**
      * Get the enabled status of the api endpoints.
      *
-     * @return boolean
+     * @return bool
      */
     public static function isEnabled()
     {
