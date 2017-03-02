@@ -91,12 +91,6 @@
         },
         methods: {
             create() {
-                if (this.valuesAreNotUnique()) {
-                    return;
-                }
-
-                this.isLoading = true;
-
                 axios.post(this.endpoints.createInventory, { inventory: this.getFormData() })
                     .then(response => {
                         this.hide();
@@ -141,10 +135,21 @@
                 $.oc.flashMsg({ text: error.response.data, class: 'error' });
             },
             onSave() {
-                if (this.context === 'create') {
-                    this.create();
-                } else {
-                    this.update();
+                try {
+                    // validate our inventory and toggle the loading state
+                    this.validate();
+                    this.isLoading = true;
+
+                    // depending on our context, create or update the inventory
+                    if (this.context === 'create') this.create();
+                    else this.update();
+                } catch (error) {
+                    if (process.env.NODE_ENV === 'development') {
+                        console.error(error);
+                    }
+
+                    // if anything went wrong, flash the error
+                    $.oc.flashMsg({ class: 'error', text: error });
                 }
             },
             onValueChanged(id) {
@@ -189,12 +194,6 @@
                 this.$refs.optionSelector.refresh();
             },
             update() {
-                if (this.valuesAreNotUnique()) {
-                    return;
-                }
-
-                this.isLoading = true;
-
                 axios.post(this.endpoints.validateInventory, { inventory: this.getFormData() })
                     .then(response => {
                         let inventory = clone(this.inventory);
@@ -207,18 +206,22 @@
                     .catch(this.onRequestFailed)
                     .then(this.onRequestComplete);
             },
-            valuesAreNotUnique() {
-                let isCollision = inventoryCollsionCheck(this.inventory, this.inventories);
-
-                if (isCollision) {
-                    let text = this.inventory.value_ids.length
+            validate() {
+                // make sure we don't have an inventory collision
+                if (inventoryCollsionCheck(this.inventory, this.inventories)) {
+                    throw this.inventory.value_ids.length
                         ? trans('bedard.shop.inventories.form.collision_values', this.lang)
                         : trans('bedard.shop.inventories.form.collision_default', this.lang);
-
-                    $.oc.flashMsg({ text, class: 'error' });
                 }
 
-                return isCollision;
+                // make sure we don't have any duplicate sku's
+                let skus = this.inventories
+                    .filter(({ id, sku }) => sku && id != this.inventory.id)
+                    .map(inventory => inventory.sku);
+
+                if (skus.indexOf(this.inventory.sku) > -1) {
+                    throw trans('bedard.shop.inventories.form.sku_unique', this.lang);
+                }
             },
         },
         props: [

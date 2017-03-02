@@ -77,6 +77,10 @@ class Inventory extends Model
         'quantity' => 'integer|min:0',
     ];
 
+    public $customMessages = [
+        'sku.unique' => 'bedard.shop::lang.inventories.form.sku_unique',
+    ];
+
     /**
      * After save.
      *

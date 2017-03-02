@@ -28,6 +28,7 @@ return [
             'collision_values' => 'An inventory with these options is already defined.',
             'quantity' => 'Quantity',
             'sku' => 'Stock keeping unit',
+            'sku_unique' => 'An inventory with that sku already exists.',
         ],
         'list' => [
             'default_name' => 'Default inventory',
