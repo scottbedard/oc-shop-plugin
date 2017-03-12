@@ -1,7 +1,7 @@
 <?php namespace Bedard\Shop\Repositories;
 
-use Bedard\Shop\Models\Category;
 use Bedard\Shop\Classes\Repository;
+use Bedard\Shop\Models\Category;
 
 class CategoryRepository extends Repository
 {
