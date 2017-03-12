@@ -213,6 +213,17 @@ class Product extends Model
     }
 
     /**
+     * Select products that are enabled.
+     *
+     * @param  \October\Rain\Database\Builder   $query
+     * @return \October\Rain\Database\Builder
+     */
+    public function scopeIsEnabled($query)
+    {
+        return $query->whereIsEnabled(true);
+    }
+
+    /**
      * This exists to makes statuses sortable by assigning them a value.
      *
      * Disabled 0

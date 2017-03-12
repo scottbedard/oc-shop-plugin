@@ -100,4 +100,14 @@ class ProductTest extends PluginTestCase
         $this->assertEquals(1, $product->inventories()->count());
         $this->assertEquals($inventory->id, $product->inventories()->first()->id);
     }
+
+    public function test_is_enabled_scope()
+    {
+        $enabled = Factory::create(new Product, ['is_enabled' => true]);
+        $disabled = Factory::create(new Product, ['is_enabled' => false]);
+
+        $query = Product::isEnabled();
+        $this->assertEquals(1, $query->count());
+        $this->assertEquals($enabled->id, $query->first()->id);
+    }
 }

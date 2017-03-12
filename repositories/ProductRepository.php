@@ -8,11 +8,15 @@ class ProductRepository extends Repository
     /**
      * Fetch products.
      *
+     * @param  array                            $options
      * @return October\Rain\Database\Collection
      */
-    public function get($query)
+    public function get(array $options = [])
     {
-        $products = Product::get();
+        $products = (new Product)->newQuery();
+
+        // eager load related models
+        $query = $this->queryWith($query, $options);
 
         return $products;
     }
