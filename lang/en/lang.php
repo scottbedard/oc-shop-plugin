@@ -19,7 +19,7 @@ return [
     'categories' => [
         'list' => [
             'name' => 'Name',
-            'reorder_button' => 'Reorder categories',
+            'reorder_button' => 'Reorder',
             'slug' => 'Slug',
             'title' => 'Manage Categories',
         ],
