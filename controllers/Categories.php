@@ -13,10 +13,13 @@ class Categories extends BackendController
     public $implement = [
         'Backend.Behaviors.FormController',
         'Backend.Behaviors.ListController',
+        'Backend.Behaviors.ReorderController',
         'Owl.Behaviors.ListDelete.Behavior',
     ];
 
     public $listConfig = 'config_list.yaml';
+
+    public $reorderConfig = 'config_reorder.yaml';
 
     public $registerPermissions = [
         'bedard.shop.categories.manage',

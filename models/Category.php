@@ -7,6 +7,8 @@ use Model;
  */
 class Category extends Model
 {
+    use \October\Rain\Database\Traits\NestedTree;
+
     /**
      * @var string The database table used by the model.
      */
@@ -21,6 +23,7 @@ class Category extends Model
      * @var array Fillable fields
      */
     protected $fillable = [
+        'description_html',
         'name',
         'slug',
     ];
@@ -35,4 +38,24 @@ class Category extends Model
             'scope' => 'isEnabled',
         ],
     ];
+
+    /**
+     * Before save.
+     *
+     * @return void
+     */
+    public function beforeSave()
+    {
+        $this->setPlainDescription();
+    }
+
+    /**
+     * Set the plain text description_html.
+     *
+     * @return void
+     */
+    protected function setPlainDescription()
+    {
+        $this->description_plain = strip_tags($this->description_html);
+    }
 }

@@ -18,3 +18,11 @@ fields:
 tabs:
     stretch: true
     fields:
+        #
+        # general
+        #
+        description_html:
+            label: bedard.shop::lang.categories.form.description
+            span: left
+            tab: bedard.shop::lang.categories.form.tab_general
+            type: richeditor

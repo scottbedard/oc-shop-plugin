@@ -59,6 +59,7 @@ class Factory
         $faker = Faker\Factory::create();
 
         return [
+            'description_html' => '<p>'.Lorem::paragraph().'</p>',
             'name' => $faker->words(2, true),
             'slug' => $faker->slug,
         ];

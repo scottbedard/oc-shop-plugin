@@ -19,13 +19,18 @@ return [
     'categories' => [
         'list' => [
             'name' => 'Name',
-            'title' => 'Manage Categories',
+            'reorder_button' => 'Reorder categories',
             'slug' => 'Slug',
+            'title' => 'Manage Categories',
         ],
         'form' => [
+            'description' => 'Description',
             'name' => 'Name',
             'slug' => 'Slug',
             'tab_general' => 'General',
+        ],
+        'reorder' => [
+            'return_button' => 'Return to categories',
         ],
         'singular' => 'Category',
         'plural' => 'Categories',
