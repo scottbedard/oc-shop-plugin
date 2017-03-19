@@ -50,3 +50,22 @@ tabs:
         options_inventories:
             type: Bedard\Shop\FormWidgets\OptionsInventories
             tab: bedard.shop::lang.products.form.tab_options_inventories
+
+        #
+        # images
+        #
+        thumbnails:
+            label: bedard.shop::lang.products.form.thumbnails
+            tab: bedard.shop::lang.products.form.tab_images
+            type: fileupload
+            mode: image
+            imageHeight: 260
+            imageWidth: 260
+
+        images:
+            label: bedard.shop::lang.products.form.images
+            tab: bedard.shop::lang.products.form.tab_images
+            type: fileupload
+            mode: image
+            imageHeight: 260
+            imageWidth: 260
