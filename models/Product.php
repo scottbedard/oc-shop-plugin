@@ -70,7 +70,7 @@ class Product extends Model
             'System\Models\File',
         ],
         'thumbnails' => [
-            'System\Models\File'
+            'System\Models\File',
         ],
     ];
 
