@@ -32,10 +32,16 @@ class Category extends Model
      * @var array Relations
      */
     public $belongsToMany = [
+        'product_count' => [
+            'Bedard\Shop\Models\Product',
+            'count' => true,
+            'scope' => 'isEnabled',
+            'table' => 'bedard_shop_category_product',
+        ],
         'products' => [
             'Bedard\Shop\Models\Product',
-            'table' => 'bedard_shop_category_product',
             'scope' => 'isEnabled',
+            'table' => 'bedard_shop_category_product',
         ],
     ];
 

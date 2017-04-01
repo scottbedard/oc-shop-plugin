@@ -212,13 +212,22 @@ class Product extends Model
     }
 
     /**
-     * Set the plain text description_html.
+     * Fetch products in particular categories.
      *
-     * @return void
+     * @param  \October\Rain\Database\Builder   $query
+     * @param  array|string                     $slugs
+     * @return \October\Rain\Database\Builder
      */
-    protected function setPlainDescription()
+    public function scopeInCategories($query, $slugs)
     {
-        $this->description_plain = strip_tags($this->description_html);
+        // if the slugs are a csv, explode them into an array
+        if (is_string($slugs)) {
+            $slugs = explode(',', $slugs);
+        }
+
+        return $query->whereHas('categories', function($category) use ($slugs) {
+            $category->whereIn('slug', $slugs);
+        });
     }
 
     /**
@@ -255,6 +264,16 @@ class Product extends Model
         'END';
 
         return $query->selectSubquery($subquery, 'status');
+    }
+
+    /**
+     * Set the plain text description_html.
+     *
+     * @return void
+     */
+    protected function setPlainDescription()
+    {
+        $this->description_plain = strip_tags($this->description_html);
     }
 
     /**

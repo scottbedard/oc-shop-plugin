@@ -13,11 +13,16 @@ class ProductRepository extends Repository
      */
     public function get(array $options = [])
     {
-        $products = (new Product)->newQuery();
+        $query = (new Product)->newQuery();
+
+        // apply categories scope
+        if (array_key_exists('categories', $options)) {
+            $query->inCategories($options['categories']);
+        }
 
         // eager load related models
         $query = $this->queryWith($query, $options);
 
-        return $products;
+        return $query->get();
     }
 }
