@@ -225,7 +225,7 @@ class Product extends Model
             $slugs = explode(',', $slugs);
         }
 
-        return $query->whereHas('categories', function($category) use ($slugs) {
+        return $query->whereHas('categories', function ($category) use ($slugs) {
             $category->whereIn('slug', $slugs);
         });
     }
