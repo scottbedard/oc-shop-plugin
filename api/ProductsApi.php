@@ -16,4 +16,18 @@ class ProductsApi extends ApiController
 
         return $repository->get($query);
     }
+
+    /**
+     * Find a product.
+     *
+     * @param  ProductRepository            $repository
+     * @param  string                       $slug
+     * @return \Bedard\Shop\Models\Product
+     */
+    public function show(ProductRepository $repository, $slug)
+    {
+        $query = input();
+
+        return $repository->find($slug, $query);
+    }
 }
