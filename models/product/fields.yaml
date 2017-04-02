@@ -38,11 +38,11 @@ tabs:
             span: right
             tab: bedard.shop::lang.products.form.tab_general
 
-        categories:
+        categories_field:
             label: bedard.shop::lang.categories.plural
             span: right
             tab: bedard.shop::lang.products.form.tab_general
-            type: relation
+            type: checkboxlist
 
         #
         # options and inventories

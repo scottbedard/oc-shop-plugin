@@ -25,6 +25,7 @@ class Category extends Model
     protected $fillable = [
         'description_html',
         'name',
+        'parent_id',
         'slug',
     ];
 
@@ -40,6 +41,7 @@ class Category extends Model
         ],
         'products' => [
             'Bedard\Shop\Models\Product',
+            'pivot' => ['is_inherited'],
             'scope' => 'isEnabled',
             'table' => 'bedard_shop_category_product',
         ],

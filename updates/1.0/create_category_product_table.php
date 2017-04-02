@@ -12,6 +12,7 @@ class CreateCategoryProductTables extends Migration
             $table->engine = 'InnoDB';
             $table->integer('category_id')->unsigned()->nullable();
             $table->integer('product_id')->unsigned()->nullable();
+            $table->boolean('is_inherited')->index()->default(false);
             $table->primary(['category_id', 'product_id'], 'category_product');
         });
     }

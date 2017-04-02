@@ -59,6 +59,7 @@ class Product extends Model
      * @var array Purgeable fields
      */
     public $purgeable = [
+        'categories_field',
         'options_inventories',
     ];
 
@@ -77,6 +78,7 @@ class Product extends Model
     public $belongsToMany = [
         'categories' => [
             'Bedard\Shop\Models\Category',
+            'pivot' => ['is_inherited'],
             'table' => 'bedard_shop_category_product',
         ],
     ];
@@ -109,6 +111,7 @@ class Product extends Model
      */
     public function afterSave()
     {
+        $this->saveCategories();
         $this->saveOptionsAndInventories();
     }
 
@@ -133,23 +136,69 @@ class Product extends Model
     }
 
     /**
-     * Joins the sum of available inventories.
+     * Determine if the categories field contains new values.
      *
-     * @param  \October\Rain\Database\Builder   $query
-     * @return \October\Rain\Database\Builder
+     * @return boolean
      */
-    public function scopeJoinInventoryCount($query)
+    protected function categoriesAreChanged()
     {
-        $alias = 'inventories';
-        $grammar = $query->getQuery()->getGrammar();
+        $old = $this->categoriesField ?: [];
+        $new = $this->getOriginalPurgeValue('categories_field') ?: [];
+        sort($old);
+        sort($new);
 
-        $subquery = Inventory::addSelect('bedard_shop_inventories.product_id')
-            ->selectRaw('SUM('.$grammar->wrap('bedard_shop_inventories.quantity').') as '.$grammar->wrap('inventory_count'))
-            ->groupBy('bedard_shop_inventories.product_id');
+        return $old != $new;
+    }
 
-        return $query
-            ->addSelect($alias.'.inventory_count')
-            ->joinSubquery($subquery, $alias, 'bedard_shop_products.id', '=', $alias.'.product_id', 'leftJoin');
+    /**
+     * Get the categories that are not inherited.
+     *
+     * @return array
+     */
+    public function getCategoriesFieldAttribute()
+    {
+        return $this->categories()
+            ->wherePivot('is_inherited', false)
+            ->lists('id');
+    }
+
+    /**
+     * List the category field options.
+     *
+     * @return array
+     */
+    public function getCategoriesFieldOptions()
+    {
+        return Category::get()->sortBy('name')->lists('name', 'id');
+    }
+
+    /**
+     * Save related categories.
+     *
+     * @return void
+     */
+    protected function saveCategories()
+    {
+        if (! $this->categoriesAreChanged()) {
+            return;
+        }
+
+        // otherwise sync our categories, and determine which categories are inheriting this product
+        $ancestorIds = [];
+        $allCategories = Category::all();
+        $directIds = $this->getOriginalPurgeValue('categories_field');
+
+        foreach($directIds as $directCategoryId) {
+            $directCategory = $allCategories->find($directCategoryId);
+            $ancestorIds = array_merge($ancestorIds, $directCategory->getParents()->lists('id'));
+        }
+
+        $sync = $directIds;
+        foreach ($ancestorIds as $ancestorId) {
+            $sync[$ancestorId] = ['is_inherited' => 1];
+        }
+
+        $this->categories()->sync($sync);
     }
 
     /**
@@ -239,6 +288,26 @@ class Product extends Model
     public function scopeIsEnabled($query)
     {
         return $query->whereIsEnabled(true);
+    }
+
+    /**
+     * Joins the sum of available inventories.
+     *
+     * @param  \October\Rain\Database\Builder   $query
+     * @return \October\Rain\Database\Builder
+     */
+    public function scopeJoinInventoryCount($query)
+    {
+        $alias = 'inventories';
+        $grammar = $query->getQuery()->getGrammar();
+
+        $subquery = Inventory::addSelect('bedard_shop_inventories.product_id')
+            ->selectRaw('SUM('.$grammar->wrap('bedard_shop_inventories.quantity').') as '.$grammar->wrap('inventory_count'))
+            ->groupBy('bedard_shop_inventories.product_id');
+
+        return $query
+            ->addSelect($alias.'.inventory_count')
+            ->joinSubquery($subquery, $alias, 'bedard_shop_products.id', '=', $alias.'.product_id', 'leftJoin');
     }
 
     /**

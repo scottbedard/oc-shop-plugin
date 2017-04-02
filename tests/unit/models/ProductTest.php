@@ -5,6 +5,7 @@ use Bedard\Shop\Models\Category;
 use Bedard\Shop\Models\Inventory;
 use Bedard\Shop\Models\Option;
 use Bedard\Shop\Models\Product;
+use DB;
 use PluginTestCase;
 
 class ProductTest extends PluginTestCase
@@ -109,5 +110,29 @@ class ProductTest extends PluginTestCase
         $query = Product::isEnabled();
         $this->assertEquals(1, $query->count());
         $this->assertEquals($enabled->id, $query->first()->id);
+    }
+
+    public function test_product_saves_its_ancestor_categories()
+    {
+        $product = Factory::create(new Product);
+        $grandparent = Factory::create(new Category);
+        $parent = Factory::create(new Category, ['parent_id' => $grandparent->id]);
+        $child = Factory::create(new Category, ['parent_id' => $parent->id]);
+
+        $product->categories_field = [$child->id];
+        $product->save();
+
+        $direct = DB::table('bedard_shop_category_product')
+            ->select('category_id')
+            ->whereIsInherited(false)
+            ->lists('category_id');
+
+        $inherited = DB::table('bedard_shop_category_product')
+            ->select('category_id')
+            ->whereIsInherited(true)
+            ->lists('category_id');
+
+        $this->assertEquals([$child->id], $direct);
+        $this->assertEquals([$grandparent->id, $parent->id], $inherited);
     }
 }
