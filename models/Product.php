@@ -138,7 +138,7 @@ class Product extends Model
     /**
      * Determine if the categories field contains new values.
      *
-     * @return boolean
+     * @return bool
      */
     protected function categoriesAreChanged()
     {
@@ -192,7 +192,7 @@ class Product extends Model
         $directIds = $this->getOriginalPurgeValue('categories_field') ?: [];
 
         // iterate over our direct ids
-        foreach($directIds as $directCategoryId) {
+        foreach ($directIds as $directCategoryId) {
             // keep track of our direct ids for the eventual sync call.
             // we need to provide the pivot data, because by default
             // the sync function won't existing database entries.

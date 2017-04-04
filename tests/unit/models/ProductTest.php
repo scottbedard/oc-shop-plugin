@@ -207,7 +207,7 @@ class ProductTest extends PluginTestCase
             ->whereIsInherited(true)
             ->lists('category_id');
 
-            $this->assertEquals([$child->id, $parent->id], $direct);
-            $this->assertEquals([], $inherited);
+        $this->assertEquals([$child->id, $parent->id], $direct);
+        $this->assertEquals([], $inherited);
     }
 }
