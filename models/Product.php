@@ -151,6 +151,16 @@ class Product extends Model
     }
 
     /**
+     * Format the price.
+     *
+     * @return string
+     */
+    public function formattedPrice()
+    {
+        return number_format($this->base_price, 2);
+    }
+
+    /**
      * Get the categories that are not inherited.
      *
      * @return array

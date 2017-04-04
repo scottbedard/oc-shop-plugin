@@ -12,6 +12,13 @@ class ProductTest extends PluginTestCase
 {
     protected $refreshPlugins = ['Bedard.Shop'];
 
+    public function test_getting_formatted_price()
+    {
+        $product = new Product;
+        $product->base_price = 1.2;
+        $this->assertEquals('1.20', $product->formattedPrice());
+    }
+
     public function test_products_can_belong_to_categories()
     {
         $category = Factory::create(new Category);
