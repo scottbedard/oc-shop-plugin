@@ -135,4 +135,79 @@ class ProductTest extends PluginTestCase
         $this->assertEquals([$child->id], $direct);
         $this->assertEquals([$grandparent->id, $parent->id], $inherited);
     }
+
+    public function test_adding_a_parent_category()
+    {
+        $product = Factory::create(new Product);
+        $parent = Factory::create(new Category);
+        $child = Factory::create(new Category, ['parent_id' => $parent->id]);
+
+        $product->categories_field = [$parent->id];
+        $product->save();
+
+        $direct = DB::table('bedard_shop_category_product')
+            ->select('category_id')
+            ->whereIsInherited(false)
+            ->lists('category_id');
+
+        $inherited = DB::table('bedard_shop_category_product')
+            ->select('category_id')
+            ->whereIsInherited(true)
+            ->lists('category_id');
+
+        $this->assertEquals([$parent->id], $direct);
+        $this->assertEquals([], $inherited);
+    }
+
+    public function test_moving_a_product_from_child_to_parent()
+    {
+        $product = Factory::create(new Product);
+        $parent = Factory::create(new Category);
+        $child = Factory::create(new Category, ['parent_id' => $parent->id]);
+
+        $product->categories_field = [$child->id];
+        $product->save();
+
+        $product->categories_field = [$parent->id];
+        $product->save();
+
+        $direct = DB::table('bedard_shop_category_product')
+            ->select('category_id')
+            ->whereIsInherited(false)
+            ->lists('category_id');
+
+        $inherited = DB::table('bedard_shop_category_product')
+            ->select('category_id')
+            ->whereIsInherited(true)
+            ->lists('category_id');
+
+        $this->assertEquals([$parent->id], $direct);
+        $this->assertEquals([], $inherited);
+    }
+
+    public function test_promoting_from_inherited_to_direct()
+    {
+        $product = Factory::create(new Product);
+        $parent = Factory::create(new Category);
+        $child = Factory::create(new Category, ['parent_id' => $parent->id]);
+
+        $product->categories_field = [$child->id];
+        $product->save();
+
+        $product->categories_field = [$child->id, $parent->id];
+        $product->save();
+
+        $direct = DB::table('bedard_shop_category_product')
+            ->select('category_id')
+            ->whereIsInherited(false)
+            ->lists('category_id');
+
+        $inherited = DB::table('bedard_shop_category_product')
+            ->select('category_id')
+            ->whereIsInherited(true)
+            ->lists('category_id');
+
+            $this->assertEquals([$child->id, $parent->id], $direct);
+            $this->assertEquals([], $inherited);
+    }
 }

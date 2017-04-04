@@ -147,7 +147,7 @@ class Product extends Model
         sort($old);
         sort($new);
 
-        return $old != $new;
+        return ! count($old) || ! count($new) || $old != $new;
     }
 
     /**
@@ -179,25 +179,42 @@ class Product extends Model
      */
     protected function saveCategories()
     {
+        // if the categories haven't changed, do nothing
         if (! $this->categoriesAreChanged()) {
             return;
         }
 
-        // otherwise sync our categories, and determine which categories are inheriting this product
+        // otherwise lets sync our categories. we first need to gather
+        // the neccessary information, and create a few containers.
+        $sync = [];
         $ancestorIds = [];
         $allCategories = Category::all();
-        $directIds = $this->getOriginalPurgeValue('categories_field');
+        $directIds = $this->getOriginalPurgeValue('categories_field') ?: [];
 
+        // iterate over our direct ids
         foreach($directIds as $directCategoryId) {
-            $directCategory = $allCategories->find($directCategoryId);
-            $ancestorIds = array_merge($ancestorIds, $directCategory->getParents()->lists('id'));
+            // keep track of our direct ids for the eventual sync call.
+            // we need to provide the pivot data, because by default
+            // the sync function won't existing database entries.
+            $sync[$directCategoryId] = ['is_inherited' => false];
+
+            // add all of our direct category's parent ids to our ancestors
+            $branchIds = $allCategories
+                ->find($directCategoryId)
+                ->getParents()
+                ->lists('id');
+
+            $ancestorIds = array_merge($ancestorIds, $branchIds);
         }
 
-        $sync = $directIds;
+        // iterate over our ancestor ids and set their is_inherited flag
         foreach ($ancestorIds as $ancestorId) {
-            $sync[$ancestorId] = ['is_inherited' => 1];
+            $sync[$ancestorId] = [
+                'is_inherited' => ! in_array($ancestorId, $directIds),
+            ];
         }
 
+        // finally, sync our direct and ancestor categories
         $this->categories()->sync($sync);
     }
 
