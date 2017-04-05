@@ -6,7 +6,7 @@ require('assets/js/boot');
 
 $(function() {
     // find the element we're going to mount our component to
-    $('[data-component=relationships]').each(function($widget) {
+    $('[data-component=relationships]').each(function() {
         let el = $(this)[0];
 
         // parse our props from data attributes
@@ -15,7 +15,6 @@ $(function() {
         const value = JSON.parse(el.dataset.value);
 
         // instantiate our component and mount it to the dom
-        // $(el).
         new Vue({
             el,
             render: h => h(RelationshipsComponent, {
