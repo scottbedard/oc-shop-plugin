@@ -139,4 +139,12 @@ return [
         'plural' => 'Products',
         'singular' => 'Product',
     ],
+
+    //
+    // Settings
+    //
+    'settings' => [
+        'plural' => 'Settings',
+        'singular' => 'Setting',
+    ],
 ];

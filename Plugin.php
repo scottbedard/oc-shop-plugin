@@ -82,6 +82,12 @@ class Plugin extends PluginBase
                         'permissions'   => ['bedard.shop.categories.*'],
                         'url'           => Backend::url('bedard/shop/categories'),
                     ],
+                    'settings' => [
+                        'icon'          => 'icon-cog',
+                        'label'         => 'bedard.shop::lang.settings.plural',
+                        'permissions'   => ['bedard.shop.settings.*'],
+                        'url'           => Backend::url('system/settings/update/bedard/shop/api'),
+                    ]
                 ],
             ],
         ];
