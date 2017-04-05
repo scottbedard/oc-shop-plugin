@@ -1,0 +1,31 @@
+<?php namespace Bedard\Shop\Controllers;
+
+use BackendMenu;
+use Backend\Classes\Controller;
+
+/**
+ * Carts Back-end Controller
+ */
+class Carts extends Controller
+{
+    public $formConfig = 'config_form.yaml';
+
+    public $implement = [
+        'Backend.Behaviors.FormController',
+        'Backend.Behaviors.ListController',
+        'Owl.Behaviors.ListDelete.Behavior',
+    ];
+
+    public $listConfig = 'config_list.yaml';
+
+    public $registerPermissions = [
+        'bedard.shop.carts.manage',
+    ];
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        BackendMenu::setContext('Bedard.Shop', 'shop', 'carts');
+    }
+}

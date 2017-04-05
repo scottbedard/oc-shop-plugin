@@ -19,6 +19,17 @@ return [
     ],
 
     //
+    // carts
+    //
+    'carts' => [
+        'list' => [
+
+        ],
+        'plural' => 'Carts',
+        'singular' => 'Cart',
+    ],
+
+    //
     // categories
     //
     'categories' => [
@@ -100,6 +111,7 @@ return [
         'description' => 'An ecommerce platform for October CMS.',
         'name' => 'Shop',
         'permissions' => [
+            'carts' => 'Manage Carts',
             'categories' => 'Manage Categories',
             'products' => 'Manage Products',
             'settings' => 'Manage Settings',

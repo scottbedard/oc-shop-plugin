@@ -9,6 +9,13 @@ use System\Classes\PluginBase;
 class Plugin extends PluginBase
 {
     /**
+     * @var array Plugin dependencies
+     */
+    public $require = [
+        'RainLab.User',
+    ];
+
+    /**
      * Returns information about this plugin.
      *
      * @return array
@@ -70,6 +77,12 @@ class Plugin extends PluginBase
                 'permissions' => ['bedard.shop.*'],
                 'url'         => Backend::url('bedard/shop/products'),
                 'sideMenu' => [
+                    'carts' => [
+                        'icon'          => 'icon-shopping-cart',
+                        'label'         => 'bedard.shop::lang.carts.plural',
+                        'permissions'   => ['bedard.shop.carts.*'],
+                        'url'           => Backend::url('bedard/shop/carts'),
+                    ],
                     'products' => [
                         'icon'          => 'icon-cubes',
                         'label'         => 'bedard.shop::lang.products.plural',
@@ -101,6 +114,10 @@ class Plugin extends PluginBase
     public function registerPermissions()
     {
         return [
+            'bedard.shop.carts.manage' => [
+                'label' => 'bedard.shop::lang.plugin.permissions.carts',
+                'tab' => 'bedard.shop::lang.plugin.name',
+            ],
             'bedard.shop.categories.manage' => [
                 'label' => 'bedard.shop::lang.plugin.permissions.categories',
                 'tab' => 'bedard.shop::lang.plugin.name',
