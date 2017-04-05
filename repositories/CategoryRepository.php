@@ -32,9 +32,13 @@ class CategoryRepository extends Repository
     public function get(array $params = [], array $options = [])
     {
         $query = (new Category)->newQuery();
+        $count = (new Category)->newQuery();
         $this->selectColumns($query, $options);
         $this->withRelationships($query, $options);
 
-        return $query->get();
+        return [
+            'results' => $query->get(),
+            'total' => $count->count(),
+        ];
     }
 }

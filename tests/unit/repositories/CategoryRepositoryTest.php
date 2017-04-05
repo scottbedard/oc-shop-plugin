@@ -38,10 +38,10 @@ class CategoryRepositoryTest extends PluginTestCase
         $repository = new CategoryRepository;
         $category = Factory::create(new Category);
 
-        $categories = $repository->get([], ['columns' => ['name']])->toArray();
+        $categories = $repository->get([], ['columns' => ['name']]);
 
-        $this->assertFalse(array_key_exists('id', $categories[0]));
-        $this->assertTrue(array_key_exists('name', $categories[0]));
+        $this->assertFalse(array_key_exists('id', $categories['results']->toArray()[0]));
+        $this->assertTrue(array_key_exists('name', $categories['results']->toArray()[0]));
     }
 
     public function test_eager_loading_categories_relationships()
@@ -51,8 +51,8 @@ class CategoryRepositoryTest extends PluginTestCase
         $product = Factory::create(new Product);
         $product->categories()->attach($category);
 
-        $categories = $repository->get([], ['relationships' => ['products']])->toArray();
+        $categories = $repository->get([], ['relationships' => ['products']]);
 
-        $this->assertEquals($product->id, $categories[0]['products'][0]['id']);
+        $this->assertEquals($product->id, $categories['results']->toArray()[0]['products'][0]['id']);
     }
 }
