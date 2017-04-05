@@ -69,11 +69,7 @@
                 return;
             }
 
-            this.relationships = Object.keys(this.value.relationships || []).map(key => {
-                return {
-                    value: this.value.relationships[key],
-                };
-            });
+            this.relationships = (this.value || []).map(value => ({ value }));
         },
         data() {
             return {
