@@ -3,26 +3,27 @@
 use Backend\Classes\FormWidgetBase;
 
 /**
- * Relationships Form Widget
+ * Relationships Form Widget.
  */
 class Relationships extends FormWidgetBase
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected $defaultAlias = 'bedard_shop_relationships';
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function render()
     {
         $this->prepareVars();
+
         return $this->makePartial('relationships');
     }
 
     /**
-     * Prepares the form widget view data
+     * Prepares the form widget view data.
      */
     public function prepareVars()
     {
@@ -32,7 +33,7 @@ class Relationships extends FormWidgetBase
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function loadAssets()
     {
@@ -40,7 +41,7 @@ class Relationships extends FormWidgetBase
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getSaveValue($value)
     {
