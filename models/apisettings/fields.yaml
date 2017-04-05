@@ -7,3 +7,27 @@ fields:
         label: bedard.shop::lang.api.form.is_enabled
         comment: bedard.shop::lang.api.form.is_enabled_comment
         type: switch
+
+tabs:
+    fields:
+        categories[columns]:
+            label: bedard.shop::lang.api.form.columns
+            tab: bedard.shop::lang.categories.singular
+            span: left
+            type: checkboxlist
+            options:
+                - description_html
+                - description_plain
+                - id
+                - name
+                - nest_depth
+                - nest_left
+                - nest_right
+                - parent_id
+                - slug
+
+        categories[relationships]:
+            label: bedard.shop::lang.api.form.relationships
+            tab: bedard.shop::lang.categories.singular
+            span: right
+            type: Bedard\Shop\FormWidgets\Relationships

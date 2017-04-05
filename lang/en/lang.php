@@ -6,11 +6,15 @@ return [
     //
     'api' => [
         'form' => [
+            'columns' => 'Columns',
             'is_enabled_comment' => 'When disabled, there will be no access to your api endpoints.',
             'is_enabled' => 'API Endpoints',
+            'relationships' => 'Relationships',
+            'relationships_placeholder' => 'Enter relationship',
+            'relationships_comment' => 'Type a relationship to eager load, then press "enter" or "tab".',
         ],
-        'label' => 'API Settings',
-        'title' => 'Configure access to API endpoints',
+        'label' => 'API Endpoints',
+        'title' => 'Configure API endpoints',
     ],
 
     //

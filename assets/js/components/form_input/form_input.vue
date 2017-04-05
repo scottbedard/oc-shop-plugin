@@ -20,6 +20,11 @@
             @keypress="onKeypress"
             @keyup="onKeyup"
         />
+        <p
+            v-if="comment"
+            class="help-block">
+            {{ comment }}
+        </p>
     </div>
 </template>
 
@@ -43,6 +48,7 @@
             },
         },
         props: {
+            comment: { type: String, default: null },
             placeholder: { type: String, default: '' },
             required: { type: Boolean, default: false },
             type: { type: String, default: 'text' },

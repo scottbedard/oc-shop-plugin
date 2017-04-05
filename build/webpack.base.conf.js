@@ -8,6 +8,7 @@ module.exports = {
     entry: {
         categories: path.resolve(__dirname, '../controllers/categories'),
         products: path.resolve(__dirname, '../controllers/products'),
+        relationships: path.resolve(__dirname, '../formwidgets/relationships/components'),
         options_inventories: path.resolve(__dirname, '../formwidgets/optionsinventories/components'),
     },
     output: {
