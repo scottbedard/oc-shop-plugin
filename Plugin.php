@@ -87,7 +87,7 @@ class Plugin extends PluginBase
                         'label'         => 'bedard.shop::lang.settings.plural',
                         'permissions'   => ['bedard.shop.settings.*'],
                         'url'           => Backend::url('system/settings/update/bedard/shop/api'),
-                    ]
+                    ],
                 ],
             ],
         ];
