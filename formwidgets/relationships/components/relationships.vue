@@ -65,7 +65,11 @@
 
     export default {
         created() {
-            this.relationships = Object.keys(this.value.relationships).map(key => {
+            if (! this.value) {
+                return;
+            }
+
+            this.relationships = Object.keys(this.value.relationships || []).map(key => {
                 return {
                     value: this.value.relationships[key],
                 };
