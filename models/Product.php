@@ -302,7 +302,7 @@ class Product extends Model
         }
 
         return $query->whereHas('categories', function ($category) use ($slugs) {
-            $category->whereIn('slug', $slugs);
+            $category->whereIn('slug', array_map('trim', $slugs));
         });
     }
 

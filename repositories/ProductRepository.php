@@ -32,8 +32,14 @@ class ProductRepository extends Repository
     public function get(array $params = [], array $options = [])
     {
         $query = (new Product)->newQuery();
+        // $this->orderResults($query, $params);
         $this->selectColumns($query, $options);
         $this->withRelationships($query, $options);
+
+        // select products in a given set of categories
+        if (array_key_exists('categories', $params)) {
+            $query->inCategories($params['categories']);
+        }
 
         return $query->get();
     }
