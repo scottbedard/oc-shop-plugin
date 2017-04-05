@@ -30,4 +30,24 @@ class ApiSettings extends Model
     {
         return self::get('is_enabled', false);
     }
+
+    /**
+     * Get options for categories endpoint.
+     *
+     * @return array
+     */
+    public static function getCategoriesOptions()
+    {
+        return self::get('categories') ?: [];
+    }
+
+    /**
+     * Get options for category endpoint.
+     *
+     * @return array
+     */
+    public static function getCategoryOptions()
+    {
+        return self::get('category') ?: [];
+    }
 }

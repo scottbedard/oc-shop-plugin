@@ -15,9 +15,8 @@ class CategoryRepository extends Repository
     public function find($slug, array $options = [])
     {
         $query = Category::whereSlug($slug);
-
-        // eager load related models
-        $query = $this->queryWith($query, $options);
+        $this->selectColumns($query, $options);
+        $this->withRelationships($query, $options);
 
         return $query->firstOrFail();
     }
@@ -25,15 +24,15 @@ class CategoryRepository extends Repository
     /**
      * Fetch categories.
      *
+     * @param  array                            $params
      * @param  array                            $options
      * @return October\Rain\Database\Collection
      */
-    public function get(array $options = [])
+    public function get(array $params = [], array $options = [])
     {
         $query = (new Category)->newQuery();
-
-        // eager load related models
-        $query = $this->queryWith($query, $options);
+        $this->selectColumns($query, $options);
+        $this->withRelationships($query, $options);
 
         return $query->get();
     }

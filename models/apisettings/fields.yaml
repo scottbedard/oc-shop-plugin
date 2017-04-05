@@ -4,27 +4,36 @@
 
 fields:
     is_enabled:
-        label: bedard.shop::lang.api.form.is_enabled
-        comment: bedard.shop::lang.api.form.is_enabled_comment
+        label: bedard.shop::lang.api.form.api_is_enabled
+        comment: bedard.shop::lang.api.form.api_is_enabled_comment
         type: switch
 
 tabs:
     fields:
+        #
+        # Categories
+        #
+        category[is_enabled]:
+            label: bedard.shop::lang.api.form.endpoint
+            tab: bedard.shop::lang.categories.singular
+            comment: /api/bedard/shop/category/:slug
+            type: switch
+
         category[columns]:
             label: bedard.shop::lang.api.form.columns
             tab: bedard.shop::lang.categories.singular
             span: left
             type: checkboxlist
             options:
-                - description_html
-                - description_plain
-                - id
-                - name
-                - nest_depth
-                - nest_left
-                - nest_right
-                - parent_id
-                - slug
+                description_html: description_html
+                description_plain: description_plain
+                id: id
+                name: name
+                nest_depth: nest_depth
+                nest_left: nest_left
+                nest_right: nest_right
+                parent_id: parent_id
+                slug: slug
 
         category[relationships]:
             label: bedard.shop::lang.api.form.relationships
@@ -32,27 +41,45 @@ tabs:
             span: right
             type: Bedard\Shop\FormWidgets\Relationships
 
+        #
+        # Categories
+        #
+        categories[is_enabled]:
+            label: bedard.shop::lang.api.form.endpoint
+            tab: bedard.shop::lang.categories.plural
+            comment: /api/bedard/shop/categories
+            type: switch
+
         categories[columns]:
             label: bedard.shop::lang.api.form.columns
             tab: bedard.shop::lang.categories.plural
             span: left
             type: checkboxlist
             options:
-                - description_html
-                - description_plain
-                - id
-                - name
-                - nest_depth
-                - nest_left
-                - nest_right
-                - parent_id
-                - slug
+                description_html: description_html
+                description_plain: description_plain
+                id: id
+                name: name
+                nest_depth: nest_depth
+                nest_left: nest_left
+                nest_right: nest_right
+                parent_id: parent_id
+                slug: slug
 
         categories[relationships]:
             label: bedard.shop::lang.api.form.relationships
             tab: bedard.shop::lang.categories.plural
             span: right
             type: Bedard\Shop\FormWidgets\Relationships
+
+        #
+        # Product
+        #
+        product[is_enabled]:
+            label: bedard.shop::lang.api.form.endpoint
+            tab: bedard.shop::lang.products.singular
+            comment: /api/bedard/shop/product/:slug
+            type: switch
 
         product[columns]:
             label: bedard.shop::lang.api.form.columns
@@ -73,6 +100,15 @@ tabs:
             tab: bedard.shop::lang.products.singular
             span: right
             type: Bedard\Shop\FormWidgets\Relationships
+
+        #
+        # Products
+        #
+        products[is_enabled]:
+            label: bedard.shop::lang.api.form.endpoint
+            tab: bedard.shop::lang.products.plural
+            comment: /api/bedard/shop/products
+            type: switch
 
         products[columns]:
             label: bedard.shop::lang.api.form.columns

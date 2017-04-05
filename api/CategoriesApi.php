@@ -1,6 +1,7 @@
 <?php namespace Bedard\Shop\Api;
 
 use Bedard\Shop\Classes\ApiController;
+use Bedard\Shop\Models\ApiSettings;
 use Bedard\Shop\Repositories\CategoryRepository;
 
 class CategoriesApi extends ApiController
@@ -14,8 +15,13 @@ class CategoriesApi extends ApiController
     public function index(CategoryRepository $repository)
     {
         $query = input();
+        $options = ApiSettings::getCategoriesOptions();
 
-        return $repository->get($query);
+        if (! $options['is_enabled']) {
+            return abort(403, 'Forbidden');
+        }
+
+        return $repository->get($query, $options);
     }
 
     /**
@@ -28,6 +34,11 @@ class CategoriesApi extends ApiController
     public function show(CategoryRepository $repository, $slug)
     {
         $query = input();
+        $options = ApiSettings::getCategoryOptions();
+
+        if (! $options['is_enabled']) {
+            return abort(403, 'Forbidden');
+        }
 
         return $repository->find($slug, $query);
     }
