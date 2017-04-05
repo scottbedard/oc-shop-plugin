@@ -39,6 +39,6 @@ class ProductsApi extends ApiController
             return abort(403, 'Forbidden');
         }
 
-        return $repository->find($slug, $query);
+        return $repository->find($slug, $query, $options);
     }
 }
