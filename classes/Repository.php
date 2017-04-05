@@ -34,7 +34,7 @@ class Repository
         ) {
             foreach ($options['relationships'] as $relationship) {
                 $query->with([
-                    $relationship => function($model) {
+                    $relationship => function ($model) {
                         // @todo: add controls to select columns of a relationship
                         $model->select('*');
                     },

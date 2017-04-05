@@ -32,6 +32,7 @@ class ProductRepositoryTest extends PluginTestCase
 
         $this->assertEquals($category->id, $data['categories'][0]['id']);
     }
+
     //
     // public function test_selecting_specific_categories_columns()
     // {
