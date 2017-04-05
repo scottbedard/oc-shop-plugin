@@ -217,4 +217,33 @@ class ProductTest extends PluginTestCase
         $this->assertEquals([$child->id, $parent->id], $direct);
         $this->assertEquals([], $inherited);
     }
+
+    public function test_syncing_all_products()
+    {
+        $foo = Factory::create(new Category);
+        $bar = Factory::create(new Category);
+        $baz = Factory::create(new Category);
+        $bar->makeChildOf($foo);
+        $baz->makeChildOf($bar);
+
+        $product = Factory::create(new Product);
+        $product->categories_field = [$baz->id];
+        $product->save();
+
+        $baz->makeChildOf($foo);
+        Product::syncAllCategories();
+
+        $direct = DB::table('bedard_shop_category_product')
+            ->select('category_id')
+            ->whereIsInherited(false)
+            ->lists('category_id');
+
+        $inherited = DB::table('bedard_shop_category_product')
+            ->select('category_id')
+            ->whereIsInherited(true)
+            ->lists('category_id');
+
+        $this->assertEquals([$baz->id], $direct);
+        $this->assertEquals([$foo->id], $inherited);
+    }
 }

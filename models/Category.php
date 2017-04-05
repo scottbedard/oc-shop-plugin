@@ -58,6 +58,29 @@ class Category extends Model
     }
 
     /**
+     * Get the parent ids of a given category.
+     *
+     * @param  integer                                  $id
+     * @param  October\Rain\Database\Collection|null    $categories
+     * @return array
+     */
+    public static function getParentIds($id, $categories = null)
+    {
+        if (! $categories) {
+            $categories = self::all();
+        }
+
+        $ancestors = [];
+        $category = $categories->find($id);
+        while ($category && $category->parent_id) {
+            $ancestors[] = $category->parent_id;
+            $category = $categories->find($category->parent_id);
+        }
+
+        return $ancestors;
+    }
+
+    /**
      * Set the plain text description_html.
      *
      * @return void

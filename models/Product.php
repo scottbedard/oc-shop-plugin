@@ -1,5 +1,6 @@
 <?php namespace Bedard\Shop\Models;
 
+use DB;
 use Model;
 
 /**
@@ -140,10 +141,9 @@ class Product extends Model
      *
      * @return bool
      */
-    protected function categoriesAreChanged()
+    protected function categoriesAreChanged($new)
     {
         $old = $this->categoriesField ?: [];
-        $new = $this->getOriginalPurgeValue('categories_field') ?: [];
         sort($old);
         sort($new);
 
@@ -190,7 +190,8 @@ class Product extends Model
     protected function saveCategories()
     {
         // if the categories haven't changed, do nothing
-        if (! $this->categoriesAreChanged()) {
+        $directIds = $this->getOriginalPurgeValue('categories_field') ?: [];
+        if (! $this->categoriesAreChanged($directIds)) {
             return;
         }
 
@@ -199,14 +200,13 @@ class Product extends Model
         $sync = [];
         $ancestorIds = [];
         $allCategories = Category::all();
-        $directIds = $this->getOriginalPurgeValue('categories_field') ?: [];
 
         // iterate over our direct ids
         foreach ($directIds as $directCategoryId) {
             // keep track of our direct ids for the eventual sync call.
             // we need to provide the pivot data, because by default
             // the sync function won't existing database entries.
-            $sync[$directCategoryId] = ['is_inherited' => false];
+            $sync[$directCategoryId] = ['is_inherited' => 0];
 
             // add all of our direct category's parent ids to our ancestors
             $branchIds = $allCategories
@@ -220,7 +220,7 @@ class Product extends Model
         // iterate over our ancestor ids and set their is_inherited flag
         foreach ($ancestorIds as $ancestorId) {
             $sync[$ancestorId] = [
-                'is_inherited' => ! in_array($ancestorId, $directIds),
+                'is_inherited' => in_array($ancestorId, $directIds) ? 0 : 1,
             ];
         }
 
@@ -370,6 +370,43 @@ class Product extends Model
     protected function setPlainDescription()
     {
         $this->description_plain = strip_tags($this->description_html);
+    }
+
+    protected function syncAllCategories()
+    {
+        // delete all inherited categories
+        DB::table('bedard_shop_category_product')
+            ->whereIsInherited(true)
+            ->delete();
+
+        // figure out what our branches are
+        $branches = [];
+        $categories = Category::select('id', 'parent_id')->get();
+        $categories->each(function($category) use (&$branches, $categories) {
+            $branches[$category->id] = Category::getParentIds($category->id, $categories);
+        });
+
+        // itterate over each product and build up an insert object
+        $insert = [];
+        $products = Product::with('categories')->select('id')->get();
+        foreach ($products as $product) {
+            foreach ($product->categories as $category) {
+                if (empty($branches[$category->id])) {
+                    continue;
+                }
+
+                foreach ($branches[$category->id] as $ancestorId) {
+                    $insert[] = [
+                        'category_id' => $ancestorId,
+                        'product_id' => $product->id,
+                        'is_inherited' => true,
+                    ];
+                }
+            }
+        }
+
+        // insert the new inherited categories
+        DB::table('bedard_shop_category_product')->insert($insert);
     }
 
     /**
