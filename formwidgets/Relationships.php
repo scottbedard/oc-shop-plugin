@@ -37,6 +37,7 @@ class Relationships extends FormWidgetBase
      */
     public function loadAssets()
     {
+        $this->addJs('/plugins/bedard/shop/assets/dist/vendor.min.js', 'Bedard.Shop');
         $this->addJs('/plugins/bedard/shop/assets/dist/relationships.min.js', 'Bedard.Shop');
     }
 
