@@ -28,7 +28,7 @@ class Repository
      *
      * @param  \October\Rain\Database\Builder   $query
      * @param  array                            $options
-     * @param  integer                          $total
+     * @param  int                          $total
      * @return void
      */
     protected function paginateResults(&$query, array $options, $total)
