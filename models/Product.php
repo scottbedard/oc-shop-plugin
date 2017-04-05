@@ -382,13 +382,13 @@ class Product extends Model
         // figure out what our branches are
         $branches = [];
         $categories = Category::select('id', 'parent_id')->get();
-        $categories->each(function($category) use (&$branches, $categories) {
+        $categories->each(function ($category) use (&$branches, $categories) {
             $branches[$category->id] = Category::getParentIds($category->id, $categories);
         });
 
         // itterate over each product and build up an insert object
         $insert = [];
-        $products = Product::with('categories')->select('id')->get();
+        $products = self::with('categories')->select('id')->get();
         foreach ($products as $product) {
             foreach ($product->categories as $category) {
                 if (empty($branches[$category->id])) {

@@ -60,7 +60,7 @@ class Category extends Model
     /**
      * Get the parent ids of a given category.
      *
-     * @param  integer                                  $id
+     * @param  int                                  $id
      * @param  October\Rain\Database\Collection|null    $categories
      * @return array
      */

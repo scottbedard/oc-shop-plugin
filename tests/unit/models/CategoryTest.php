@@ -3,7 +3,6 @@
 use Bedard\Shop\Classes\Factory;
 use Bedard\Shop\Models\Category;
 use Bedard\Shop\Models\Product;
-use DB;
 use PluginTestCase;
 
 class CategoryTest extends PluginTestCase
