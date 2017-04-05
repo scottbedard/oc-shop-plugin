@@ -15,7 +15,7 @@ class CategoryRepositoryTest extends PluginTestCase
         $repository = new CategoryRepository;
         $category = Factory::create(new Category);
 
-        $data = $repository->find($category->slug, ['columns' => ['name']])->toArray();
+        $data = $repository->find($category->slug, [], ['columns' => ['name']])->toArray();
 
         $this->assertFalse(array_key_exists('id', $data));
         $this->assertTrue(array_key_exists('name', $data));
@@ -28,7 +28,7 @@ class CategoryRepositoryTest extends PluginTestCase
         $product = Factory::create(new Product);
         $product->categories()->attach($category);
 
-        $data = $repository->find($category->slug, ['relationships' => ['products']])->toArray();
+        $data = $repository->find($category->slug, [], ['relationships' => ['products']])->toArray();
 
         $this->assertEquals($product->id, $data['products'][0]['id']);
     }

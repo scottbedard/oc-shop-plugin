@@ -50,4 +50,24 @@ class ApiSettings extends Model
     {
         return self::get('category') ?: [];
     }
+
+    /**
+     * Get options for products endpoint.
+     *
+     * @return array
+     */
+    public static function getProductsOptions()
+    {
+        return self::get('products') ?: [];
+    }
+
+    /**
+     * Get options for product endpoint.
+     *
+     * @return array
+     */
+    public static function getProductOptions()
+    {
+        return self::get('product') ?: [];
+    }
 }

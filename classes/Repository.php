@@ -15,7 +15,7 @@ class Repository
             array_key_exists('columns', $options) &&
             is_array($options['columns'])
         ) {
-            $query->select($options['columns']);
+            $query->addSelect($options['columns']);
         }
     }
 
@@ -33,7 +33,12 @@ class Repository
             is_array($options['relationships'])
         ) {
             foreach ($options['relationships'] as $relationship) {
-                $query->with($relationship);
+                $query->with([
+                    $relationship => function($model) {
+                        // @todo: add controls to select columns of a relationship
+                        $model->select('*');
+                    },
+                ]);
             }
         }
     }

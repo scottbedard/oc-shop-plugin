@@ -87,13 +87,13 @@ tabs:
             span: left
             type: checkboxlist
             options:
-                - base_price
-                - description_html
-                - description_plain
-                - id
-                - name
-                - price
-                - slug
+                base_price: base_price
+                description_html: description_html
+                description_plain: description_plain
+                id: id
+                name: name
+                price: price
+                slug: slug
 
         product[relationships]:
             label: bedard.shop::lang.api.form.relationships
@@ -116,13 +116,13 @@ tabs:
             span: left
             type: checkboxlist
             options:
-                - base_price
-                - description_html
-                - description_plain
-                - id
-                - name
-                - price
-                - slug
+                base_price: base_price
+                description_html: description_html
+                description_plain: description_plain
+                id: id
+                name: name
+                price: price
+                slug: slug
 
         products[relationships]:
             label: bedard.shop::lang.api.form.relationships

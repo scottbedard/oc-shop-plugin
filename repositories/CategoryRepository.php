@@ -9,10 +9,11 @@ class CategoryRepository extends Repository
      * Find a category.
      *
      * @param  string                       $slug
+     * @param  array                        $params
      * @param  array                        $options
      * @return Bedard\Shop\Models\Category
      */
-    public function find($slug, array $options = [])
+    public function find($slug, array $params = [], array $options = [])
     {
         $query = Category::whereSlug($slug);
         $this->selectColumns($query, $options);

@@ -49,6 +49,6 @@ class Relationships extends FormWidgetBase
         $value = json_decode($value, true);
         $value['relationships'] = array_filter($value['relationships']);
 
-        return $value;
+        return $value['relationships'];
     }
 }

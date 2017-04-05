@@ -9,15 +9,15 @@ class ProductRepository extends Repository
      * Find a product.
      *
      * @param  string                       $slug
+     * @param  array                        $params
      * @param  array                        $options
      * @return Bedard\Shop\Models\Product
      */
-    public function find($slug, array $options = [])
+    public function find($slug, array $params = [], array $options = [])
     {
         $query = Product::whereSlug($slug);
-
-        // eager load related models
-        $query = $this->queryWith($query, $options);
+        $this->selectColumns($query, $options);
+        $this->withRelationships($query, $options);
 
         return $query->firstOrFail();
     }
@@ -25,20 +25,15 @@ class ProductRepository extends Repository
     /**
      * Fetch products.
      *
+     * @param  array                            $params
      * @param  array                            $options
      * @return October\Rain\Database\Collection
      */
-    public function get(array $options = [])
+    public function get(array $params = [], array $options = [])
     {
         $query = (new Product)->newQuery();
-
-        // apply categories scope
-        if (array_key_exists('categories', $options)) {
-            $query->inCategories($options['categories']);
-        }
-
-        // eager load related models
-        $query = $this->queryWith($query, $options);
+        $this->selectColumns($query, $options);
+        $this->withRelationships($query, $options);
 
         return $query->get();
     }
