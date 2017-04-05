@@ -1,10 +1,10 @@
 <?php namespace Bedard\Shop\Controllers;
 
-use BackendMenu;
 use Backend\Classes\Controller;
+use BackendMenu;
 
 /**
- * Carts Back-end Controller
+ * Carts Back-end Controller.
  */
 class Carts extends Controller
 {
