@@ -2,9 +2,15 @@
 
 use Bedard\Shop\Classes\Repository;
 use Bedard\Shop\Models\Cart;
+use Session;
 
 class CartRepository extends Repository
 {
+    /**
+     * @var string  Cart persistence key.
+     */
+    const CART_KEY = 'bedard_shop_cart';
+
     /**
      * Add an inventory to the cart.
      *
@@ -23,7 +29,14 @@ class CartRepository extends Repository
      */
     public function create()
     {
-        return Cart::create();
+        $cart = Cart::create();
+
+        Session::put(self::CART_KEY, [
+            'id' => $cart->id,
+            'token' => $cart->token,
+        ]);
+
+        return $cart;
     }
 
     /**
@@ -33,7 +46,17 @@ class CartRepository extends Repository
      */
     public function find()
     {
-        // @todo
+        $token = $this->getToken();
+
+        if ($token) {
+            $cart = Cart::whereToken($token['token'])->find($token['id']);
+
+            if ($cart) {
+                return $cart;
+            }
+        }
+
+        return $this->create();
     }
 
     /**
@@ -44,5 +67,17 @@ class CartRepository extends Repository
     public function findOrCreate()
     {
         return $this->find() ?: $this->create();
+    }
+
+    /**
+     * Get the cart token.
+     *
+     * @return string
+     */
+    public function getToken()
+    {
+        $token = Session::get(self::CART_KEY);
+
+        return $token;
     }
 }
