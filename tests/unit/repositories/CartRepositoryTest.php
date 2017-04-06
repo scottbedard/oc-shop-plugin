@@ -1,6 +1,5 @@
 <?php namespace Bedard\Shop\Tests\Unit\Repositories;
 
-use Bedard\Shop\Classes\Factory;
 use Bedard\Shop\Models\Cart;
 use Bedard\Shop\Repositories\CartRepository;
 use PluginTestCase;

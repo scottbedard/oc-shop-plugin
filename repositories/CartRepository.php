@@ -14,8 +14,8 @@ class CartRepository extends Repository
     /**
      * Add an inventory to the cart.
      *
-     * @param integer $inventoryId
-     * @param integer $quantity
+     * @param int $inventoryId
+     * @param int $quantity
      */
     public function add($inventoryId, $quantity)
     {
