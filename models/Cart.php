@@ -34,4 +34,24 @@ class Cart extends Model
     public $morphMany = [];
     public $attachOne = [];
     public $attachMany = [];
+
+    /**
+     * Before create.
+     *
+     * @return void
+     */
+    public function beforeCreate()
+    {
+        $this->generateToken();
+    }
+
+    /**
+     * Generate a random token.
+     *
+     * @return void
+     */
+    protected function generateToken()
+    {
+        $this->token = str_random(40);
+    }
 }
