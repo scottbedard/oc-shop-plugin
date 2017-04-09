@@ -140,7 +140,7 @@ class Inventory extends Model
      */
     public function scopeIsEnabled($query)
     {
-        return $query->whereHas('product', function($product) {
+        return $query->whereHas('product', function ($product) {
             $product->isEnabled();
         });
     }
