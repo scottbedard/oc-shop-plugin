@@ -116,8 +116,8 @@ class CartRepository extends Repository
     /**
      * Add or remove quantity to an existing CartItem.
      *
-     * @param  int                          $inventoryId
-     * @param  int                          $quantity
+     * @param  int                              $inventoryId
+     * @param  int                              $quantity
      * @param  \Bedard\Shop\Models\Inventory    $inventory
      * @param  \Bedard\Shop\Models\CartItem     $item
      * @return \Bedard\Shop\Models\CartItem
