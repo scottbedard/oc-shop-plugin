@@ -3,10 +3,19 @@
 use Bedard\Shop\Models\Cart;
 use Bedard\Shop\Repositories\CartRepository;
 use PluginTestCase;
+use Session;
 
 class CartRepositoryTest extends PluginTestCase
 {
     protected $refreshPlugins = ['Bedard.Shop'];
+
+    public function test_find_returns_null_when_no_cart_is_found()
+    {
+        $repository = new CartRepository;
+        Session::forget('bedard_shop_cart');
+
+        $this->assertEquals(null, $repository->find());
+    }
 
     public function test_creating_a_cart()
     {

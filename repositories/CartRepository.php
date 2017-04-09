@@ -56,7 +56,7 @@ class CartRepository extends Repository
             }
         }
 
-        return $this->create();
+        return null;
     }
 
     /**
@@ -67,6 +67,11 @@ class CartRepository extends Repository
     public function findOrCreate()
     {
         return $this->find() ?: $this->create();
+    }
+
+    public function findOrNew()
+    {
+        return $this->find() ?: new Cart;
     }
 
     /**

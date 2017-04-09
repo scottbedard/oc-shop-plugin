@@ -13,6 +13,17 @@ class Cart extends Model
     public $table = 'bedard_shop_carts';
 
     /**
+     * @var array Default attributes
+     */
+    public $attributes = [
+        'id' => null,
+        'created_at' => null,
+        'token' => null,
+        'total' => 0,
+        'updated_at' => null,
+    ];
+
+    /**
      * @var array Guarded fields
      */
     protected $guarded = ['*'];
