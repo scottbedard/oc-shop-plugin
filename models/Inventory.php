@@ -72,7 +72,7 @@ class Inventory extends Model
     public $hasMany = [
         'cartItems' => [
             'Bedard\Shop\Models\CartItem',
-        ]
+        ],
     ];
 
     /**

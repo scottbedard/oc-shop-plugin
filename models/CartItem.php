@@ -3,7 +3,7 @@
 use Model;
 
 /**
- * CartItem Model
+ * CartItem Model.
  */
 class CartItem extends Model
 {

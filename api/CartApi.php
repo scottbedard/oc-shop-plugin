@@ -9,7 +9,7 @@ class CartApi extends ApiController
      *
      * @param  CartRepository           $repository
      * @param  string                   $slug
-     * @param  integer                  $quantity
+     * @param  int                  $quantity
      * @return \Bedard\Shop\Models\Cart
      */
     public function add(CartRepository $repository, $slug, $quantity = 1)
