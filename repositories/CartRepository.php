@@ -12,6 +12,11 @@ class CartRepository extends Repository
     const CART_KEY = 'bedard_shop_cart';
 
     /**
+     * @var \Bedard\Shop\Models\Cart|null
+     */
+    protected $cart = null;
+
+    /**
      * Add an inventory to the cart.
      *
      * @param int $inventoryId
@@ -46,6 +51,10 @@ class CartRepository extends Repository
      */
     public function find()
     {
+        if ($this->cart) {
+            return $this->cart;
+        }
+
         $token = $this->getToken();
 
         if ($token) {

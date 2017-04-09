@@ -85,6 +85,9 @@ class Product extends Model
     ];
 
     public $hasMany = [
+        'cartItems' => [
+            'Bedard\Shop\Models\CartItem',
+        ],
         'inventories' => [
             'Bedard\Shop\Models\Inventory',
             'delete' => true,
