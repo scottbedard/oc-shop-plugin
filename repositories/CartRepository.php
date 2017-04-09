@@ -2,6 +2,8 @@
 
 use Bedard\Shop\Classes\Repository;
 use Bedard\Shop\Models\Cart;
+use Bedard\Shop\Models\CartItem;
+use Bedard\Shop\Models\Inventory;
 use Session;
 
 class CartRepository extends Repository
@@ -25,6 +27,22 @@ class CartRepository extends Repository
     public function add($inventoryId, $quantity)
     {
         $cart = $this->findOrCreate();
+        $inventory = Inventory::isEnabled()->findOrFail($inventoryId);
+
+        if ($item = $cart->items()->whereInventoryId($inventoryId)->first()) {
+            return $this->update($inventoryId, $quantity, $inventory, $item);
+        }
+
+        if ($quantity > $inventory->quantity) {
+            $quantity = $inventory->quantity;
+        }
+
+        return CartItem::create([
+            'cart_id' => $cart->id,
+            'inventory_id' => $inventory->id,
+            'product_id' => $inventory->product_id,
+            'quantity' => $quantity,
+        ]);
     }
 
     /**
@@ -93,5 +111,37 @@ class CartRepository extends Repository
         $token = Session::get(self::CART_KEY);
 
         return $token;
+    }
+
+    /**
+     * Add or remove quantity to an existing CartItem.
+     *
+     * @param  integer                          $inventoryId
+     * @param  integer                          $quantity
+     * @param  \Bedard\Shop\Models\Inventory    $inventory
+     * @param  \Bedard\Shop\Models\CartItem     $item
+     * @return \Bedard\Shop\Models\CartItem
+     */
+    public function update($inventoryId, $quantity, Inventory $inventory = null, CartItem $item = null)
+    {
+        $cart = $this->findOrCreate();
+
+        if (! $inventory) {
+            $inventory = Inventory::isEnabled()->findOrFail($inventoryId);
+        }
+
+        if (! $item) {
+            $item = $cart->items()->whereInventoryId($inventoryId)->firstOrFail();
+        }
+
+        $quantity += $item->quantity;
+        if ($quantity > $inventory->quantity) {
+            $quantity = $inventory->quantity;
+        }
+
+        $item->quantity = $quantity;
+        $item->save();
+
+        return $item;
     }
 }

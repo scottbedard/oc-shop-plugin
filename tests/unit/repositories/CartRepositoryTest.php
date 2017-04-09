@@ -1,6 +1,9 @@
 <?php namespace Bedard\Shop\Tests\Unit\Repositories;
 
+use Bedard\Shop\Classes\Factory;
 use Bedard\Shop\Models\Cart;
+use Bedard\Shop\Models\Inventory;
+use Bedard\Shop\Models\Product;
 use Bedard\Shop\Repositories\CartRepository;
 use PluginTestCase;
 use Session;
@@ -43,5 +46,45 @@ class CartRepositoryTest extends PluginTestCase
         $bar = $repository->findOrCreate();
 
         $this->assertEquals($foo->id, $bar->id);
+    }
+
+    public function test_adding_a_new_item_to_a_cart()
+    {
+        $repository = new CartRepository;
+        $product = Factory::create(new Product);
+        $inventory = Factory::create(new Inventory, ['product_id' => $product->id, 'quantity' => 5]);
+
+        $item = $repository->add($inventory->id, 1);
+
+        $cart = $repository->find();
+        $this->assertEquals($item->id, $cart->items()->first()->id);
+    }
+
+    public function test_adding_an_existing_item_to_a_cart()
+    {
+        $repository = new CartRepository;
+        $product = Factory::create(new Product);
+        $inventory = Factory::create(new Inventory, ['product_id' => $product->id, 'quantity' => 5]);
+
+        $item = $repository->add($inventory->id, 1);
+        $repository->add($inventory->id, 1);
+        $cart = $repository->find();
+
+        $this->assertEquals(1, $cart->items()->count());
+        $this->assertEquals(2, $cart->items()->first()->quantity);
+    }
+
+    public function test_updating_an_item_in_the_cart()
+    {
+        $repository = new CartRepository;
+        $product = Factory::create(new Product);
+        $inventory = Factory::create(new Inventory, ['product_id' => $product->id, 'quantity' => 5]);
+
+        $item = $repository->add($inventory->id, 1);
+        $repository->update($inventory->id, 1);
+        $cart = $repository->find();
+
+        $this->assertEquals(1, $cart->items()->count());
+        $this->assertEquals(2, $cart->items()->first()->quantity);
     }
 }

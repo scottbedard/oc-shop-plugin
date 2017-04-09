@@ -15,6 +15,17 @@ class CartItem extends Model
     public $table = 'bedard_shop_cart_items';
 
     /**
+     * @var array Attribute casting
+     */
+    protected $casts = [
+        'cart_id' => 'integer',
+        'id' => 'integer',
+        'inventory_id' => 'integer',
+        'product_id' => 'integer',
+        'quantity' => 'integer',
+    ];
+
+    /**
      * @var array Date fields
      */
     protected $dates = ['deleted_at'];
@@ -27,7 +38,12 @@ class CartItem extends Model
     /**
      * @var array Fillable fields
      */
-    protected $fillable = [];
+    protected $fillable = [
+        'cart_id',
+        'inventory_id',
+        'product_id',
+        'quantity',
+    ];
 
     /**
      * @var array Relations
