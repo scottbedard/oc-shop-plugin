@@ -32,6 +32,7 @@ class Inventory extends Model
      * @var array Fillable fields
      */
     protected $fillable = [
+        'product_id',
         'quantity',
         'sku',
         'value_ids',
@@ -129,5 +130,18 @@ class Inventory extends Model
         $values = $this->getOriginalPurgeValue('value_ids') ?: [];
 
         $this->values()->sync($values);
+    }
+
+    /**
+     * Find inventories with an enabled product.
+     *
+     * @param  \October\Rain\Database\Builder   $query
+     * @return \October\Rain\Database\Builder
+     */
+    public function scopeIsEnabled($query)
+    {
+        return $query->whereHas('product', function($product) {
+            $product->isEnabled();
+        });
     }
 }

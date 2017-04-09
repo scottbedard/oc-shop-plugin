@@ -3,6 +3,7 @@
 use Bedard\Shop\Classes\Factory;
 use Bedard\Shop\Models\Inventory;
 use Bedard\Shop\Models\Option;
+use Bedard\Shop\Models\Product;
 use October\Rain\Exception\ValidationException;
 use PluginTestCase;
 
@@ -33,5 +34,17 @@ class InventoryTest extends PluginTestCase
 
         $inventory = Factory::create(new Inventory, ['value_ids' => [1, 2]]);
         $this->assertEquals(2, $inventory->values()->count());
+    }
+
+    public function test_finding_enabled_inventories()
+    {
+        $enabled = Factory::create(new Product, ['is_enabled' => true]);
+        $disabled = Factory::create(new Product, ['is_enabled' => false]);
+        $inv1 = Factory::create(new Inventory, ['product_id' => $enabled->id]);
+        $inv2 = Factory::create(new Inventory, ['product_id' => $disabled->id]);
+
+        $inventories = Inventory::isEnabled()->get();
+        $this->assertEquals(1, count($inventories));
+        $this->assertEquals($inv1->id, $inventories->first()->id);
     }
 }
