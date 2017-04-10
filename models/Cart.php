@@ -18,9 +18,18 @@ class Cart extends Model
     public $attributes = [
         'id' => null,
         'created_at' => null,
+        'item_count' => 0,
+        'item_total' => 0,
         'token' => null,
-        'total' => 0,
         'updated_at' => null,
+    ];
+
+    /**
+     * @var array Attribute casting
+     */
+    protected $casts = [
+        'item_count' => 'integer',
+        'item_total' => 'float',
     ];
 
     /**

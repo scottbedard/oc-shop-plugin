@@ -2,6 +2,7 @@
 
 use Bedard\Shop\Classes\ApiController;
 use Bedard\Shop\Repositories\CartRepository;
+use Bedard\Shop\Models\ApiSettings;
 
 class CartApi extends ApiController
 {
@@ -27,7 +28,13 @@ class CartApi extends ApiController
      */
     public function index(CartRepository $repository)
     {
-        return $repository->findOrNew();
+        $options = ApiSettings::getCartOptions();
+
+        if (! array_key_exists('is_enabled', $options) || ! $options['is_enabled']) {
+            return abort(403, 'Forbidden');
+        }
+
+        return $repository->findOrNew($options);
     }
 
     /**

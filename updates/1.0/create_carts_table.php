@@ -12,7 +12,8 @@ class CreateCartsTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('token', 40)->index();
-            $table->decimal('total', 10, 2)->unsigned()->default(0);
+            $table->integer('item_count')->unsigned();
+            $table->decimal('item_total', 10, 2)->unsigned();
             $table->timestamps();
         });
     }

@@ -11,6 +11,33 @@ fields:
 tabs:
     fields:
         #
+        # Cart
+        #
+        cart[is_enabled]:
+            label: bedard.shop::lang.api.form.endpoint
+            tab: bedard.shop::lang.carts.singular
+            comment: /api/bedard/shop/cart
+            type: switch
+
+        cart[columns]:
+            label: bedard.shop::lang.api.form.columns
+            tab: bedard.shop::lang.carts.singular
+            span: left
+            type: checkboxlist
+            options:
+                created_at: created_at
+                id: id
+                item_count: item_count
+                item_total: item_total
+                token: token
+                updated_at: updated_at
+
+        cart[relationships]:
+            label: bedard.shop::lang.api.form.relationships
+            tab: bedard.shop::lang.carts.singular
+            span: right
+            type: Bedard\Shop\FormWidgets\Relationships
+        #
         # Categories
         #
         category[is_enabled]:

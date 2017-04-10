@@ -32,6 +32,16 @@ class ApiSettings extends Model
     }
 
     /**
+     * Get options for cart endpoint.
+     *
+     * @return array
+     */
+    public static function getCartOptions()
+    {
+        return self::get('cart') ?: [];
+    }
+
+    /**
      * Get options for categories endpoint.
      *
      * @return array

@@ -65,9 +65,10 @@ class CartRepository extends Repository
     /**
      * Find the current cart.
      *
+     * @param  array                    $options
      * @return \Bedard\Shop\Models\Cart|null
      */
-    public function find()
+    public function find($options)
     {
         if ($this->cart) {
             return $this->cart;
@@ -76,9 +77,11 @@ class CartRepository extends Repository
         $token = $this->getToken();
 
         if ($token) {
-            $cart = Cart::whereToken($token['token'])->find($token['id']);
+            $query = Cart::whereToken($token['token']);
+            $this->selectColumns($query, $options);
+            $this->withRelationships($query, $options);
 
-            if ($cart) {
+            if ($cart = $query->find($token['id'])) {
                 return $cart;
             }
         }
@@ -89,16 +92,23 @@ class CartRepository extends Repository
     /**
      * Find the current cart, or create a new one.
      *
+     * @param  array                    $options
      * @return \Bedard\Shop\Models\Cart
      */
-    public function findOrCreate()
+    public function findOrCreate($options)
     {
-        return $this->find() ?: $this->create();
+        return $this->find($options) ?: $this->create();
     }
 
-    public function findOrNew()
+    /**
+     * Find the current cart or instantiate a new one.
+     *
+     * @param  array                    $options
+     * @return \Bedard\Shop\Models\Cart
+     */
+    public function findOrNew($options)
     {
-        return $this->find() ?: new Cart;
+        return $this->find($options) ?: new Cart;
     }
 
     /**
