@@ -1,8 +1,8 @@
 <?php namespace Bedard\Shop\Api;
 
 use Bedard\Shop\Classes\ApiController;
-use Bedard\Shop\Repositories\CartRepository;
 use Bedard\Shop\Models\ApiSettings;
+use Bedard\Shop\Repositories\CartRepository;
 
 class CartApi extends ApiController
 {
