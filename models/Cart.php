@@ -1,6 +1,5 @@
 <?php namespace Bedard\Shop\Models;
 
-use Bedard\Shop\Models\Inventory;
 use Model;
 
 /**
@@ -58,8 +57,8 @@ class Cart extends Model
     /**
      * Add inventory to the cart.
      *
-     * @param  integer $inventoryId
-     * @param  integer $quantity
+     * @param  int $inventoryId
+     * @param  int $quantity
      */
     public function addInventory($inventoryId, $quantity = 1)
     {
@@ -83,8 +82,8 @@ class Cart extends Model
     /**
      * Delete an inventory from the cart.
      *
-     * @param  integer $inventoryId
-     * @param  integer $quantity
+     * @param  int $inventoryId
+     * @param  int $quantity
      */
     public function deleteInventory($inventoryId)
     {
@@ -105,7 +104,7 @@ class Cart extends Model
     /**
      * Get or instantiate an inventory.
      *
-     * @param  integer $inventoryId
+     * @param  int $inventoryId
      * @return \Bedard\Shop\Models\Inventory
      */
     public function getItemByInventoryId($inventoryId)
@@ -118,7 +117,7 @@ class Cart extends Model
             'product_id' => $inventory->product_id,
         ]);
 
-        $item->bindEvent('model.beforeSave', function() use ($inventory, $item) {
+        $item->bindEvent('model.beforeSave', function () use ($inventory, $item) {
             if ($item->quantity > $inventory->quantity) {
                 $item->quantity = $inventory->quantity;
             }
@@ -130,8 +129,8 @@ class Cart extends Model
     /**
      * Set an inventory.
      *
-     * @param integer $inventoryId
-     * @param integer $quantity
+     * @param int $inventoryId
+     * @param int $quantity
      */
     public function setInventory($inventoryId, $quantity)
     {
