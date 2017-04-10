@@ -27,22 +27,8 @@ class CartRepository extends Repository
     public function add($inventoryId, $quantity)
     {
         $cart = $this->findOrCreate();
-        $inventory = Inventory::isEnabled()->findOrFail($inventoryId);
 
-        if ($item = $cart->items()->whereInventoryId($inventoryId)->first()) {
-            return $this->update($inventoryId, $quantity, $inventory, $item);
-        }
-
-        if ($quantity > $inventory->quantity) {
-            $quantity = $inventory->quantity;
-        }
-
-        return CartItem::create([
-            'cart_id' => $cart->id,
-            'inventory_id' => $inventory->id,
-            'product_id' => $inventory->product_id,
-            'quantity' => $quantity,
-        ]);
+        return $cart->addInventory($inventoryId, $quantity);
     }
 
     /**
@@ -68,7 +54,7 @@ class CartRepository extends Repository
      * @param  array                    $options
      * @return \Bedard\Shop\Models\Cart|null
      */
-    public function find($options)
+    public function find($options = [])
     {
         if ($this->cart) {
             return $this->cart;
@@ -95,7 +81,7 @@ class CartRepository extends Repository
      * @param  array                    $options
      * @return \Bedard\Shop\Models\Cart
      */
-    public function findOrCreate($options)
+    public function findOrCreate($options = [])
     {
         return $this->find($options) ?: $this->create();
     }
@@ -106,7 +92,7 @@ class CartRepository extends Repository
      * @param  array                    $options
      * @return \Bedard\Shop\Models\Cart
      */
-    public function findOrNew($options)
+    public function findOrNew($options = [])
     {
         return $this->find($options) ?: new Cart;
     }
@@ -126,32 +112,14 @@ class CartRepository extends Repository
     /**
      * Add or remove quantity to an existing CartItem.
      *
-     * @param  int                              $inventoryId
-     * @param  int                              $quantity
-     * @param  \Bedard\Shop\Models\Inventory    $inventory
-     * @param  \Bedard\Shop\Models\CartItem     $item
+     * @param  int                          $inventoryId
+     * @param  int                          $quantity
      * @return \Bedard\Shop\Models\CartItem
      */
-    public function update($inventoryId, $quantity, Inventory $inventory = null, CartItem $item = null)
+    public function update($inventoryId, $quantity)
     {
         $cart = $this->findOrCreate();
 
-        if (! $inventory) {
-            $inventory = Inventory::isEnabled()->findOrFail($inventoryId);
-        }
-
-        if (! $item) {
-            $item = $cart->items()->whereInventoryId($inventoryId)->firstOrFail();
-        }
-
-        $quantity += $item->quantity;
-        if ($quantity > $inventory->quantity) {
-            $quantity = $inventory->quantity;
-        }
-
-        $item->quantity = $quantity;
-        $item->save();
-
-        return $item;
+        return $cart->setInventory($inventoryId, $quantity);
     }
 }

@@ -15,6 +15,13 @@ class CartItem extends Model
     public $table = 'bedard_shop_cart_items';
 
     /**
+     * @var array Default attributes
+     */
+    public $attributes = [
+        'quantity' => 0,
+    ];
+
+    /**
      * @var array Attribute casting
      */
     protected $casts = [
