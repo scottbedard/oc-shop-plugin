@@ -63,24 +63,11 @@ class Cart extends Model
      */
     public function addInventory($inventoryId, $quantity = 1)
     {
-        $inventory = Inventory::findOrFail($inventoryId);
-
-        $item = $this->items()->firstOrNew([
-            'cart_id' => $this->id,
-            'inventory_id' => $inventoryId,
-            'product_id' => $inventory->product_id,
-        ]);
+        $item = $this->getItemByInventoryId($inventoryId);
 
         $item->quantity += $quantity;
 
-        if ($item->quantity > $inventory->quantity) {
-            $item->quantity = $inventory->quantity;
-        }
-
-        $item->save();
-        $this->syncItems();
-
-        return $item;
+        return $this->saveItem($item);
     }
 
     /**
@@ -116,12 +103,12 @@ class Cart extends Model
     }
 
     /**
-     * Set an inventory.
+     * Get or instantiate an inventory.
      *
-     * @param integer $inventoryId
-     * @param integer $quantity
+     * @param  integer $inventoryId
+     * @return \Bedard\Shop\Models\Inventory
      */
-    public function setInventory($inventoryId, $quantity)
+    public function getItemByInventoryId($inventoryId)
     {
         $inventory = Inventory::findOrFail($inventoryId);
 
@@ -131,12 +118,38 @@ class Cart extends Model
             'product_id' => $inventory->product_id,
         ]);
 
+        $item->bindEvent('model.beforeSave', function() use ($inventory, $item) {
+            if ($item->quantity > $inventory->quantity) {
+                $item->quantity = $inventory->quantity;
+            }
+        });
+
+        return $item;
+    }
+
+    /**
+     * Set an inventory.
+     *
+     * @param integer $inventoryId
+     * @param integer $quantity
+     */
+    public function setInventory($inventoryId, $quantity)
+    {
+        $item = $this->getItemByInventoryId($inventoryId);
+
         $item->quantity = $quantity;
 
-        if ($item->quantity > $inventory->quantity) {
-            $item->quantity = $inventory->quantity;
-        }
+        return $this->saveItem($item);
+    }
 
+    /**
+     * Save an item and sync the cart.
+     *
+     * @param  \Bedard\Shop\Models\Item     $item
+     * @return \Bedard\Shop\Models\Item
+     */
+    public function saveItem($item)
+    {
         $item->save();
         $this->syncItems();
 
