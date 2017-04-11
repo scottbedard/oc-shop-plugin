@@ -17,6 +17,18 @@ class CartTest extends PluginTestCase
         $this->assertEquals(40, strlen($cart->token));
     }
 
+    public function test_saving_the_cart_updates_the_update_count()
+    {
+        $cart = Factory::fill(new Cart);
+        $this->assertEquals(0, $cart->update_count);
+
+        $cart->save();
+        $this->assertEquals(1, $cart->update_count);
+
+        $cart->save();
+        $this->assertEquals(2, $cart->update_count);
+    }
+
     public function test_adding_an_item_syncs_the_cart()
     {
         $product = Factory::create(new Product, ['base_price' => 0.5]);

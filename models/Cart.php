@@ -18,6 +18,7 @@ class Cart extends Model
     public $attributes = [
         'id' => null,
         'created_at' => null,
+        'update_count' => 0,
         'item_count' => 0,
         'item_total' => 0,
         'token' => null,
@@ -28,6 +29,7 @@ class Cart extends Model
      * @var array Attribute casting
      */
     protected $casts = [
+        'update_count' => 'integer',
         'item_count' => 'integer',
         'item_total' => 'float',
     ];
@@ -41,6 +43,7 @@ class Cart extends Model
      * @var array Fillable fields
      */
     protected $fillable = [
+        'update_count',
         'item_count',
         'item_total',
     ];
@@ -77,6 +80,16 @@ class Cart extends Model
     public function beforeCreate()
     {
         $this->generateToken();
+    }
+
+    /**
+     * Before save.
+     *
+     * @return void
+     */
+    public function beforeSave()
+    {
+        $this->incrementUpdateCount();
     }
 
     /**
@@ -124,6 +137,16 @@ class Cart extends Model
         });
 
         return $item;
+    }
+
+    /**
+     * Increment the update count.
+     *
+     * @return void
+     */
+    protected function incrementUpdateCount()
+    {
+        $this->update_count++;
     }
 
     /**
