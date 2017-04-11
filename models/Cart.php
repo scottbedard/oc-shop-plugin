@@ -140,7 +140,7 @@ class Cart extends Model
     /**
      * Remove an item from the cart.
      *
-     * @param  integer                      $itemId
+     * @param  int                      $itemId
      * @return \Bedard\Shop\Models\CartItem
      */
     public function removeItem($itemId)
