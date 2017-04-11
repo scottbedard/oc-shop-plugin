@@ -68,17 +68,19 @@ class CartTest extends PluginTestCase
         $this->assertEquals(1, $cart->items()->whereInventoryId($inventory->id)->first()->quantity);
     }
 
-    public function test_deleting_an_inventory()
+    public function test_removing_an_item()
     {
         $product = Factory::create(new Product, ['base_price' => 0.5]);
         $inventory = Factory::create(new Inventory, ['product_id' => $product->id, 'quantity' => 5]);
         $cart = Factory::create(new Cart);
 
-        $cart->addInventory($inventory->id, 3);
-        $cart->deleteInventory($inventory->id);
+        $item = $cart->addInventory($inventory->id);
+        $this->assertEquals(1, $cart->items()->count());
+        $updateCount = $cart->update_count;
 
-        $this->assertEquals(0, $cart->item_count);
-        $this->assertEquals(0, $cart->item_total);
-        $this->assertEquals(0, $cart->items->count());
+        $cart->removeItem($item->id);
+        $this->assertEquals(0, $cart->items()->count());
+        $this->assertEquals(1, $cart->items()->withTrashed()->count());
+        $this->assertEquals($updateCount + 1, $cart->update_count);
     }
 }

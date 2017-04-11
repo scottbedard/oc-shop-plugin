@@ -2,6 +2,7 @@
 
 use Bedard\Shop\Classes\Factory;
 use Bedard\Shop\Models\Cart;
+use Bedard\Shop\Models\CartItem;
 use Bedard\Shop\Models\Inventory;
 use Bedard\Shop\Models\Product;
 use Bedard\Shop\Repositories\CartRepository;
@@ -74,5 +75,19 @@ class CartRepositoryTest extends PluginTestCase
         $cart = $repository->find();
 
         $this->assertEquals(2, $cart->items()->first()->quantity);
+    }
+
+    public function test_removing_an_item_from_the_cart()
+    {
+        $repository = new CartRepository;
+        $product = Factory::create(new Product);
+        $inventory = Factory::create(new Inventory, ['product_id' => $product->id, 'quantity' => 5]);
+
+        $item = $repository->add($inventory->id, 1);
+        $this->assertNull($item->deleted_at);
+
+        $repository->remove($item->id);
+        $item = CartItem::withTrashed()->find($item->id);
+        $this->assertNotNull($item->deleted_at);
     }
 }

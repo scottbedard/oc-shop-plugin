@@ -93,18 +93,6 @@ class Cart extends Model
     }
 
     /**
-     * Delete an inventory from the cart.
-     *
-     * @param  int $inventoryId
-     * @param  int $quantity
-     */
-    public function deleteInventory($inventoryId)
-    {
-        $this->items()->whereInventoryId($inventoryId)->delete();
-        $this->syncItems();
-    }
-
-    /**
      * Generate a random token.
      *
      * @return void
@@ -147,6 +135,25 @@ class Cart extends Model
     protected function incrementUpdateCount()
     {
         $this->update_count++;
+    }
+
+    /**
+     * Remove an item from the cart.
+     *
+     * @param  integer                      $itemId
+     * @return \Bedard\Shop\Models\CartItem
+     */
+    public function removeItem($itemId)
+    {
+        $item = $this->items()
+            ->withTrashed()
+            ->findOrFail($itemId);
+
+        $item->delete();
+
+        $this->syncItems();
+
+        return $item;
     }
 
     /**

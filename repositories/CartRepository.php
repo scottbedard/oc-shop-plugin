@@ -110,6 +110,19 @@ class CartRepository extends Repository
     }
 
     /**
+     * Remove an item from the cart.
+     *
+     * @param  integer                      $itemId
+     * @return \Bedard\Shop\Models\CartItem
+     */
+    public function remove($itemId)
+    {
+        $cart = $this->findOrCreate();
+
+        return $cart->removeItem($itemId);
+    }
+
+    /**
      * Add or remove quantity to an existing CartItem.
      *
      * @param  int                          $inventoryId

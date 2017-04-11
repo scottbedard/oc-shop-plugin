@@ -38,6 +38,19 @@ class CartApi extends ApiController
     }
 
     /**
+     * Remove an item from the cart.
+     *
+     * @param  CartRepository $repository
+     * @return \Bedard\Shop\Models\CartItem
+     */
+    public function remove(CartRepository $repository)
+    {
+        $itemId = (int) input('itemId');
+
+        return $repository->remove($itemId);
+    }
+
+    /**
      * Add or remove quantity to an existing CartItem.
      *
      * @param  CartRepository               $repository

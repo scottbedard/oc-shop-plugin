@@ -18,7 +18,14 @@ class CartItem extends Model
      * @var array Default attributes
      */
     public $attributes = [
+        'cart_id' => null,
+        'created_at' => null,
+        'deleted_at' => null,
+        'id' => null,
+        'inventory_id' => null,
+        'product_id' => null,
         'quantity' => 0,
+        'updated_at' => null,
     ];
 
     /**
