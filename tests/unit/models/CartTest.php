@@ -1,6 +1,9 @@
 <?php namespace Bedard\Shop\Tests\Unit\Models;
 
+use Bedard\Shop\Classes\Factory;
 use Bedard\Shop\Models\Cart;
+use Bedard\Shop\Models\Inventory;
+use Bedard\Shop\Models\Product;
 use PluginTestCase;
 
 class CartTest extends PluginTestCase
