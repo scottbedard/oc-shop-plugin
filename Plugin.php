@@ -72,10 +72,10 @@ class Plugin extends PluginBase
         return [
             'shop' => [
                 'icon'        => 'icon-shopping-cart',
-                'label'       => 'Shop',
+                'label'       => 'bedard.shop::lang.plugin.name',
                 'order'       => 500,
                 'permissions' => ['bedard.shop.*'],
-                'url'         => Backend::url('bedard/shop/products'),
+                'url'         => Backend::url('bedard/shop/carts'),
                 'sideMenu' => [
                     'carts' => [
                         'icon'          => 'icon-shopping-cart',
