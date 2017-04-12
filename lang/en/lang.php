@@ -22,6 +22,9 @@ return [
     // carts
     //
     'carts' => [
+        'form' => [
+            'return_to_list' => 'Return to carts list',
+        ],
         'list' => [
 
         ],
@@ -33,17 +36,17 @@ return [
     // categories
     //
     'categories' => [
-        'list' => [
-            'name' => 'Name',
-            'reorder_button' => 'Reorder',
-            'slug' => 'Slug',
-            'title' => 'Manage Categories',
-        ],
         'form' => [
             'description' => 'Description',
             'name' => 'Name',
             'slug' => 'Slug',
             'tab_general' => 'General',
+        ],
+        'list' => [
+            'name' => 'Name',
+            'reorder_button' => 'Reorder',
+            'slug' => 'Slug',
+            'title' => 'Manage Categories',
         ],
         'reorder' => [
             'return_button' => 'Return to categories',

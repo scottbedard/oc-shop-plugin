@@ -6,3 +6,15 @@ fields:
     id:
         label: ID
         disabled: true
+
+tabs:
+    fields:
+        foo:
+            label: foo
+            tab: foo
+
+secondaryTabs:
+    fields:
+        bar:
+            label: bar
+            tab: bar

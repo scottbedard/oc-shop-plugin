@@ -3,7 +3,7 @@
 # ===================================
 
 # Record name
-name: Cart
+name: bedard.shop::lang.carts.singular
 
 # Model Form Field configuration
 form: $/bedard/shop/models/cart/fields.yaml
@@ -14,18 +14,8 @@ modelClass: Bedard\Shop\Models\Cart
 # Default redirect location
 defaultRedirect: bedard/shop/carts
 
-# Create page
-create:
-    title: Create Cart
-    redirect: bedard/shop/carts/update/:id
-    redirectClose: bedard/shop/carts
-
 # Update page
 update:
     title: Edit Cart
     redirect: bedard/shop/carts
     redirectClose: bedard/shop/carts
-
-# Preview page
-preview:
-    title: Preview Cart

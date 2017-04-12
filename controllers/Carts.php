@@ -8,6 +8,8 @@ use BackendMenu;
  */
 class Carts extends Controller
 {
+    public $bodyClass = 'compact-container';
+
     public $formConfig = 'config_form.yaml';
 
     public $implement = [
