@@ -3,7 +3,7 @@
 use Model;
 
 /**
- * Status Model
+ * Status Model.
  */
 class Status extends Model
 {

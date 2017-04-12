@@ -3,26 +3,27 @@
 use Backend\Classes\FormWidgetBase;
 
 /**
- * CartHistory Form Widget
+ * CartHistory Form Widget.
  */
 class CartHistory extends FormWidgetBase
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected $defaultAlias = 'bedard_shop_cart_history';
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function render()
     {
         $this->prepareVars();
+
         return $this->makePartial('carthistory');
     }
 
     /**
-     * Prepares the form widget view data
+     * Prepares the form widget view data.
      */
     public function prepareVars()
     {
@@ -32,7 +33,7 @@ class CartHistory extends FormWidgetBase
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function loadAssets()
     {
@@ -40,7 +41,7 @@ class CartHistory extends FormWidgetBase
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getSaveValue($value)
     {
