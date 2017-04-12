@@ -23,10 +23,13 @@ return [
     //
     'carts' => [
         'form' => [
+            'history' => 'History',
             'return_to_list' => 'Return to carts list',
         ],
         'list' => [
-
+            'created_at' => 'Created',
+            'status' => 'Status',
+            'updated_at' => 'Updated',
         ],
         'plural' => 'Carts',
         'singular' => 'Cart',
@@ -156,10 +159,21 @@ return [
     ],
 
     //
-    // Settings
+    // settings
     //
     'settings' => [
         'plural' => 'Settings',
         'singular' => 'Setting',
+    ],
+
+    //
+    // statuses
+    //
+    'statuses' => [
+        'abandoned' => 'Abandoned',
+        'awaiting_payment' => 'Awaiting payment',
+        'complete' => 'Complete',
+        'open' => 'Open',
+        'payment_received' => 'Payment received',
     ],
 ];

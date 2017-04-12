@@ -4,7 +4,7 @@ use October\Rain\Database\Schema\Blueprint;
 use October\Rain\Database\Updates\Migration;
 use Schema;
 
-class CreateCategoryProductTables extends Migration
+class CreateCategoryProductTable extends Migration
 {
     public function up()
     {

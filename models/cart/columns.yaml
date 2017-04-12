@@ -6,3 +6,17 @@ columns:
     id:
         label: ID
         searchable: true
+
+    created_at:
+        label: bedard.shop::lang.carts.list.created_at
+        type: datetime
+
+    updated_at:
+        label: bedard.shop::lang.carts.list.updated_at
+        type: timesince
+
+    status:
+        label: bedard.shop::lang.carts.list.status
+        sortable: false
+        type: partial
+        path: $/bedard/shop/models/cart/_column_status.htm

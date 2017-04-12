@@ -51,6 +51,15 @@ class Cart extends Model
     /**
      * @var array Relations
      */
+    public $belongsToMany = [
+        'statuses' => [
+            'Bedard\Shop\Models\Status',
+            'order' => 'pivot_created_at asc',
+            'pivot' => ['created_at'],
+            'table' => 'bedard_shop_cart_status',
+        ],
+    ];
+
     public $hasMany = [
         'items' => [
             'Bedard\Shop\Models\CartItem',
@@ -73,6 +82,16 @@ class Cart extends Model
     }
 
     /**
+     * After create.
+     *
+     * @return void
+     */
+    public function afterCreate()
+    {
+        $this->createOpenStatus();
+    }
+
+    /**
      * Before create.
      *
      * @return void
@@ -90,6 +109,16 @@ class Cart extends Model
     public function beforeSave()
     {
         $this->incrementUpdateCount();
+    }
+
+    /**
+     * Create an open status.
+     *
+     * @return void
+     */
+    protected function createOpenStatus()
+    {
+        $this->statuses()->attach(Status::find(1));
     }
 
     /**
@@ -128,6 +157,16 @@ class Cart extends Model
     }
 
     /**
+     * Get the most recent status.
+     *
+     * @return \Bedard\Shop\Models\Status
+     */
+    public function getStatusAttribute()
+    {
+        return $this->statuses->last();
+    }
+
+    /**
      * Increment the update count.
      *
      * @return void
@@ -157,6 +196,20 @@ class Cart extends Model
     }
 
     /**
+     * Save an item and sync the cart.
+     *
+     * @param  \Bedard\Shop\Models\Item     $item
+     * @return \Bedard\Shop\Models\Item
+     */
+    public function saveItem($item)
+    {
+        $item->save();
+        $this->syncItems();
+
+        return $item;
+    }
+
+    /**
      * Set an inventory.
      *
      * @param int $inventoryId
@@ -169,20 +222,6 @@ class Cart extends Model
         $item->quantity = $quantity;
 
         return $this->saveItem($item);
-    }
-
-    /**
-     * Save an item and sync the cart.
-     *
-     * @param  \Bedard\Shop\Models\Item     $item
-     * @return \Bedard\Shop\Models\Item
-     */
-    public function saveItem($item)
-    {
-        $item->save();
-        $this->syncItems();
-
-        return $item;
     }
 
     /**

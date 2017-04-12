@@ -15,6 +15,6 @@ tabs:
 
 secondaryTabs:
     fields:
-        bar:
-            label: bar
-            tab: bar
+        history:
+            label: bedard.shop::lang.carts.form.history
+            type: Bedard\Shop\FormWidgets\CartHistory

@@ -1,12 +1,15 @@
 0.1.0:
     - First version of Bedard.Shop
-    - 1.0/create_carts_table.php
     - 1.0/create_cart_items_table.php
-    - 1.0/create_products_table.php
+    - 1.0/create_cart_status_table.php
+    - 1.0/create_carts_table.php
     - 1.0/create_categories_table.php
     - 1.0/create_category_product_table.php
-    - 1.0/create_options_table.php
-    - 1.0/create_option_values_table.php
     - 1.0/create_inventories_table.php
     - 1.0/create_inventory_option_value_table.php
-    - seeds.php
+    - 1.0/create_option_values_table.php
+    - 1.0/create_options_table.php
+    - 1.0/create_products_table.php
+    - 1.0/create_statuses_table.php
+    - 1.0/seed_statuses_table.php
+    - dev_seeds.php

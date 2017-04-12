@@ -83,4 +83,12 @@ class CartTest extends PluginTestCase
         $this->assertEquals(1, $cart->items()->withTrashed()->count());
         $this->assertEquals($updateCount + 1, $cart->update_count);
     }
+
+    public function test_that_an_open_status_is_created()
+    {
+        $cart = Factory::create(new Cart);
+
+        $this->assertEquals(1, $cart->statuses()->count());
+        $this->assertEquals('bedard.shop::lang.statuses.open', $cart->statuses()->first()->name);
+    }
 }

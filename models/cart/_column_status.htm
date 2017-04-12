@@ -1,0 +1,12 @@
+<?php if ($record->status && $record->status->icon): ?>
+    <i
+        <?php if ($record->status->color): ?>
+            style="color: <?= $record->status->color ?>"
+        <?php endif; ?>
+        class="<?= $record->status->icon ?>">
+    </i>
+<?php endif; ?>
+
+<?php if ($record->status && $record->status->name): ?>
+    <span><?= e(trans($record->status->name)) ?></span>
+<?php endif; ?>

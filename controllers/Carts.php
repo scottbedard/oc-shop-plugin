@@ -30,4 +30,15 @@ class Carts extends Controller
 
         BackendMenu::setContext('Bedard.Shop', 'shop', 'carts');
     }
+
+    /**
+     * Extend the list query.
+     *
+     * @param  \Illuminate\Database\Query\Builder $query
+     * @return \Illuminate\Database\Query\Builder
+     */
+    public function listExtendQuery($query)
+    {
+        $query->with('statuses');
+    }
 }

@@ -6,10 +6,11 @@ const eslintFriendlyFormatter = require('eslint-friendly-formatter');
 
 module.exports = {
     entry: {
+        cart_history: path.resolve(__dirname, '../formwidgets/carthistory/components'),
         categories: path.resolve(__dirname, '../controllers/categories'),
+        options_inventories: path.resolve(__dirname, '../formwidgets/optionsinventories/components'),
         products: path.resolve(__dirname, '../controllers/products'),
         relationships: path.resolve(__dirname, '../formwidgets/relationships/components'),
-        options_inventories: path.resolve(__dirname, '../formwidgets/optionsinventories/components'),
     },
     output: {
         filename: '[name].min.js',
