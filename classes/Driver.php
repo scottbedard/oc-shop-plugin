@@ -30,6 +30,6 @@ abstract class Driver
 
         $reflector = new ReflectionClass(get_class($this));
 
-        return $yaml->parseFile(dirname($reflector->getFileName()) . '/' . $this->formFields);
+        return $yaml->parseFile(dirname($reflector->getFileName()).'/'.$this->formFields);
     }
 }

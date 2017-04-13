@@ -38,7 +38,7 @@ class DriverConfigs extends FormWidgetBase
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function loadAssets()
     {
@@ -74,7 +74,7 @@ class DriverConfigs extends FormWidgetBase
     }
 
     /**
-     * Prepares the form widget view data
+     * Prepares the form widget view data.
      */
     public function prepareVars()
     {

@@ -43,7 +43,7 @@ class DriverManager
         }
 
         // extract the driver details
-        $drivers = array_map(function($driver) {
+        $drivers = array_map(function ($driver) {
             $details = $driver->driverDetails();
             $details['class'] = get_class($driver);
             $details['name'] = Lang::get($details['name']);
