@@ -74,7 +74,7 @@ class DriverConfigs extends FormWidgetBase
         $driver = new $class;
 
         $form = $this->makeConfigFromArray($driver->getFormFields());
-        $form->model = DriverConfig::whereDriver($class)->firstOrFail();
+        $form->model = DriverConfig::firstOrNew(['driver' => $class]);
         $form->model->populate();
 
         return $this->makePartial('popup', [
@@ -95,7 +95,7 @@ class DriverConfigs extends FormWidgetBase
         $driver = new $data['_class'];
         $driver->validate($formData);
 
-        $config = DriverConfig::whereDriver($data['_class'])->firstOrFail();
+        $config = DriverConfig::firstOrNew(['driver' => $data['_class']]);
         $config->config = $formData;
         $config->save();
     }
