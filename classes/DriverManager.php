@@ -10,7 +10,7 @@ class DriverManager
     protected $manager;
 
     /**
-     * Construct
+     * Construct.
      *
      * @return void
      */

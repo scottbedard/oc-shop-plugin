@@ -4,12 +4,12 @@ use Backend\Classes\FormWidgetBase;
 use Bedard\Shop\Classes\DriverManager;
 
 /**
- * DriverConfigs Form Widget
+ * DriverConfigs Form Widget.
  */
 class DriverConfigs extends FormWidgetBase
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected $defaultAlias = 'bedard_shop_driver_configs';
 
@@ -19,7 +19,7 @@ class DriverConfigs extends FormWidgetBase
     protected $manager;
 
     /**
-     * Construct
+     * Construct.
      */
     public function __construct()
     {
@@ -29,7 +29,7 @@ class DriverConfigs extends FormWidgetBase
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -39,7 +39,7 @@ class DriverConfigs extends FormWidgetBase
     }
 
     /**
-     * Prepares the form widget view data
+     * Prepares the form widget view data.
      */
     public function prepareVars()
     {
@@ -49,7 +49,7 @@ class DriverConfigs extends FormWidgetBase
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function loadAssets()
     {
@@ -58,7 +58,7 @@ class DriverConfigs extends FormWidgetBase
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getSaveValue($value)
     {
