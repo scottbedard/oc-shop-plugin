@@ -10,6 +10,7 @@ $(function() {
     const el = document.querySelector('[data-component=driver-configs]');
 
     // parse our props from data attributes
+    const drivers = JSON.parse(el.dataset.drivers);
     const lang = JSON.parse(el.dataset.lang);
 
     // configure axios with our csrf token
@@ -20,6 +21,7 @@ $(function() {
         el,
         render: h => h(DriverConfigsComponent, {
             props: {
+                drivers,
                 lang,
             },
         }),

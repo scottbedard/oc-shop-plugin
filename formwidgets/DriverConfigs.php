@@ -2,6 +2,7 @@
 
 use Backend\Classes\FormWidgetBase;
 use Bedard\Shop\Classes\DriverManager;
+use Bedard\Shop\Models\DriverConfig;
 
 /**
  * DriverConfigs Form Widget.
@@ -31,15 +32,49 @@ class DriverConfigs extends FormWidgetBase
     /**
      * {@inheritdoc}
      */
-    public function render()
+    public function getSaveValue($value)
     {
-        $this->prepareVars();
-
-        return $this->makePartial('driverconfigs');
+        return $value;
     }
 
     /**
-     * Prepares the form widget view data.
+     * @inheritDoc
+     */
+    public function loadAssets()
+    {
+        $this->addJs('/plugins/bedard/shop/assets/dist/vendor.min.js', 'Bedard.Shop');
+        $this->addJs('/plugins/bedard/shop/assets/dist/driver_configs.min.js', 'Bedard.Shop');
+    }
+
+    /**
+     * Load a driver's configuration form.
+     */
+    public function onDriverClicked()
+    {
+        $class = input('class');
+        $driver = new $class;
+
+        $form = $this->makeConfigFromArray($driver->getFormFields());
+        $form->model = DriverConfig::findByClass($class);
+
+        return $this->makePartial('popup', [
+            'details' => $driver->driverDetails(),
+            'form' => $this->makeWidget('Backend\Widgets\Form', $form),
+        ]);
+    }
+
+    /**
+     * Save a driver's configuration.
+     */
+    public function onDriverSaved()
+    {
+        // @todo: save driver config
+
+        return [];
+    }
+
+    /**
+     * Prepares the form widget view data
      */
     public function prepareVars()
     {
@@ -51,17 +86,10 @@ class DriverConfigs extends FormWidgetBase
     /**
      * {@inheritdoc}
      */
-    public function loadAssets()
+    public function render()
     {
-        $this->addJs('/plugins/bedard/shop/assets/dist/vendor.min.js', 'Bedard.Shop');
-        $this->addJs('/plugins/bedard/shop/assets/dist/driver_configs.min.js', 'Bedard.Shop');
-    }
+        $this->prepareVars();
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getSaveValue($value)
-    {
-        return $value;
+        return $this->makePartial('driverconfigs');
     }
 }

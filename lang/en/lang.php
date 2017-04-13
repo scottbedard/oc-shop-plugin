@@ -59,6 +59,15 @@ return [
     ],
 
     //
+    // drivers
+    //
+    'drivers' => [
+        'nopayment' => [
+            'name' => 'No Payment',
+        ],
+    ],
+
+    //
     // inventories
     //
     'inventories' => [
@@ -114,6 +123,9 @@ return [
     // payment
     //
     'payment' => [
+        'form' => [
+            'configure' => 'Configure payment drivers',
+        ],
         'label' => 'Payment drivers',
         'title' => 'Configure payment drivers',
     ],

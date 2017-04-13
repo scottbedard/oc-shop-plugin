@@ -5,6 +5,11 @@ use Bedard\Shop\Classes\Driver;
 class NoPayment extends Driver
 {
     /**
+     * @return string   Form fields.
+     */
+    public $formFields = 'nopayment/fields.yaml';
+
+    /**
      * Driver details.
      *
      * @return array
@@ -12,7 +17,8 @@ class NoPayment extends Driver
     public function driverDetails()
     {
         return [
-            'name' => 'No Payment',
+            'name' => 'bedard.shop::lang.drivers.nopayment.name',
+            'thumbnail' => null,
         ];
     }
 }

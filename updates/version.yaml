@@ -5,6 +5,7 @@
     - 1.0/create_carts_table.php
     - 1.0/create_categories_table.php
     - 1.0/create_category_product_table.php
+    - 1.0/create_driver_configs_table.php
     - 1.0/create_inventories_table.php
     - 1.0/create_inventory_option_value_table.php
     - 1.0/create_option_values_table.php

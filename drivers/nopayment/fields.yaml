@@ -1,0 +1,18 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    id:
+        label: ID
+        disabled: true
+
+tabs:
+    fields:
+        foo:
+            label: foo
+            tab: foo
+
+        bar:
+            label: bar
+            tab: bar

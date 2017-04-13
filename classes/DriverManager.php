@@ -1,5 +1,6 @@
 <?php namespace Bedard\Shop\Classes;
 
+use Lang;
 use System\Classes\PluginManager;
 
 class DriverManager
@@ -27,6 +28,7 @@ class DriverManager
      */
     public function getDrivers($type)
     {
+        // find all drivers of a particular type
         $drivers = [];
 
         foreach ($this->manager->getPlugins() as $id => $plugin) {
@@ -36,9 +38,18 @@ class DriverManager
             }
 
             foreach ($plugin->registerShopDrivers()[$type] as $driver) {
-                $drivers[] = (new $driver)->driverDetails();
+                $drivers[] = new $driver;
             }
         }
+
+        // extract the driver details
+        $drivers = array_map(function($driver) {
+            $details = $driver->driverDetails();
+            $details['class'] = get_class($driver);
+            $details['name'] = Lang::get($details['name']);
+
+            return $details;
+        }, $drivers);
 
         return $drivers;
     }

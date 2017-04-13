@@ -4,6 +4,6 @@
 
 fields:
     payment:
-        label: bedard.shop::lang.payment.form.drivers
+        label: bedard.shop::lang.payment.form.configure
         type: Bedard\Shop\FormWidgets\DriverConfigs
         drivers: payment
