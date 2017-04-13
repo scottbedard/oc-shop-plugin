@@ -149,6 +149,28 @@ class Plugin extends PluginBase
                 'label'         => 'bedard.shop::lang.api.label',
                 'permissions'   => ['bedard.shop.settings.manage'],
             ],
+            'payment' => [
+                'category'      => 'bedard.shop::lang.plugin.name',
+                'class'         => 'Bedard\Shop\Models\PaymentDrivers',
+                'description'   => 'bedard.shop::lang.payment.title',
+                'icon'          => 'icon-money',
+                'label'         => 'bedard.shop::lang.payment.label',
+                'permissions'   => ['bedard.shop.settings.manage'],
+            ],
+        ];
+    }
+
+    /**
+     * Register drivers.
+     *
+     * @return array
+     */
+    public function registerShopDrivers()
+    {
+        return [
+            'payment' => [
+                'Bedard\Shop\Drivers\NoPayment',
+            ],
         ];
     }
 }

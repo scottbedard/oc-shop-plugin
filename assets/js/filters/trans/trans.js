@@ -8,7 +8,7 @@ import Vue from 'vue';
  * @return {String}
  */
 const getLanguageString = function(value, lang) {
-    value = String(value);
+    value = String(value).replace('::lang.', '.');
 
     for (let key of value.split('.')) {
         lang = lang[key];

@@ -1,0 +1,9 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    payment:
+        label: bedard.shop::lang.payment.form.drivers
+        type: Bedard\Shop\FormWidgets\DriverConfigs
+        drivers: payment

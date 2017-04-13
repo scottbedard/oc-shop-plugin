@@ -111,6 +111,14 @@ return [
     ],
 
     //
+    // payment
+    //
+    'payment' => [
+        'label' => 'Payment drivers',
+        'title' => 'Configure payment drivers',
+    ],
+
+    //
     // plugin
     //
     'plugin' => [

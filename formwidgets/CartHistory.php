@@ -27,9 +27,7 @@ class CartHistory extends FormWidgetBase
      */
     public function prepareVars()
     {
-        $this->vars['name'] = $this->formField->getName();
-        $this->vars['value'] = $this->getLoadValue();
-        $this->vars['model'] = $this->model;
+        $this->vars['statuses'] = $this->model->statuses;
     }
 
     /**
@@ -37,6 +35,7 @@ class CartHistory extends FormWidgetBase
      */
     public function loadAssets()
     {
+        $this->addJs('/plugins/bedard/shop/assets/dist/vendor.min.js', 'Bedard.Shop');
         $this->addJs('/plugins/bedard/shop/assets/dist/cart_history.min.js', 'Bedard.Shop');
     }
 

@@ -16,12 +16,12 @@ class Cart extends Model
      * @var array Default attributes
      */
     public $attributes = [
-        'id' => null,
         'created_at' => null,
-        'update_count' => 0,
+        'id' => null,
         'item_count' => 0,
         'item_total' => 0,
         'token' => null,
+        'update_count' => 0,
         'updated_at' => null,
     ];
 
@@ -54,7 +54,7 @@ class Cart extends Model
     public $belongsToMany = [
         'statuses' => [
             'Bedard\Shop\Models\Status',
-            'order' => 'pivot_created_at asc',
+            'order' => 'pivot_created_at desc',
             'pivot' => ['created_at'],
             'table' => 'bedard_shop_cart_status',
         ],
