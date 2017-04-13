@@ -35,7 +35,8 @@ class DriverConfigs extends FormWidgetBase
      * @param  array $data
      * @return array
      */
-    public function getFormData($data) {
+    public function getFormData($data)
+    {
         $formData = [];
 
         foreach ($data as $key => $value) {
