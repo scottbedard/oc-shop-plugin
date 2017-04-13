@@ -17,6 +17,9 @@ module.exports = merge(webpackConfig, {
         // @todo: extract css chunks into their own files
         // new ExtractTextPlugin("style.css"),
 
+        // only use the parts of moment we need
+        new webpack.ContextReplacementPlugin(/moment[\\\/]locale$/, /^\.\/(en)$/),
+
         // extract core dependencies into their own bundle
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
@@ -25,7 +28,7 @@ module.exports = merge(webpackConfig, {
                     module.resource.indexOf(path.join(__dirname, '../assets')) === 0 ||
                     module.resource.indexOf(path.join(__dirname, '../node_modules')) === 0
                 );
-            }
+            },
         }),
     ],
 });
