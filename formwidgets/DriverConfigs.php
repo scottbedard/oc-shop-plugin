@@ -30,6 +30,24 @@ class DriverConfigs extends FormWidgetBase
     }
 
     /**
+     * Filter out form data from popup input.
+     *
+     * @param  array $data
+     * @return array
+     */
+    public function getFormData($data) {
+        $formData = [];
+
+        foreach ($data as $key => $value) {
+            if ($key[0] !== '_') {
+                $formData[$key] = $value;
+            }
+        }
+
+        return $formData;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getSaveValue($value)
@@ -55,9 +73,11 @@ class DriverConfigs extends FormWidgetBase
         $driver = new $class;
 
         $form = $this->makeConfigFromArray($driver->getFormFields());
-        $form->model = DriverConfig::findByClass($class);
+        $form->model = DriverConfig::whereDriver($class)->firstOrFail();
+        $form->model->populate();
 
         return $this->makePartial('popup', [
+            'class' => get_class($driver),
             'details' => $driver->driverDetails(),
             'form' => $this->makeWidget('Backend\Widgets\Form', $form),
         ]);
@@ -68,9 +88,15 @@ class DriverConfigs extends FormWidgetBase
      */
     public function onDriverSaved()
     {
-        // @todo: save driver config
+        $data = input();
+        $formData = $this->getFormData($data);
 
-        return [];
+        $driver = new $data['_class'];
+        $driver->validate($formData);
+
+        $config = DriverConfig::whereDriver($data['_class'])->firstOrFail();
+        $config->config = $formData;
+        $config->save();
     }
 
     /**
