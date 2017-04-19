@@ -1,6 +1,7 @@
 <?php namespace Bedard\Shop\Updates;
 
 use Bedard\Shop\Models\Status;
+use Lang;
 use October\Rain\Database\Updates\Seeder;
 
 class SeedStatusesTable extends Seeder
@@ -8,28 +9,28 @@ class SeedStatusesTable extends Seeder
     public function run()
     {
         Status::create([
-            'name' => 'bedard.shop::lang.statuses.open',
+            'name' => Lang::get('bedard.shop::lang.statuses.presets.open'),
             'icon' => 'icon-shopping-cart',
         ]);
 
         Status::create([
-            'name' => 'bedard.shop::lang.statuses.awaiting_payment',
+            'name' => Lang::get('bedard.shop::lang.statuses.presets.awaiting_payment'),
             'icon' => 'icon-spinner',
         ]);
 
         Status::create([
-            'name' => 'bedard.shop::lang.statuses.abandoned',
+            'name' => Lang::get('bedard.shop::lang.statuses.presets.abandoned'),
             'color' => '#c0392b',
             'icon' => 'icon-times',
         ]);
 
         Status::create([
-            'name' => 'bedard.shop::lang.statuses.payment_received',
+            'name' => Lang::get('bedard.shop::lang.statuses.presets.payment_received'),
             'icon' => 'icon-money',
         ]);
 
         Status::create([
-            'name' => 'bedard.shop::lang.statuses.complete',
+            'name' => Lang::get('bedard.shop::lang.statuses.presets.complete'),
             'color' => '#27ae60',
             'icon' => 'icon-check',
         ]);

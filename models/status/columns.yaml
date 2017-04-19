@@ -3,6 +3,18 @@
 # ===================================
 
 columns:
-    id:
-        label: ID
+    name:
+        label: bedard.shop::lang.statuses.list.name
         searchable: true
+
+    icon:
+        label: bedard.shop::lang.statuses.list.icon
+        searchable: false
+        type: partial
+        path: $/bedard/shop/models/status/_column_icon.htm
+
+    color:
+        label: bedard.shop::lang.statuses.list.color
+        searchable: false
+        type: partial
+        path: $/bedard/shop/models/status/_column_color.htm

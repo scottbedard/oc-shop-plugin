@@ -1,0 +1,11 @@
+<div
+    data-component="status-selector"
+    data-statuses="<?= e($statuses->toJson()) ?>">
+</div>
+
+<script>
+    // since this component is usually loaded in a modal, we
+    // will manually mount our comonent through the window
+    // to avoid any timing bugs with october's spinner.
+    window.mountBedardShopStatusSelector();
+</script>

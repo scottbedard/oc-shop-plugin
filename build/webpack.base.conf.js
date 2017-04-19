@@ -4,26 +4,31 @@ const autoprefixer = require('autoprefixer');
 const path = require('path');
 const eslintFriendlyFormatter = require('eslint-friendly-formatter');
 
+function resolve(dir) {
+    return path.resolve(__dirname, '..', dir);
+};
+
 module.exports = {
     entry: {
-        cart_history: path.resolve(__dirname, '../formwidgets/carthistory/components'),
-        categories: path.resolve(__dirname, '../controllers/categories'),
-        driver_configs: path.resolve(__dirname, '../formwidgets/driverconfigs/components'),
-        options_inventories: path.resolve(__dirname, '../formwidgets/optionsinventories/components'),
-        products: path.resolve(__dirname, '../controllers/products'),
-        relationships: path.resolve(__dirname, '../formwidgets/relationships/components'),
+        cart_history: resolve('formwidgets/carthistory/components'),
+        categories: resolve('controllers/categories'),
+        driver_configs: resolve('formwidgets/driverconfigs/components'),
+        options_inventories: resolve('formwidgets/optionsinventories/components'),
+        products: resolve('controllers/products'),
+        status_selector: resolve('formwidgets/statusselector'),
+        relationships: resolve('formwidgets/relationships/components'),
     },
     output: {
         filename: '[name].min.js',
-        path: path.resolve(__dirname, '../assets/dist'),
+        path: resolve('assets/dist'),
         publicPath: '/plugins/bedard/shop/assets/dist',
     },
     resolve: {
         extensions: ['.js', '.vue', '.scss'],
         modules: [
-            path.resolve(__dirname, '../'),
-            path.resolve(__dirname, '../assets/scss'),
-            path.resolve(__dirname, '../node_modules'),
+            resolve(''),
+            resolve('assets/scss'),
+            resolve('node_modules'),
         ],
     },
     module: {
@@ -33,7 +38,7 @@ module.exports = {
                 loader: 'eslint-loader',
                 enforce: "pre",
                 include: [
-                    path.resolve(__dirname, '../'),
+                    resolve(''),
                 ],
                 options: {
                     fix: true,
@@ -45,7 +50,7 @@ module.exports = {
                 loader: 'vue-loader',
                 options: {
                     loaders: {
-                        'scss': 'style-loader!css-loader!sass-loader?includePaths[]=' + path.resolve(__dirname, '../assets/scss'),
+                        'scss': 'style-loader!css-loader!sass-loader?includePaths[]=' + resolve('assets/scss'),
                     },
                     postcss: [
                         autoprefixer({ browsers: ['last 2 versions'] }),
@@ -56,7 +61,7 @@ module.exports = {
                 test: /\.js$/,
                 loader: 'babel-loader',
                 include: [
-                    path.resolve(__dirname, '../'),
+                    resolve(''),
                 ],
                 exclude: /node_modules/,
             },
@@ -69,7 +74,7 @@ module.exports = {
                 loader: 'url-loader',
                 query: {
                     limit: 10000,
-                    name: path.resolve(__dirname, '../assets/dist/img/[name].[ext]'),
+                    name: resolve('assets/dist/img/[name].[ext]'),
                 },
             },
             {
@@ -77,7 +82,7 @@ module.exports = {
                 loader: 'url-loader',
                 query: {
                     limit: 10000,
-                    name: path.resolve(__dirname, '../assets/dist/fonts/[name].[ext]'),
+                    name: resolve('assets/dist/fonts/[name].[ext]'),
                 },
             },
             {
@@ -93,7 +98,7 @@ module.exports = {
                         loader: 'sass-loader',
                         options: {
                             includePaths: [
-                                path.resolve(__dirname, '../assets/scss'),
+                                resolve('assets/scss'),
                             ],
                         },
                     },

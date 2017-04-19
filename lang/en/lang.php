@@ -28,6 +28,7 @@ return [
         ],
         'list' => [
             'created_at' => 'Created',
+            'manage_statuses' => 'Manage statuses',
             'status' => 'Status',
             'updated_at' => 'Updated',
         ],
@@ -63,6 +64,10 @@ return [
     //
     'drivers' => [
         'nopayment' => [
+            'event_complete' => 'Checkout complete',
+            'event_complete_descrition' => 'This event fires when a user completes the checkout process.',
+            'events_tab' => 'Events',
+            'message' => 'This driver does not charge the user.',
             'name' => 'No Payment',
         ],
     ],
@@ -190,10 +195,24 @@ return [
     // statuses
     //
     'statuses' => [
-        'abandoned' => 'Abandoned',
-        'awaiting_payment' => 'Awaiting payment',
-        'complete' => 'Complete',
-        'open' => 'Open',
-        'payment_received' => 'Payment received',
+        'list' => [
+            'color' => 'Color',
+            'icon' => 'Icon',
+            'name' => 'Name',
+            'return_to_carts' => 'Return to carts',
+            'title' => 'Manage Statuses',
+        ],
+        'form' => [
+            'color' => 'Color',
+            'icon' => 'Icon',
+            'name' => 'Name',
+        ],
+        'presets' => [
+            'abandoned' => 'Abandoned',
+            'awaiting_payment' => 'Awaiting payment',
+            'complete' => 'Complete',
+            'open' => 'Open',
+            'payment_received' => 'Payment received',
+        ],
     ],
 ];

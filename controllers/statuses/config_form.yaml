@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: bedard.shop::lang.statuses.singular
+
+# Model Form Field configuration
+form: $/bedard/shop/models/status/fields.yaml
+
+# Model Class name
+modelClass: Bedard\Shop\Models\Status
+
+# Default redirect location
+defaultRedirect: bedard/shop/statuses
+
+# Create page
+create:
+    title: backend::lang.form.create_title
+    redirect: bedard/shop/statuses/update/:id
+    redirectClose: bedard/shop/statuses
+
+# Update page
+update:
+    title: backend::lang.form.update_title
+    redirect: bedard/shop/statuses
+    redirectClose: bedard/shop/statuses
+
+# Preview page
+preview:
+    title: backend::lang.form.preview_title

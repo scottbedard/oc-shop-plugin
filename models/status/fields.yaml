@@ -3,6 +3,15 @@
 # ===================================
 
 fields:
-    id:
-        label: ID
-        disabled: true
+    name:
+        label: bedard.shop::lang.statuses.form.name
+        span: left
+
+    icon:
+        label: bedard.shop::lang.statuses.form.icon
+        span: left
+
+    color:
+        label: bedard.shop::lang.statuses.form.color
+        type: colorpicker
+        span: left

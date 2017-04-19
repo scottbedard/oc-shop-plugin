@@ -4,15 +4,12 @@
 
 fields:
     id:
-        label: ID
-        disabled: true
+        type: partial
+        path: $/bedard/shop/drivers/nopayment/message.htm
 
 tabs:
     fields:
-        foo:
-            label: foo
-            tab: foo
-
-        bar:
-            label: bar
-            tab: bar
+        event_complete:
+            label: bedard.shop::lang.drivers.nopayment.event_complete
+            tab: bedard.shop::lang.drivers.nopayment.events_tab
+            type: Bedard\Shop\FormWidgets\StatusSelector
