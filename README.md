@@ -21,6 +21,13 @@ This repository has undergone a number of complete rewrites. It is my hope that 
 
 To see the progress being made toward the first release, check out the [first release milestone](https://github.com/scottbedard/oc-shop-plugin/milestone/1).
 
+<a name="demo"></a>
+### Live demo
+
+A QA site has been set up at [bedard.shop](https://bedard.shop)
+
+You can log into the backend with username **demo** and password **demo**.
+
 <a name="local-development"></a>
 ### Local development
 
