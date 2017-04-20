@@ -13,4 +13,5 @@
     - 1.0/create_products_table.php
     - 1.0/create_statuses_table.php
     - 1.0/seed_statuses_table.php
+    - 1.0/seed_driver_configs.php
     - dev_seeds.php

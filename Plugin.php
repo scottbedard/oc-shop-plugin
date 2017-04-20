@@ -151,6 +151,7 @@ class Plugin extends PluginBase
                 'description'   => 'bedard.shop::lang.api.title',
                 'icon'          => 'icon-cog',
                 'label'         => 'bedard.shop::lang.api.label',
+                'order'         => 100,
                 'permissions'   => ['bedard.shop.settings.manage'],
             ],
             'payment' => [
@@ -159,6 +160,7 @@ class Plugin extends PluginBase
                 'description'   => 'bedard.shop::lang.payment.title',
                 'icon'          => 'icon-money',
                 'label'         => 'bedard.shop::lang.payment.label',
+                'order'         => 200,
                 'permissions'   => ['bedard.shop.settings.manage'],
             ],
         ];
