@@ -7,6 +7,8 @@ use Model;
  */
 class Status extends Model
 {
+    use \October\Rain\Database\Traits\SoftDelete;
+
     /**
      * @var string The database table used by the model.
      */
@@ -17,6 +19,13 @@ class Status extends Model
      */
     protected $casts = [
         'is_default' => 'boolean',
+    ];
+
+    /**
+     * @var array Dates
+     */
+    protected $dates = [
+        'deleted_at',
     ];
 
     /**

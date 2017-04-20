@@ -16,6 +16,7 @@ class CreateStatusesTable extends Migration
             $table->string('icon')->default('');
             $table->boolean('is_default')->default(false);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
