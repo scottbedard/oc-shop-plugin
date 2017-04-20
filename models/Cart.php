@@ -88,7 +88,7 @@ class Cart extends Model
      */
     public function afterCreate()
     {
-        $this->createOpenStatus();
+        $this->createDefaultStatus();
     }
 
     /**
@@ -112,13 +112,17 @@ class Cart extends Model
     }
 
     /**
-     * Create an open status.
+     * Create the default status.
      *
      * @return void
      */
-    protected function createOpenStatus()
+    protected function createDefaultStatus()
     {
-        $this->statuses()->attach(Status::find(1));
+        $status = Status::isDefault()->first();
+
+        if ($status) {
+            $this->statuses()->attach($status);
+        }
     }
 
     /**

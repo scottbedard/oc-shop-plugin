@@ -3,6 +3,11 @@
 # ===================================
 
 fields:
+    is_default:
+        label: bedard.shop::lang.statuses.form.is_default
+        comment: bedard.shop::lang.statuses.form.is_default_comment
+        type: switch
+
     name:
         label: bedard.shop::lang.statuses.form.name
         span: left

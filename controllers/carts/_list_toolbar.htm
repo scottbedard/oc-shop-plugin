@@ -1,7 +1,9 @@
 <div data-control="toolbar">
-    <a
-        href="<?= Backend::url('bedard/shop/statuses') ?>"
-        class="btn btn-default oc-icon-tags">
-        <?= e(trans('bedard.shop::lang.carts.list.manage_statuses')); ?>
-    </a>
+    <?php if ($this->user->hasAccess('bedard.shop.statuses.*')): ?>
+        <a
+            href="<?= Backend::url('bedard/shop/statuses') ?>"
+            class="btn btn-default oc-icon-tags">
+            <?= e(trans('bedard.shop::lang.carts.list.manage_statuses')); ?>
+        </a>
+    <?php endif ?>
 </div>

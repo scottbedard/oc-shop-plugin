@@ -38,6 +38,7 @@ class Factory
             case 'Bedard\Shop\Models\Inventory': $seed = self::getInventoryData($data); break;
             case 'Bedard\Shop\Models\Option': $seed = self::getOptionData($data); break;
             case 'Bedard\Shop\Models\Product': $seed = self::getProductData($data); break;
+            case 'Bedard\Shop\Models\Status': $seed = self::getStatusData($data); break;
         }
 
         $model->fill(array_merge($seed, $data));
@@ -124,6 +125,22 @@ class Factory
             'description_html' => '<p>'.Lorem::paragraph().'</p>',
             'name' => $faker->words(2, true),
             'slug' => $faker->slug,
+        ];
+    }
+
+    /**
+     * Status.
+     *
+     * @param  array $data
+     * @return array
+     */
+    public static function getStatusData(array $data = [])
+    {
+        $faker = Faker\Factory::create();
+
+        return [
+            'is_default' => false,
+            'name' => $faker->words(2, true),
         ];
     }
 }

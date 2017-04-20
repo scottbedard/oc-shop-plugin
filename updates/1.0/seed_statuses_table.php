@@ -11,6 +11,7 @@ class SeedStatusesTable extends Seeder
         Status::create([
             'name' => Lang::get('bedard.shop::lang.statuses.presets.open'),
             'icon' => 'icon-shopping-cart',
+            'is_default' => true,
         ]);
 
         Status::create([

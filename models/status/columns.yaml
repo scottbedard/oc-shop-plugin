@@ -3,6 +3,14 @@
 # ===================================
 
 columns:
+    is_default:
+        label: bedard.shop::lang.statuses.list.is_default
+        path: $/bedard/shop/models/status/_column_is_default.htm
+        searchable: false
+        sortable: false
+        type: partial
+        width: 80px
+
     name:
         label: bedard.shop::lang.statuses.list.name
         searchable: true

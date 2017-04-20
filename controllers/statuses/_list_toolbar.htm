@@ -5,11 +5,13 @@
         New Status
     </a>
 
-    <a
-        href="<?= Backend::url('bedard/shop/carts') ?>"
-        class="btn btn-default oc-icon-angle-left">
-        <?= e(trans('bedard.shop::lang.statuses.list.return_to_carts')); ?>
-    </a>
+    <?php if ($this->user->hasAccess('bedard.shop.carts.*')): ?>
+        <a
+            href="<?= Backend::url('bedard/shop/carts') ?>"
+            class="btn btn-default oc-icon-angle-left">
+            <?= e(trans('bedard.shop::lang.statuses.list.return_to_carts')); ?>
+        </a>
+    <?php endif ?>
 
     <button
         class="btn btn-default oc-icon-trash-o"

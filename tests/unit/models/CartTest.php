@@ -4,6 +4,7 @@ use Bedard\Shop\Classes\Factory;
 use Bedard\Shop\Models\Cart;
 use Bedard\Shop\Models\Inventory;
 use Bedard\Shop\Models\Product;
+use Bedard\Shop\Models\Status;
 use PluginTestCase;
 
 class CartTest extends PluginTestCase
@@ -84,11 +85,11 @@ class CartTest extends PluginTestCase
         $this->assertEquals($updateCount + 1, $cart->update_count);
     }
 
-    public function test_that_an_open_status_is_created()
+    public function test_that_the_default_status_is_created()
     {
+        $status = Factory::create(new Status, ['is_default' => 1]);
         $cart = Factory::create(new Cart);
 
-        $this->assertEquals(1, $cart->statuses()->count());
-        $this->assertEquals('bedard.shop::lang.statuses.open', $cart->statuses()->first()->name);
+        $this->assertEquals(1, $cart->statuses()->whereId($status->id)->count());
     }
 }

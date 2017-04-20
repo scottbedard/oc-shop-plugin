@@ -146,6 +146,7 @@ return [
             'categories' => 'Manage Categories',
             'products' => 'Manage Products',
             'settings' => 'Manage Settings',
+            'statuses' => 'Manage Statuses',
         ],
     ],
 
@@ -198,6 +199,7 @@ return [
         'list' => [
             'color' => 'Color',
             'icon' => 'Icon',
+            'is_default' => 'Default',
             'name' => 'Name',
             'return_to_carts' => 'Return to carts',
             'title' => 'Manage Statuses',
@@ -205,6 +207,8 @@ return [
         'form' => [
             'color' => 'Color',
             'icon' => 'Icon',
+            'is_default' => 'Default',
+            'is_default_comment' => 'The default status will be the first status of a cart.',
             'name' => 'Name',
         ],
         'plural' => 'Statuses',

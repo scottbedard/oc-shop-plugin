@@ -14,6 +14,7 @@ class CreateStatusesTable extends Migration
             $table->string('name')->default('')->index();
             $table->string('color')->default('');
             $table->string('icon')->default('');
+            $table->boolean('is_default')->default(false);
             $table->timestamps();
         });
     }

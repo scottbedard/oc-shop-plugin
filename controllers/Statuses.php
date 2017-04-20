@@ -1,21 +1,26 @@
 <?php namespace Bedard\Shop\Controllers;
 
 use BackendMenu;
-use Backend\Classes\Controller;
+use Bedard\Shop\Classes\BackendController;
 
 /**
  * Statuses Back-end Controller
  */
-class Statuses extends Controller
-{
+ class Statuses extends BackendController
+ {
+    public $formConfig = 'config_form.yaml';
+
     public $implement = [
         'Backend.Behaviors.FormController',
         'Backend.Behaviors.ListController',
         'Owl.Behaviors.ListDelete.Behavior',
     ];
 
-    public $formConfig = 'config_form.yaml';
     public $listConfig = 'config_list.yaml';
+
+    public $registerPermissions = [
+        'bedard.shop.statuses.manage',
+    ];
 
     public function __construct()
     {

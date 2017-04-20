@@ -130,6 +130,10 @@ class Plugin extends PluginBase
                 'label' => 'bedard.shop::lang.plugin.permissions.settings',
                 'tab' => 'bedard.shop::lang.plugin.name',
             ],
+            'bedard.shop.statuses.manage' => [
+                'label' => 'bedard.shop::lang.plugin.permissions.statuses',
+                'tab' => 'bedard.shop::lang.plugin.name',
+            ],
         ];
     }
 
