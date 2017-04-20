@@ -6,8 +6,11 @@
 
 <template>
     <div class="v-status-selector">
-        <v-select ref="select">
-            <option v-for="status in statuses" :value="status.id">
+        <v-select :name="name" ref="select" clearable>
+            <option
+                v-for="status in statuses"
+                :selected="status.id == value"
+                :value="status.id">
                 {{ status.name }}
             </option>
         </v-select>
@@ -30,7 +33,9 @@
         },
         props: [
             'lang',
+            'name',
             'statuses',
+            'value',
         ],
     };
 </script>

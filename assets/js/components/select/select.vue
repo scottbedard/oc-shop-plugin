@@ -24,7 +24,7 @@
 
 <template>
     <div class="v-select">
-        <select ref="select">
+        <select ref="select" :name="name">
             <option></option>
             <slot></slot>
         </select>
@@ -79,8 +79,16 @@
             },
         },
         props: {
-            clearable: { default: false, type: Boolean },
-            placeholder: { default: '' },
+            clearable: {
+                default: false,
+                type: Boolean,
+            },
+            name: {
+                default: null,
+            },
+            placeholder: {
+                default: '',
+            },
         },
     };
 </script>

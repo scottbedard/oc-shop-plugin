@@ -1,2 +1,8 @@
-<i class="<?= $record->icon ?>"></i>
+<?php if ($record->icon): ?>
+    <i class="<?= $record->icon ?>" style="
+        display: inline-block;
+        min-width: 22px;
+        text-align: center;
+    "></i>
+<?php endif ?>
 <span><?= $record->icon ?></span>

@@ -207,6 +207,7 @@ return [
             'icon' => 'Icon',
             'name' => 'Name',
         ],
+        'plural' => 'Statuses',
         'presets' => [
             'abandoned' => 'Abandoned',
             'awaiting_payment' => 'Awaiting payment',
@@ -214,5 +215,6 @@ return [
             'open' => 'Open',
             'payment_received' => 'Payment received',
         ],
+        'singular' => 'Status',
     ],
 ];

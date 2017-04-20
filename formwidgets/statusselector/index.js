@@ -10,17 +10,18 @@ window.mountBedardShopStatusSelector = function() {
         let el = $(this)[0];
 
         // parse our props from data attributes
-        // const lang = JSON.parse(el.dataset.lang);
-        // const name = el.dataset.name;
-        // const value = JSON.parse(el.dataset.value);
+        const name = el.dataset.name;
         const statuses = JSON.parse(el.dataset.statuses);
+        const value = el.dataset.value;
 
         // instantiate our component and mount it to the dom
         new Vue({
             el,
             render: h => h(StatusSelectorComponent, {
                 props: {
+                    name,
                     statuses,
+                    value,
                 },
             }),
         });

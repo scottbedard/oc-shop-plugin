@@ -3,6 +3,7 @@
 use Backend\Classes\FormWidgetBase;
 use Bedard\Shop\Classes\DriverManager;
 use Bedard\Shop\Models\DriverConfig;
+use Exception;
 
 /**
  * DriverConfigs Form Widget.
@@ -75,7 +76,12 @@ class DriverConfigs extends FormWidgetBase
 
         $form = $this->makeConfigFromArray($driver->getFormFields());
         $form->model = DriverConfig::firstOrNew(['driver' => $class]);
-        $form->model->populate();
+
+        try {
+            $form->model->populate();
+        } catch (Exception $e) {
+            // json decoding crashes if the content was incorrectly saved as []
+        }
 
         return $this->makePartial('popup', [
             'class' => get_class($driver),
