@@ -12,8 +12,8 @@ class CreateStatusesTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('name')->default('')->index();
-            $table->string('color')->default('');
-            $table->string('icon')->default('');
+            $table->string('color')->nullable();
+            $table->string('icon')->nullable();
             $table->boolean('is_default')->default(false);
             $table->timestamps();
             $table->softDeletes();

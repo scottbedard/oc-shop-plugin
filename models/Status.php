@@ -7,7 +7,8 @@ use Model;
  */
 class Status extends Model
 {
-    use \October\Rain\Database\Traits\SoftDelete;
+    use \October\Rain\Database\Traits\SoftDelete,
+        \October\Rain\Database\Traits\Validation;
 
     /**
      * @var string The database table used by the model.
@@ -52,6 +53,13 @@ class Status extends Model
             'pivot' => ['created_at'],
             'table' => 'bedard_shop_cart_status',
         ],
+    ];
+
+    /**
+     * @var array Validation
+     */
+    public $rules = [
+        'name' => 'required',
     ];
 
     /**
