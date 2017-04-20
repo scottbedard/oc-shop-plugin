@@ -2,7 +2,6 @@
 
 use Bedard\Shop\Classes\Factory;
 use Bedard\Shop\Models\Status;
-use Exception;
 use PluginTestCase;
 
 class StatusTest extends PluginTestCase

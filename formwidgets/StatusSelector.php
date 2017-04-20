@@ -4,33 +4,34 @@ use Backend\Classes\FormWidgetBase;
 use Bedard\Shop\Models\Status;
 
 /**
- * StatusSelector Form Widget
+ * StatusSelector Form Widget.
  */
 class StatusSelector extends FormWidgetBase
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected $defaultAlias = 'bedard_shop_status_selector';
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function init()
     {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function render()
     {
         $this->prepareVars();
+
         return $this->makePartial('statusselector');
     }
 
     /**
-     * Prepares the form widget view data
+     * Prepares the form widget view data.
      */
     public function prepareVars()
     {
@@ -42,7 +43,7 @@ class StatusSelector extends FormWidgetBase
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function loadAssets()
     {
@@ -51,7 +52,7 @@ class StatusSelector extends FormWidgetBase
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getSaveValue($value)
     {
