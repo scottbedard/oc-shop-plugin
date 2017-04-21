@@ -11,7 +11,7 @@ class NoPayment extends PaymentDriver
     public $formFields = 'nopayment/fields.yaml';
 
     /**
-     * Process a card.
+     * Process a cart.
      *
      * @param  Cart   $cart
      * @return void

@@ -63,7 +63,7 @@ class CartRepository extends Repository
         $token = $this->getToken();
 
         if ($token) {
-            $query = Cart::whereToken($token['token']);
+            $query = Cart::isOpen()->whereToken($token['token']);
             $this->selectColumns($query, $options);
             $this->withRelationships($query, $options);
 

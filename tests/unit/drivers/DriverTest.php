@@ -1,14 +1,12 @@
 <?php namespace Bedard\Shop\Tests\Unit\Drivers;
 
 use Bedard\Shop\Classes\Driver;
+use Bedard\Shop\Classes\Factory;
+use Bedard\Shop\Models\Cart;
 use PluginTestCase;
 
 class TestDriver extends Driver
 {
-    public function driverDetails()
-    {
-        return [];
-    }
 }
 
 class DriverTest extends PluginTestCase
@@ -38,5 +36,15 @@ class DriverTest extends PluginTestCase
         $config = $driver->getConfig();
 
         $this->assertEquals('bar', $config['foo']);
+    }
+
+    public function test_closing_a_cart()
+    {
+        $cart = Factory::create(new Cart);
+        $driver = new TestDriver;
+
+        $driver->close($cart);
+
+        $this->assertNotNull(Cart::find($cart->id)->closed_at);
     }
 }

@@ -35,6 +35,13 @@ class Cart extends Model
     ];
 
     /**
+     * @var array Dates
+     */
+    protected $dates = [
+        'closed_at',
+    ];
+
+    /**
      * @var array Guarded fields
      */
     protected $guarded = ['*'];
@@ -43,9 +50,10 @@ class Cart extends Model
      * @var array Fillable fields
      */
     protected $fillable = [
-        'update_count',
+        'closed_at',
         'item_count',
         'item_total',
+        'update_count',
     ];
 
     /**
@@ -211,6 +219,28 @@ class Cart extends Model
         $this->syncItems();
 
         return $item;
+    }
+
+    /**
+     * Select closed carts.
+     *
+     * @param  \October\Rain\Database\Builder $query
+     * @return \October\Rain\Database\Builder
+     */
+    public function scopeIsClosed($query)
+    {
+        return $query->whereNotNull('closed_at');
+    }
+
+    /**
+     * Select open carts.
+     *
+     * @param  \October\Rain\Database\Builder $query
+     * @return \October\Rain\Database\Builder
+     */
+    public function scopeIsOpen($query)
+    {
+        return $query->whereNull('closed_at');
     }
 
     /**

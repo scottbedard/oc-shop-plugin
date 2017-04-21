@@ -1,6 +1,8 @@
 <?php namespace Bedard\Shop\Classes;
 
+use Bedard\Shop\Models\Cart;
 use Bedard\Shop\Models\DriverConfig;
+use Carbon\Carbon;
 use Exception;
 use October\Rain\Exception\ValidationException;
 use October\Rain\Parse\Yaml;
@@ -23,6 +25,19 @@ abstract class Driver
      * @var array Validation rules.
      */
     public $rules = [];
+
+    /**
+     * Close a cart.
+     *
+     * @param  Cart   $cart
+     * @return void
+     */
+    public function close(Cart $cart)
+    {
+        $cart->closed_at = Carbon::now();
+
+        $cart->save();
+    }
 
     /**
      * Get the configuration model.

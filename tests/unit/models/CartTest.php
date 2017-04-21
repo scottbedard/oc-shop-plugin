@@ -5,6 +5,7 @@ use Bedard\Shop\Models\Cart;
 use Bedard\Shop\Models\Inventory;
 use Bedard\Shop\Models\Product;
 use Bedard\Shop\Models\Status;
+use Carbon\Carbon;
 use PluginTestCase;
 
 class CartTest extends PluginTestCase
@@ -91,5 +92,16 @@ class CartTest extends PluginTestCase
         $cart = Factory::create(new Cart);
 
         $this->assertEquals(1, $cart->statuses()->whereId($status->id)->count());
+    }
+
+    public function test_open_and_closed_scopes()
+    {
+        $open = Factory::create(new Cart);
+        $closed = Factory::create(new Cart, ['closed_at' => Carbon::now()]);
+
+        $this->assertEquals(1, Cart::isOpen()->count());
+        $this->assertEquals(1, Cart::isClosed()->count());
+        $this->assertEquals($open->id, Cart::isOpen()->first()->id);
+        $this->assertEquals($closed->id, Cart::isClosed()->first()->id);
     }
 }
