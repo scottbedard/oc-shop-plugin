@@ -15,21 +15,6 @@ class DriverConfigs extends FormWidgetBase
     protected $defaultAlias = 'bedard_shop_driver_configs';
 
     /**
-     * @var \Bedard\Shop\Classes\DriverManager
-     */
-    protected $manager;
-
-    /**
-     * Construct.
-     */
-    public function __construct()
-    {
-        call_user_func_array('parent::__construct', func_get_args());
-
-        $this->manager = new DriverManager;
-    }
-
-    /**
      * Filter out form data from popup input.
      *
      * @param  array $data
@@ -73,6 +58,9 @@ class DriverConfigs extends FormWidgetBase
         $class = input('class');
         $driver = new $class;
 
+        $manager = new DriverManager;
+        $registration = $manager->getRegistration($class);
+
         $model = $driver->getConfigModel();
         $model->populate();
 
@@ -86,8 +74,8 @@ class DriverConfigs extends FormWidgetBase
         }
 
         return $this->makePartial('popup', [
-            'class' => get_class($driver),
-            'details' => $driver->driverDetails(),
+            'class' => $class,
+            'title' => $registration['name'],
             'form' => $this->makeWidget('Backend\Widgets\Form', $form),
         ]);
     }
@@ -109,9 +97,10 @@ class DriverConfigs extends FormWidgetBase
      */
     public function prepareVars()
     {
+        $manager = new DriverManager;
         $drivers = $this->getConfig('drivers');
 
-        $this->vars['drivers'] = $this->manager->getDrivers($drivers);
+        $this->vars['drivers'] = $manager->getDriversByType($drivers);
     }
 
     /**

@@ -1,8 +1,9 @@
 <?php namespace Bedard\Shop\Drivers;
 
-use Bedard\Shop\Classes\Driver;
+use Bedard\Shop\Classes\PaymentDriver;
+use Bedard\Shop\Models\Cart;
 
-class NoPayment extends Driver
+class NoPayment extends PaymentDriver
 {
     /**
      * @return string   Form fields.
@@ -10,15 +11,13 @@ class NoPayment extends Driver
     public $formFields = 'nopayment/fields.yaml';
 
     /**
-     * Driver details.
+     * Process a card.
      *
-     * @return array
+     * @param  Cart   $cart
+     * @return void
      */
-    public function driverDetails()
+    public function process(Cart $cart)
     {
-        return [
-            'name' => 'bedard.shop::lang.drivers.nopayment.name',
-            'thumbnail' => null,
-        ];
+        // print_r ($this->getConfig());
     }
 }

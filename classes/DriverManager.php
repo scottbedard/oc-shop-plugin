@@ -20,14 +20,12 @@ class DriverManager
     }
 
     /**
-     * Get a type of driver.
+     * Get all drivers.
      *
-     * @param  string   $type
      * @return array
      */
-    public function getDrivers($type)
+    public function getDrivers()
     {
-        // find all drivers of a particular type
         $drivers = [];
 
         foreach ($this->manager->getPlugins() as $id => $plugin) {
@@ -36,25 +34,44 @@ class DriverManager
             }
 
             foreach ($plugin->registerShopDrivers() as $driver) {
-                if ($driver['type'] === $type) {
-                    $drivers[] = $driver;
+                if (array_key_exists('name', $driver)) {
+                    $driver['name'] = trans($driver['name']);
                 }
+
+                $drivers[] = $driver;
             }
         }
 
-        // attach driver details to the array
-        return array_map(function ($driver) {
-            $details = (new $driver['class'])->driverDetails();
-            $driver['details'] = $details;
+        return $drivers;
+    }
 
-            if (
-                array_key_exists('name', $driver['details']) &&
-                is_string($driver['details']['name'])
-            ) {
-                $driver['details']['name'] = trans($driver['details']['name']);
+    /**
+     * Get a type of driver.
+     *
+     * @param  string   $type
+     * @return array
+     */
+    public function getDriversByType($type)
+    {
+        return array_filter($this->getDrivers(), function($driver) use ($type) {
+            return $driver['type'] === $type;
+        });
+    }
+
+    /**
+     * Get the registration of a particular driver.
+     *
+     * @param  string       $class
+     * @return array|null
+     */
+    public function getRegistration($class)
+    {
+        foreach ($this->getDrivers() as $driver) {
+            if ($driver['class'] === $class) {
+                return $driver;
             }
+        }
 
-            return $driver;
-        }, $drivers);
+        return null;
     }
 }

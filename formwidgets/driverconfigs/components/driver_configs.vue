@@ -32,17 +32,15 @@
 </style>
 
 <template>
-    <div>
-        <div class="drivers">
-            <a
-                v-for="driver in drivers"
-                href="#"
-                :title="driver.name"
-                @click.prevent="onDriverClicked(driver)">
-                <img v-if="driver.details.thumbnail" :src="driver.details.thumbnail" />
-                <span v-else>{{ driver.details.name }}</span>
-            </a>
-        </div>
+    <div class="drivers">
+        <a
+            v-for="driver in drivers"
+            href="#"
+            :title="driver.name"
+            @click.prevent="onDriverClicked(driver)">
+            <img v-if="driver.thumbnail" :src="driver.thumbnail" />
+            <span v-else>{{ driver.name }}</span>
+        </a>
     </div>
 </template>
 

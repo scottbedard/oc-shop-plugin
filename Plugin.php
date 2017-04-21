@@ -175,8 +175,10 @@ class Plugin extends PluginBase
     {
         return [
             'nopayment' => [
-                'class' => 'Bedard\Shop\Drivers\NoPayment',
-                'type'  => 'payment',
+                'class'     => 'Bedard\Shop\Drivers\NoPayment',
+                'name'      => 'bedard.shop::lang.drivers.nopayment.name',
+                'thumbnail' => null,
+                'type'      => 'payment',
             ],
         ];
     }

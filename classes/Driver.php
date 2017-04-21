@@ -25,13 +25,6 @@ abstract class Driver
     public $rules = [];
 
     /**
-     * Driver details.
-     *
-     * @return array
-     */
-    abstract public function driverDetails();
-
-    /**
      * Get the configuration model.
      *
      * @return Bedard\Shop\Models\DriverConfig
