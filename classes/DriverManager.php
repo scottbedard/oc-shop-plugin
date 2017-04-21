@@ -1,6 +1,5 @@
 <?php namespace Bedard\Shop\Classes;
 
-use Lang;
 use System\Classes\PluginManager;
 
 class DriverManager

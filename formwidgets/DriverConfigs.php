@@ -2,7 +2,6 @@
 
 use Backend\Classes\FormWidgetBase;
 use Bedard\Shop\Classes\DriverManager;
-use Bedard\Shop\Models\DriverConfig;
 use Exception;
 
 /**

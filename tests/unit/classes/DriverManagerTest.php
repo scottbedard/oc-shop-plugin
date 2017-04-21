@@ -1,7 +1,7 @@
 <?php namespace Bedard\Shop\Tests\Unit\Classes;
 
-use PluginTestCase;
 use Bedard\Shop\Classes\DriverManager;
+use PluginTestCase;
 
 class DriverManagerTest extends PluginTestCase
 {
