@@ -53,7 +53,7 @@ class DriverManager
      */
     public function getDriversByType($type)
     {
-        return array_filter($this->getDrivers(), function($driver) use ($type) {
+        return array_filter($this->getDrivers(), function ($driver) use ($type) {
             return $driver['type'] === $type;
         });
     }
