@@ -7,7 +7,7 @@ class SeedDriverConfigsTable extends Seeder
 {
     public function run()
     {
-        $nopayment = DriverConfig::firstOrNew(['driver' => 'Bedard\Shop\Drivers\NoPayment']);
+        $nopayment = DriverConfig::firstOrNew(['class' => 'Bedard\Shop\Drivers\NoPayment']);
         $nopayment->config = ['event_complete' => 5];
         $nopayment->save();
     }

@@ -1,5 +1,6 @@
 <?php namespace Bedard\Shop\Classes;
 
+use Bedard\Shop\Models\DriverConfig;
 use Exception;
 use October\Rain\Exception\ValidationException;
 use October\Rain\Parse\Yaml;
@@ -24,6 +25,37 @@ abstract class Driver
     public $rules = [];
 
     /**
+     * Driver details.
+     *
+     * @return array
+     */
+    abstract public function driverDetails();
+
+    /**
+     * Get the configuration model.
+     *
+     * @return Bedard\Shop\Models\DriverConfig
+     */
+    public function getConfigModel()
+    {
+        return DriverConfig::firstOrNew([
+            'class' => get_class($this),
+        ]);
+    }
+
+    /**
+     * Get the configuration array.
+     *
+     * @return array
+     */
+    public function getConfig()
+    {
+        $model = $this->getConfigModel();
+
+        return $model->getConfig();
+    }
+
+    /**
      * Get form fields.
      *
      * @return array
@@ -43,6 +75,23 @@ abstract class Driver
         $reflector = new ReflectionClass(get_class($this));
 
         return $yaml->parseFile(dirname($reflector->getFileName()).'/'.$this->formFields);
+    }
+
+    /**
+     * Save driver configuration.
+     *
+     * @param  array    $config
+     * @return void
+     */
+    public function saveConfig(array $config)
+    {
+        $this->validate($config);
+
+        $model = $this->getConfigModel(false);
+
+        $model->config = json_encode($config);
+
+        return $model->save();
     }
 
     /**

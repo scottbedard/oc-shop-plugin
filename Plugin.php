@@ -174,8 +174,9 @@ class Plugin extends PluginBase
     public function registerShopDrivers()
     {
         return [
-            'payment' => [
-                'Bedard\Shop\Drivers\NoPayment',
+            'nopayment' => [
+                'class' => 'Bedard\Shop\Drivers\NoPayment',
+                'type'  => 'payment',
             ],
         ];
     }

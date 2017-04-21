@@ -24,13 +24,15 @@ class DriverConfig extends Model
     /**
      * @var array Encrypted fields
      */
-    protected $encryptable = ['config'];
+    protected $encryptable = [
+        'config',
+    ];
 
     /**
      * @var array Fillable fields
      */
     protected $fillable = [
-        'driver',
+        'class',
         'config',
     ];
 
@@ -42,7 +44,21 @@ class DriverConfig extends Model
     /**
      * @var array Jsonable fields
      */
-    protected $jsonable = ['config'];
+    protected $jsonable = [
+        'config',
+    ];
+
+    /**
+     * Get the model's config array.
+     *
+     * @return array
+     */
+    public function getConfig()
+    {
+        $config = $this->config ?: [];
+
+        return is_string($config) ? json_decode($config, true) : $config;
+    }
 
     /**
      * Populate attriutes based on config so a form can be rendered.
@@ -52,10 +68,10 @@ class DriverConfig extends Model
      */
     public function populate()
     {
-        if (is_array($this->config)) {
-            foreach ($this->config as $key => $value) {
-                $this->$key = $value;
-            }
+        $config = $this->getConfig();
+
+        foreach ($config as $key => $value) {
+            $this->$key = $value;
         }
     }
 }

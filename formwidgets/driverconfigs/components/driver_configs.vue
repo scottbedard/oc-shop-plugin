@@ -39,8 +39,8 @@
                 href="#"
                 :title="driver.name"
                 @click.prevent="onDriverClicked(driver)">
-                <img v-if="driver.thumbnail" :src="driver.thumbnail" />
-                <span v-else>{{ driver.name }}</span>
+                <img v-if="driver.details.thumbnail" :src="driver.details.thumbnail" />
+                <span v-else>{{ driver.details.name }}</span>
             </a>
         </div>
     </div>

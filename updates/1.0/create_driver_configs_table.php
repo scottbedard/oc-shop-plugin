@@ -11,7 +11,7 @@ class CreateDriverConfigsTable extends Migration
         Schema::create('bedard_shop_driver_configs', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('driver')->default('');
+            $table->string('class')->default('');
             $table->json('config');
             $table->timestamps();
         });

@@ -74,8 +74,11 @@ class DriverConfigs extends FormWidgetBase
         $class = input('class');
         $driver = new $class;
 
+        $model = $driver->getConfigModel();
+        $model->populate();
+
         $form = $this->makeConfigFromArray($driver->getFormFields());
-        $form->model = DriverConfig::firstOrNew(['driver' => $class]);
+        $form->model = $model;
 
         try {
             $form->model->populate();
@@ -96,14 +99,10 @@ class DriverConfigs extends FormWidgetBase
     public function onDriverSaved()
     {
         $data = input();
-        $formData = $this->getFormData($data);
+        $formData = $this->getFormData(input());
 
         $driver = new $data['_class'];
-        $driver->validate($formData);
-
-        $config = DriverConfig::firstOrNew(['driver' => $data['_class']]);
-        $config->config = $formData;
-        $config->save();
+        $driver->saveConfig($formData);
     }
 
     /**

@@ -32,25 +32,30 @@ class DriverManager
         $drivers = [];
 
         foreach ($this->manager->getPlugins() as $id => $plugin) {
-            if (! method_exists($plugin, 'registerShopDrivers') ||
-                ! array_key_exists($type, $plugin->registerShopDrivers())) {
+            if (! method_exists($plugin, 'registerShopDrivers')) {
                 continue;
             }
 
-            foreach ($plugin->registerShopDrivers()[$type] as $driver) {
-                $drivers[] = new $driver;
+            foreach ($plugin->registerShopDrivers() as $driver) {
+                if ($driver['type'] === $type) {
+                    $drivers[] = $driver;
+                }
             }
         }
 
-        // extract the driver details
-        $drivers = array_map(function ($driver) {
-            $details = $driver->driverDetails();
-            $details['class'] = get_class($driver);
-            $details['name'] = Lang::get($details['name']);
+        // attach driver details to the array
+        return array_map(function ($driver) {
+            $details = (new $driver['class'])->driverDetails();
+            $driver['details'] = $details;
 
-            return $details;
+            if (
+                array_key_exists('name', $driver['details']) &&
+                is_string($driver['details']['name'])
+            ) {
+                $driver['details']['name'] = trans($driver['details']['name']);
+            }
+
+            return $driver;
         }, $drivers);
-
-        return $drivers;
     }
 }
