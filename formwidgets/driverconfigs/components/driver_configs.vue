@@ -34,7 +34,7 @@
 <template>
     <div class="drivers">
         <a
-            v-for="driver in drivers"
+            v-for="driver in sortedDrivers"
             href="#"
             :title="driver.name"
             @click.prevent="onDriverClicked(driver)">
@@ -48,6 +48,19 @@
     import axios from 'axios';
 
     export default {
+        computed: {
+            sortedDrivers() {
+                let firstParty = this.drivers.filter(driver => {
+                    return driver.class.startsWith('Bedard\\Shop');
+                });
+
+                let thirdParty = this.drivers.filter(driver => {
+                    return ! driver.class.startsWith('Bedard\\Shop');
+                });
+
+                return firstParty.concat(thirdParty);
+            },
+        },
         methods: {
             onDriverClicked(driver) {
                 $(this.$el).popup({
