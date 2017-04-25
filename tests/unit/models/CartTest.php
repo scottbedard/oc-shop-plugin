@@ -1,12 +1,18 @@
 <?php namespace Bedard\Shop\Tests\Unit\Models;
 
 use Bedard\Shop\Classes\Factory;
+use Bedard\Shop\Classes\PaymentDriver;
 use Bedard\Shop\Models\Cart;
 use Bedard\Shop\Models\Inventory;
 use Bedard\Shop\Models\Product;
 use Bedard\Shop\Models\Status;
 use Carbon\Carbon;
 use PluginTestCase;
+
+class TestDriver extends PaymentDriver
+{
+
+}
 
 class CartTest extends PluginTestCase
 {
@@ -103,5 +109,46 @@ class CartTest extends PluginTestCase
         $this->assertEquals(1, Cart::isClosed()->count());
         $this->assertEquals($open->id, Cart::isOpen()->first()->id);
         $this->assertEquals($closed->id, Cart::isClosed()->first()->id);
+    }
+
+    public function test_closing_a_cart_sets_the_closed_fields()
+    {
+        $driver = new TestDriver;
+        $cart = Factory::create(new Cart);
+
+        $this->assertNull($cart->closed_by);
+        $this->assertNull($cart->closed_at);
+
+        $cart->finalize($driver);
+
+        $cart = Cart::find($cart->id);
+        $this->assertEquals(Carbon::now(), $cart->closed_at);
+        $this->assertEquals(get_class($driver), $cart->closed_by);
+    }
+
+    public function test_closing_a_cart_reduces_the_available_inventory()
+    {
+        $product = Factory::create(new Product, ['base_price' => 0.5]);
+        $inventory = Factory::create(new Inventory, ['product_id' => $product->id, 'quantity' => 5]);
+        $cart = Factory::create(new Cart);
+
+        $cart->addInventory($inventory->id, 2);
+        $cart->finalize(new TestDriver);
+
+        $inventory = Inventory::find($inventory->id);
+        $this->assertEquals(3, $inventory->quantity);
+    }
+
+    public function test_restocking_a_cart()
+    {
+        $product = Factory::create(new Product, ['base_price' => 0.5]);
+        $inventory = Factory::create(new Inventory, ['product_id' => $product->id, 'quantity' => 5]);
+        $cart = Factory::create(new Cart);
+
+        $cart->addInventory($inventory->id, 2);
+        $cart->restockInventories();
+
+        $inventory = Inventory::find($inventory->id);
+        $this->assertEquals(7, $inventory->quantity);
     }
 }

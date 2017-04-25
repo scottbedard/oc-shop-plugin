@@ -1,6 +1,9 @@
 <?php namespace Bedard\Shop\Models;
 
+use Bedard\Shop\Classes\PaymentDriver;
+use Carbon\Carbon;
 use Model;
+use Queue;
 
 /**
  * Cart Model.
@@ -51,6 +54,7 @@ class Cart extends Model
      */
     protected $fillable = [
         'closed_at',
+        'closed_by',
         'item_count',
         'item_total',
         'update_count',
@@ -134,6 +138,23 @@ class Cart extends Model
     }
 
     /**
+     * Finalize a cart and reduce the available inventory.
+     *
+     * @param  PaymentDriver $driver
+     * @return void
+     */
+    public function finalize(PaymentDriver $driver)
+    {
+        // close the cart
+        $this->closed_at = Carbon::now();
+        $this->closed_by = get_class($driver);
+        $this->save();
+
+        // reduce our inventories
+        $this->reduceInventories();
+    }
+
+    /**
      * Generate a random token.
      *
      * @return void
@@ -189,6 +210,28 @@ class Cart extends Model
     }
 
     /**
+     * Reduce the available inventory.
+     *
+     * @return void
+     */
+    public function reduceInventories()
+    {
+        // throw an error if the cart is already closed
+        if ($this->closed_at || $this->closed_by) {
+            throw new Error('Failed to close cart, it was already closed by ' . $this->closed_by);
+        }
+
+        $id = $this->id;
+        Queue::push(function($job) use ($id) {
+            $cart = Cart::with('items.inventory')->findOrFail($id);
+            $cart->items->each(function($item) {
+                $item->inventory->quantity -= $item->quantity;
+                $item->inventory->save();
+            });
+        });
+    }
+
+    /**
      * Remove an item from the cart.
      *
      * @param  int                      $itemId
@@ -205,6 +248,28 @@ class Cart extends Model
         $this->syncItems();
 
         return $item;
+    }
+
+    /**
+     * Restock the available inventories.
+     *
+     * @return void
+     */
+    public function restockInventories()
+    {
+        // throw an error if the cart is not closed
+        if ($this->closed_at || $this->closed_by) {
+            throw new Error('Failed to restock inventories, the cart is not closed.');
+        }
+
+        $id = $this->id;
+        Queue::push(function($job) use ($id) {
+            $cart = Cart::with('items.inventory')->findOrFail($id);
+            $cart->items->each(function($item) {
+                $item->inventory->quantity += $item->quantity;
+                $item->inventory->save();
+            });
+        });
     }
 
     /**
