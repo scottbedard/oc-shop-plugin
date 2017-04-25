@@ -218,13 +218,13 @@ class Cart extends Model
     {
         // throw an error if the cart is already closed
         if ($this->closed_at || $this->closed_by) {
-            throw new Error('Failed to close cart, it was already closed by ' . $this->closed_by);
+            throw new Error('Failed to close cart, it was already closed by '.$this->closed_by);
         }
 
         $id = $this->id;
-        Queue::push(function($job) use ($id) {
+        Queue::push(function ($job) use ($id) {
             $cart = Cart::with('items.inventory')->findOrFail($id);
-            $cart->items->each(function($item) {
+            $cart->items->each(function ($item) {
                 $item->inventory->quantity -= $item->quantity;
                 $item->inventory->save();
             });
@@ -263,9 +263,9 @@ class Cart extends Model
         }
 
         $id = $this->id;
-        Queue::push(function($job) use ($id) {
+        Queue::push(function ($job) use ($id) {
             $cart = Cart::with('items.inventory')->findOrFail($id);
-            $cart->items->each(function($item) {
+            $cart->items->each(function ($item) {
                 $item->inventory->quantity += $item->quantity;
                 $item->inventory->save();
             });

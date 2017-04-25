@@ -11,7 +11,6 @@ use PluginTestCase;
 
 class TestDriver extends PaymentDriver
 {
-
 }
 
 class CartTest extends PluginTestCase
