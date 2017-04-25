@@ -148,7 +148,7 @@ class Cart extends Model
     {
         // throw an error if the cart is already closed
         if ($this->closed_at || $this->closed_by) {
-            throw new Exception('Failed to close cart, it was already closed by ' . $this->closed_by);
+            throw new Exception('Failed to close cart, it was already closed by '.$this->closed_by);
         }
 
         // close the cart
