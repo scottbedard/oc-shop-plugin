@@ -1,13 +1,10 @@
-<div
-    data-component="status-selector"
-    data-name="<?= $name ?>"
-    data-statuses="<?= e($statuses->toJson()) ?>"
-    data-value="<?= $value ?>">
-</div>
-
-<script>
-    // since this component is usually loaded in a modal, we
-    // will manually mount our comonent through the window
-    // to avoid any timing bugs with october's spinner.
-    window.mountBedardShopStatusSelector();
-</script>
+<select
+    name="<?= $name ?>"
+    class="form-control custom-select">
+    <option value=""><?= e(trans('bedard.shop::lang.drivers.form.status_selector_placeholder')) ?></option>
+    <?php foreach ($statuses as $status): ?>
+        <option value="<?= $status->id ?>" <?= $value == $status->id ? 'selected' : '' ?>>
+            <?= $status->name ?>
+        </option>
+    <?php endforeach; ?>
+</select>

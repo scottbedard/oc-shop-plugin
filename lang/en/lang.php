@@ -63,6 +63,9 @@ return [
     // drivers
     //
     'drivers' => [
+        'form' => [
+            'status_selector_placeholder' => 'Select a status',
+        ],
         'nopayment' => [
             'event_complete' => 'Checkout complete',
             'event_complete_descrition' => 'This event fires when a user completes the checkout process.',

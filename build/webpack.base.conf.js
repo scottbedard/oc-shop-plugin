@@ -16,7 +16,6 @@ module.exports = {
         options_inventories: resolve('formwidgets/optionsinventories/components'),
         products: resolve('controllers/products'),
         relationships: resolve('formwidgets/relationships/components'),
-        status_selector: resolve('formwidgets/statusselector'),
     },
     output: {
         filename: '[name].min.js',

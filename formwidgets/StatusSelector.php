@@ -16,13 +16,6 @@ class StatusSelector extends FormWidgetBase
     /**
      * {@inheritdoc}
      */
-    public function init()
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function render()
     {
         $this->prepareVars();
@@ -40,15 +33,6 @@ class StatusSelector extends FormWidgetBase
         $this->vars['model'] = $this->model;
 
         $this->vars['statuses'] = Status::all();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function loadAssets()
-    {
-        $this->addJs('/plugins/bedard/shop/assets/dist/vendor.min.js', 'Bedard.Shop');
-        $this->addJs('/plugins/bedard/shop/assets/dist/status_selector.min.js', 'Bedard.Shop');
     }
 
     /**
