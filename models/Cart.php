@@ -2,6 +2,7 @@
 
 use Bedard\Shop\Classes\PaymentDriver;
 use Carbon\Carbon;
+use Exception;
 use Model;
 use Queue;
 
@@ -145,6 +146,11 @@ class Cart extends Model
      */
     public function finalize(PaymentDriver $driver)
     {
+        // throw an error if the cart is already closed
+        if ($this->closed_at || $this->closed_by) {
+            throw new Exception('Failed to close cart, it was already closed by ' . $this->closed_by);
+        }
+
         // close the cart
         $this->closed_at = Carbon::now();
         $this->closed_by = get_class($driver);
@@ -216,11 +222,6 @@ class Cart extends Model
      */
     public function reduceInventories()
     {
-        // throw an error if the cart is already closed
-        if ($this->closed_at || $this->closed_by) {
-            throw new Error('Failed to close cart, it was already closed by '.$this->closed_by);
-        }
-
         $id = $this->id;
         Queue::push(function ($job) use ($id) {
             $cart = Cart::with('items.inventory')->findOrFail($id);
@@ -259,7 +260,7 @@ class Cart extends Model
     {
         // throw an error if the cart is not closed
         if ($this->closed_at || $this->closed_by) {
-            throw new Error('Failed to restock inventories, the cart is not closed.');
+            throw new Exception('Failed to restock inventories, the cart is not closed.');
         }
 
         $id = $this->id;
