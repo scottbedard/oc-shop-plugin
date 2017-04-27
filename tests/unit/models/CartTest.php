@@ -7,13 +7,13 @@ use Bedard\Shop\Models\Inventory;
 use Bedard\Shop\Models\Product;
 use Bedard\Shop\Models\Status;
 use Carbon\Carbon;
-use PluginTestCase;
+use Bedard\Shop\Tests\Unit\ShopTestCase;
 
 class TestDriver extends PaymentDriver
 {
 }
 
-class CartTest extends PluginTestCase
+class CartTest extends ShopTestCase
 {
     protected $refreshPlugins = ['Bedard.Shop'];
 

@@ -4,12 +4,10 @@ use Bedard\Shop\Classes\Factory;
 use Bedard\Shop\Models\Category;
 use Bedard\Shop\Models\Product;
 use Bedard\Shop\Repositories\ProductRepository;
-use PluginTestCase;
+use Bedard\Shop\Tests\Unit\ShopTestCase;
 
-class ProductRepositoryTest extends PluginTestCase
+class ProductRepositoryTest extends ShopTestCase
 {
-    protected $refreshPlugins = ['Bedard.Shop'];
-
     public function test_selecting_specific_product_columns()
     {
         $repository = new ProductRepository;

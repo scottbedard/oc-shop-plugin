@@ -2,12 +2,10 @@
 
 use Bedard\Shop\Classes\Factory;
 use Bedard\Shop\Models\Status;
-use PluginTestCase;
+use Bedard\Shop\Tests\Unit\ShopTestCase;
 
-class StatusTest extends PluginTestCase
+class StatusTest extends ShopTestCase
 {
-    protected $refreshPlugins = ['Bedard.Shop'];
-
     public function test_creating_multiple_default_statuses()
     {
         $one = Factory::create(new Status, ['is_default' => true]);

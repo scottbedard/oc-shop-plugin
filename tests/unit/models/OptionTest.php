@@ -4,12 +4,10 @@ use Bedard\Shop\Classes\Factory;
 use Bedard\Shop\Models\Inventory;
 use Bedard\Shop\Models\Option;
 use Exception;
-use PluginTestCase;
+use Bedard\Shop\Tests\Unit\ShopTestCase;
 
-class OptionTest extends PluginTestCase
+class OptionTest extends ShopTestCase
 {
-    protected $refreshPlugins = ['Bedard.Shop'];
-
     public function test_option_values_must_be_unique()
     {
         try {

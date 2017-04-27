@@ -3,12 +3,10 @@
 use Bedard\Shop\Classes\Factory;
 use Bedard\Shop\Models\Category;
 use Bedard\Shop\Models\Product;
-use PluginTestCase;
+use Bedard\Shop\Tests\Unit\ShopTestCase;
 
-class CategoryTest extends PluginTestCase
+class CategoryTest extends ShopTestCase
 {
-    protected $refreshPlugins = ['Bedard.Shop'];
-
     public function test_categoriess_can_belong_to_products()
     {
         $category = Factory::create(new Category);

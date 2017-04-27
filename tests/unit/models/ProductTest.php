@@ -6,12 +6,10 @@ use Bedard\Shop\Models\Inventory;
 use Bedard\Shop\Models\Option;
 use Bedard\Shop\Models\Product;
 use DB;
-use PluginTestCase;
+use Bedard\Shop\Tests\Unit\ShopTestCase;
 
-class ProductTest extends PluginTestCase
+class ProductTest extends ShopTestCase
 {
-    protected $refreshPlugins = ['Bedard.Shop'];
-
     public function test_getting_formatted_price()
     {
         $product = new Product;

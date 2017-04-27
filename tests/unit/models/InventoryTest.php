@@ -5,12 +5,10 @@ use Bedard\Shop\Models\Inventory;
 use Bedard\Shop\Models\Option;
 use Bedard\Shop\Models\Product;
 use October\Rain\Exception\ValidationException;
-use PluginTestCase;
+use Bedard\Shop\Tests\Unit\ShopTestCase;
 
-class InventoryTest extends PluginTestCase
+class InventoryTest extends ShopTestCase
 {
-    protected $refreshPlugins = ['Bedard.Shop'];
-
     public function test_sku_must_be_unique()
     {
         // null sku's should not collide

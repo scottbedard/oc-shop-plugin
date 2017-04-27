@@ -1,12 +1,10 @@
 <?php namespace Bedard\Shop\Tests\Unit\Classes;
 
 use Bedard\Shop\Classes\DriverManager;
-use PluginTestCase;
+use Bedard\Shop\Tests\Unit\ShopTestCase;
 
-class DriverManagerTest extends PluginTestCase
+class DriverManagerTest extends ShopTestCase
 {
-    protected $refreshPlugins = ['Bedard.Shop'];
-
     public function test_getting_an_array_of_drivers()
     {
         $manager = new DriverManager;

@@ -6,13 +6,11 @@ use Bedard\Shop\Models\CartItem;
 use Bedard\Shop\Models\Inventory;
 use Bedard\Shop\Models\Product;
 use Bedard\Shop\Repositories\CartRepository;
-use PluginTestCase;
+use Bedard\Shop\Tests\Unit\ShopTestCase;
 use Session;
 
-class CartRepositoryTest extends PluginTestCase
+class CartRepositoryTest extends ShopTestCase
 {
-    protected $refreshPlugins = ['Bedard.Shop'];
-
     public function test_find_returns_null_when_no_cart_is_found()
     {
         $repository = new CartRepository;

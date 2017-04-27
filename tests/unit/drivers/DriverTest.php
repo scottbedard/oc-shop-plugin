@@ -3,7 +3,7 @@
 use Bedard\Shop\Classes\Driver;
 use Exception;
 use October\Rain\Exception\ValidationException;
-use PluginTestCase;
+use Bedard\Shop\Tests\Unit\ShopTestCase;
 
 //
 // fixtures
@@ -19,10 +19,8 @@ class DriverValidationException extends Exception
 //
 // tests
 //
-class DriverTest extends PluginTestCase
+class DriverTest extends ShopTestCase
 {
-    protected $refreshPlugins = ['Bedard.Shop'];
-
     public function test_getting_a_drivers_config_model()
     {
         $driver = new TestDriver;
