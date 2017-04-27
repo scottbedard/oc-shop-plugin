@@ -6,8 +6,8 @@ use Bedard\Shop\Models\Cart;
 use Bedard\Shop\Models\Inventory;
 use Bedard\Shop\Models\Product;
 use Bedard\Shop\Models\Status;
-use Carbon\Carbon;
 use Bedard\Shop\Tests\Unit\ShopTestCase;
+use Carbon\Carbon;
 
 class TestDriver extends PaymentDriver
 {

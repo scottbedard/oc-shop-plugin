@@ -1,9 +1,9 @@
 <?php namespace Bedard\Shop\Tests\Unit\Drivers;
 
 use Bedard\Shop\Classes\Driver;
+use Bedard\Shop\Tests\Unit\ShopTestCase;
 use Exception;
 use October\Rain\Exception\ValidationException;
-use Bedard\Shop\Tests\Unit\ShopTestCase;
 
 //
 // fixtures

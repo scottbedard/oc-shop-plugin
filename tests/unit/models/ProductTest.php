@@ -5,8 +5,8 @@ use Bedard\Shop\Models\Category;
 use Bedard\Shop\Models\Inventory;
 use Bedard\Shop\Models\Option;
 use Bedard\Shop\Models\Product;
-use DB;
 use Bedard\Shop\Tests\Unit\ShopTestCase;
+use DB;
 
 class ProductTest extends ShopTestCase
 {

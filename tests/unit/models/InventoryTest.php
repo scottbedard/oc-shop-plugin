@@ -4,8 +4,8 @@ use Bedard\Shop\Classes\Factory;
 use Bedard\Shop\Models\Inventory;
 use Bedard\Shop\Models\Option;
 use Bedard\Shop\Models\Product;
-use October\Rain\Exception\ValidationException;
 use Bedard\Shop\Tests\Unit\ShopTestCase;
+use October\Rain\Exception\ValidationException;
 
 class InventoryTest extends ShopTestCase
 {

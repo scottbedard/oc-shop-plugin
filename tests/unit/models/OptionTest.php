@@ -3,8 +3,8 @@
 use Bedard\Shop\Classes\Factory;
 use Bedard\Shop\Models\Inventory;
 use Bedard\Shop\Models\Option;
-use Exception;
 use Bedard\Shop\Tests\Unit\ShopTestCase;
+use Exception;
 
 class OptionTest extends ShopTestCase
 {
