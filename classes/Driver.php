@@ -27,16 +27,23 @@ abstract class Driver
     public $rules = [];
 
     /**
-     * Close a cart.
+     * After validate.
      *
-     * @param  Cart   $cart
+     * @param  array    $data
      * @return void
      */
-    public function close(Cart $cart)
+    public function afterValidate(array $data)
     {
-        $cart->closed_at = Carbon::now();
+    }
 
-        $cart->save();
+    /**
+     * Before validate.
+     *
+     * @param  array    $data
+     * @return void
+     */
+    public function beforeValidate(array $data)
+    {
     }
 
     /**
@@ -111,10 +118,14 @@ abstract class Driver
      */
     public function validate(array $formData)
     {
+        $this->beforeValidate($formData);
+
         $validator = Validator::make($formData, $this->rules, $this->customMessages);
 
         if ($validator->fails()) {
             throw new ValidationException($validator);
         }
+
+        $this->afterValidate($formData);
     }
 }
