@@ -1,8 +1,6 @@
 <?php namespace Bedard\Shop\Tests\Unit\Drivers;
 
 use Bedard\Shop\Classes\Driver;
-use Bedard\Shop\Classes\Factory;
-use Bedard\Shop\Models\Cart;
 use Exception;
 use October\Rain\Exception\ValidationException;
 use PluginTestCase;
@@ -63,7 +61,8 @@ class DriverTest extends PluginTestCase
     public function test_before_validate()
     {
         $driver = new class extends Driver {
-            public function beforeValidate(array $data) {
+            public function beforeValidate(array $data)
+            {
                 throw new DriverValidationException;
             }
         };
@@ -76,7 +75,8 @@ class DriverTest extends PluginTestCase
     public function test_after_validate()
     {
         $driver = new class extends Driver {
-            public function afterValidate(array $data) {
+            public function afterValidate(array $data)
+            {
                 throw new DriverValidationException;
             }
         };

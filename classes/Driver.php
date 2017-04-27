@@ -1,8 +1,6 @@
 <?php namespace Bedard\Shop\Classes;
 
-use Bedard\Shop\Models\Cart;
 use Bedard\Shop\Models\DriverConfig;
-use Carbon\Carbon;
 use Exception;
 use October\Rain\Exception\ValidationException;
 use October\Rain\Parse\Yaml;
