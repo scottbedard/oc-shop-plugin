@@ -55,7 +55,6 @@ class Cart extends Model
      */
     protected $fillable = [
         'closed_at',
-        'closed_by',
         'item_count',
         'item_total',
         'update_count',
@@ -139,25 +138,17 @@ class Cart extends Model
     }
 
     /**
-     * Finalize a cart and reduce the available inventory.
+     * Close a cart.
      *
-     * @param  PaymentDriver $driver
-     * @return void
+     * @return boolean
      */
-    public function finalize(PaymentDriver $driver)
+    public function close()
     {
-        // throw an error if the cart is already closed
-        if ($this->closed_at || $this->closed_by) {
-            throw new Exception('Failed to close cart, it was already closed by '.$this->closed_by);
-        }
+        $this->reduceAvailableInventory();
 
-        // close the cart
         $this->closed_at = Carbon::now();
-        $this->closed_by = get_class($driver);
-        $this->save();
 
-        // reduce our inventories
-        $this->reduceInventories();
+        return $this->save();
     }
 
     /**
@@ -220,7 +211,7 @@ class Cart extends Model
      *
      * @return void
      */
-    public function reduceInventories()
+    public function reduceAvailableInventory()
     {
         $id = $this->id;
         Queue::push(function ($job) use ($id) {
@@ -258,11 +249,6 @@ class Cart extends Model
      */
     public function restockInventories()
     {
-        // throw an error if the cart is not closed
-        if ($this->closed_at || $this->closed_by) {
-            throw new Exception('Failed to restock inventories, the cart is not closed.');
-        }
-
         $id = $this->id;
         Queue::push(function ($job) use ($id) {
             $cart = Cart::with('items.inventory')->findOrFail($id);

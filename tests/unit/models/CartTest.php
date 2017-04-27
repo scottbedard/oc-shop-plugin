@@ -115,14 +115,12 @@ class CartTest extends ShopTestCase
         $driver = new TestDriver;
         $cart = Factory::create(new Cart);
 
-        $this->assertNull($cart->closed_by);
         $this->assertNull($cart->closed_at);
 
-        $cart->finalize($driver);
+        $cart->close($driver);
 
         $cart = Cart::find($cart->id);
         $this->assertEquals(Carbon::now(), $cart->closed_at);
-        $this->assertEquals(get_class($driver), $cart->closed_by);
     }
 
     public function test_closing_a_cart_reduces_the_available_inventory()
@@ -132,7 +130,7 @@ class CartTest extends ShopTestCase
         $cart = Factory::create(new Cart);
 
         $cart->addInventory($inventory->id, 2);
-        $cart->finalize(new TestDriver);
+        $cart->close(new TestDriver);
 
         $inventory = Inventory::find($inventory->id);
         $this->assertEquals(3, $inventory->quantity);
