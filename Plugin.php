@@ -99,7 +99,7 @@ class Plugin extends PluginBase
                         'icon'          => 'icon-cog',
                         'label'         => 'bedard.shop::lang.settings.plural',
                         'permissions'   => ['bedard.shop.settings.*'],
-                        'url'           => Backend::url('system/settings/update/bedard/shop/api'),
+                        'url'           => Backend::url('system/settings/update/bedard/shop/general'),
                     ],
                 ],
             ],
@@ -145,13 +145,22 @@ class Plugin extends PluginBase
     public function registerSettings()
     {
         return [
+            'general' => [
+                'category'      => 'bedard.shop::lang.plugin.name',
+                'class'         => 'Bedard\Shop\Models\Settings',
+                'description'   => 'bedard.shop::lang.settings.title',
+                'icon'          => 'icon-cog',
+                'label'         => 'bedard.shop::lang.settings.label',
+                'order'         => 100,
+                'permissions'   => ['bedard.shop.settings.manage'],
+            ],
             'api' => [
                 'category'      => 'bedard.shop::lang.plugin.name',
                 'class'         => 'Bedard\Shop\Models\ApiSettings',
                 'description'   => 'bedard.shop::lang.api.title',
-                'icon'          => 'icon-cog',
+                'icon'          => 'icon-code',
                 'label'         => 'bedard.shop::lang.api.label',
-                'order'         => 100,
+                'order'         => 200,
                 'permissions'   => ['bedard.shop.settings.manage'],
             ],
             'payment' => [
@@ -160,7 +169,7 @@ class Plugin extends PluginBase
                 'description'   => 'bedard.shop::lang.payment.title',
                 'icon'          => 'icon-money',
                 'label'         => 'bedard.shop::lang.payment.label',
-                'order'         => 200,
+                'order'         => 300,
                 'permissions'   => ['bedard.shop.settings.manage'],
             ],
         ];
