@@ -227,6 +227,18 @@ class Cart extends Model
     }
 
     /**
+     * Process carts that have been abandoned.
+     *
+     * @return void
+     */
+    public static function processAbandoned()
+    {
+        self::isAbandoned()->get()->each(function ($cart) {
+            $cart->abandon();
+        });
+    }
+
+    /**
      * Reduce the available inventory.
      *
      * @return void

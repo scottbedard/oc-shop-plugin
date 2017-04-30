@@ -60,6 +60,16 @@ return [
     ],
 
     //
+    // console
+    //
+    'console' => [
+        'abandon' => [
+            'description' => 'Process carts that have been abandoned',
+            'success' => 'Processed abandoned carts',
+        ],
+    ],
+
+    //
     // drivers
     //
     'drivers' => [

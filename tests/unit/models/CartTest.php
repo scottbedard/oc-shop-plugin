@@ -201,4 +201,22 @@ class CartTest extends ShopTestCase
 
         $this->assertEquals(get_class($driver), $data['statuses'][1]['pivot']['driver']);
     }
+
+    public function test_processing_abandoned_carts()
+    {
+        // set the cart lifespan to 10 minutes
+        Settings::set('cart_lifespan', 10);
+
+        // create a cart was last updated 20 minutes ago
+        $cart = Factory::create(new Cart);
+        $cart->updated_at = Carbon::now()->subMinutes(20);
+        $cart->save();
+
+        // process the abandoned carts
+        Cart::processAbandoned();
+
+        // our cart should now be abandoned
+        $cart = Cart::find($cart->id);
+        $this->assertEquals(Carbon::now(), $cart->abandoned_at);
+    }
 }

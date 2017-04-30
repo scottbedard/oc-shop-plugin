@@ -46,6 +46,7 @@ class Plugin extends PluginBase
      */
     public function register()
     {
+        $this->registerConsoleCommand('shop.abandon', 'Bedard\Shop\Console\Abandon');
     }
 
     /**
@@ -135,6 +136,17 @@ class Plugin extends PluginBase
                 'tab' => 'bedard.shop::lang.plugin.name',
             ],
         ];
+    }
+
+    /**
+     * Register scheduled tasks.
+     *
+     * @param  \Illuminate\Console\Scheduling\Schedule $schedule
+     * @return void
+     */
+    public function registerSchedule($schedule)
+    {
+        $schedule->command('shop:abandon')->everyTenMinutes();
     }
 
     /**
