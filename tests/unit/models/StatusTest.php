@@ -3,7 +3,7 @@
 use Bedard\Shop\Classes\Factory;
 use Bedard\Shop\Models\Status;
 use Bedard\Shop\Tests\Unit\ShopTestCase;
-use \October\Rain\Database\ModelException;
+use October\Rain\Database\ModelException;
 
 class StatusTest extends ShopTestCase
 {

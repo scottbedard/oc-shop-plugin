@@ -1,6 +1,5 @@
 <?php namespace Bedard\Shop\Models;
 
-use Exception;
 use Flash;
 use Lang;
 use Model;
