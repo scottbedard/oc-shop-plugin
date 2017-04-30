@@ -5,7 +5,6 @@ use PluginTestCase;
 class ShopTestCase extends PluginTestCase
 {
     protected $refreshPlugins = [
-        'RainLab.User',
         'Bedard.Shop',
     ];
 }
