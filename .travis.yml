@@ -24,7 +24,7 @@ before_script:
   - composer install
   - cp config/cms.php config/cms.php.testing
   - mv config/cms.php.testing config/testing/cms.php
-  - git clone https://github.com/rainlab/user-plugin.git plugins/rainlab/user
+  - php artisan plugin:install RainLab.User
   - cd plugins/bedard/shop
   - composer install
 
