@@ -111,7 +111,7 @@ class CartTest extends ShopTestCase
         $this->assertEquals($closed->id, Cart::isClosed()->first()->id);
     }
 
-    public function test_abandoned_scopes()
+    public function test_is_abandoned_scopes()
     {
         Settings::set('cart_lifespan', 10);
 

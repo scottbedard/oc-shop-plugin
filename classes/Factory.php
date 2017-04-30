@@ -139,6 +139,7 @@ class Factory
         $faker = Faker\Factory::create();
 
         return [
+            'is_abandoned' => false,
             'is_default' => false,
             'name' => $faker->words(2, true),
         ];

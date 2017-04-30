@@ -6,6 +6,14 @@ use Bedard\Shop\Tests\Unit\ShopTestCase;
 
 class StatusTest extends ShopTestCase
 {
+    public function test_creating_multiple_abandoned_statuses()
+    {
+        $one = Factory::create(new Status, ['is_abandoned' => true]);
+        $two = Factory::create(new Status, ['is_abandoned' => true]);
+
+        $this->assertFalse(Status::find($one->id)->is_abandoned);
+    }
+
     public function test_creating_multiple_default_statuses()
     {
         $one = Factory::create(new Status, ['is_default' => true]);

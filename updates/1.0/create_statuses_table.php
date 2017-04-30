@@ -15,6 +15,7 @@ class CreateStatusesTable extends Migration
             $table->string('color')->nullable();
             $table->string('icon')->nullable();
             $table->boolean('is_default')->default(false);
+            $table->boolean('is_abandoned')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });

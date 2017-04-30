@@ -43,6 +43,7 @@ class Cart extends Model
      * @var array Dates
      */
     protected $dates = [
+        'abandoned_at',
         'closed_at',
     ];
 
@@ -306,7 +307,9 @@ class Cart extends Model
      */
     public function scopeIsOpen($query)
     {
-        return $query->whereNull('closed_at');
+        return $query
+            ->whereNull('abandoned_at')
+            ->whereNull('closed_at');
     }
 
     /**

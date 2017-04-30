@@ -191,8 +191,21 @@ return [
     // settings
     //
     'settings' => [
+        'form' => [
+            'cart_lifespan_1_day' => '1 day',
+            'cart_lifespan_1_hour' => '1 hour',
+            'cart_lifespan_1_week' => '1 week',
+            'cart_lifespan_12_hours' => '12 hours',
+            'cart_lifespan_2_days' => '2 days',
+            'cart_lifespan_3_days' => '3 days',
+            'cart_lifespan_6_hours' => '6 hours',
+            'cart_lifespan_description' => 'Carts that have not been touched for this amount of time will be considered abandoned.',
+            'cart_lifespan' => 'Cart lifespan',
+        ],
+        'label' => 'Settings',
         'plural' => 'Settings',
         'singular' => 'Setting',
+        'title' => 'General shop configuration',
     ],
 
     //

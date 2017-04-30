@@ -19,6 +19,7 @@ class Status extends Model
      * @var array Attribute casting
      */
     protected $casts = [
+        'is_abandoned' => 'boolean',
         'is_default' => 'boolean',
     ];
 
@@ -40,6 +41,7 @@ class Status extends Model
     protected $fillable = [
         'color',
         'icon',
+        'is_abandoned',
         'is_default',
         'name',
     ];
@@ -69,7 +71,8 @@ class Status extends Model
      */
     public function afterSave()
     {
-        $this->cleanDuplicateDefaults();
+        $this->preventDuplicateAbandoned();
+        $this->preventDuplicateDefaults();
     }
 
     /**
@@ -79,9 +82,23 @@ class Status extends Model
      */
     public function beforeDelete()
     {
-        // prevent the deletion of the default status
-        if ($this->is_default) {
+        // prevent the deletion of the default or abandoned statuses
+        if ($this->is_abandoned || $this->is_default) {
             return false;
+        }
+    }
+
+    /**
+     * Prevent multiple statuses from having an abandoned status.
+     *
+     * @return void
+     */
+    protected function preventDuplicateAbandoned()
+    {
+        if ($this->is_abandoned) {
+            self::isAbandoned()
+                ->where('id', '<>', $this->id)
+                ->update(['is_abandoned' => false]);
         }
     }
 
@@ -90,13 +107,24 @@ class Status extends Model
      *
      * @return void
      */
-    protected function cleanDuplicateDefaults()
+    protected function preventDuplicateDefaults()
     {
         if ($this->is_default) {
             self::isDefault()
                 ->where('id', '<>', $this->id)
                 ->update(['is_default' => false]);
         }
+    }
+
+    /**
+     * Select the abandoned status.
+     *
+     * @param  \October\Rain\Database\Builder $query
+     * @return \October\Rain\Database\Builder
+     */
+    public function scopeIsAbandoned($query)
+    {
+        return $query->where('is_abandoned', 1);
     }
 
     /**
