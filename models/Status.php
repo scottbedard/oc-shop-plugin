@@ -55,7 +55,10 @@ class Status extends Model
     public $belongsToMany = [
         'carts' => [
             'Bedard\Shop\Models\Cart',
-            'pivot' => ['created_at'],
+            'pivot' => [
+                'created_at',
+                'driver',
+            ],
             'table' => 'bedard_shop_cart_status',
         ],
     ];

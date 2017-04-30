@@ -10,6 +10,7 @@ class CreateCartStatusTable extends Migration
     {
         Schema::create('bedard_shop_cart_status', function (Blueprint $table) {
             $table->engine = 'InnoDB';
+            $table->string('driver')->nullable();
             $table->integer('cart_id')->unsigned()->nullable();
             $table->integer('status_id')->unsigned()->nullable();
             $table->timestamp('created_at')->nullable();

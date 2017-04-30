@@ -169,8 +169,36 @@ class CartTest extends ShopTestCase
     public function test_abandoning_a_cart()
     {
         $cart = Factory::create(new Cart);
+        $status = Factory::create(new Status, ['is_abandoned' => true]);
+
         $cart->abandon();
 
         $this->assertEquals(Carbon::now(), $cart->abandoned_at);
+        $this->assertEquals(1, $cart->statuses()->whereId($status->id)->count());
+    }
+
+    public function test_setting_a_status_without_a_driver()
+    {
+        $cart = Factory::create(new Cart);
+        $status = Factory::create(new Status);
+
+        $cart->setStatus($status);
+        $cart->load('statuses');
+        $data = $cart->toArray();
+
+        $this->assertEquals(null, $data['statuses'][1]['pivot']['driver']);
+    }
+
+    public function test_setting_a_status_with_a_driver()
+    {
+        $cart = Factory::create(new Cart);
+        $status = Factory::create(new Status);
+        $driver = new TestDriver;
+
+        $cart->setStatus($status, $driver);
+        $cart->load('statuses');
+        $data = $cart->toArray();
+
+        $this->assertEquals(get_class($driver), $data['statuses'][1]['pivot']['driver']);
     }
 }

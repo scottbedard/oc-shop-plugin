@@ -1,5 +1,6 @@
 <?php namespace Bedard\Shop\Models;
 
+use Bedard\Shop\Classes\Driver;
 use Carbon\Carbon;
 use Model;
 use Queue;
@@ -66,7 +67,10 @@ class Cart extends Model
         'statuses' => [
             'Bedard\Shop\Models\Status',
             'order' => 'pivot_created_at desc',
-            'pivot' => ['created_at'],
+            'pivot' => [
+                'created_at',
+                'driver',
+            ],
             'table' => 'bedard_shop_cart_status',
         ],
     ];
@@ -84,6 +88,12 @@ class Cart extends Model
      */
     public function abandon()
     {
+        $status = Status::isAbandoned()->first();
+
+        if ($status) {
+            $this->setStatus($status);
+        }
+
         $this->abandoned_at = Carbon::now();
         $this->save();
     }
@@ -143,7 +153,7 @@ class Cart extends Model
         $status = Status::isDefault()->first();
 
         if ($status) {
-            $this->statuses()->attach($status);
+            $this->setStatus($status);
         }
     }
 
@@ -333,6 +343,19 @@ class Cart extends Model
         $item->quantity = $quantity;
 
         return $this->saveItem($item);
+    }
+
+    /**
+     * Set a cart status.
+     *
+     * @param \Bedard\Shop\Models\Status        $status
+     * @param \Bedard\Shop\Classes\Driver|null  $driver
+     */
+    public function setStatus(Status $status, Driver $driver = null)
+    {
+        $this->statuses()->attach($status, [
+            'driver' => $driver ? get_class($driver) : null,
+        ]);
     }
 
     /**
