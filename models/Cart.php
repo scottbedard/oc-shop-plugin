@@ -78,6 +78,17 @@ class Cart extends Model
     ];
 
     /**
+     * Abandon a cart.
+     *
+     * @return void
+     */
+    public function abandon()
+    {
+        $this->abandoned_at = Carbon::now();
+        $this->save();
+    }
+
+    /**
      * Add inventory to the cart.
      *
      * @param  int $inventoryId

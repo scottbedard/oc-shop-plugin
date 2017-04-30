@@ -165,4 +165,12 @@ class CartTest extends ShopTestCase
         $inventory = Inventory::find($inventory->id);
         $this->assertEquals(7, $inventory->quantity);
     }
+
+    public function test_abandoning_a_cart()
+    {
+        $cart = Factory::create(new Cart);
+        $cart->abandon();
+
+        $this->assertEquals(Carbon::now(), $cart->abandoned_at);
+    }
 }
