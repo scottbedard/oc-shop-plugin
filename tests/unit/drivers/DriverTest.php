@@ -16,6 +16,20 @@ class DriverValidationException extends Exception
 {
 }
 
+class AfterValidateDriver extends Driver {
+    public function afterValidate(array $data)
+    {
+        throw new DriverValidationException;
+    }
+}
+
+class BeforeValidateDriver extends Driver {
+    public function beforeValidate(array $data)
+    {
+        throw new DriverValidationException;
+    }
+}
+
 //
 // tests
 //
@@ -58,12 +72,7 @@ class DriverTest extends ShopTestCase
 
     public function test_before_validate()
     {
-        $driver = new class extends Driver {
-            public function beforeValidate(array $data)
-            {
-                throw new DriverValidationException;
-            }
-        };
+        $driver = new BeforeValidateDriver;
 
         $this->setExpectedException(DriverValidationException::class);
 
@@ -72,12 +81,7 @@ class DriverTest extends ShopTestCase
 
     public function test_after_validate()
     {
-        $driver = new class extends Driver {
-            public function afterValidate(array $data)
-            {
-                throw new DriverValidationException;
-            }
-        };
+        $driver = new AfterValidateDriver;
 
         $this->setExpectedException(DriverValidationException::class);
 
