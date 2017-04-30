@@ -66,4 +66,15 @@ class StatusTest extends ShopTestCase
         $this->setExpectedException(ModelException::class);
         $foo->save();
     }
+
+    public function test_if_statuses_can_be_deleted()
+    {
+        $default = Factory::create(new Status, ['is_default' => 1]);
+        $abandoned = Factory::create(new Status, ['is_abandoned' => 1]);
+        $regular = Factory::create(new Status);
+
+        $this->assertFalse($default->isDeleteable());
+        $this->assertFalse($abandoned->isDeleteable());
+        $this->assertTrue($regular->isDeleteable());
+    }
 }

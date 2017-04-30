@@ -106,6 +106,16 @@ class Status extends Model
     }
 
     /**
+     * Determine if the status can be deleted.
+     *
+     * @return boolean
+     */
+    public function isDeleteable()
+    {
+        return ! $this->is_default && ! $this->is_abandoned;
+    }
+
+    /**
      * Prevent the default status from being removed.
      *
      * @throws \October\Rain\Database\ModelException
