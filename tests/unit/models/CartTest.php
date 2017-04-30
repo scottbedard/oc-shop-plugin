@@ -5,6 +5,7 @@ use Bedard\Shop\Classes\PaymentDriver;
 use Bedard\Shop\Models\Cart;
 use Bedard\Shop\Models\Inventory;
 use Bedard\Shop\Models\Product;
+use Bedard\Shop\Models\Settings;
 use Bedard\Shop\Models\Status;
 use Bedard\Shop\Tests\Unit\ShopTestCase;
 use Carbon\Carbon;
@@ -108,6 +109,22 @@ class CartTest extends ShopTestCase
         $this->assertEquals(1, Cart::isClosed()->count());
         $this->assertEquals($open->id, Cart::isOpen()->first()->id);
         $this->assertEquals($closed->id, Cart::isClosed()->first()->id);
+    }
+
+    public function test_abandoned_scopes()
+    {
+        Settings::set('cart_lifespan', 10);
+
+        $open = Factory::create(new Cart);
+        $abandoned = Factory::create(new Cart);
+
+        Cart::whereId($abandoned->id)->update([
+            'created_at' => Carbon::now()->subMinutes(20),
+            'updated_at' => Carbon::now()->subMinutes(11),
+        ]);
+
+        $this->assertEquals(1, Cart::isAbandoned()->count());
+        $this->assertEquals($abandoned->id, Cart::isAbandoned()->first()->id);
     }
 
     public function test_closing_a_cart_sets_the_closed_fields()

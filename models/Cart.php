@@ -1,6 +1,7 @@
 <?php namespace Bedard\Shop\Models;
 
 use Bedard\Shop\Classes\PaymentDriver;
+use Bedard\Shop\Models\Settings;
 use Carbon\Carbon;
 use Exception;
 use Model;
@@ -271,6 +272,19 @@ class Cart extends Model
         $this->syncItems();
 
         return $item;
+    }
+
+    /**
+     * Select abandoned carts.
+     *
+     * @param  \October\Rain\Database\Builder $query
+     * @return \October\Rain\Database\Builder
+     */
+    public function scopeIsAbandoned($query)
+    {
+        $lifespan = Settings::getLifespan();
+
+        return $query->where('updated_at', '<', Carbon::now()->subMinutes($lifespan));
     }
 
     /**
