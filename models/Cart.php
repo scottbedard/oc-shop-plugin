@@ -1,9 +1,6 @@
 <?php namespace Bedard\Shop\Models;
 
-use Bedard\Shop\Classes\PaymentDriver;
-use Bedard\Shop\Models\Settings;
 use Carbon\Carbon;
-use Exception;
 use Model;
 use Queue;
 
@@ -142,7 +139,7 @@ class Cart extends Model
     /**
      * Close a cart.
      *
-     * @return boolean
+     * @return bool
      */
     public function close()
     {
