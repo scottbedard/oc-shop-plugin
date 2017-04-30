@@ -88,8 +88,7 @@ class Status extends Model
      */
     public function beforeDelete()
     {
-        // prevent the deletion of the default or abandoned statuses
-        if ($this->is_abandoned || $this->is_default) {
+        if (! $this->isDeleteable()) {
             return false;
         }
     }
