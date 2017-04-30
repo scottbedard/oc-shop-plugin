@@ -3,8 +3,6 @@
 use Bedard\Shop\Models\Cart;
 use Illuminate\Console\Command;
 use Lang;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
 
 class Abandon extends Command
 {
@@ -19,7 +17,7 @@ class Abandon extends Command
     protected $description;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @return void
      */
@@ -39,6 +37,6 @@ class Abandon extends Command
     {
         Cart::processAbandoned();
 
-        $this->output->writeln('<info>' . Lang::get('bedard.shop::lang.console.abandon.success') . '</info>');
+        $this->output->writeln('<info>'.Lang::get('bedard.shop::lang.console.abandon.success').'</info>');
     }
 }
