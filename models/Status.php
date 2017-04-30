@@ -108,7 +108,7 @@ class Status extends Model
     /**
      * Determine if the status can be deleted.
      *
-     * @return boolean
+     * @return bool
      */
     public function isDeleteable()
     {
