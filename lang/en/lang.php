@@ -215,6 +215,7 @@ return [
         'list' => [
             'color' => 'Color',
             'icon' => 'Icon',
+            'is_abandoned' => 'Abandoned',
             'is_default' => 'Default',
             'name' => 'Name',
             'return_to_carts' => 'Return to carts',
@@ -223,8 +224,12 @@ return [
         'form' => [
             'color' => 'Color',
             'icon' => 'Icon',
-            'is_default' => 'Default',
+            'is_abandoned_comment' => 'The abandoned status will be applied to inactive carts.',
+            'is_abandoned' => 'Abandoned',
+            'is_default_abandoned_exception' => 'A status cannot be both the default and abandoned status.',
             'is_default_comment' => 'The default status will be the first status of a cart.',
+            'is_default' => 'Default',
+            'is_default_removed' => 'The default status cannot be removed. Instead, try setting a different status as the default.',
             'name' => 'Name',
         ],
         'plural' => 'Statuses',

@@ -7,6 +7,13 @@ fields:
         label: bedard.shop::lang.statuses.form.is_default
         comment: bedard.shop::lang.statuses.form.is_default_comment
         type: switch
+        span: left
+
+    is_abandoned:
+        label: bedard.shop::lang.statuses.form.is_abandoned
+        comment: bedard.shop::lang.statuses.form.is_abandoned_comment
+        type: switch
+        span: right
 
     name:
         label: bedard.shop::lang.statuses.form.name
@@ -14,9 +21,8 @@ fields:
 
     icon:
         label: bedard.shop::lang.statuses.form.icon
-        span: left
+        span: right
 
     color:
         label: bedard.shop::lang.statuses.form.color
         type: colorpicker
-        span: left

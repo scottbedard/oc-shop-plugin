@@ -23,6 +23,7 @@ class SeedStatusesTable extends Seeder
             'name' => Lang::get('bedard.shop::lang.statuses.presets.abandoned'),
             'color' => '#c0392b',
             'icon' => 'icon-times',
+            'is_abandoned' => true,
         ]);
 
         Status::create([

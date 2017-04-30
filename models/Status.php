@@ -1,6 +1,10 @@
 <?php namespace Bedard\Shop\Models;
 
+use Exception;
+use Flash;
+use Lang;
 use Model;
+use October\Rain\Database\ModelException;
 
 /**
  * Status Model.
@@ -89,6 +93,33 @@ class Status extends Model
     }
 
     /**
+     * Before save.
+     *
+     * @return void
+     */
+    public function beforeSave()
+    {
+        $this->preventDefaultRemoval();
+        $this->validateFlags();
+    }
+
+    /**
+     * Prevent the default status from being removed.
+     *
+     * @throws \October\Rain\Database\ModelException
+     * @return void
+     */
+    protected function preventDefaultRemoval()
+    {
+        if ($this->getOriginal('is_default') && ! $this->is_default) {
+            $message = Lang::get('bedard.shop::lang.statuses.form.is_default_removed');
+
+            Flash::error($message);
+            throw new ModelException($this, $message);
+        }
+    }
+
+    /**
      * Prevent multiple statuses from having an abandoned status.
      *
      * @return void
@@ -136,5 +167,21 @@ class Status extends Model
     public function scopeIsDefault($query)
     {
         return $query->where('is_default', 1);
+    }
+
+    /**
+     * Validate status flags.
+     *
+     * @throws \Exception
+     * @return void
+     */
+    protected function validateFlags()
+    {
+        if ($this->is_abandoned && $this->is_default) {
+            $message = Lang::get('bedard.shop::lang.statuses.form.is_default_abandoned_exception');
+
+            Flash::error($message);
+            throw new ModelException($this, $message);
+        }
     }
 }

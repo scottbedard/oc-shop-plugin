@@ -3,14 +3,6 @@
 # ===================================
 
 columns:
-    is_default:
-        label: bedard.shop::lang.statuses.list.is_default
-        path: $/bedard/shop/models/status/_column_is_default.htm
-        searchable: false
-        sortable: false
-        type: partial
-        width: 80px
-
     name:
         label: bedard.shop::lang.statuses.list.name
         searchable: true
@@ -26,3 +18,17 @@ columns:
         searchable: false
         type: partial
         path: $/bedard/shop/models/status/_column_color.htm
+
+    is_default:
+        label: bedard.shop::lang.statuses.list.is_default
+        path: $/bedard/shop/models/status/_column_is_default.htm
+        searchable: false
+        type: partial
+        width: 100px
+
+    is_abandoned:
+        label: bedard.shop::lang.statuses.list.is_abandoned
+        path: $/bedard/shop/models/status/_column_is_abandoned.htm
+        searchable: false
+        type: partial
+        width: 100px;
