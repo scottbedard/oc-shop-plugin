@@ -16,14 +16,16 @@ class DriverValidationException extends Exception
 {
 }
 
-class AfterValidateDriver extends Driver {
+class AfterValidateDriver extends Driver
+{
     public function afterValidate(array $data)
     {
         throw new DriverValidationException;
     }
 }
 
-class BeforeValidateDriver extends Driver {
+class BeforeValidateDriver extends Driver
+{
     public function beforeValidate(array $data)
     {
         throw new DriverValidationException;
