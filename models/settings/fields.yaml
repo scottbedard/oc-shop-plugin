@@ -1,0 +1,18 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    name:
+        label: bedard.shop::lang.settings.form.cart_lifespan
+        comment: bedard.shop::lang.settings.form.cart_lifespan_comment
+        type: dropdown
+        default: 360
+        options:
+            60: bedard.shop::lang.settings.form.cart_lifespan_1_hour
+            360: bedard.shop::lang.settings.form.cart_lifespan_6_hours
+            720: bedard.shop::lang.settings.form.cart_lifespan_12_hours
+            1140: bedard.shop::lang.settings.form.cart_lifespan_1_day
+            2280: bedard.shop::lang.settings.form.cart_lifespan_2_days
+            4320: bedard.shop::lang.settings.form.cart_lifespan_3_days
+            10080: bedard.shop::lang.settings.form.cart_lifespan_1_week
