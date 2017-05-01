@@ -123,6 +123,20 @@ class CartRepository extends Repository
     }
 
     /**
+     * Touch the current cart.
+     *
+     * @return void
+     */
+    public function touch()
+    {
+        $cart = $this->findOrCreate();
+
+        $cart->touch();
+
+        return $cart;
+    }
+
+    /**
      * Add or remove quantity to an existing CartItem.
      *
      * @param  int                          $inventoryId

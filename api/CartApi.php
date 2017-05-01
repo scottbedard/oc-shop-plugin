@@ -51,6 +51,17 @@ class CartApi extends ApiController
     }
 
     /**
+     * Touch a cart.
+     *
+     * @param  CartRepository $repository
+     * @return \Bedard\Shop\Models\Cart
+     */
+    public function touch(CartRepository $repository)
+    {
+        return $repository->touch();
+    }
+
+    /**
      * Add or remove quantity to an existing CartItem.
      *
      * @param  CartRepository               $repository

@@ -7,6 +7,7 @@ use Bedard\Shop\Models\Inventory;
 use Bedard\Shop\Models\Product;
 use Bedard\Shop\Repositories\CartRepository;
 use Bedard\Shop\Tests\Unit\ShopTestCase;
+use Carbon\Carbon;
 use Session;
 
 class CartRepositoryTest extends ShopTestCase
@@ -87,5 +88,19 @@ class CartRepositoryTest extends ShopTestCase
         $repository->remove($item->id);
         $item = CartItem::withTrashed()->find($item->id);
         $this->assertNotNull($item->deleted_at);
+    }
+
+    public function test_touching_a_cart()
+    {
+        $repository = new CartRepository;
+
+        // create a cart that was last updated yesterday
+        $cart = $repository->create();
+        Cart::whereId($cart->id)->update(['updated_at' => Carbon::yesterday()]);
+        $this->assertEquals(Carbon::yesterday(), Cart::find($cart->id)->updated_at);
+
+        // touch the cart
+        $cart = $repository->touch();
+        $this->assertEquals(Carbon::now(), $cart->updated_at);
     }
 }
