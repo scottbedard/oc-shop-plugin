@@ -84,6 +84,12 @@ class Plugin extends PluginBase
                         'permissions'   => ['bedard.shop.carts.*'],
                         'url'           => Backend::url('bedard/shop/carts'),
                     ],
+                    'statuses' => [
+                        'icon'          => 'icon-tags',
+                        'label'         => 'bedard.shop::lang.statuses.plural',
+                        'permissions'   => ['bedard.shop.statuses.*'],
+                        'url'           => Backend::url('bedard/shop/statuses'),
+                    ],
                     'products' => [
                         'icon'          => 'icon-cubes',
                         'label'         => 'bedard.shop::lang.products.plural',
