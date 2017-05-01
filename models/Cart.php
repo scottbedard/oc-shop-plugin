@@ -370,7 +370,7 @@ class Cart extends Model
         // reduce inventories if neccessary
         if ($status->is_reducing) {
             $id = $this->id;
-            Queue::push(function() use ($id) {
+            Queue::push(function () use ($id) {
                 $cart = Cart::findOrFail($id);
                 $cart->reduceAvailableInventory();
             });
