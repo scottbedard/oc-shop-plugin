@@ -23,6 +23,7 @@ columns:
         label: bedard.shop::lang.statuses.list.is_default
         path: $/bedard/shop/models/status/_column_is_default.htm
         searchable: false
+        sortable: false
         type: partial
         width: 100px
 
@@ -30,5 +31,14 @@ columns:
         label: bedard.shop::lang.statuses.list.is_abandoned
         path: $/bedard/shop/models/status/_column_is_abandoned.htm
         searchable: false
+        sortable: false
+        type: partial
+        width: 100px;
+
+    is_reducing:
+        label: bedard.shop::lang.statuses.list.is_reducing
+        path: $/bedard/shop/models/status/_column_is_reducing.htm
+        searchable: false
+        sortable: false
         type: partial
         width: 100px;
