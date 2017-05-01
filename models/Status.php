@@ -24,6 +24,7 @@ class Status extends Model
     protected $casts = [
         'is_abandoned' => 'boolean',
         'is_default' => 'boolean',
+        'is_reducing' => 'boolean',
     ];
 
     /**
@@ -46,6 +47,7 @@ class Status extends Model
         'icon',
         'is_abandoned',
         'is_default',
+        'is_reducing',
         'name',
     ];
 

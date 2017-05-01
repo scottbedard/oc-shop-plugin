@@ -23,6 +23,7 @@ class CartItem extends Model
         'deleted_at' => null,
         'id' => null,
         'inventory_id' => null,
+        'is_reduced' => false,
         'product_id' => null,
         'quantity' => 0,
         'updated_at' => null,
@@ -35,6 +36,7 @@ class CartItem extends Model
         'cart_id' => 'integer',
         'id' => 'integer',
         'inventory_id' => 'integer',
+        'is_reduced' => 'boolean',
         'product_id' => 'integer',
         'quantity' => 'integer',
     ];
@@ -55,6 +57,7 @@ class CartItem extends Model
     protected $fillable = [
         'cart_id',
         'inventory_id',
+        'is_reduced',
         'product_id',
         'quantity',
     ];
@@ -73,4 +76,21 @@ class CartItem extends Model
             'Bedard\Shop\Models\Product',
         ],
     ];
+
+    /**
+     * Reduce the available inventory.
+     *
+     * @return void
+     */
+    public function reduceAvailableInventory()
+    {
+        if (! $this->is_reduced) {
+            $this->load('inventory');
+            $this->inventory->quantity -= $this->quantity;
+            $this->inventory->save();
+
+            $this->is_reduced = true;
+            $this->save();
+        }
+    }
 }

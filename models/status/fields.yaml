@@ -15,6 +15,12 @@ fields:
         type: switch
         span: right
 
+    is_reducing:
+        label: bedard.shop::lang.statuses.form.is_reducing
+        comment: bedard.shop::lang.statuses.form.is_reducing_comment
+        type: switch
+        span: left
+
     name:
         label: bedard.shop::lang.statuses.form.name
         span: left

@@ -164,8 +164,6 @@ class Cart extends Model
      */
     public function close()
     {
-        $this->reduceAvailableInventory();
-
         $this->closed_at = Carbon::now();
 
         return $this->save();
@@ -248,9 +246,9 @@ class Cart extends Model
         $id = $this->id;
         Queue::push(function ($job) use ($id) {
             $cart = Cart::with('items.inventory')->findOrFail($id);
+
             $cart->items->each(function ($item) {
-                $item->inventory->quantity -= $item->quantity;
-                $item->inventory->save();
+                $item->reduceAvailableInventory();
             });
         });
     }
@@ -368,6 +366,15 @@ class Cart extends Model
         $this->statuses()->attach($status, [
             'driver' => $driver ? get_class($driver) : null,
         ]);
+
+        // reduce inventories if neccessary
+        if ($status->is_reducing) {
+            $id = $this->id;
+            Queue::push(function() use ($id) {
+                $cart = Cart::findOrFail($id);
+                $cart->reduceAvailableInventory();
+            });
+        }
     }
 
     /**

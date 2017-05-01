@@ -140,19 +140,6 @@ class CartTest extends ShopTestCase
         $this->assertEquals(Carbon::now(), $cart->closed_at);
     }
 
-    public function test_closing_a_cart_reduces_the_available_inventory()
-    {
-        $product = Factory::create(new Product, ['base_price' => 0.5]);
-        $inventory = Factory::create(new Inventory, ['product_id' => $product->id, 'quantity' => 5]);
-        $cart = Factory::create(new Cart);
-
-        $cart->addInventory($inventory->id, 2);
-        $cart->close(new TestDriver);
-
-        $inventory = Inventory::find($inventory->id);
-        $this->assertEquals(3, $inventory->quantity);
-    }
-
     public function test_restocking_a_cart()
     {
         $product = Factory::create(new Product, ['base_price' => 0.5]);
@@ -218,5 +205,24 @@ class CartTest extends ShopTestCase
         // our cart should now be abandoned
         $cart = Cart::find($cart->id);
         $this->assertEquals(Carbon::now(), $cart->abandoned_at);
+    }
+
+    public function test_attaching_a_reducing_status()
+    {
+        // create a product, inventory, and cart
+        $product = Factory::create(new Product);
+        $inventory = Factory::create(new Inventory, ['product_id' => $product->id, 'quantity' => 5]);
+        $cart = Factory::create(new Cart);
+
+        // create a status that is reducing
+        $status = Factory::create(new Status, ['is_reducing' => true]);
+
+        // add our inventory to the cart and refresh it
+        $cart->addInventory($inventory->id, 3);
+        $cart = Cart::with('items.inventory')->find($cart->id);
+
+        // set the cart's status
+        $cart->setStatus($status);
+        $this->assertEquals(2, Inventory::find($inventory->id)->quantity);
     }
 }

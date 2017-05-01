@@ -240,6 +240,8 @@ return [
             'is_default_comment' => 'The default status will be the first status of a cart.',
             'is_default' => 'Default',
             'is_default_removed' => 'The default status cannot be removed. Instead, try setting a different status as the default.',
+            'is_reducing' => 'Adjust inventory',
+            'is_reducing_comment' => 'When on, this will status will subtract the cart\'s items from the available inventory.',
             'name' => 'Name',
         ],
         'plural' => 'Statuses',

@@ -34,6 +34,7 @@ class Factory
 
         switch (get_class($model)) {
             case 'Bedard\Shop\Models\Cart': $seed = self::getCartData($data); break;
+            case 'Bedard\Shop\Models\CartItem': $seed = self::getCartItemData($data); break;
             case 'Bedard\Shop\Models\Category': $seed = self::getCategoryData($data); break;
             case 'Bedard\Shop\Models\Inventory': $seed = self::getInventoryData($data); break;
             case 'Bedard\Shop\Models\Option': $seed = self::getOptionData($data); break;
@@ -60,6 +61,21 @@ class Factory
     {
         return [
             //
+        ];
+    }
+
+    /**
+     * CartItem.
+     *
+     * @param  array $data
+     * @return array
+     */
+    public static function getCartItemData(array $data = [])
+    {
+        return [
+            'cart_id' => 0,
+            'inventory_id' => 0,
+            'product_id' => 0,
         ];
     }
 
@@ -141,6 +157,7 @@ class Factory
         return [
             'is_abandoned' => false,
             'is_default' => false,
+            'is_reducing' => false,
             'name' => $faker->words(2, true),
         ];
     }
