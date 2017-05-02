@@ -1,14 +1,14 @@
 <?php namespace Bedard\Shop\Updates;
 
-use Schema;
 use October\Rain\Database\Schema\Blueprint;
 use October\Rain\Database\Updates\Migration;
+use Schema;
 
 class CreateAddressesTable extends Migration
 {
     public function up()
     {
-        Schema::create('bedard_shop_addresses', function(Blueprint $table) {
+        Schema::create('bedard_shop_addresses', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->json('street')->nullable();
