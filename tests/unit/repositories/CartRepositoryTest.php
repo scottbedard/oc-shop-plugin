@@ -101,6 +101,6 @@ class CartRepositoryTest extends ShopTestCase
 
         // touch the cart
         $cart = $repository->touch();
-        $this->assertEquals(Carbon::now(), $cart->updated_at);
+        $this->assertTrue($cart->updated_at > Carbon::now()->subMinutes(2));
     }
 }
