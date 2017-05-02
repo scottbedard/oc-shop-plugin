@@ -41,6 +41,7 @@ class Factory
             case 'Bedard\Shop\Models\Option': $seed = self::getOptionData($data); break;
             case 'Bedard\Shop\Models\Product': $seed = self::getProductData($data); break;
             case 'Bedard\Shop\Models\Status': $seed = self::getStatusData($data); break;
+            case 'RainLab\User\Models\User': $seed = self::getUserData($data); break;
         }
 
         $model->fill(array_merge($seed, $data));
@@ -173,6 +174,24 @@ class Factory
             'is_default' => false,
             'is_reducing' => false,
             'name' => $faker->words(2, true),
+        ];
+    }
+
+    /**
+     * User.
+     *
+     * @param  array $data
+     * @return array
+     */
+    public static function getUserData(array $data = [])
+    {
+        $faker = Faker\Factory::create();
+
+        return [
+            'email' => $faker->email(),
+            'username' => $faker->username(),
+            'password' => 'foobar',
+            'password_confirmation' => 'foobar',
         ];
     }
 }

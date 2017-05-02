@@ -3,6 +3,7 @@
 use Bedard\Shop\Classes\Factory;
 use Bedard\Shop\Models\Address;
 use Bedard\Shop\Tests\Unit\ShopTestCase;
+use RainLab\User\Models\User;
 
 class AddressTest extends ShopTestCase
 {

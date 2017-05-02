@@ -18,7 +18,7 @@ class Address extends Model
      * @var array Default attributes
      */
     public $attributes = [
-        'country' => null,
+        'country_code' => null,
         'locality' => null,
         'postal_code' => null,
         'region' => null,
@@ -51,7 +51,18 @@ class Address extends Model
     /**
      * @var array Relations
      */
-    public $belongsToMany = [];
+    public $belongsToMany = [
+        'users' => [
+            'RainLab\User\Models\User',
+            'table' => 'bedard_shop_address_user',
+        ],
+    ];
+
+    public $hasMany = [
+        'carts' => [
+            'Bedard\Shop\Models\Cart',
+        ],
+    ];
 
     /**
      * @var array Validation

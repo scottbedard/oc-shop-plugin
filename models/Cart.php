@@ -19,6 +19,7 @@ class Cart extends Model
      * @var array Default attributes
      */
     public $attributes = [
+        'address_id' => null,
         'created_at' => null,
         'id' => null,
         'item_count' => 0,
@@ -26,6 +27,7 @@ class Cart extends Model
         'token' => null,
         'update_count' => 0,
         'updated_at' => null,
+        'user_id' => null,
     ];
 
     /**
@@ -54,15 +56,26 @@ class Cart extends Model
      * @var array Fillable fields
      */
     protected $fillable = [
+        'address_id',
         'closed_at',
         'item_count',
         'item_total',
         'update_count',
+        'user_id',
     ];
 
     /**
      * @var array Relations
      */
+    public $belongsTo = [
+        'address' => [
+            'Bedard\Shop\Models\Address',
+        ],
+        'user' => [
+            'RainLab\User\Models\User',
+        ],
+    ];
+
     public $belongsToMany = [
         'statuses' => [
             'Bedard\Shop\Models\Status',

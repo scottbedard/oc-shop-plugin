@@ -1,6 +1,7 @@
 <?php namespace Bedard\Shop;
 
 use Backend;
+use RainLab\User\Models\User;
 use System\Classes\PluginBase;
 
 /**
@@ -37,6 +38,22 @@ class Plugin extends PluginBase
      */
     public function boot()
     {
+        $this->extendRainLabUser();
+    }
+
+    /**
+     * Extend RainLab.User plugin.
+     *
+     * @return void
+     */
+    protected function extendRainLabUser()
+    {
+        User::extend(function($model) {
+            $model->belongsToMany['addresses'] = [
+                'Bedard\Shop\Models\Address',
+                'table' => 'bedard_shop_address_user',
+            ];
+        });
     }
 
     /**
