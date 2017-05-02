@@ -17,10 +17,17 @@
             justify-content: center;
             margin: $spacing;
             padding: 12px 20px;
+            position: relative;
             width: $size;
 
             &:hover {
                 text-decoration: none;
+            }
+
+            .v-checkbox {
+                position: absolute;
+                top: 10px;
+                left: 10px;
             }
 
             img {
@@ -38,6 +45,7 @@
             href="#"
             :title="driver.name"
             @click.prevent="onDriverClicked(driver)">
+            <v-checkbox v-model="findEnabledObject(driver).isEnabled" />
             <img v-if="driver.thumbnail" :src="driver.thumbnail" />
             <span v-else>{{ driver.name }}</span>
         </a>
@@ -48,6 +56,14 @@
     import axios from 'axios';
 
     export default {
+        data() {
+            return {
+                enabled: this.drivers.map(driver => ({
+                    class: driver.class,
+                    isEnabled: false,
+                })),
+            };
+        },
         computed: {
             sortedDrivers() {
                 let firstParty = this.drivers.filter(driver => {
@@ -62,6 +78,12 @@
             },
         },
         methods: {
+            findEnabledObject(driver) {
+                return this.enabled.find(d => d.class === driver.class);
+            },
+            isEnabled(driver) {
+                return this.findEnabledObject(driver).isEnabled;
+            },
             onDriverClicked(driver) {
                 $(this.$el).popup({
                     handler: 'onDriverClicked',
