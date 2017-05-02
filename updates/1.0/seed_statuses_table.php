@@ -29,6 +29,7 @@ class SeedStatusesTable extends Seeder
         Status::create([
             'name' => Lang::get('bedard.shop::lang.statuses.presets.payment_received'),
             'icon' => 'icon-money',
+            'is_reducing' => true,
         ]);
 
         Status::create([

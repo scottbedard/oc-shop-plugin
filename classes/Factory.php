@@ -33,6 +33,7 @@ class Factory
         $seed = [];
 
         switch (get_class($model)) {
+            case 'Bedard\Shop\Models\Address': $seed = self::getAddressData($data); break;
             case 'Bedard\Shop\Models\Cart': $seed = self::getCartData($data); break;
             case 'Bedard\Shop\Models\CartItem': $seed = self::getCartItemData($data); break;
             case 'Bedard\Shop\Models\Category': $seed = self::getCategoryData($data); break;
@@ -49,6 +50,19 @@ class Factory
         }
 
         return $model;
+    }
+
+    /**
+     * Address.
+     *
+     * @param  array $data
+     * @return array
+     */
+    public static function getAddressData(array $data = [])
+    {
+        return [
+            //
+        ];
     }
 
     /**
