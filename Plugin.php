@@ -48,7 +48,7 @@ class Plugin extends PluginBase
      */
     protected function extendRainLabUser()
     {
-        User::extend(function($model) {
+        User::extend(function ($model) {
             $model->belongsToMany['addresses'] = [
                 'Bedard\Shop\Models\Address',
                 'table' => 'bedard_shop_address_user',
