@@ -12,6 +12,13 @@ $(function() {
     // parse our props from data attributes
     const drivers = JSON.parse(el.dataset.drivers);
     const lang = JSON.parse(el.dataset.lang);
+    const name = el.dataset.name;
+    const value = JSON.parse(el.dataset.value.trim() || '[]').map(driver => {
+        return {
+            class: driver.class,
+            isEnabled: driver.is_enabled,
+        };
+    });
 
     // configure axios with our csrf token
     axios.defaults.headers.common['X-CSRF-TOKEN'] = el.dataset.token;
@@ -23,6 +30,8 @@ $(function() {
             props: {
                 drivers,
                 lang,
+                name,
+                value,
             },
         }),
     });

@@ -4,6 +4,7 @@ use Bedard\Shop\Classes\Driver;
 use Bedard\Shop\Tests\Unit\ShopTestCase;
 use Exception;
 use October\Rain\Exception\ValidationException;
+use Bedard\Shop\Models\PaymentDrivers;
 
 //
 // fixtures
@@ -30,6 +31,10 @@ class BeforeValidateDriver extends Driver
     {
         throw new DriverValidationException;
     }
+}
+
+class IsEnabledDriver extends Driver
+{
 }
 
 //

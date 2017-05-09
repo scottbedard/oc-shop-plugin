@@ -1,7 +1,8 @@
 <style lang="scss" scoped>@import 'core';;
     a {
-        display: inline-flex;
         align-items: center;
+        color: #2a3e51;
+        display: inline-flex;
         text-decoration: none;
 
         .v-checkbox-target {
@@ -14,25 +15,24 @@
             height: 18px;
             width: 18px;
             text-align: center;
+        }
 
-            &.is-checked {
-                -webkit-font-smoothing: antialiased;
-                background-color: #1f99dc;
-                border-color: #1f99dc;
-                border-width: 2px;
-                box-shadow: none;
-                content: "\f00c";
-                font-family: FontAwesome;
-                font-size: 12px;
-                font-style: normal;
-                font-weight: normal;
-                line-height: 17px;
-                text-decoration: inherit;
-            }
+        .is-checked .v-checkbox-target {
+            -webkit-font-smoothing: antialiased;
+            background-color: #1f99dc;
+            border-color: #1f99dc;
+            border-width: 2px;
+            box-shadow: none;
+            content: "\f00c";
+            font-family: FontAwesome;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: normal;
+            line-height: 17px;
+            text-decoration: inherit;
         }
 
         .v-checkbox-label {
-            color: #2a3e51;
             font-size: 13px;
             margin-left: 7px;
 
@@ -47,8 +47,9 @@
         <a
             class="v-checkbox"
             href="#"
+            :class="{ 'is-checked': value }"
             @click.prevent.stop="onClick">
-            <span class="v-checkbox-target" :class="{ 'is-checked': value }">
+            <span class="v-checkbox-target">
                 <i class="icon-check" v-if="value"></i>
             </span>
             <span class="v-checkbox-label">

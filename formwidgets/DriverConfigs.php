@@ -1,5 +1,6 @@
 <?php namespace Bedard\Shop\FormWidgets;
 
+use Bedard\Shop\Models\DriverConfig;
 use Backend\Classes\FormWidgetBase;
 use Bedard\Shop\Classes\DriverManager;
 use Exception;
@@ -98,9 +99,11 @@ class DriverConfigs extends FormWidgetBase
     public function prepareVars()
     {
         $manager = new DriverManager;
-        $drivers = $this->getConfig('drivers');
+        $type = $this->getConfig('drivers');
 
-        $this->vars['drivers'] = $manager->getDriversByType($drivers);
+        $this->vars['drivers'] = $manager->getDriversByType($type);
+        $this->vars['name'] = $this->formField->getName();
+        $this->vars['value'] = DriverConfig::all();
     }
 
     /**

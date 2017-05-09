@@ -12,6 +12,7 @@ class CreateDriverConfigsTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('class')->default('');
+            $table->boolean('is_enabled')->default(false);
             $table->json('config');
             $table->timestamps();
         });

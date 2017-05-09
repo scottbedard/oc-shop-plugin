@@ -4,5 +4,7 @@
     data-lang="<?= e(json_encode([
         'bedard' => ['shop' => trans('bedard.shop::lang')],
     ])) ?>"
-    data-token="<?= csrf_token() ?>">
+    data-name="<?= $name ?>"
+    data-token="<?= csrf_token() ?>"
+    data-value="<?= e($value) ?>">
 </div>

@@ -74,6 +74,8 @@ return [
     //
     'drivers' => [
         'form' => [
+            'is_enabled_true' => 'Enabled',
+            'is_enabled_false' => 'Disabled',
             'status_selector_placeholder' => 'Select a status',
         ],
         'nopayment' => [

@@ -25,15 +25,30 @@
             }
 
             .v-checkbox {
+                bottom: 0px;
+                color: #bbb;
+                left: 0px;
+                padding: 0 0 10px 10px;
                 position: absolute;
-                top: 10px;
-                left: 10px;
+                transition: color 50ms ease-in-out;
+
+                &.is-checked {
+                    color: #2a3e51;
+                }
             }
 
             img {
                 height: auto;
                 max-width: 100%;
             }
+        }
+    }
+
+    .driver-cover {
+        transition: transform 50ms ease-in-out;
+
+        &:not(.is-enabled) {
+            opacity: 0.4;
         }
     }
 </style>
@@ -45,10 +60,20 @@
             href="#"
             :title="driver.name"
             @click.prevent="onDriverClicked(driver)">
-            <v-checkbox v-model="findEnabledObject(driver).isEnabled" />
-            <img v-if="driver.thumbnail" :src="driver.thumbnail" />
-            <span v-else>{{ driver.name }}</span>
+            <v-checkbox v-model="findEnabledObject(driver).isEnabled">
+                {{
+                    findEnabledObject(driver).isEnabled
+                        ? 'bedard.shop::lang.drivers.form.is_enabled_true'
+                        : 'bedard.shop::lang.drivers.form.is_enabled_false'
+                    | trans(lang)
+                }}
+            </v-checkbox>
+            <div class="driver-cover" :class="{ 'is-enabled': findEnabledObject(driver).isEnabled }">
+                <img v-if="driver.thumbnail" :src="driver.thumbnail" />
+                <span v-else>{{ driver.name }}</span>
+            </div>
         </a>
+        <input type="hidden" :name="name" :value="outputValue" />
     </div>
 </template>
 
@@ -56,6 +81,9 @@
     import axios from 'axios';
 
     export default {
+        created() {
+            this.parseValue();
+        },
         data() {
             return {
                 enabled: this.drivers.map(driver => ({
@@ -65,6 +93,9 @@
             };
         },
         computed: {
+            outputValue() {
+                return JSON.stringify(this.enabled);
+            },
             sortedDrivers() {
                 let firstParty = this.drivers.filter(driver => {
                     return driver.class.startsWith('Bedard\\Shop');
@@ -92,10 +123,21 @@
                     },
                 });
             },
+            parseValue() {
+                let enabledDrivers = this.value.filter(driver => driver.isEnabled);
+
+                enabledDrivers.forEach(enabledDriver => {
+                    let driver = this.enabled.find(driver => driver.class === enabledDriver.class);
+
+                    driver.isEnabled = true;
+                });
+            },
         },
         props: [
             'drivers',
             'lang',
+            'name',
+            'value',
         ],
     };
 </script>

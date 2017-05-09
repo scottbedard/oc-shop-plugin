@@ -1,5 +1,6 @@
 <?php namespace Bedard\Shop\Models;
 
+use Crypt;
 use Model;
 
 /**
@@ -34,6 +35,7 @@ class DriverConfig extends Model
     protected $fillable = [
         'class',
         'config',
+        'is_enabled',
     ];
 
     /**
@@ -49,15 +51,27 @@ class DriverConfig extends Model
     ];
 
     /**
+     * Before save.
+     *
+     * @return void
+     */
+    public function beforeSave()
+    {
+        $this->preventEmptyConfig();
+    }
+
+    /**
      * Get the model's config array.
      *
      * @return array
      */
     public function getConfig()
     {
-        $config = $this->config ?: [];
+        if (is_array($this->config)) {
+            return $this->config;
+        }
 
-        return is_string($config) ? json_decode($config, true) : $config;
+        return json_decode($this->config ?: '[]', true);
     }
 
     /**
@@ -70,8 +84,34 @@ class DriverConfig extends Model
     {
         $config = $this->getConfig();
 
-        foreach ($config as $key => $value) {
-            $this->$key = $value;
+        if (is_array($config)) {
+            foreach ($config as $key => $value) {
+                $this->$key = $value;
+            }
         }
+    }
+
+    /**
+     * Prevent empty configs.
+     *
+     * @return void
+     */
+    public function preventEmptyConfig()
+    {
+        // if (! $this->getConfig()) {
+        //     print_r ('ye');
+        //     $this->config = Crypt::encrypt('[]');
+        // }
+    }
+
+    /**
+     * Select enabled drivers.
+     *
+     * @param  \October\Rain\Database\Builder $query
+     * @return \October\Rain\Database\Builder
+     */
+    public function scopeIsEnabled($query)
+    {
+        return $query->whereIsEnabled(true);
     }
 }
