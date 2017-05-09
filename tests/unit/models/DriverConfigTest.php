@@ -1,6 +1,5 @@
 <?php namespace Bedard\Shop\Tests\Unit\Models;
 
-use Bedard\Shop\Classes\Factory;
 use Bedard\Shop\Models\DriverConfig;
 use Bedard\Shop\Tests\Unit\ShopTestCase;
 
