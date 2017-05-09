@@ -25,6 +25,10 @@ before_script:
   - cp config/cms.php config/cms.php.testing
   - mv config/cms.php.testing config/testing/cms.php
   - git clone https://github.com/rainlab/user-plugin.git plugins/rainlab/user
+  - ls
+  - ls plugins
+  - ls plugins/rainlab
+  - ls plugins/rainlab/user
   - cd plugins/bedard/shop
   - composer install
 
