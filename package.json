@@ -66,6 +66,7 @@
     "axios": "^0.15.3",
     "escape-html": "^1.0.3",
     "moment": "^2.18.1",
-    "sortablejs": "^1.5.0"
+    "sortablejs": "^1.5.0",
+    "vuex": "^2.4.0"
   }
 }
