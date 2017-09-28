@@ -28,8 +28,14 @@
             },
         },
         props: {
-            primary: { type: Boolean, default: false },
-            type: { default: 'button', type: String },
+            primary: {
+                default: false,
+                type: Boolean,
+            },
+            type: {
+                default: 'button',
+                type: String,
+            },
         },
     };
 </script>

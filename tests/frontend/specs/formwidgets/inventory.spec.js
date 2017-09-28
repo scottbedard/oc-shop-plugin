@@ -1,3 +1,0 @@
-describe('inventory form widget', () => {
-
-});
