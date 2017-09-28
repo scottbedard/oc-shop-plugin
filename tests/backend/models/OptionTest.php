@@ -1,9 +1,9 @@
-<?php namespace Bedard\Shop\Tests\Unit\Models;
+<?php namespace Bedard\Shop\Tests\Backend\Models;
 
 use Bedard\Shop\Classes\Factory;
 use Bedard\Shop\Models\Inventory;
 use Bedard\Shop\Models\Option;
-use Bedard\Shop\Tests\Unit\ShopTestCase;
+use Bedard\Shop\Tests\Backend\ShopTestCase;
 use Exception;
 
 class OptionTest extends ShopTestCase

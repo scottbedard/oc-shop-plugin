@@ -1,7 +1,7 @@
-<?php namespace Bedard\Shop\Tests\Unit\Drivers;
+<?php namespace Bedard\Shop\Tests\Backend\Drivers;
 
 use Bedard\Shop\Classes\Driver;
-use Bedard\Shop\Tests\Unit\ShopTestCase;
+use Bedard\Shop\Tests\Backend\ShopTestCase;
 use Exception;
 use October\Rain\Exception\ValidationException;
 

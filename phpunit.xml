@@ -13,7 +13,7 @@
 >
     <testsuites>
         <testsuite name="scottbedard/oc-shop-plugin">
-            <directory>./tests</directory>
+            <directory>./tests/backend</directory>
         </testsuite>
     </testsuites>
     <php>

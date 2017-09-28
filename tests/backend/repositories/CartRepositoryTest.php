@@ -1,4 +1,4 @@
-<?php namespace Bedard\Shop\Tests\Unit\Repositories;
+<?php namespace Bedard\Shop\Tests\Backend\Repositories;
 
 use Bedard\Shop\Classes\Factory;
 use Bedard\Shop\Models\Cart;
@@ -6,7 +6,7 @@ use Bedard\Shop\Models\CartItem;
 use Bedard\Shop\Models\Inventory;
 use Bedard\Shop\Models\Product;
 use Bedard\Shop\Repositories\CartRepository;
-use Bedard\Shop\Tests\Unit\ShopTestCase;
+use Bedard\Shop\Tests\Backend\ShopTestCase;
 use Carbon\Carbon;
 use Session;
 

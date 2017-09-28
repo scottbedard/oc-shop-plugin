@@ -1,8 +1,8 @@
-<?php namespace Bedard\Shop\Tests\Unit\Models;
+<?php namespace Bedard\Shop\Tests\Backend\Models;
 
 use Bedard\Shop\Classes\Factory;
 use Bedard\Shop\Models\Status;
-use Bedard\Shop\Tests\Unit\ShopTestCase;
+use Bedard\Shop\Tests\Backend\ShopTestCase;
 use October\Rain\Database\ModelException;
 
 class StatusTest extends ShopTestCase

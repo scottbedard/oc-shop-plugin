@@ -1,11 +1,11 @@
-<?php namespace Bedard\Shop\Tests\Unit\Models;
+<?php namespace Bedard\Shop\Tests\Backend\Models;
 
 use Bedard\Shop\Classes\Factory;
 use Bedard\Shop\Models\Category;
 use Bedard\Shop\Models\Inventory;
 use Bedard\Shop\Models\Option;
 use Bedard\Shop\Models\Product;
-use Bedard\Shop\Tests\Unit\ShopTestCase;
+use Bedard\Shop\Tests\Backend\ShopTestCase;
 use DB;
 
 class ProductTest extends ShopTestCase

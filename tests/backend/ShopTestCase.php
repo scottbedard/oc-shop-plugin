@@ -1,4 +1,4 @@
-<?php namespace Bedard\Shop\Tests\Unit;
+<?php namespace Bedard\Shop\Tests\Backend;
 
 use PluginTestCase;
 

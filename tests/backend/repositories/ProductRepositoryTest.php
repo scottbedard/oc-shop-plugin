@@ -1,10 +1,10 @@
-<?php namespace Bedard\Shop\Tests\Unit\Repositories;
+<?php namespace Bedard\Shop\Tests\Backend\Repositories;
 
 use Bedard\Shop\Classes\Factory;
 use Bedard\Shop\Models\Category;
 use Bedard\Shop\Models\Product;
 use Bedard\Shop\Repositories\ProductRepository;
-use Bedard\Shop\Tests\Unit\ShopTestCase;
+use Bedard\Shop\Tests\Backend\ShopTestCase;
 
 class ProductRepositoryTest extends ShopTestCase
 {

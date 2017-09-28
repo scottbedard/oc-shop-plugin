@@ -1,0 +1,11 @@
+<div
+    data-component="inventory"
+    data-lang="<?= e(json_encode([
+        'bedard' => ['shop' => trans('bedard.shop::lang')],
+        'backend' => [
+            'form' => trans('backend::lang.form'),
+            'relation' => trans('backend::lang.relation'),
+        ],
+    ])) ?>"
+    data-token="<?= csrf_token() ?>">
+</div>

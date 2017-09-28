@@ -1,8 +1,8 @@
-<?php namespace Bedard\Shop\Tests\Unit\Models;
+<?php namespace Bedard\Shop\Tests\Backend\Models;
 
 use Bedard\Shop\Classes\Factory;
 use Bedard\Shop\Models\Address;
-use Bedard\Shop\Tests\Unit\ShopTestCase;
+use Bedard\Shop\Tests\Backend\ShopTestCase;
 
 class AddressTest extends ShopTestCase
 {

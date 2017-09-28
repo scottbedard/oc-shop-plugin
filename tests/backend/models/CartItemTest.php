@@ -1,9 +1,9 @@
-<?php namespace Bedard\Shop\Tests\Unit\Models;
+<?php namespace Bedard\Shop\Tests\Backend\Models;
 
 use Bedard\Shop\Classes\Factory;
 use Bedard\Shop\Models\CartItem;
 use Bedard\Shop\Models\Inventory;
-use Bedard\Shop\Tests\Unit\ShopTestCase;
+use Bedard\Shop\Tests\Backend\ShopTestCase;
 
 class CartItemTest extends ShopTestCase
 {

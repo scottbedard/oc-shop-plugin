@@ -17,6 +17,14 @@ fields:
 tabs:
     stretch: true
     fields:
+
+        #
+        # inventory
+        #
+        inventory:
+            type: Bedard\Shop\FormWidgets\Inventory
+            tab: bedard.shop::lang.products.form.tab_options_inventories
+
         #
         # general
         #
@@ -44,12 +52,12 @@ tabs:
             tab: bedard.shop::lang.products.form.tab_general
             type: checkboxlist
 
-        #
-        # options and inventories
-        #
-        options_inventories:
-            type: Bedard\Shop\FormWidgets\OptionsInventories
-            tab: bedard.shop::lang.products.form.tab_options_inventories
+        # #
+        # # options and inventories
+        # #
+        # options_inventories:
+        #     type: Bedard\Shop\FormWidgets\OptionsInventories
+        #     tab: bedard.shop::lang.products.form.tab_options_inventories
 
         #
         # images

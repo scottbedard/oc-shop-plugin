@@ -1,7 +1,7 @@
-<?php namespace Bedard\Shop\Tests\Unit\Classes;
+<?php namespace Bedard\Shop\Tests\Backend\Classes;
 
 use Bedard\Shop\Classes\DriverManager;
-use Bedard\Shop\Tests\Unit\ShopTestCase;
+use Bedard\Shop\Tests\Backend\ShopTestCase;
 
 class DriverManagerTest extends ShopTestCase
 {
