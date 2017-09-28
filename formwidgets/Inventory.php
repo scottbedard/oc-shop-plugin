@@ -3,33 +3,34 @@
 use Backend\Classes\FormWidgetBase;
 
 /**
- * Inventory Form Widget
+ * Inventory Form Widget.
  */
 class Inventory extends FormWidgetBase
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected $defaultAlias = 'bedard_shop_inventory';
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function init()
     {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function render()
     {
         $this->prepareVars();
+
         return $this->makePartial('inventory');
     }
 
     /**
-     * Prepares the form widget view data
+     * Prepares the form widget view data.
      */
     public function prepareVars()
     {
@@ -39,7 +40,7 @@ class Inventory extends FormWidgetBase
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function loadAssets()
     {
@@ -47,7 +48,7 @@ class Inventory extends FormWidgetBase
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getSaveValue($value)
     {
