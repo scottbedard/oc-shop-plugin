@@ -29,8 +29,8 @@
         },
         props: {
             primary: {
-                default: false,
                 type: Boolean,
+                default: false,
             },
             type: {
                 default: 'button',
