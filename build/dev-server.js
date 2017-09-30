@@ -4,9 +4,9 @@ const chalk = require('chalk');
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
+const proxyMiddleware = require('http-proxy-middleware');
 const webpack = require('webpack');
 const webpackConfig = require('./webpack.dev.conf');
-const proxyMiddleware = require('http-proxy-middleware');
 
 // set our node environment
 process.env.NODE_ENV = 'development';
@@ -37,7 +37,7 @@ const devMiddleware = require('webpack-dev-middleware')(compiler, {
 });
 
 const hotMiddleware = require('webpack-hot-middleware')(compiler, {
-    log: function() { /* this turns off standard error messages */ },
+    log: function() { /* this disables standard error messages */ },
 });
 
 // proxy our vendor assets to void.js to silence annoying 404 errors
@@ -51,19 +51,20 @@ app.use(proxyMiddleware('/plugins/bedard/shop/assets/dist/vendor.min.js', {
 // and proxy everything else to our October site
 app.use(proxyMiddleware(
     function(pathname) {
-        return pathname.indexOf('__webpack') === -1 && pathname.indexOf('bedard/shop/assets') === -1;
+        return pathname.indexOf('__webpack') === -1
+            && pathname.indexOf('bedard/shop/assets') === -1;
     },
     { target: octoberProxy }
 ));
 
 app.use(devMiddleware);
-
 app.use(hotMiddleware);
 
 // fire up the dev server
 module.exports = app.listen(8080, function (err) {
     if (err) {
         console.log(err);
+
         return;
     }
 
