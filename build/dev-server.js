@@ -13,14 +13,17 @@ process.env.NODE_ENV = 'development';
 
 // make sure the .october_proxy file is present
 let octoberProxy;
+
 try {
     fs.statSync(path.resolve(__dirname, '../.october_proxy')).isFile();
     octoberProxy = fs.readFileSync(path.resolve(__dirname, '../.october_proxy'), 'utf8');
 } catch (e) {
+    console.log();
     console.log(chalk.red('  Error:') + ' An .october_proxy file must be created to use the dev server.');
     console.log();
-    console.log(chalk.gray('  See the docs for more information on this error.'));
+    console.log(chalk.gray('  For more information, visit the following URL...'));
     console.log(chalk.gray('  https://github.com/scottbedard/oc-shop-plugin#local-development'));
+    console.log();
     process.exit();
 }
 
