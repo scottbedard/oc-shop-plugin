@@ -9,6 +9,7 @@
   "scripts": {
     "build": "node build/build.js",
     "dev": "node build/dev-server.js",
+    "test-watch": "cross-env BABEL_ENV=test karma start tests/frontend/karma.conf.js",
     "test": "cross-env BABEL_ENV=test karma start tests/frontend/karma.conf.js --single-run"
   },
   "repository": {
