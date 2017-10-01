@@ -12,6 +12,7 @@ export default {
         setInventoryFormQuantity: 'inventoryForm.data.quantity',
         setInventoryFormSku: 'inventoryForm.data.sku',
         setOptionFormContext: 'optionForm.context',
+        setOptionFormIsSaving: 'optionForm.isSaving',
         setOptionFormIsVisible: 'optionForm.isVisible',
         setLang: 'lang',
     }),

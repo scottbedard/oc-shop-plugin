@@ -60,6 +60,62 @@ describe('inventory formwidget', () => {
                     });
                 });
             });
+
+            it('closes when cancel is clicked', () => {
+                vm = mount({
+                    template: '<v-option-form />',
+                }, {
+                    inventories: {
+                        optionForm: { isVisible: true },
+                    },
+                });
+
+                click(vm.$el.querySelector('[data-action=cancel]'));
+
+                expect(vm.$store.state.inventories.optionForm.isVisible).to.be.false;
+            });
+
+            it('creates in the create context', () => {
+                vm = mount({
+                    template: '<v-option-form />',
+                }, {
+                    inventories: {
+                        optionForm: { context: 'create' },
+                    },
+                });
+
+                const dispatch = sinon.stub(vm.$store, 'dispatch');
+                click(vm.$el.querySelector('[data-action="confirm"]'));
+                expect(dispatch).to.have.been.calledWith('inventories/createOption');
+            });
+
+            it('updates in the update context', () => {
+                vm = mount({
+                    template: '<v-option-form />',
+                }, {
+                    inventories: {
+                        optionForm: { context: 'update' },
+                    },
+                });
+
+                const dispatch = sinon.stub(vm.$store, 'dispatch');
+                click(vm.$el.querySelector('[data-action="confirm"]'));
+                expect(dispatch).to.have.been.calledWith('inventories/updateOption');
+            });
+
+            it('displays a loading state when saving', (done) => {
+                vm = mount({
+                    template: '<v-option-form />',
+                });
+
+                expect(vm.$el.querySelector('.spinner')).to.be.null;
+                vm.$store.commit('inventories/setOptionFormIsSaving', true);
+
+                setTimeout(() => {
+                    expect(vm.$el.querySelector('.spinner')).not.to.be.null;
+                    done();
+                }, 500);
+            });
         });
     });
 
@@ -72,7 +128,7 @@ describe('inventory formwidget', () => {
                 template: '<v-inventories />',
             });
 
-            click(vm.$el.querySelector('[data-create="inventory"]'));
+            click(vm.$el.querySelector('[data-action="create"]'));
 
             vm.$nextTick(() => {
                 expect(vm.$store.state.inventories.inventoryForm.isVisible).to.be.true;
@@ -135,16 +191,12 @@ describe('inventory formwidget', () => {
                     template: '<v-inventory-form />',
                 }, {
                     inventories: {
-                        inventoryForm: {
-                            context: 'create',
-                        },
+                        inventoryForm: { context: 'create' },
                     },
                 });
 
                 const dispatch = sinon.stub(vm.$store, 'dispatch');
-
                 click(vm.$el.querySelector('[data-action="confirm"]'));
-
                 expect(dispatch).to.have.been.calledWith('inventories/createInventory');
             });
 
@@ -153,16 +205,12 @@ describe('inventory formwidget', () => {
                     template: '<v-inventory-form />',
                 }, {
                     inventories: {
-                        inventoryForm: {
-                            context: 'update',
-                        },
+                        inventoryForm: { context: 'update' },
                     },
                 });
 
                 const dispatch = sinon.stub(vm.$store, 'dispatch');
-
                 click(vm.$el.querySelector('[data-action="confirm"]'));
-
                 expect(dispatch).to.have.been.calledWith('inventories/updateInventory');
             });
 

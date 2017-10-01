@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- create button -->
-        <v-create-button @click="onCreate" data-create="inventory">
+        <v-create-button @click="onCreate" data-action="create">
             {{ 'backend.relation.create_name' | trans(lang, { name: 'bedard.shop.inventories.singular' }) }}
         </v-create-button>
 
