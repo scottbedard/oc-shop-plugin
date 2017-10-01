@@ -21,13 +21,20 @@ export default {
         });
     },
 
+    // create an option
+    createOption({ commit }) {
+        commit('setOptionFormIsSaving', true);
+    },
+
     // hide the inventory form
     hideInventoryForm({ commit }) {
+        commit('setInventoryFormIsSaving', false);
         commit('setInventoryFormIsVisible', false);
     },
 
     // hide the option form
     hideOptionForm({ commit }) {
+        commit('setOptionFormIsSaving', false);
         commit('setOptionFormIsVisible', false);
     },
 
@@ -40,5 +47,6 @@ export default {
     // show a fresh option form
     showCreateOptionForm({ commit }) {
         commit('setOptionFormIsVisible', true);
+        commit('setOptionFormIsSaving', false);
     },
 };

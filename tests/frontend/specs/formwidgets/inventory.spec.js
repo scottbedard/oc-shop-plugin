@@ -22,7 +22,7 @@ const mount = factory({
 //
 // tests
 //
-describe('inventory formwidget', () => {
+describe('inventory form widget', () => {
 
     //
     // options
@@ -73,6 +73,21 @@ describe('inventory formwidget', () => {
                 click(vm.$el.querySelector('[data-action=cancel]'));
 
                 expect(vm.$store.state.inventories.optionForm.isVisible).to.be.false;
+            });
+
+            it('tracks form data', (done) => {
+                vm = mount({
+                    template: '<v-option-form />',
+                });
+
+                input('foo', vm.$el.querySelector('[data-input=name]'));
+                input('bar', vm.$el.querySelector('[data-input=placeholder]'));
+
+                vm.$nextTick(() => {
+                    expect(vm.$store.state.inventories.optionForm.data.name).to.equal('foo');
+                    expect(vm.$store.state.inventories.optionForm.data.placeholder).to.equal('bar');
+                    done();
+                });
             });
 
             it('creates in the create context', () => {

@@ -6,6 +6,20 @@
                 {{ title | trans(lang, { name: 'bedard.shop.inventories.singular' }) }}
             </v-modal-header>
 
+            <!-- body -->
+            <v-modal-body>
+
+                <!-- name -->
+                <v-form-input v-model="name" data-input="name" required>
+                    {{ 'bedard.shop.options.form.name' | trans(lang) }}
+                </v-form-input>
+
+                <!-- placeholder -->
+                <v-form-input v-model="placeholder" data-input="placeholder">
+                    {{ 'bedard.shop.options.form.placeholder' | trans(lang) }}
+                </v-form-input>
+            </v-modal-body>
+
             <!-- footer -->
             <v-modal-footer>
                 <transition name="fade" mode="out-in">
@@ -42,7 +56,8 @@
                 lang: state => state.lang,
             }),
             ...mapTwoWayState('inventories', {
-
+                name: 'setOptionFormName',
+                placeholder: 'setOptionFormPlaceholder',
             }),
             creatingOrSaving() {
                 return this.context === 'create'

@@ -17,7 +17,8 @@ export default function() {
         optionForm: {
             context: 'create',
             data: {
-
+                name: '',
+                placeholder: '',
             },
             isSaving: false,
             isVisible: false,

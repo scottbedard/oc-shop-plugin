@@ -14,6 +14,8 @@ export default {
         setOptionFormContext: 'optionForm.context',
         setOptionFormIsSaving: 'optionForm.isSaving',
         setOptionFormIsVisible: 'optionForm.isVisible',
+        setOptionFormName: 'optionForm.data.name',
+        setOptionFormPlaceholder: 'optionForm.data.placeholder',
         setLang: 'lang',
     }),
 };
