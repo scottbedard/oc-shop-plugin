@@ -5,11 +5,14 @@ import { simpleSetters } from 'spyfu-vuex-helpers';
 //
 export default {
     ...simpleSetters({
+        setEndpoints: 'endpoints',
         setInventoryFormContext: 'inventoryForm.context',
         setInventoryFormIsSaving: 'inventoryForm.isSaving',
         setInventoryFormIsVisible: 'inventoryForm.isVisible',
         setInventoryFormQuantity: 'inventoryForm.data.quantity',
         setInventoryFormSku: 'inventoryForm.data.sku',
+        setOptionFormContext: 'optionForm.context',
+        setOptionFormIsVisible: 'optionForm.isVisible',
         setLang: 'lang',
     }),
 };

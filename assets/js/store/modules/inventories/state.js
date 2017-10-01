@@ -3,8 +3,9 @@
 //
 export default function() {
     return {
+        endpoints: {},
         inventoryForm: {
-            context: 'update',
+            context: 'create',
             data: {
                 sku: '',
                 quantity: 0,
@@ -13,5 +14,13 @@ export default function() {
             isVisible: false,
         },
         lang: {},
+        optionForm: {
+            context: 'create',
+            data: {
+
+            },
+            isSaving: false,
+            isVisible: false,
+        },
     };
 }

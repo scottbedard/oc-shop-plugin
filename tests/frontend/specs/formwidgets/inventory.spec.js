@@ -1,14 +1,18 @@
-import inventoryFormComponent from 'formwidgets/inventory/components/inventories/form/form';
-import inventoriesModule from 'assets/js/store/modules/inventories';
 import inventoriesComponent from 'formwidgets/inventory/components/inventories/inventories';
+import inventoriesModule from 'assets/js/store/modules/inventories';
+import inventoryFormComponent from 'formwidgets/inventory/components/inventories/form/form';
+import optionFormComponent from 'formwidgets/inventory/components/options/form/form';
+import optionsComponent from 'formwidgets/inventory/components/options/options';
 
 //
 // factory
 //
 const mount = factory({
     components: {
-        'v-inventory-form': inventoryFormComponent,
         'v-inventories': inventoriesComponent,
+        'v-inventory-form': inventoryFormComponent,
+        'v-option-form': optionFormComponent,
+        'v-options': optionsComponent,
     },
     modules: {
         inventories: inventoriesModule,
@@ -21,27 +25,48 @@ const mount = factory({
 describe('inventory formwidget', () => {
 
     //
-    // inventories
+    // options
     //
-    describe('inventories', () => {
-        it('form displays the correct header for context', (done) => {
+    describe('options', () => {
+        it('clicking create displays a fresh form', (done) => {
             vm = mount({
-                template: '<v-inventory-form />',
+                template: '<v-options />',
             });
 
-            vm.$store.commit('inventories/setInventoryFormContext', 'create');
+            click(vm.$el.querySelector('[data-action="create"]'));
+
             vm.$nextTick(() => {
-                expect(vm.$el.textContent).to.include('backend.relation.create_name');
-
-                vm.$store.commit('inventories/setInventoryFormContext', 'update');
-                vm.$nextTick(() => {
-                    expect(vm.$el.textContent).to.include('backend.relation.update_name');
-
-                    done();
-                });
+                expect(vm.$store.state.inventories.optionForm.isVisible).to.be.true;
+                expect(vm.$store.state.inventories.optionForm.context).to.equal('create');
+                done();
             });
         });
 
+        describe('form', () => {
+            it('form displays the correct header for context', (done) => {
+                vm = mount({
+                    template: '<v-option-form />',
+                });
+
+                vm.$store.commit('inventories/setOptionFormContext', 'create');
+                vm.$nextTick(() => {
+                    expect(vm.$el.textContent).to.include('backend.relation.create_name');
+
+                    vm.$store.commit('inventories/setOptionFormContext', 'update');
+                    vm.$nextTick(() => {
+                        expect(vm.$el.textContent).to.include('backend.relation.update_name');
+
+                        done();
+                    });
+                });
+            });
+        });
+    });
+
+    //
+    // inventories
+    //
+    describe('inventories', () => {
         it('clicking create displays a fresh form', (done) => {
             vm = mount({
                 template: '<v-inventories />',
@@ -57,6 +82,24 @@ describe('inventory formwidget', () => {
         });
 
         describe('form', () => {
+            it('form displays the correct header for context', (done) => {
+                vm = mount({
+                    template: '<v-inventory-form />',
+                });
+
+                vm.$store.commit('inventories/setInventoryFormContext', 'create');
+                vm.$nextTick(() => {
+                    expect(vm.$el.textContent).to.include('backend.relation.create_name');
+
+                    vm.$store.commit('inventories/setInventoryFormContext', 'update');
+                    vm.$nextTick(() => {
+                        expect(vm.$el.textContent).to.include('backend.relation.update_name');
+
+                        done();
+                    });
+                });
+            });
+
             it('displays a loading state when saving', (done) => {
                 vm = mount({
                     template: '<v-inventory-form />',

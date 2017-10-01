@@ -1,5 +1,6 @@
 <?php namespace Bedard\Shop\FormWidgets;
 
+use Backend;
 use Backend\Classes\FormWidgetBase;
 
 /**
@@ -37,6 +38,13 @@ class Inventory extends FormWidgetBase
         $this->vars['name'] = $this->formField->getName();
         $this->vars['value'] = $this->getLoadValue();
         $this->vars['model'] = $this->model;
+
+        $this->vars['endpoints'] = [
+            'createInventory' => Backend::url('bedard/shop/inventories/create'),
+            // 'createOption' => Backend::url('bedard/shop/options/create'),
+            // 'validateInventory' => Backend::url('bedard/shop/inventories/validate'),
+            // 'validateOption' => Backend::url('bedard/shop/options/validate'),
+        ];
     }
 
     /**

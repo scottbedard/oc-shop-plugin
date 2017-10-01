@@ -10,6 +10,7 @@ $(function() {
     // parse data from the target element
     const el = document.querySelector('[data-component=inventory]');
 
+    store.commit('inventories/setEndpoints', JSON.parse(el.dataset.endpoints));
     store.commit('inventories/setLang', JSON.parse(el.dataset.lang));
 
     // mount our formwidget to the dom
