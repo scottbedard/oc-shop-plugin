@@ -1,21 +1,43 @@
 <template>
-    <div class="control-popup modal fade" ref="modal" data-bedard-shop="popup-component">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <slot></slot>
+    <transition name="fade" mode="out-in">
+        <div v-show="visible" class="popup-backdrop" @click="onBackdropClick">
+            <div class="control-popup modal fade" style="display: block" :class="inClass">
+                <div class="modal-dialog">
+                    <div class="modal-content" @click.stop>
+                        <slot />
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </transition>
 </template>
 
 <script>
     export default {
-        methods: {
-            hide() {
-                $(this.$refs.modal).modal('hide');
+        data() {
+            return {
+                in: this.visible,
+            };
+        },
+        computed: {
+            inClass() {
+                return this.in ? 'in' : null;
             },
-            show() {
-                $(this.$refs.modal).modal();
+        },
+        methods: {
+            onBackdropClick() {
+                this.$emit('close');
+            },
+        },
+        props: {
+            visible: {
+                required: true,
+                type: Boolean,
+            },
+        },
+        watch: {
+            visible(visible) {
+                this.$nextTick(() => this.in = visible);
             },
         },
     };

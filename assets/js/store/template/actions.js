@@ -1,6 +1,6 @@
 //
-// mutations
+// actions
 //
 export default {
 
-};
+}

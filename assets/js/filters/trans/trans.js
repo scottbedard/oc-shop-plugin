@@ -25,27 +25,30 @@ const getLanguageString = function(value, lang) {
  * @return {String}
  */
 export default function(value, lang, data = {}) {
-    // grab the string we're going to translate
-    let translatedValue = getLanguageString(value, lang);
+    try {
+        // grab the string we're going to translate
+        let translatedValue = getLanguageString(value, lang);
 
-    // translate the passed in data
-    for (let key in data) {
-        data[key] = getLanguageString(data[key], lang);
+        // translate the passed in data
+        for (let key in data) {
+            data[key] = getLanguageString(data[key], lang);
+        }
+
+        // find language strings in our value and replace them
+        let words = translatedValue.match(/:([a-zA-Z]+)/g);
+
+        if (Array.isArray(words)) {
+            words.forEach(word => {
+                let wordKey = word.slice(1);
+                if (typeof data[wordKey] !== 'undefined') {
+                    translatedValue = translatedValue.replace(word, data[wordKey]);
+                }
+            });
+        }
+
+        // finally, return the translated string
+        return translatedValue;
+    } catch (e) {
+        return value;
     }
-
-    // find language strings in our value and replace them
-    let words = translatedValue.match(/:([a-zA-Z]+)/g);
-
-    if (Array.isArray(words)) {
-        words.forEach(word => {
-            let wordKey = word.slice(1);
-            if (typeof data[wordKey] !== 'undefined') {
-                translatedValue = translatedValue.replace(word, data[wordKey]);
-            }
-        });
-    }
-
-
-    // finally, return the translated string
-    return translatedValue;
 };
