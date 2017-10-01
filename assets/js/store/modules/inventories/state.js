@@ -6,6 +6,7 @@ export default function() {
         inventoryForm: {
             context: 'update',
             data: {},
+            isSaving: false,
             isVisible: false,
         },
         lang: {},

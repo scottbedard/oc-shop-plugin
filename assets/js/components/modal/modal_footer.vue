@@ -6,6 +6,10 @@
         min-height: 60px;
         padding: 0 20px 20px;
     }
+
+    .v-modal-footer /deep/ button + button {
+        margin-left: 12px;
+    }
 </style>
 
 <template>

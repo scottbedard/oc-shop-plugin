@@ -54,7 +54,7 @@
                     <template v-if="context === 'create'">{{ 'backend.form.create' | trans(lang) }}</template>
                     <template v-else>{{ 'backend.form.save' | trans(lang) }}</template>
                 </v-button>
-                <v-button @click="onCancel">
+                <v-button @click="onCancel" data-action="cancel">
                     {{ 'backend.form.cancel' | trans(lang) }}
                 </v-button>
             </div>

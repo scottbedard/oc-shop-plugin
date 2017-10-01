@@ -55,5 +55,37 @@ describe('inventory formwidget', () => {
                 done();
             });
         });
+
+        describe('form', () => {
+            it('displays a loading state when saving', (done) => {
+                vm = mount({
+                    template: '<v-inventory-form />',
+                });
+
+                expect(vm.$el.querySelector('.spinner')).to.be.null;
+                vm.$store.commit('inventories/setInventoryFormIsSaving', true);
+
+                setTimeout(() => {
+                    expect(vm.$el.querySelector('.spinner')).not.to.be.null;
+                    done();
+                }, 500);
+            });
+
+            it('closes when cancel is clicked', () => {
+                vm = mount({
+                    template: '<v-inventory-form />',
+                }, {
+                    inventories: {
+                        inventoryForm: {
+                            isVisible: true,
+                        },
+                    },
+                });
+
+                click(vm.$el.querySelector('[data-action=cancel]'));
+
+                expect(vm.$store.state.inventories.inventoryForm.isVisible).to.be.false;
+            });
+        });
     });
 });
