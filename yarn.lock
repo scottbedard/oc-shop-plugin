@@ -1642,6 +1642,10 @@ deep-is@~0.1.3:
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/deep-is/-/deep-is-0.1.3.tgz#b369d6fb5dbc13eecf524f91b070feedc357cf34"
 
+deepmerge@^1.5.2:
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-1.5.2.tgz#10499d868844cdad4fee0842df8c7f6f0c95a753"
+
 defined@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/defined/-/defined-1.0.0.tgz#c98d9bcef75674188e110969151199e39b1fa693"
@@ -5119,10 +5123,11 @@ sprintf-js@~1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
 
-spyfu-vue-factory@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/spyfu-vue-factory/-/spyfu-vue-factory-0.1.1.tgz#c5578eda875bdfd2c7b21f7d0b294e77d89e7cbe"
+spyfu-vue-factory@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/spyfu-vue-factory/-/spyfu-vue-factory-0.2.0.tgz#fd215bb2acd33c2dd2d56cb8fb88a65059ea4447"
   dependencies:
+    deepmerge "^1.5.2"
     vue "^2.4.1"
     vue-router "^2.7.0"
     vuex "^2.3.1"

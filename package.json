@@ -68,7 +68,7 @@
     "shelljs": "^0.7.6",
     "sinon": "^4.0.0",
     "sinon-chai": "^2.13.0",
-    "spyfu-vue-factory": "^0.1.1",
+    "spyfu-vue-factory": "^0.2.0",
     "spyfu-vue-functional": "^0.1.6",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
