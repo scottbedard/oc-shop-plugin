@@ -1,6 +1,6 @@
 <template>
     <v-modal :visible="isVisible" @close="close">
-        <form @submit="save">
+        <form @submit.prevent="confirm">
             <!-- header -->
             <v-modal-header @close="close">
                 {{ title | trans(lang, { name: 'bedard.shop.inventories.singular' }) }}
@@ -8,7 +8,23 @@
 
             <!-- body -->
             <v-modal-body>
-                Hello from the body
+
+                <!-- sku -->
+                <v-form-input
+                    v-model="sku"
+                    data-input="sku">
+                    {{ 'bedard.shop.inventories.form.sku' | trans(lang) }}
+                </v-form-input>
+
+                <!-- quantity -->
+                <v-form-input
+                    v-model.number="quantity"
+                    data-input="quantity"
+                    min="0"
+                    placeholder="0"
+                    required>
+                    {{ 'bedard.shop.inventories.form.quantity' | trans(lang) }}
+                </v-form-input>
             </v-modal-body>
 
             <!-- footer -->
@@ -21,7 +37,7 @@
 
                     <!-- actions -->
                     <div v-else key="actions">
-                        <v-button primary type="submit">
+                        <v-button data-action="confirm" primary type="submit">
                             {{ createOrSave | trans(lang) }}
                         </v-button>
                         <v-button data-action="cancel" type="button" @click="close">
@@ -36,6 +52,7 @@
 
 <script>
     import { mapActions, mapState } from 'vuex';
+    import { mapTwoWayState } from 'spyfu-vuex-helpers';
 
     export default {
         computed: {
@@ -44,6 +61,10 @@
                 isSaving: state => state.inventoryForm.isSaving,
                 isVisible: state => state.inventoryForm.isVisible,
                 lang: state => state.lang,
+            }),
+            ...mapTwoWayState('inventories', {
+                sku: 'setInventoryFormSku',
+                quantity: 'setInventoryFormQuantity',
             }),
             creatingOrSaving() {
                 return this.context === 'create'
@@ -64,8 +85,14 @@
         methods: {
             ...mapActions('inventories', {
                 close: 'hideInventoryForm',
-                save: 'saveInventoryForm',
             }),
+            confirm() {
+                if (this.context === 'create') {
+                    this.$store.dispatch('inventories/createInventory');
+                } else {
+                    this.$store.dispatch('inventories/updateInventory');
+                }
+            },
         },
     };
 </script>

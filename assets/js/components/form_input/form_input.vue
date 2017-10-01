@@ -12,6 +12,7 @@
         <input
             class="form-control"
             ref="input"
+            :data-input="dataInput"
             :placeholder="placeholder"
             :type="type"
             :value="value"
@@ -48,11 +49,28 @@
             },
         },
         props: {
-            comment: { type: String, default: null },
-            placeholder: { type: String, default: '' },
-            required: { type: Boolean, default: false },
-            type: { type: String, default: 'text' },
-            value: { default: '' },
+            comment: {
+                default: null,
+                type: String,
+            },
+            dataInput: {
+                default: null,
+            },
+            placeholder: {
+                default: '',
+                type: String,
+            },
+            required: {
+                default: false,
+                type: Boolean,
+            },
+            type: {
+                default: 'text',
+                type: String,
+            },
+            value: {
+                default: '',
+            },
         },
     };
 </script>

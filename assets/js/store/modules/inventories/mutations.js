@@ -8,6 +8,8 @@ export default {
         setInventoryFormContext: 'inventoryForm.context',
         setInventoryFormIsSaving: 'inventoryForm.isSaving',
         setInventoryFormIsVisible: 'inventoryForm.isVisible',
+        setInventoryFormQuantity: 'inventoryForm.data.quantity',
+        setInventoryFormSku: 'inventoryForm.data.sku',
         setLang: 'lang',
     }),
 };

@@ -5,7 +5,10 @@ export default function() {
     return {
         inventoryForm: {
             context: 'update',
-            data: {},
+            data: {
+                sku: '',
+                quantity: 0,
+            },
             isSaving: false,
             isVisible: false,
         },

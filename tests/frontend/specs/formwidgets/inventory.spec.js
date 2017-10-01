@@ -86,6 +86,57 @@ describe('inventory formwidget', () => {
 
                 expect(vm.$store.state.inventories.inventoryForm.isVisible).to.be.false;
             });
+
+            it('creates in the create context', () => {
+                vm = mount({
+                    template: '<v-inventory-form />',
+                }, {
+                    inventories: {
+                        inventoryForm: {
+                            context: 'create',
+                        },
+                    },
+                });
+
+                const dispatch = sinon.stub(vm.$store, 'dispatch');
+
+                click(vm.$el.querySelector('[data-action="confirm"]'));
+
+                expect(dispatch).to.have.been.calledWith('inventories/createInventory');
+            });
+
+            it('updates in the update context', () => {
+                vm = mount({
+                    template: '<v-inventory-form />',
+                }, {
+                    inventories: {
+                        inventoryForm: {
+                            context: 'update',
+                        },
+                    },
+                });
+
+                const dispatch = sinon.stub(vm.$store, 'dispatch');
+
+                click(vm.$el.querySelector('[data-action="confirm"]'));
+
+                expect(dispatch).to.have.been.calledWith('inventories/updateInventory');
+            });
+
+            it('tracks form data', (done) => {
+                vm = mount({
+                    template: '<v-inventory-form />',
+                });
+
+                input('foo', vm.$el.querySelector('[data-input=sku]'));
+                input(5, vm.$el.querySelector('[data-input=quantity]'));
+
+                vm.$nextTick(() => {
+                    expect(vm.$store.state.inventories.inventoryForm.data.sku).to.equal('foo');
+                    expect(vm.$store.state.inventories.inventoryForm.data.quantity).to.equal(5);
+                    done();
+                });
+            });
         });
     });
 });
