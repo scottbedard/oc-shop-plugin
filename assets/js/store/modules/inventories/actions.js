@@ -10,6 +10,7 @@ export default {
 
     // show a fresh inventory form
     showCreateInventoryForm({ commit }) {
+        commit('setInventoryFormContext', 'create');
         commit('setInventoryFormIsVisible', true);
     },
 };

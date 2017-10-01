@@ -1,12 +1,14 @@
-import inventoryForm from 'formwidgets/inventory/components/inventories/form/form';
+import inventoryFormComponent from 'formwidgets/inventory/components/inventories/form/form';
 import inventoriesModule from 'assets/js/store/modules/inventories';
+import inventoriesComponent from 'formwidgets/inventory/components/inventories/inventories';
 
 //
 // factory
 //
 const mount = factory({
     components: {
-        'v-inventory-form': inventoryForm,
+        'v-inventory-form': inventoryFormComponent,
+        'v-inventories': inventoriesComponent,
     },
     modules: {
         inventories: inventoriesModule,
@@ -37,6 +39,20 @@ describe('inventory formwidget', () => {
 
                     done();
                 });
+            });
+        });
+
+        it('clicking create displays a fresh form', (done) => {
+            vm = mount({
+                template: '<v-inventories />',
+            });
+
+            click(vm.$el.querySelector('[data-create="inventory"]'));
+
+            vm.$nextTick(() => {
+                expect(vm.$store.state.inventories.inventoryForm.isVisible).to.be.true;
+                expect(vm.$store.state.inventories.inventoryForm.context).to.equal('create');
+                done();
             });
         });
     });
