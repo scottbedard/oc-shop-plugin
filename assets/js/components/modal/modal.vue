@@ -37,7 +37,7 @@
         },
         watch: {
             visible(visible) {
-                this.$nextTick(() => this.in = visible);
+                this.$nextTick(() => this.$nextTick(() => this.in = visible));
             },
         },
     };
