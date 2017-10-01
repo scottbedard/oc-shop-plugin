@@ -82,12 +82,53 @@ describe('inventory form widget', () => {
 
                 input('foo', vm.$el.querySelector('[data-input=name]'));
                 input('bar', vm.$el.querySelector('[data-input=placeholder]'));
+                input('baz', vm.$el.querySelector('[data-input=new-value]'));
 
                 vm.$nextTick(() => {
                     expect(vm.$store.state.inventories.optionForm.data.name).to.equal('foo');
                     expect(vm.$store.state.inventories.optionForm.data.placeholder).to.equal('bar');
+                    expect(vm.$store.state.inventories.optionForm.data.newValue).to.equal('baz');
                     done();
                 });
+            });
+
+            it('also adds values on enter', () => {
+                vm = mount({
+                    template: '<v-option-form />',
+                });
+
+                const dispatch = sinon.stub(vm.$store, 'dispatch');
+
+                const enter = new Event('keydown');
+                enter.keyCode = 13;
+                vm.$el.querySelector('[data-input=new-value]').dispatchEvent(enter);
+
+                expect(dispatch).to.have.been.calledWith('inventories/addValueToOption');
+            });
+
+            it('adds values to the form', () => {
+                vm = mount({
+                    template: '<v-option-form />',
+                });
+
+                // enter a value
+                input('whatever', vm.$el.querySelector('[data-input=new-value]'));
+
+                // pressing tab should submit the value
+                const dispatch = sinon.spy(vm.$store, 'dispatch');
+                const tab = new Event('keydown');
+                tab.keyCode = 9;
+                vm.$el.querySelector('[data-input=new-value]').dispatchEvent(tab);
+
+                expect(dispatch).to.have.been.calledWith('inventories/addValueToOption');
+
+                // a new value should have been added to the form data
+                expect(vm.$store.state.inventories.optionForm.data.values).to.deep.equal([
+                        { id: null, name: 'whatever', sortOrder: 0 },
+                ]);
+
+                // and the input should be cleared
+                expect(vm.$store.state.inventories.optionForm.data.newValue).to.equal('');
             });
 
             it('creates in the create context', () => {

@@ -5,6 +5,12 @@ import axios from 'axios';
 //
 export default {
 
+    // add a new value to an option
+    addValueToOption({ commit, state }) {
+        commit('addOptionFormValue', state.optionForm.data.newValue);
+        commit('setOptionFormNewValue', '');
+    },
+
     // create an inventory
     createInventory({ commit, state }) {
         commit('setInventoryFormIsSaving', true);
@@ -48,5 +54,6 @@ export default {
     showCreateOptionForm({ commit }) {
         commit('setOptionFormIsVisible', true);
         commit('setOptionFormIsSaving', false);
+        commit('setOptionFormValues', []);
     },
 };

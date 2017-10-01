@@ -8,7 +8,6 @@
 
             <!-- body -->
             <v-modal-body>
-
                 <!-- name -->
                 <v-form-input v-model="name" data-input="name" required>
                     {{ 'bedard.shop.options.form.name' | trans(lang) }}
@@ -18,6 +17,9 @@
                 <v-form-input v-model="placeholder" data-input="placeholder">
                     {{ 'bedard.shop.options.form.placeholder' | trans(lang) }}
                 </v-form-input>
+
+                <!-- option values -->
+                <v-values />
             </v-modal-body>
 
             <!-- footer -->
@@ -48,6 +50,9 @@
     import { mapTwoWayState } from 'spyfu-vuex-helpers';
 
     export default {
+        components: {
+            'v-values': require('./values/values').default,
+        },
         computed: {
             ...mapState('inventories', {
                 context: state => state.optionForm.context,
