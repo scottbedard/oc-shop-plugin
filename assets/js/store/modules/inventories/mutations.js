@@ -1,4 +1,5 @@
 import { simpleSetters } from 'spyfu-vuex-helpers';
+import { uniqueId } from 'assets/js/utilities/helpers';
 
 //
 // mutations
@@ -22,9 +23,12 @@ export default {
     }),
 
     // add a new value to the option form
-    addOptionFormValue(state, name) {
-        const sortOrder = state.optionForm.data.values.length;
-
-        state.optionForm.data.values.push({ id: null, name, sortOrder });
+    addOptionFormValue(state, newValue) {
+        state.optionForm.data.values.push({
+            _key: uniqueId(),
+            id: null,
+            name: newValue,
+            sortOrder: state.optionForm.data.values.length,
+        });
     },
 };

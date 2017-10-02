@@ -7,8 +7,12 @@ export default {
 
     // add a new value to an option
     addValueToOption({ commit, state }) {
-        commit('addOptionFormValue', state.optionForm.data.newValue);
-        commit('setOptionFormNewValue', '');
+        const newValue = state.optionForm.data.newValue.trim();
+
+        if (newValue.length) {
+            commit('addOptionFormValue', newValue);
+            commit('setOptionFormNewValue', '');
+        }
     },
 
     // create an inventory

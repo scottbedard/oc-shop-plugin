@@ -29,3 +29,11 @@ export const renameKey = function(object, oldName, newName) {
 
     return newObject;
 };
+
+/**
+ * Return a unique integer.
+ *
+ * @type {Number}
+ */
+let uniqueIdCount = 0;
+export const uniqueId = () => uniqueIdCount++;

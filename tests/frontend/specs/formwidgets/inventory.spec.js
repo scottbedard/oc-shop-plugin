@@ -124,7 +124,7 @@ describe('inventory form widget', () => {
 
                 // a new value should have been added to the form data
                 expect(vm.$store.state.inventories.optionForm.data.values).to.deep.equal([
-                        { id: null, name: 'whatever', sortOrder: 0 },
+                        { _key: 0, id: null, name: 'whatever', sortOrder: 0 },
                 ]);
 
                 // and the input should be cleared

@@ -14,12 +14,15 @@
                 </v-form-input>
 
                 <!-- placeholder -->
-                <v-form-input v-model="placeholder" data-input="placeholder">
+                <v-form-input
+                    v-model="placeholder"
+                    data-input="placeholder"
+                    ref="placeholder">
                     {{ 'bedard.shop.options.form.placeholder' | trans(lang) }}
                 </v-form-input>
 
                 <!-- option values -->
-                <v-values />
+                <v-values @focus-placeholder="focusPlaceholder" />
             </v-modal-body>
 
             <!-- footer -->
@@ -90,6 +93,9 @@
                 } else {
                     this.$store.dispatch('inventories/updateOption');
                 }
+            },
+            focusPlaceholder() {
+                this.$refs.placeholder.focus();
             },
         },
     };
