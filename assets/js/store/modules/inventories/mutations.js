@@ -31,4 +31,10 @@ export default {
             sortOrder: state.optionForm.data.values.length,
         });
     },
+
+    // reorder a value in the option form
+    reorderOptionValue(state, { newIndex, oldIndex }) {
+        const movedValue = state.optionForm.data.values.splice(oldIndex, 1)[0];
+        state.optionForm.data.values.splice(newIndex, 0, movedValue);
+    },
 };

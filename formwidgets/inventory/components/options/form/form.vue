@@ -9,7 +9,11 @@
             <!-- body -->
             <v-modal-body>
                 <!-- name -->
-                <v-form-input v-model="name" data-input="name" required>
+                <v-form-input
+                    v-model="name"
+                    data-input="name"
+                    ref="name"
+                    required>
                     {{ 'bedard.shop.options.form.name' | trans(lang) }}
                 </v-form-input>
 
@@ -94,8 +98,18 @@
                     this.$store.dispatch('inventories/updateOption');
                 }
             },
+            focusName() {
+                this.$refs.name.focus();
+            },
             focusPlaceholder() {
                 this.$refs.placeholder.focus();
+            },
+        },
+        watch: {
+            isVisible(isVisible) {
+                if (isVisible) {
+                    setTimeout(this.focusName, 100);
+                }
             },
         },
     };

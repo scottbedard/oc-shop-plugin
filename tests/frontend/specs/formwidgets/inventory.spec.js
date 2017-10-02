@@ -131,6 +131,28 @@ describe('inventory form widget', () => {
                 expect(vm.$store.state.inventories.optionForm.data.newValue).to.equal('');
             });
 
+            it('reorders values in the form', () => {
+                vm = mount({
+                    template: '<v-option-form ref="optionForm"/>',
+                }, {
+                    inventories: {
+                        optionForm: {
+                            data: {
+                                values: [
+                                    { _delete: false, _key: 0, id: 0, name: 'foo' },
+                                    { _delete: false, _key: 1, id: 1, name: 'bar' },
+                                    { _delete: false, _key: 2, id: 2, name: 'baz' },
+                                ],
+                            },
+                        },
+                    },
+                });
+
+                vm.$store.dispatch('inventories/reorderOptionValue', { newIndex: 1, oldIndex: 2 });
+
+                expect(vm.$store.state.inventories.optionForm.data.values.map(v => v._key)).to.deep.equal([0, 2, 1]);
+            });
+
             it('creates in the create context', () => {
                 vm = mount({
                     template: '<v-option-form />',

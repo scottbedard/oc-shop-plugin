@@ -48,6 +48,11 @@ export default {
         commit('setOptionFormIsVisible', false);
     },
 
+    // reorder the option values
+    reorderOptionValue({ commit }, indices) {
+        commit('reorderOptionValue', indices);
+    },
+
     // show a fresh inventory form
     showCreateInventoryForm({ commit }) {
         commit('setInventoryFormContext', 'create');
