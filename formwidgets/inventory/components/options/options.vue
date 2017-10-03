@@ -1,5 +1,8 @@
 <template>
     <div>
+        <!-- list -->
+        <v-option-list />
+
         <!-- create button -->
         <v-create-button @click="create" data-action="create">
             {{ 'backend.relation.create_name' | trans(lang, { name: 'bedard.shop.options.singular' }) }}
@@ -17,6 +20,7 @@
         components: {
             'v-create-button': require('../shared/create_button').default,
             'v-option-form': require('./form/form').default,
+            'v-option-list': require('./list/list').default,
         },
         computed: {
             ...mapState('inventories', [
