@@ -1,6 +1,6 @@
 <template>
     <v-modal :visible="isVisible" @close="close">
-        <form @submit.prevent="confirm">
+        <form @submit.prevent="save">
             <!-- header -->
             <v-modal-header @close="close">
                 {{ title | trans(lang, { name: 'bedard.shop.inventories.singular' }) }}
@@ -90,14 +90,8 @@
         methods: {
             ...mapActions('inventories', {
                 close: 'hideOptionForm',
+                save: 'saveOption',
             }),
-            confirm() {
-                if (this.context === 'create') {
-                    this.$store.dispatch('inventories/createOption');
-                } else {
-                    this.$store.dispatch('inventories/updateOption');
-                }
-            },
             focusName() {
                 this.$refs.name.focus();
             },

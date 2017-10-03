@@ -31,11 +31,6 @@ export default {
         });
     },
 
-    // create an option
-    createOption({ commit }) {
-        commit('setOptionFormIsSaving', true);
-    },
-
     // hide the inventory form
     hideInventoryForm({ commit }) {
         commit('setInventoryFormIsSaving', false);
@@ -51,6 +46,11 @@ export default {
     // reorder the option values
     reorderOptionValue({ commit }, indices) {
         commit('reorderOptionValue', indices);
+    },
+
+    // validate and save an option
+    saveOption({ commit }) {
+        commit('setOptionFormIsSaving', true);
     },
 
     // show a fresh inventory form

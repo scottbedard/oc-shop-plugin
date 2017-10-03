@@ -203,32 +203,14 @@ describe('inventory form widget', () => {
                 expect(vm.$store.state.inventories.optionForm.data.values.length).to.equal(0);
             });
 
-            it('creates in the create context', () => {
+            it('saves option on confirm', () => {
                 vm = mount({
                     template: '<v-option-form />',
-                }, {
-                    inventories: {
-                        optionForm: { context: 'create' },
-                    },
                 });
 
                 const dispatch = sinon.stub(vm.$store, 'dispatch');
                 click(vm.$el.querySelector('[data-action="confirm"]'));
-                expect(dispatch).to.have.been.calledWith('inventories/createOption');
-            });
-
-            it('updates in the update context', () => {
-                vm = mount({
-                    template: '<v-option-form />',
-                }, {
-                    inventories: {
-                        optionForm: { context: 'update' },
-                    },
-                });
-
-                const dispatch = sinon.stub(vm.$store, 'dispatch');
-                click(vm.$el.querySelector('[data-action="confirm"]'));
-                expect(dispatch).to.have.been.calledWith('inventories/updateOption');
+                expect(dispatch).to.have.been.calledWith('inventories/saveOption');
             });
 
             it('displays a loading state when saving', (done) => {
