@@ -18,14 +18,15 @@ export default function() {
         optionForm: {
             context: 'create',
             data: {
+                id: null,
                 name: '',
-                newValue: '',
                 placeholder: '',
                 values: [],
             },
             isReordering: false,
             isSaving: false,
             isVisible: false,
+            newValue: '',
         },
         options: [],
     };

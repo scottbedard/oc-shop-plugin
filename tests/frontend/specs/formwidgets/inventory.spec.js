@@ -80,14 +80,14 @@ describe('inventory form widget', () => {
                     template: '<v-option-form />',
                 });
 
-                input('foo', vm.$el.querySelector('[data-input=name]'));
-                input('bar', vm.$el.querySelector('[data-input=placeholder]'));
-                input('baz', vm.$el.querySelector('[data-input=new-value]'));
+                input('foo', vm.$el.querySelector('[data-input=new-value]'));
+                input('bar', vm.$el.querySelector('[data-input=name]'));
+                input('baz', vm.$el.querySelector('[data-input=placeholder]'));
 
                 vm.$nextTick(() => {
-                    expect(vm.$store.state.inventories.optionForm.data.name).to.equal('foo');
-                    expect(vm.$store.state.inventories.optionForm.data.placeholder).to.equal('bar');
-                    expect(vm.$store.state.inventories.optionForm.data.newValue).to.equal('baz');
+                    expect(vm.$store.state.inventories.optionForm.newValue).to.equal('foo');
+                    expect(vm.$store.state.inventories.optionForm.data.name).to.equal('bar');
+                    expect(vm.$store.state.inventories.optionForm.data.placeholder).to.equal('baz');
                     done();
                 });
             });
@@ -128,7 +128,7 @@ describe('inventory form widget', () => {
                 ]);
 
                 // and the input should be cleared
-                expect(vm.$store.state.inventories.optionForm.data.newValue).to.equal('');
+                expect(vm.$store.state.inventories.optionForm.newValue).to.equal('');
             });
 
             it('reorders values in the form', () => {

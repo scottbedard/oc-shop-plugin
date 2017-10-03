@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { snakeCaseKeysDeep } from 'assets/js/utilities/helpers';
 
 //
 // actions
@@ -7,7 +8,7 @@ export default {
 
     // add a new value to an option
     addValueToOption({ commit, state }) {
-        const newValue = state.optionForm.data.newValue.trim();
+        const newValue = state.optionForm.newValue.trim();
 
         if (newValue.length) {
             commit('addOptionFormValue', newValue);
@@ -49,8 +50,18 @@ export default {
     },
 
     // validate and save an option
-    saveOption({ commit }) {
+    saveOption({ commit, state }) {
         commit('setOptionFormIsSaving', true);
+
+        const request = axios.post(state.endpoints.validateOption, snakeCaseKeysDeep(state.optionForm.data));
+
+        request.then(() => {
+            commit('setOptionFormIsSaving', false);
+        }, () => {
+            commit('setOptionFormIsSaving', false);
+        });
+
+        return request;
     },
 
     // show a fresh inventory form
@@ -61,8 +72,9 @@ export default {
 
     // show a fresh option form
     showCreateOptionForm({ commit }) {
-        commit('setOptionFormIsVisible', true);
         commit('setOptionFormIsSaving', false);
+        commit('setOptionFormIsVisible', true);
+        commit('setOptionFormNewValue', '');
         commit('setOptionFormValues', []);
     },
 

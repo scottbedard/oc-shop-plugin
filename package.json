@@ -86,6 +86,7 @@
     "axios": "^0.15.3",
     "escape-html": "^1.0.3",
     "moment": "^2.18.1",
+    "snake-case": "^2.1.0",
     "sortablejs": "^1.5.0",
     "spyfu-vuex-helpers": "^0.6.1",
     "vuex": "^2.4.0"

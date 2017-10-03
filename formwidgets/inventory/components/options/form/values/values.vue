@@ -128,7 +128,7 @@
                 'lang',
             ]),
             ...mapTwoWayState('inventories', {
-                'optionForm.data.newValue': 'setOptionFormNewValue',
+                'optionForm.newValue': 'setOptionFormNewValue',
                 'optionForm.data.values': 'setOptionFormValues',
                 'optionForm.isReordering': 'setOptionFormIsReordering',
             }),

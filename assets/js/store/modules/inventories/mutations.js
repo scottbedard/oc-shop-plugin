@@ -18,7 +18,7 @@ export default {
         setOptionFormIsSaving: 'optionForm.isSaving',
         setOptionFormIsVisible: 'optionForm.isVisible',
         setOptionFormName: 'optionForm.data.name',
-        setOptionFormNewValue: 'optionForm.data.newValue',
+        setOptionFormNewValue: 'optionForm.newValue',
         setOptionFormPlaceholder: 'optionForm.data.placeholder',
         setOptionFormValues: 'optionForm.data.values',
     }),
