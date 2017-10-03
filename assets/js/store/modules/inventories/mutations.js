@@ -14,6 +14,7 @@ export default {
         setInventoryFormSku: 'inventoryForm.data.sku',
         setLang: 'lang',
         setOptionFormContext: 'optionForm.context',
+        setOptionFormIsReordering: 'optionForm.isReordering',
         setOptionFormIsSaving: 'optionForm.isSaving',
         setOptionFormIsVisible: 'optionForm.isVisible',
         setOptionFormName: 'optionForm.data.name',
@@ -25,6 +26,7 @@ export default {
     // add a new value to the option form
     addOptionFormValue(state, newValue) {
         state.optionForm.data.values.push({
+            _delete: false,
             _key: uniqueId(),
             id: null,
             name: newValue,
@@ -36,5 +38,16 @@ export default {
     reorderOptionValue(state, { newIndex, oldIndex }) {
         const movedValue = state.optionForm.data.values.splice(oldIndex, 1)[0];
         state.optionForm.data.values.splice(newIndex, 0, movedValue);
+    },
+
+    // delete an option value, or toggle it's delete flag
+    toggleOptionValueDelete(state, value) {
+        if (value.id) {
+            value._delete = ! value._delete;
+        } else {
+            const { values } = state.optionForm.data;
+
+            values.splice(values.indexOf(value), 1);
+        }
     },
 };

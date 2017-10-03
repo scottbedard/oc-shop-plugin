@@ -23,6 +23,7 @@ export default function() {
                 placeholder: '',
                 values: [],
             },
+            isReordering: false,
             isSaving: false,
             isVisible: false,
         },

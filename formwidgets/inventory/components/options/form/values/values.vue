@@ -1,11 +1,19 @@
 <style lang="scss" scoped>@import 'core';
     .list {
         .form-group {
-            margin-bottom: 10px;
             padding-bottom: 0;
 
             /deep/ input {
-                padding: 0 30px;
+                padding: 0 32px;
+            }
+
+            &:after {
+                // we are using this pseudo element because a margin-bottom
+                // causes the sortable library to lose it's mind. keeping
+                // the spacing within our border prevents various bugs.
+                display: block;
+                height: 10px;
+                content: "";
             }
         }
 
@@ -15,9 +23,9 @@
 
         a {
             color: #ccc;
+            outline: none;
             position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
+            top: 10px;
             transition: color 150ms ease-in-out;
             z-index: 1;
 
@@ -31,21 +39,29 @@
         }
 
         .oc-icon-bars {
-            cursor: move;
             left: 12px;
-
-            &:hover {
-                color: $blue;
-            }
         }
 
-        .oc-icon-trash-o {
+        &:not(.is-reordering) .oc-icon-bars {
+            cursor: move;
+        }
+
+        .oc-icon-trash-o,
+        .oc-icon-undo {
             right: 12px;
-
-            &:hover {
-                color: $red;
-            }
         }
+
+        .oc-icon-trash-o:hover {
+            color: $red;
+        }
+
+        .oc-icon-undo:hover {
+            color: $green;
+        }
+    }
+
+    .sortable-ghost {
+        opacity: 0;
     }
 </style>
 
@@ -57,7 +73,7 @@
         </label>
 
         <!-- list -->
-        <div class="list" v-sortable="{ handle: '.oc-icon-bars', onEnd: reorderOptionValue }">
+        <div v-sortable="sortableOptions" class="list" :class="isReordering && 'is-reordering'">
             <div
                 v-for="value in values"
                 class="value"
@@ -66,6 +82,7 @@
                 <a
                     class="oc-icon-bars"
                     href="#"
+                    tabindex="-1"
                     :title="reorderTitle"
                     @click.prevent>
                 </a>
@@ -74,10 +91,15 @@
                     :value="value.name"
                 />
                 <a
-                    class="oc-icon-trash-o"
+                    data-action="delete"
                     href="#"
+                    tabindex="-1"
+                    :class="{
+                        'oc-icon-trash-o': !value._delete,
+                        'oc-icon-undo': value._delete,
+                    }"
                     :title="removeOrRestoreTitle(value)"
-                    @click.prevent>
+                    @click.prevent="toggleValueDelete(value)">
                 </a>
             </div>
         </div>
@@ -108,12 +130,21 @@
             ...mapTwoWayState('inventories', {
                 'optionForm.data.newValue': 'setOptionFormNewValue',
                 'optionForm.data.values': 'setOptionFormValues',
+                'optionForm.isReordering': 'setOptionFormIsReordering',
             }),
             placeholder() {
                 return trans('bedard.shop.options.form.values_placeholder', this.lang);
             },
             reorderTitle() {
                 return trans('bedard.shop.options.form.values_reorder_title', this.lang);
+            },
+            sortableOptions() {
+                return {
+                    animation: 100,
+                    handle: '.oc-icon-bars',
+                    onEnd: this.onReorderEnd,
+                    onStart: this.onReorderStart,
+                };
             },
         },
         directives: {
@@ -124,13 +155,8 @@
         methods: {
             ...mapActions('inventories', {
                 addValue: 'addValueToOption',
-                reorderOptionValue: 'reorderOptionValue',
+                toggleValueDelete: 'toggleOptionValueDelete',
             }),
-            removeOrRestoreTitle(value) {
-                return value._delete
-                    ? trans('bedard.shop.options.form.values_restore_title', this.lang)
-                    : trans('bedard.shop.options.form.values_delete_title', this.lang);
-            },
             focusNewValue() {
                 this.$refs.newValue.focus();
             },
@@ -147,6 +173,18 @@
                 } else {
                     this.addValue();
                 }
+            },
+            onReorderStart() {
+                this.isReordering = true;
+            },
+            onReorderEnd(indices) {
+                this.isReordering = false;
+                this.$store.dispatch('inventories/reorderOptionValue', indices);
+            },
+            removeOrRestoreTitle(value) {
+                return value._delete
+                    ? trans('bedard.shop.options.form.values_restore_title', this.lang)
+                    : trans('bedard.shop.options.form.values_delete_title', this.lang);
             },
         },
     };

@@ -65,4 +65,8 @@ export default {
         commit('setOptionFormIsSaving', false);
         commit('setOptionFormValues', []);
     },
+
+    toggleOptionValueDelete({ commit }, value) {
+        commit('toggleOptionValueDelete', value);
+    },
 };

@@ -124,7 +124,7 @@ describe('inventory form widget', () => {
 
                 // a new value should have been added to the form data
                 expect(vm.$store.state.inventories.optionForm.data.values).to.deep.equal([
-                        { _key: 0, id: null, name: 'whatever', sortOrder: 0 },
+                        { _delete: false, _key: 0, id: null, name: 'whatever', sortOrder: 0 },
                 ]);
 
                 // and the input should be cleared
@@ -151,6 +151,56 @@ describe('inventory form widget', () => {
                 vm.$store.dispatch('inventories/reorderOptionValue', { newIndex: 1, oldIndex: 2 });
 
                 expect(vm.$store.state.inventories.optionForm.data.values.map(v => v._key)).to.deep.equal([0, 2, 1]);
+            });
+
+            it('toggles a value\'s delete flag on click if an id is present', (done) => {
+                vm = mount({
+                    template: '<v-option-form ref="optionForm"/>',
+                }, {
+                    inventories: {
+                        optionForm: {
+                            data: {
+                                values: [{ _delete: false, _key: 0, id: 1, name: 'foo' }],
+                            },
+                        },
+                    },
+                });
+
+                click(vm.$el.querySelector('[data-action=delete]'));
+
+                vm.$nextTick(() => {
+                    expect(vm.$el.querySelector('.oc-icon-trash-o')).to.be.null;
+                    expect(vm.$el.querySelector('.oc-icon-undo')).not.to.be.null;
+                    expect(vm.$store.state.inventories.optionForm.data.values[0]._delete).to.be.true;
+
+                    click(vm.$el.querySelector('[data-action=delete]'));
+
+                    vm.$nextTick(() => {
+                        expect(vm.$el.querySelector('.oc-icon-trash-o')).not.to.be.null;
+                        expect(vm.$el.querySelector('.oc-icon-undo')).to.be.null;
+                        expect(vm.$store.state.inventories.optionForm.data.values[0]._delete).to.be.false;
+
+                        done();
+                    });
+                });
+
+            });
+
+            it('removes a value when delete is clicked and no id is present', () => {
+                vm = mount({
+                    template: '<v-option-form ref="optionForm"/>',
+                }, {
+                    inventories: {
+                        optionForm: {
+                            data: {
+                                values: [{ _delete: false, _key: 0, id: null, name: 'foo' }],
+                            },
+                        },
+                    },
+                });
+
+                click(vm.$el.querySelector('[data-action=delete]'));
+                expect(vm.$store.state.inventories.optionForm.data.values.length).to.equal(0);
             });
 
             it('creates in the create context', () => {
