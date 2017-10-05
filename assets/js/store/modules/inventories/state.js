@@ -30,5 +30,6 @@ export default function() {
             newValue: '',
         },
         options: [],
+        optionsIsReordering: false,
     };
 }

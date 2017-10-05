@@ -1,5 +1,6 @@
 import { simpleSetters } from 'spyfu-vuex-helpers';
 import { createOption, createOptionValue } from './factories';
+import { clone } from 'assets/js/utilities/helpers';
 
 //
 // mutations
@@ -20,17 +21,19 @@ export default {
         setOptionFormNewValue: 'optionForm.newValue',
         setOptionFormPlaceholder: 'optionForm.data.placeholder',
         setOptionFormValues: 'optionForm.data.values',
+        setOptionsIsReordering: 'optionsIsReordering',
     }),
-
-    // add a new option
-    addOption(state) {
-        state.options.push(createOption(state.optionForm.data));
-    },
 
     // add a new value to the option form
     addOptionFormValue(state, name) {
         const sortOrder = state.optionForm.data.values.length;
         state.optionForm.data.values.push(createOptionValue({ name, sortOrder }));
+    },
+
+    // reorder an option in the list
+    reorderOption(state, { newIndex, oldIndex }) {
+        const movedValue = state.options.splice(oldIndex, 1)[0];
+        state.options.splice(newIndex, 0, movedValue);
     },
 
     // reorder a value in the option form
@@ -55,8 +58,23 @@ export default {
         }
     },
 
-    // update an existing option
-    updateOption() {
-        console.log ('update it');
+    // update an existing option, or create a new one
+    saveOption(state) {
+        const optionIndex = state.options.findIndex(obj => obj._key === state.optionForm.data._key);
+
+        if (optionIndex > -1) {
+            state.options.splice(optionIndex, 1, clone(state.optionForm.data));
+        } else {
+            state.options.push(createOption(state.optionForm.data));
+        }
+    },
+
+    // update an option value
+    updateOptionValue(state, { key, value }) {
+        const optionValue = state.optionForm.data.values.find(obj => obj._key === key);
+
+        if (optionValue) {
+            optionValue.name = value;
+        }
     },
 };

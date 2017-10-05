@@ -44,6 +44,11 @@ export default {
         commit('setOptionFormIsVisible', false);
     },
 
+    // reorder the options
+    reorderOption({ commit }, indices) {
+        commit('reorderOption', indices);
+    },
+
     // reorder the option values
     reorderOptionValue({ commit }, indices) {
         commit('reorderOptionValue', indices);
@@ -54,7 +59,7 @@ export default {
         // @todo: validate option
 
         // update or create the option
-        commit(state.optionForm.data.id ? 'updateOption' : 'addOption');
+        commit('saveOption');
 
         // close the option modal
         dispatch('hideOptionForm');
@@ -83,5 +88,10 @@ export default {
 
     toggleOptionValueDelete({ commit }, value) {
         commit('toggleOptionValueDelete', value);
+    },
+
+    // update an option value
+    updateOptionValue({ commit }, payload) {
+        commit('updateOptionValue', payload);
     },
 };

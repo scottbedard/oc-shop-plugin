@@ -1,8 +1,6 @@
-import inventoriesComponent from 'formwidgets/inventory/components/inventories/inventories';
 import inventoriesModule from 'assets/js/store/modules/inventories';
-import inventoryFormComponent from 'formwidgets/inventory/components/inventories/form/form';
 import optionFormComponent from 'formwidgets/inventory/components/options/form/form';
-import optionsComponent from 'formwidgets/inventory/components/options/options';
+import { createOption, createOptionValue } from 'assets/js/store/modules/inventories/factories';
 import { uniqueId } from 'assets/js/utilities/helpers';
 
 //
@@ -178,17 +176,7 @@ describe('option form', () => {
         expect(vm.$store.state.inventories.optionForm.data.values.length).to.equal(0);
     });
 
-    it('saves option on confirm', () => {
-        vm = mount({
-            template: '<v-option-form />',
-        });
-
-        const dispatch = sinon.stub(vm.$store, 'dispatch');
-        click(vm.$el.querySelector('[data-action="confirm"]'));
-        expect(dispatch).to.have.been.calledWith('inventories/saveOption');
-    });
-
-    it('creates new options', () => {
+    it('creates a new option', () => {
         vm = mount({
             template: '<v-option-form />',
         });
@@ -199,20 +187,56 @@ describe('option form', () => {
         simulate('keydown', vm.$el.querySelector('[data-input=new-value]'), e => e.keyCode = 13);
         click(vm.$el.querySelector('[data-action=confirm]'));
 
-        expect(vm.$store.state.inventories.options).to.deep.equal([{
-            _delete: false,
-            _key: 0,
-            id: null,
-            name: 'foo',
-            placeholder: 'bar',
-            sortOrder: 0,
-            values: [{
-                _delete: false,
+        expect(vm.$store.state.inventories.options).to.deep.equal([
+            createOption({
                 _key: 0,
-                id: null,
-                name: 'baz',
-                sortOrder: 0,
-            }],
-        }]);
+                name: 'foo',
+                placeholder: 'bar',
+                values: [
+                    createOptionValue({ _key: 0, name: 'baz' }),
+                ],
+            }),
+        ]);
+    });
+
+    it('updates an existing option', () => {
+        vm = mount({
+            template: '<v-option-form />',
+        }, {
+            inventories: {
+                optionForm: {
+                    data: createOption({
+                        _key: 123,
+                        id: 1,
+                        name: 'foo',
+                        placeholder: 'bar',
+                        values: [
+                            createOptionValue({ name: 'baz' }),
+                        ],
+                    }),
+                },
+                options: [
+                    createOption({
+                        _key: 123,
+                        id: 1,
+                        name: 'foo',
+                        placeholder: 'bar',
+                        values: [
+                            createOptionValue({ name: 'baz' }),
+                        ],
+                    }),
+                ],
+            },
+        });
+
+        input('one', vm.$el.querySelector('[data-input=name]'));
+        input('two', vm.$el.querySelector('[data-input=placeholder]'));
+        input('three', vm.$el.querySelector('[data-input=option-value]'));
+
+        click(vm.$el.querySelector('[data-action=confirm]'));
+
+        expect(vm.$store.state.inventories.options[0].name).to.equal('one');
+        expect(vm.$store.state.inventories.options[0].placeholder).to.equal('two');
+        expect(vm.$store.state.inventories.options[0].values[0].name).to.equal('three');
     });
 });

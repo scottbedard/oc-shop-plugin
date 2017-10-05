@@ -56,6 +56,7 @@ describe('options', () => {
         click(vm.$el.querySelector('.list-item'));
 
         vm.$nextTick(() => {
+            expect(vm.$store.state.inventories.optionForm.context).to.equal('update');
             expect(vm.$el.querySelector('[data-input=name]').value).to.equal('foo');
             expect(vm.$el.querySelector('[data-input=placeholder]').value).to.equal('bar');
             expect(vm.$el.querySelector('[data-input=option-value]').value).to.equal('baz');

@@ -90,6 +90,7 @@
                     data-input="option-value"
                     ref="value"
                     :value="value.name"
+                    @input="updateValue({ key: value._key, value: $event })"
                 />
                 <a
                     data-action="delete"
@@ -120,7 +121,6 @@
 <script>
     import { mapActions, mapState } from 'vuex';
     import { mapTwoWayState } from 'spyfu-vuex-helpers';
-    import Sortable from 'sortablejs';
     import trans from 'assets/js/filters/trans/trans';
 
     export default {
@@ -148,15 +148,11 @@
                 };
             },
         },
-        directives: {
-            sortable: {
-                inserted: (el, binding) => new Sortable(el, binding.value || {}),
-            },
-        },
         methods: {
             ...mapActions('inventories', {
                 addValue: 'addValueToOption',
                 toggleValueDelete: 'toggleOptionValueDelete',
+                updateValue: 'updateOptionValue',
             }),
             focusNewValue() {
                 this.$refs.newValue.focus();
