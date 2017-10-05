@@ -1,5 +1,5 @@
 import { simpleSetters } from 'spyfu-vuex-helpers';
-import { createOption, createOtionValue } from './factories';
+import { createOption, createOptionValue } from './factories';
 
 //
 // mutations
@@ -30,7 +30,7 @@ export default {
     // add a new value to the option form
     addOptionFormValue(state, name) {
         const sortOrder = state.optionForm.data.values.length;
-        state.optionForm.data.values.push(createOtionValue({ name, sortOrder }));
+        state.optionForm.data.values.push(createOptionValue({ name, sortOrder }));
     },
 
     // reorder a value in the option form
@@ -42,8 +42,6 @@ export default {
     // set the option form data
     setOptionFormData(state, data) {
         state.optionForm.data = JSON.parse(JSON.stringify(data));
-
-        console.log ('ok, ', state.optionForm.data);
     },
 
     // delete an option value, or toggle it's delete flag

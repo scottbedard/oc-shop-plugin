@@ -14,6 +14,7 @@ export function createOption(options = {}) {
         name: '',
         placeholder: '',
         sortOrder: 0,
+        values: [],
         ...options,
     };
 }
@@ -24,7 +25,7 @@ export function createOption(options = {}) {
  * @param  {Object} options
  * @return {Object}
  */
-export function createOtionValue(options = {}) {
+export function createOptionValue(options = {}) {
     return {
         _delete: false,
         _key: uniqueId(),

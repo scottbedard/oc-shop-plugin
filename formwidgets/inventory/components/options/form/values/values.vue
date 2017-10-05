@@ -87,6 +87,7 @@
                     @click.prevent>
                 </a>
                 <v-form-input
+                    data-input="option-value"
                     ref="value"
                     :value="value.name"
                 />

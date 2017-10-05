@@ -17,7 +17,7 @@ const mount = factory({
 //
 // tests
 //
-describe('inventories list', () => {
+describe('inventories', () => {
     it('clicking create displays a fresh form', (done) => {
         vm = mount({
             template: '<v-inventories />',

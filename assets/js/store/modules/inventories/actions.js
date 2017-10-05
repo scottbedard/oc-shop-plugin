@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { snakeCaseKeysDeep } from 'assets/js/utilities/helpers';
+import { createOption } from './factories';
 
 //
 // actions
@@ -67,9 +68,10 @@ export default {
 
     // show a fresh option form
     showCreateOptionForm({ commit }) {
+        commit('setOptionFormContext', 'create');
+        commit('setOptionFormData', createOption());
         commit('setOptionFormIsVisible', true);
         commit('setOptionFormNewValue', '');
-        commit('setOptionFormValues', []);
     },
 
     // show the form of an existing option

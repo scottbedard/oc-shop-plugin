@@ -58,8 +58,8 @@
                 lang: state => state.lang,
             }),
             ...mapTwoWayState('inventories', {
-                name: 'setOptionFormName',
-                placeholder: 'setOptionFormPlaceholder',
+                'optionForm.data.name': 'setOptionFormName',
+                'optionForm.data.placeholder': 'setOptionFormPlaceholder',
             }),
             createOrSave() {
                 return this.context === 'create'
