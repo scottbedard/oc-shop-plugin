@@ -40,6 +40,12 @@ window.nextTick = function(fn) {
 };
 
 // simulate an html event
-window.simulate = function(name, el) {
-    return el.dispatchEvent(new Event(name));
+window.simulate = function(name, el, eventSetupFn) {
+    const e = new Event(name);
+
+    if (eventSetupFn) {
+        eventSetupFn(e);
+    }
+
+    return el.dispatchEvent(e);
 };

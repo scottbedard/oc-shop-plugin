@@ -1,5 +1,5 @@
 import { simpleSetters } from 'spyfu-vuex-helpers';
-import { uniqueId } from 'assets/js/utilities/helpers';
+import { createOption, createOtionValue } from './factories';
 
 //
 // mutations
@@ -15,7 +15,6 @@ export default {
         setLang: 'lang',
         setOptionFormContext: 'optionForm.context',
         setOptionFormIsReordering: 'optionForm.isReordering',
-        setOptionFormIsSaving: 'optionForm.isSaving',
         setOptionFormIsVisible: 'optionForm.isVisible',
         setOptionFormName: 'optionForm.data.name',
         setOptionFormNewValue: 'optionForm.newValue',
@@ -23,15 +22,15 @@ export default {
         setOptionFormValues: 'optionForm.data.values',
     }),
 
+    // add a new option
+    addOption(state) {
+        state.options.push(createOption(state.optionForm.data));
+    },
+
     // add a new value to the option form
-    addOptionFormValue(state, newValue) {
-        state.optionForm.data.values.push({
-            _delete: false,
-            _key: uniqueId(),
-            id: null,
-            name: newValue,
-            sortOrder: state.optionForm.data.values.length,
-        });
+    addOptionFormValue(state, name) {
+        const sortOrder = state.optionForm.data.values.length;
+        state.optionForm.data.values.push(createOtionValue({ name, sortOrder }));
     },
 
     // reorder a value in the option form
@@ -49,5 +48,10 @@ export default {
 
             values.splice(values.indexOf(value), 1);
         }
+    },
+
+    // update an existing option
+    updateOption() {
+        console.log ('update it');
     },
 };

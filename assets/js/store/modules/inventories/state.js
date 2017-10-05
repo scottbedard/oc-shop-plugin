@@ -24,7 +24,6 @@ export default function() {
                 values: [],
             },
             isReordering: false,
-            isSaving: false,
             isVisible: false,
             newValue: '',
         },

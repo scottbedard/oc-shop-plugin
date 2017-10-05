@@ -3,6 +3,7 @@ import inventoriesModule from 'assets/js/store/modules/inventories';
 import inventoryFormComponent from 'formwidgets/inventory/components/inventories/form/form';
 import optionFormComponent from 'formwidgets/inventory/components/options/form/form';
 import optionsComponent from 'formwidgets/inventory/components/options/options';
+import { uniqueId } from 'assets/js/utilities/helpers';
 
 //
 // factory
@@ -213,18 +214,33 @@ describe('inventory form widget', () => {
                 expect(dispatch).to.have.been.calledWith('inventories/saveOption');
             });
 
-            it('displays a loading state when saving', (done) => {
+            it('creates new options', () => {
                 vm = mount({
                     template: '<v-option-form />',
                 });
 
-                expect(vm.$el.querySelector('.spinner')).to.be.null;
-                vm.$store.commit('inventories/setOptionFormIsSaving', true);
+                const uid = uniqueId();
+                input('foo', vm.$el.querySelector('[data-input=name]'));
+                input('bar', vm.$el.querySelector('[data-input=placeholder]'));
+                input('baz', vm.$el.querySelector('[data-input=new-value]'));
+                simulate('keydown', vm.$el.querySelector('[data-input=new-value]'), e => e.keyCode = 13);
+                click(vm.$el.querySelector('[data-action=confirm]'));
 
-                setTimeout(() => {
-                    expect(vm.$el.querySelector('.spinner')).not.to.be.null;
-                    done();
-                }, 500);
+                expect(vm.$store.state.inventories.options).to.deep.equal([{
+                    _delete: false,
+                    _key: uid + 2,
+                    id: null,
+                    name: 'foo',
+                    placeholder: 'bar',
+                    sortOrder: 0,
+                    values: [{
+                        _delete: false,
+                        _key: uid + 1,
+                        id: null,
+                        name: 'baz',
+                        sortOrder: 0,
+                    }],
+                }]);
             });
         });
     });

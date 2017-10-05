@@ -33,14 +33,13 @@ export default {
     },
 
     // hide the inventory form
-    hideInventoryForm({ commit }) {
+    hideInventoryForm({ commit, dispatch }) {
         commit('setInventoryFormIsSaving', false);
         commit('setInventoryFormIsVisible', false);
     },
 
     // hide the option form
     hideOptionForm({ commit }) {
-        commit('setOptionFormIsSaving', false);
         commit('setOptionFormIsVisible', false);
     },
 
@@ -50,18 +49,14 @@ export default {
     },
 
     // validate and save an option
-    saveOption({ commit, state }) {
-        commit('setOptionFormIsSaving', true);
+    saveOption({ commit, dispatch, state }) {
+        // @todo: validate option
 
-        const request = axios.post(state.endpoints.validateOption, snakeCaseKeysDeep(state.optionForm.data));
+        // update or create the option
+        commit(state.optionForm.data.id ? 'updateOption' : 'addOption');
 
-        request.then(() => {
-            commit('setOptionFormIsSaving', false);
-        }, () => {
-            commit('setOptionFormIsSaving', false);
-        });
-
-        return request;
+        // close the option modal
+        dispatch('hideOptionForm');
     },
 
     // show a fresh inventory form
@@ -72,7 +67,6 @@ export default {
 
     // show a fresh option form
     showCreateOptionForm({ commit }) {
-        commit('setOptionFormIsSaving', false);
         commit('setOptionFormIsVisible', true);
         commit('setOptionFormNewValue', '');
         commit('setOptionFormValues', []);
