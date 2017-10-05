@@ -5,6 +5,9 @@ Vue.config.productionTip = false;
 import components from './components/global';
 Object.keys(components).forEach(tag => Vue.component(tag, components[tag]));
 
+// register global directives
+import './directives/sortable';
+
 // register global filters
 import filters from './filters/global';
 Object.keys(filters).forEach(tag => Vue.filter(tag, filters[tag]));
