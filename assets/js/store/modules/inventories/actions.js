@@ -72,6 +72,13 @@ export default {
         commit('setOptionFormValues', []);
     },
 
+    // show the form of an existing option
+    showEditOptionForm({ commit }, option) {
+        commit('setOptionFormIsVisible', true);
+        commit('setOptionFormContext', 'update');
+        commit('setOptionFormData', option);
+    },
+
     toggleOptionValueDelete({ commit }, value) {
         commit('toggleOptionValueDelete', value);
     },

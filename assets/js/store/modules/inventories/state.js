@@ -18,9 +18,11 @@ export default function() {
         optionForm: {
             context: 'create',
             data: {
+                _delete: false,
+                _key: 0,
                 id: null,
-                name: '',
-                placeholder: '',
+                name: 'sdff',
+                placeholder: 'aaa',
                 values: [],
             },
             isReordering: false,

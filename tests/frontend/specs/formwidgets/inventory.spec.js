@@ -219,7 +219,6 @@ describe('inventory form widget', () => {
                     template: '<v-option-form />',
                 });
 
-                const uid = uniqueId();
                 input('foo', vm.$el.querySelector('[data-input=name]'));
                 input('bar', vm.$el.querySelector('[data-input=placeholder]'));
                 input('baz', vm.$el.querySelector('[data-input=new-value]'));
@@ -228,14 +227,14 @@ describe('inventory form widget', () => {
 
                 expect(vm.$store.state.inventories.options).to.deep.equal([{
                     _delete: false,
-                    _key: uid + 2,
+                    _key: 0,
                     id: null,
                     name: 'foo',
                     placeholder: 'bar',
                     sortOrder: 0,
                     values: [{
                         _delete: false,
-                        _key: uid + 1,
+                        _key: 0,
                         id: null,
                         name: 'baz',
                         sortOrder: 0,

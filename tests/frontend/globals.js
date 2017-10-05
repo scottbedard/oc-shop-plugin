@@ -2,6 +2,7 @@ import factory from 'spyfu-vue-factory';
 
 // create a global container for our vue instances
 beforeEach(() => {
+    window.uniqueIdCount = 0;
     window.vm = undefined;
 });
 
