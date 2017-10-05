@@ -47,6 +47,11 @@ export default {
         state.optionForm.data = JSON.parse(JSON.stringify(data));
     },
 
+    // toggle the delete flag of an option
+    toggleOptionDelete(state, option) {
+        option._delete = !option._delete;
+    },
+
     // delete an option value, or toggle it's delete flag
     toggleOptionValueDelete(state, value) {
         if (value.id) {

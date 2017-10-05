@@ -86,6 +86,12 @@ export default {
         commit('setOptionFormData', option);
     },
 
+    // toggle the delete flag of an option
+    toggleOptionDelete({ commit }, option) {
+        commit('toggleOptionDelete', option);
+    },
+
+    // toggle the delete flag of an option value
     toggleOptionValueDelete({ commit }, value) {
         commit('toggleOptionValueDelete', value);
     },

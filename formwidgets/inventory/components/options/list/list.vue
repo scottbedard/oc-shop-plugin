@@ -1,7 +1,19 @@
 <style lang="scss" scoped>@import 'core';
-    .is-reordering {
-        /deep/ .list-item:hover,
-        /deep/ .list-item:hover .square {
+    .list-item.is-deleted {
+        opacity: 0.6;
+
+        .square.delete {
+            &:hover {
+                background-color: transparent;
+                color: $green;
+            }
+        }
+    }
+
+    .list-item.is-deleted,
+    .is-reordering /deep/ .list-item {
+        &:hover,
+        &:hover .square {
             background-color: transparent;
             color: #333;
         }
@@ -19,6 +31,13 @@
         cursor: move;
     }
 
+    .list-item .square.delete {
+        // &:hover {
+        //     background-color: $red;
+        //     color: #fff;
+        // }
+    }
+
     .sortable-ghost {
         border: 2px dashed #333;
         opacity: 0.2;
@@ -26,12 +45,13 @@
 </style>
 
 <template>
-    <div v-sortable="sortableOptions" :class="{ 'is-reordering': isReordering }">
+    <div v-sortable="sortableOptions">
         <v-list-item
             v-for="option in options"
+            :class="{ 'is-deleted': option._delete }"
             :key="option._key"
             @click="edit(option)">
-            <div class="square" slot="icon">
+            <div class="square icon" slot="icon">
                 <i class="icon-plus"></i>
             </div>
             <div slot="main">
@@ -42,8 +62,9 @@
                 <div class="square handle" :title="reorderTitle">
                     <i class="icon-bars"></i>
                 </div>
-                <div class="square">
-                    <i class="icon-trash-o"></i>
+                <div class="square delete" :title="deleteTitle(option)" @click="toggleOptionDelete(option)">
+                    <i v-if="option._delete" class="icon-undo"></i>
+                    <i v-else class="icon-trash-o"></i>
                 </div>
             </template>
         </v-list-item>
@@ -79,7 +100,13 @@
         methods: {
             ...mapActions('inventories', {
                 edit: 'showEditOptionForm',
+                toggleOptionDelete: 'toggleOptionDelete',
             }),
+            deleteTitle(option) {
+                return option._delete
+                    ? trans('bedard.shop.options.list.restore_title', this.lang)
+                    : trans('bedard.shop.options.list.delete_title', this.lang);
+            },
             onReorderStart() {
                 this.$store.commit('inventories/setOptionsIsReordering', true);
             },
