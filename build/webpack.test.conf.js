@@ -10,9 +10,8 @@ var webpackConfig = merge(baseConfig, {
         // rules: utils.styleLoaders(),
     },
     plugins: [
-        // new webpack.DefinePlugin({
-        //     'process.env': require('../config/test.env'),
-        // }),
+        // set our node environment to "test"
+        new webpack.DefinePlugin({ 'process.env': { NODE_ENV: '"test"' }}),
     ],
     resolve: {
         alias: {
