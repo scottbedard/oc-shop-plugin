@@ -40,6 +40,9 @@
 
 <script>
     export default {
+        beforeDestroy() {
+            this.unbind();
+        },
         mounted() {
             this.refresh();
         },
@@ -63,7 +66,7 @@
                 $(this.$refs.select).on('select2:select', e => this.$emit('input', e.target.value));
             },
             onClearClicked() {
-                this.$emit('clear');
+                this.$emit('input', null);
                 $(this.$refs.select).val('').trigger('change');
             },
             refresh() {

@@ -39,20 +39,6 @@ describe('inventory form', () => {
         });
     });
 
-    it('displays a loading state when saving', (done) => {
-        vm = mount({
-            template: '<v-inventory-form />',
-        });
-
-        expect(vm.$el.querySelector('.spinner')).to.be.null;
-        vm.$store.commit('inventories/setInventoryFormIsSaving', true);
-
-        setTimeout(() => {
-            expect(vm.$el.querySelector('.spinner')).not.to.be.null;
-            done();
-        }, 500);
-    });
-
     it('closes when cancel is clicked', () => {
         vm = mount({
             template: '<v-inventory-form />',

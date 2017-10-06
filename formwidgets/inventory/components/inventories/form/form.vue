@@ -25,26 +25,19 @@
                     required>
                     {{ 'bedard.shop.inventories.form.quantity' | trans(lang) }}
                 </v-form-input>
+
+                <!-- option selector -->
+                <v-option-selector />
             </v-modal-body>
 
             <!-- footer -->
             <v-modal-footer>
-                <transition name="fade" mode="out-in">
-                    <!-- loading state -->
-                    <v-spinner v-if="isSaving">
-                        {{ creatingOrSaving | trans(lang, { name: 'bedard.shop.inventories.singular' }) }}
-                    </v-spinner>
-
-                    <!-- actions -->
-                    <div v-else key="actions">
-                        <v-button data-action="confirm" primary type="submit">
-                            {{ createOrSave | trans(lang) }}
-                        </v-button>
-                        <v-button data-action="cancel" type="button" @click="close">
-                            {{ 'backend.form.cancel' | trans(lang) }}
-                        </v-button>
-                    </div>
-                </transition>
+                <v-button data-action="confirm" primary type="submit">
+                    {{ createOrSave | trans(lang) }}
+                </v-button>
+                <v-button data-action="cancel" type="button" @click="close">
+                    {{ 'backend.form.cancel' | trans(lang) }}
+                </v-button>
             </v-modal-footer>
         </form>
     </v-modal>
@@ -55,6 +48,9 @@
     import { mapTwoWayState } from 'spyfu-vuex-helpers';
 
     export default {
+        components: {
+            'v-option-selector': require('./option_selector/option_selector').default,
+        },
         computed: {
             ...mapState('inventories', {
                 context: state => state.inventoryForm.context,
@@ -66,11 +62,6 @@
                 sku: 'setInventoryFormSku',
                 quantity: 'setInventoryFormQuantity',
             }),
-            creatingOrSaving() {
-                return this.context === 'create'
-                    ? 'backend.form.creating_name'
-                    : 'backend.form.saving_name';
-            },
             createOrSave() {
                 return this.context === 'create'
                     ? 'backend.form.create'
