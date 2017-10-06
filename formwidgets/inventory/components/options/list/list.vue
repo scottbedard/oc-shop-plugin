@@ -1,12 +1,14 @@
 <style lang="scss" scoped>@import 'core';
     .list-item.is-deleted {
-        opacity: 0.6;
+        color: #bbb !important;
 
-        .square.delete {
-            &:hover {
-                background-color: transparent;
-                color: $green;
-            }
+        .square {
+            color: #bbb !important;
+        }
+
+        .square.delete:hover {
+            background-color: transparent;
+            color: $green !important;
         }
     }
 
@@ -31,15 +33,8 @@
         cursor: move;
     }
 
-    .list-item .square.delete {
-        // &:hover {
-        //     background-color: $red;
-        //     color: #fff;
-        // }
-    }
-
     .sortable-ghost {
-        border: 2px dashed #333;
+        // border: 2px dashed #333;
         opacity: 0.2;
     }
 </style>

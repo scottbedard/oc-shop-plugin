@@ -8,6 +8,15 @@
 
             <!-- body -->
             <v-modal-body>
+
+                <!-- delete message -->
+                <div v-if="isDeleted" class="callout fade in callout-warning no-subheader">
+                    <div class="header">
+                        <i class="icon-exclamation-triangle"></i>
+                        <p>{{ 'bedard.shop.options.form.delete_warning' | trans(lang) }}</p>
+                    </div>
+                </div>
+
                 <!-- name -->
                 <v-form-input
                     v-model="name"
@@ -53,6 +62,7 @@
         computed: {
             ...mapState('inventories', {
                 context: state => state.optionForm.context,
+                isDeleted: state => state.optionForm.data._delete,
                 isSaving: state => state.optionForm.isSaving,
                 isVisible: state => state.optionForm.isVisible,
                 lang: state => state.lang,

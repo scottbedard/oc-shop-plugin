@@ -119,6 +119,7 @@ return [
     //
     'options' => [
         'form' => [
+            'delete_warning' => 'This option and related inventories will be deleted when the product is saved.',
             'name' => 'Name',
             'placeholder' => 'Placeholder',
             'values' => 'Values',
