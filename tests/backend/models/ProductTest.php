@@ -51,11 +51,12 @@ class ProductTest extends ShopTestCase
                 'options' => [
                     [
 
-                    ]
-                ]
-            ]
+                    ],
+                ],
+            ],
         ]);
     }
+
     // public function test_saving_options()
     // {
     //     $option = Factory::create(new Option);
