@@ -84,6 +84,7 @@
   },
   "dependencies": {
     "axios": "^0.15.3",
+    "camel-case": "^3.0.0",
     "escape-html": "^1.0.3",
     "moment": "^2.18.1",
     "snake-case": "^2.1.0",
