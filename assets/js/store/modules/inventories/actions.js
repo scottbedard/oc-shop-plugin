@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { snakeCaseKeysDeep } from 'assets/js/utilities/helpers';
 import { createOption } from './factories';
 
 //

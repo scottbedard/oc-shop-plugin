@@ -52,7 +52,8 @@ class Product extends Model
         'description_plain',
         'is_enabled',
         'name',
-        'options_inventories',
+        // 'options_inventories',
+        'inventory',
         'slug',
     ];
 
@@ -61,7 +62,8 @@ class Product extends Model
      */
     public $purgeable = [
         'categories_field',
-        'options_inventories',
+        // 'options_inventories',
+        'inventory',
     ];
 
     /**
@@ -116,7 +118,7 @@ class Product extends Model
     public function afterSave()
     {
         $this->saveCategories();
-        $this->saveOptionsAndInventories();
+        // $this->saveOptionsAndInventories();
     }
 
     /**
@@ -126,7 +128,7 @@ class Product extends Model
      */
     public function afterValidate()
     {
-        $this->validateOptionsAndInventories();
+        // $this->validateOptionsAndInventories();
     }
 
     /**
@@ -231,64 +233,64 @@ class Product extends Model
         $this->categories()->sync($sync);
     }
 
-    /**
-     * Save related inventories.
-     *
-     * @param  array $inventories
-     * @return void
-     */
-    protected function saveInventories($inventories)
-    {
-        foreach ($inventories as $inventory) {
-            if ($model = Inventory::find($inventory['id'])) {
-                if (array_key_exists('_deleted', $inventory) && $inventory['_deleted']) {
-                    $model->delete();
-                } else {
-                    $model->fill($inventory);
-                    $model->product_id = $this->id;
-                    $model->save();
-                }
-            }
-        }
-    }
+    // /**
+    //  * Save related inventories.
+    //  *
+    //  * @param  array $inventories
+    //  * @return void
+    //  */
+    // protected function saveInventories($inventories)
+    // {
+    //     foreach ($inventories as $inventory) {
+    //         if ($model = Inventory::find($inventory['id'])) {
+    //             if (array_key_exists('_deleted', $inventory) && $inventory['_deleted']) {
+    //                 $model->delete();
+    //             } else {
+    //                 $model->fill($inventory);
+    //                 $model->product_id = $this->id;
+    //                 $model->save();
+    //             }
+    //         }
+    //     }
+    // }
 
-    /**
-     * Save related options.
-     *
-     * @param  array $options
-     * @return void
-     */
-    protected function saveOptions($options)
-    {
-        foreach ($options as $index => $option) {
-            if ($model = Option::find($option['id'])) {
-                if (array_key_exists('_deleted', $option) && $option['_deleted']) {
-                    $model->delete();
-                } else {
-                    $model->fill($option);
-                    $model->product_id = $this->id;
-                    $model->sort_order = $index;
-                    $model->save();
-                }
-            }
-        }
-    }
-
-    /**
-     * Save related options and inventories.
-     *
-     * @return void
-     */
-    protected function saveOptionsAndInventories()
-    {
-        if (! $data = $this->getOriginalPurgeValue('options_inventories')) {
-            return;
-        }
-
-        $data = json_decode($data, true);
-        $this->saveOptions($data['options']);
-        $this->saveInventories($data['inventories']);
-    }
+    // /**
+    //  * Save related options.
+    //  *
+    //  * @param  array $options
+    //  * @return void
+    //  */
+    // protected function saveOptions($options)
+    // {
+    //     foreach ($options as $index => $option) {
+    //         if ($model = Option::find($option['id'])) {
+    //             if (array_key_exists('_deleted', $option) && $option['_deleted']) {
+    //                 $model->delete();
+    //             } else {
+    //                 $model->fill($option);
+    //                 $model->product_id = $this->id;
+    //                 $model->sort_order = $index;
+    //                 $model->save();
+    //             }
+    //         }
+    //     }
+    // }
+    //
+    // /**
+    //  * Save related options and inventories.
+    //  *
+    //  * @return void
+    //  */
+    // protected function saveOptionsAndInventories()
+    // {
+    //     if (! $data = $this->getOriginalPurgeValue('options_inventories')) {
+    //         return;
+    //     }
+    //
+    //     $data = json_decode($data, true);
+    //     $this->saveOptions($data['options']);
+    //     $this->saveInventories($data['inventories']);
+    // }
 
     /**
      * Fetch products in particular categories.

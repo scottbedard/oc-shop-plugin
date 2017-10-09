@@ -9,7 +9,9 @@ import snake from 'snake-case';
  */
 export function camelCaseKeys(obj) {
     return Object.keys(obj).reduce((newObj, key) => {
-        if (Array.isArray(obj[key])) {
+        if (key[0] === '_') {
+            newObj[key] = obj[key];
+        } else if (Array.isArray(obj[key])) {
             newObj[camel(key)] = obj[key].map(camelCaseKeys);
         } else if (typeof obj[key] === 'object' && obj[key] !== null) {
             newObj[camel(key)] = camelCaseKeys(obj[key]);
@@ -29,7 +31,9 @@ export function camelCaseKeys(obj) {
  */
 export function snakeCaseKeys(obj) {
     return Object.keys(obj).reduce((newObj, key) => {
-        if (Array.isArray(obj[key])) {
+        if (key[0] === '_') {
+            newObj[key] = obj[key];
+        } else if (Array.isArray(obj[key])) {
             newObj[snake(key)] = obj[key].map(snakeCaseKeys);
         } else if (typeof obj[key] === 'object' && obj[key] !== null) {
             newObj[snake(key)] = snakeCaseKeys(obj[key]);

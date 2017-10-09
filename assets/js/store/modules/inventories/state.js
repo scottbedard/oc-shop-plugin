@@ -1,30 +1,24 @@
+import { createInventory, createOption } from './factories';
+
 //
 // state
 //
 export default function() {
     return {
         endpoints: {},
+        fieldName: '',
         inventoryForm: {
             context: 'create',
-            data: {
-                sku: '',
-                quantity: 0,
-            },
+            data: createInventory(),
             isSaving: false,
             isVisible: false,
         },
         inventories: [],
         lang: {},
+        model: {},
         optionForm: {
             context: 'create',
-            data: {
-                _delete: false,
-                _key: 0,
-                id: null,
-                name: '',
-                placeholder: '',
-                values: [],
-            },
+            data: createOption(),
             isReordering: false,
             isVisible: false,
             newValue: '',

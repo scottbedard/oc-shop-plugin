@@ -27,7 +27,6 @@
     import { mapState } from 'vuex';
 
     export default {
-        data: () => ({ foo: null }),
         computed: {
             ...mapState('inventories', {
                 options: state => state.options,

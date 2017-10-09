@@ -1,6 +1,6 @@
 import { camelCaseKeys, snakeCaseKeys } from 'assets/js/utilities/object';
 
-describe.only('object utilities', () => {
+describe('object utilities', () => {
     const testObject = {
         camelCase: true,
         snake_case: true,
@@ -12,6 +12,8 @@ describe.only('object utilities', () => {
             camelCase: true,
             snake_case: true,
         },
+        _ignoredCamel: true,
+        _ignored_snake: true,
     };
 
     it('camelCaseKeys', () => {
@@ -26,6 +28,8 @@ describe.only('object utilities', () => {
                 camelCase: true,
                 snakeCase: true,
             },
+            _ignoredCamel: true,
+            _ignored_snake: true,
         });
     });
 
@@ -41,6 +45,8 @@ describe.only('object utilities', () => {
                 camel_case: true,
                 snake_case: true,
             },
+            _ignoredCamel: true,
+            _ignored_snake: true,
         });
     });
 });

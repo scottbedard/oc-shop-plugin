@@ -11,6 +11,8 @@ $(function() {
     const el = document.querySelector('[data-component=inventory]');
     store.commit('inventories/setEndpoints', JSON.parse(el.dataset.endpoints));
     store.commit('inventories/setLang', JSON.parse(el.dataset.lang));
+    store.commit('inventories/setModel', JSON.parse(el.dataset.model));
+    store.commit('inventories/setFieldName', el.dataset.fieldName);
 
     // mount our formwidget to the dom
     new Vue({

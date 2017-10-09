@@ -8,6 +8,7 @@ import { clone } from 'assets/js/utilities/helpers';
 export default {
     ...simpleSetters({
         setEndpoints: 'endpoints',
+        setFieldName: 'fieldName',
         setInventoryFormContext: 'inventoryForm.context',
         setInventoryFormIsSaving: 'inventoryForm.isSaving',
         setInventoryFormIsVisible: 'inventoryForm.isVisible',
@@ -40,6 +41,11 @@ export default {
     reorderOptionValue(state, { newIndex, oldIndex }) {
         const movedValue = state.optionForm.data.values.splice(oldIndex, 1)[0];
         state.optionForm.data.values.splice(newIndex, 0, movedValue);
+    },
+
+    // set the parent product model
+    setModel(state, model) {
+
     },
 
     // set the option form data
