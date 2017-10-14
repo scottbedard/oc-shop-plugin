@@ -16,10 +16,10 @@ before_script:
   - php composer.phar install --dev --no-interaction
   - composer self-update
   - git clone https://github.com/octobercms/october.git
-  - git clone https://github.com/rainlab/user-plugin.git plugins/rainlab/user
   - mkdir -p ./october/plugins/bedard/shop
   - mv !(october) october/plugins/bedard/shop
   - cd october
+  - git clone https://github.com/rainlab/user-plugin.git plugins/rainlab/user
   - composer install
   - cp config/cms.php config/cms.php.testing
   - mv config/cms.php.testing config/testing/cms.php
