@@ -21,7 +21,7 @@ tabs:
         #
         # inventory
         #
-        inventory:
+        options_inventories:
             type: Bedard\Shop\FormWidgets\Inventory
             tab: bedard.shop::lang.products.form.tab_options_inventories
 

@@ -1,6 +1,6 @@
 import { simpleSetters } from 'spyfu-vuex-helpers';
 import { createOption, createOptionValue } from './factories';
-import { clone } from 'assets/js/utilities/helpers';
+import { clone, uniqueId } from 'assets/js/utilities/helpers';
 
 //
 // mutations
@@ -45,7 +45,22 @@ export default {
 
     // set the parent product model
     setModel(state, model) {
+        state.model = model;
 
+        // prep and add options
+        state.options = model.options.map(option => {
+            option['_key'] = uniqueId();
+            option['_delete'] = false;
+
+            option.values = option.values.map(value => {
+                value['_key'] = uniqueId();
+                value['_delete'] = false;
+
+                return value;
+            });
+
+            return option;
+        });
     },
 
     // set the option form data
