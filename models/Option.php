@@ -132,7 +132,7 @@ class Option extends Model
     protected function saveValues(array $values)
     {
         $savedValues = array_filter($values, function ($value) {
-            return !$value['_delete'];
+            return ! $value['_delete'];
         }, ARRAY_FILTER_USE_BOTH);
 
         foreach ($savedValues as $index => $data) {

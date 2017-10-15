@@ -408,7 +408,7 @@ class Product extends Model
     protected function saveOptions($options)
     {
         $savedOptions = array_filter($options, function ($option) {
-            return !$option['_delete'];
+            return ! $option['_delete'];
         }, ARRAY_FILTER_USE_BOTH);
 
         foreach ($savedOptions as $index => $data) {
