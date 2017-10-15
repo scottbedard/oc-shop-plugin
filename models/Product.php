@@ -168,11 +168,16 @@ class Product extends Model
         }, ARRAY_FILTER_USE_BOTH);
 
         // create a model for each one and relate it to this product
-        foreach ($newOptions as $id => $newOption) {
+        foreach ($newOptions as $index => $newOption) {
             $model = new Option;
-            $model->product_id = $this->id;
-            $model->pending_values = $newOption['values'];
+
             $model->fill($newOption);
+
+            $model->sort_order = $index;
+
+            $model->product_id = $this->id;
+
+            $model->pending_values = $newOption['values'];
 
             $model->save();
         }
@@ -332,9 +337,11 @@ class Product extends Model
             $inventories = $data['inventories'];
 
             // options
-            $this->deleteFlaggedOptions($options);
-            $this->createNewOptions($options);
-            $this->updateExistingOptions($options);
+            if ($options) {
+                $this->deleteFlaggedOptions($options);
+                $this->createNewOptions($options);
+                $this->updateExistingOptions($options);
+            }
         }
     }
 
@@ -466,10 +473,15 @@ class Product extends Model
             return $option['id'] !== null && ! $option['_delete'];
         }, ARRAY_FILTER_USE_BOTH);
 
-        foreach ($existingOptions as $id => $data) {
+        foreach ($existingOptions as $index => $data) {
             $option = Option::find($data['id']);
-            $option->pending_values = $data['values'];
+
             $option->fill($data);
+
+            $option->pending_values = $data['values'];
+
+            $option->sort_order = $index;
+
             $option->save();
         }
     }

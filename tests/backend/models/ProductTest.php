@@ -243,6 +243,68 @@ class ProductTest extends ShopTestCase
         $this->assertEquals(0, count($product->options[0]['values']));
     }
 
+    public function test_reorering_options()
+    {
+        $product = Factory::create(new Product, [
+            'options_inventories' => '{
+                "inventories": [],
+                "options": [
+                    {
+                        "_delete": false,
+                        "_key": 0,
+                        "id": null,
+                        "name": "foo",
+                        "placeholder": "",
+                        "sort_order": 0,
+                        "values": []
+                    },
+                    {
+                        "_delete": false,
+                        "_key": 1,
+                        "id": null,
+                        "name": "bar",
+                        "placeholder": "",
+                        "sort_order": 1,
+                        "values": []
+                    }
+                ]
+            }',
+        ]);
+
+        $product->load('options');
+        $this->assertEquals('foo', $product->options[0]['name']);
+        $this->assertEquals('bar', $product->options[1]['name']);
+
+        $product->options_inventories = '{
+            "inventories": [],
+            "options": [
+                {
+                    "_delete": false,
+                    "_key": 1,
+                    "id": 2,
+                    "name": "bar",
+                    "placeholder": "",
+                    "sort_order": 1,
+                    "values": []
+                },
+                {
+                    "_delete": false,
+                    "_key": 0,
+                    "id": 1,
+                    "name": "foo",
+                    "placeholder": "",
+                    "sort_order": 0,
+                    "values": []
+                }
+            ]
+        }';
+
+        $product->save();
+        $product->load('options.values');
+        $this->assertEquals('bar', $product->options[0]['name']);
+        $this->assertEquals('foo', $product->options[1]['name']);
+    }
+
     // public function test_saving_options()
     // {
     //     $option = Factory::create(new Option);
