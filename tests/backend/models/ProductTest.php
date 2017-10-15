@@ -75,11 +75,9 @@ class ProductTest extends ShopTestCase
         // make sure the option exists
         $this->assertEquals('size', $product->options[0]['name']);
         $this->assertEquals('select size', $product->options[0]['placeholder']);
-        $this->assertEquals(1, $product->options[0]['sort_order']);
 
         // make sure the values exist
         $this->assertEquals('small', $product->options[0]['values'][0]['name']);
-        $this->assertEquals(2, $product->options[0]['values'][0]['sort_order']);
     }
 
     public function test_saving_an_option()
@@ -139,12 +137,10 @@ class ProductTest extends ShopTestCase
         $this->assertEquals(1, $product->options[0]['id']);
         $this->assertEquals('updated size', $product->options[0]['name']);
         $this->assertEquals('updated select size', $product->options[0]['placeholder']);
-        $this->assertEquals(2, $product->options[0]['sort_order']);
 
         // check the updated option value
         $this->assertEquals(1, $product->options[0]['values'][0]['id']);
         $this->assertEquals('updated small', $product->options[0]['values'][0]['name']);
-        $this->assertEquals(3, $product->options[0]['values'][0]['sort_order']);
     }
 
     public function test_deleting_an_option()
@@ -303,6 +299,80 @@ class ProductTest extends ShopTestCase
         $product->load('options.values');
         $this->assertEquals('bar', $product->options[0]['name']);
         $this->assertEquals('foo', $product->options[1]['name']);
+    }
+
+    public function test_reordering_option_values()
+    {
+        $product = Factory::create(new Product, [
+            'options_inventories' => '{
+                "inventories": [],
+                "options": [
+                    {
+                        "_delete": false,
+                        "_key": 0,
+                        "id": null,
+                        "name": "foo",
+                        "placeholder": "",
+                        "sort_order": 0,
+                        "values": [
+                            {
+                                "_delete": false,
+                                "_key": 1,
+                                "id": null,
+                                "name": "one",
+                                "sort_order": 0
+                            },
+                            {
+                                "_delete": false,
+                                "_key": 2,
+                                "id": null,
+                                "name": "two",
+                                "sort_order": 1
+                            }
+                        ]
+                    }
+                ]
+            }',
+        ]);
+
+        $product->load('options.values');
+        $this->assertEquals('one', $product->options[0]['values'][0]['name']);
+        $this->assertEquals('two', $product->options[0]['values'][1]['name']);
+
+        $product->options_inventories = '{
+            "inventories": [],
+            "options": [
+                {
+                    "_delete": false,
+                    "_key": 0,
+                    "id": 1,
+                    "name": "foo",
+                    "placeholder": "",
+                    "sort_order": 0,
+                    "values": [
+                        {
+                            "_delete": false,
+                            "_key": 2,
+                            "id": 2,
+                            "name": "two",
+                            "sort_order": 1
+                        },
+                        {
+                            "_delete": false,
+                            "_key": 1,
+                            "id": 1,
+                            "name": "one",
+                            "sort_order": 0
+                        }
+                    ]
+                }
+            ]
+        }';
+
+        $product->save();
+        $product->load('options.values');
+        $this->assertEquals('two', $product->options[0]['values'][0]['name']);
+        $this->assertEquals('one', $product->options[0]['values'][1]['name']);
     }
 
     // public function test_saving_options()

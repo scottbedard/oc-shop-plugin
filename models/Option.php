@@ -84,42 +84,17 @@ class Option extends Model
      */
     public function afterSave()
     {
-        $this->savePendingValues();
+        $this->processPendingValues();
     }
 
     /**
-     * Create new values.
+     * Delete option values.
      *
-     * @param  array|null $values
+     * @param  array $values
      * @return void
      */
-    protected function createNewValues(array $values = null)
-    {
-        if ($values === null) {
-            return;
-        }
-
-        // extract our new options from the options being updated
-        $newValues = array_filter($values, function ($value) {
-            return $value['id'] === null && ! $value['_delete'];
-        }, ARRAY_FILTER_USE_BOTH);
-
-        // create a model for each one and relate it to this option
-        foreach ($newValues as $id => $newValue) {
-            $value = new OptionValue;
-            $value->option_id = $this->id;
-            $value->fill($newValue);
-            $value->save();
-        }
-    }
-
     protected function deleteFlaggedValues(array $values = null)
     {
-        if ($values === null) {
-            return;
-        }
-
-        // extract our new options from the options being updated
         $flaggedValues = array_filter($values, function ($value) {
             return $value['_delete'];
         }, ARRAY_FILTER_USE_BOTH);
@@ -138,28 +113,36 @@ class Option extends Model
      *
      * @return void
      */
-    public function savePendingValues()
+    public function processPendingValues()
     {
         $values = $this->getOriginalPurgeValue('pending_values');
 
-        $this->deleteFlaggedValues($values);
-        $this->createNewValues($values);
-        $this->updateExistingValues($values);
+        if ($values) {
+            $this->deleteFlaggedValues($values);
+            $this->saveValues($values);
+        }
     }
 
-    protected function updateExistingValues(array $values = null)
+    /**
+     * Save option values.
+     *
+     * @param  array  $values
+     * @return void
+     */
+    protected function saveValues(array $values)
     {
-        if ($values === null) {
-            return;
-        }
-
-        $existingValues = array_filter($values, function ($value) {
-            return $value['id'] !== null && ! $value['_delete'];
+        $savedValues = array_filter($values, function ($value) {
+            return !$value['_delete'];
         }, ARRAY_FILTER_USE_BOTH);
 
-        foreach ($existingValues as $id => $data) {
-            $value = OptionValue::find($data['id']);
+        foreach ($savedValues as $index => $data) {
+            $value = $data['id']
+                ? OptionValue::findOrNew($data['id'])
+                : new OptionValue;
+
             $value->fill($data);
+            $value->sort_order = $index;
+            $value->option_id = $this->id;
             $value->save();
         }
     }

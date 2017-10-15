@@ -21,18 +21,18 @@ class InventoryTest extends ShopTestCase
         Factory::create(new Inventory, ['sku' => 'foo']);
     }
 
-    public function test_saving_related_inventory_values()
-    {
-        $option = Factory::create(new Option, [
-            'value_data' => [
-                ['id' => null, 'name' => 'a', 'sort_order' => 0],
-                ['id' => null, 'name' => 'b', 'sort_order' => 1],
-            ],
-        ]);
-
-        $inventory = Factory::create(new Inventory, ['value_ids' => [1, 2]]);
-        $this->assertEquals(2, $inventory->values()->count());
-    }
+    // public function test_saving_related_inventory_values()
+    // {
+    //     $option = Factory::create(new Option, [
+    //         'value_data' => [
+    //             ['id' => null, 'name' => 'a', 'sort_order' => 0],
+    //             ['id' => null, 'name' => 'b', 'sort_order' => 1],
+    //         ],
+    //     ]);
+    //
+    //     $inventory = Factory::create(new Inventory, ['value_ids' => [1, 2]]);
+    //     $this->assertEquals(2, $inventory->values()->count());
+    // }
 
     public function test_finding_enabled_inventories()
     {

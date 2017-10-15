@@ -128,7 +128,6 @@ class Product extends Model
      */
     public function afterValidate()
     {
-        // $this->validateOptionsAndInventories();
     }
 
     /**
@@ -156,33 +155,11 @@ class Product extends Model
     }
 
     /**
-     * Create new options.
+     * Delete product options.
      *
-     * @return
+     * @param  array $options
+     * @return void
      */
-    protected function createNewOptions($options)
-    {
-        // extract our new options from the options being updated
-        $newOptions = array_filter($options, function ($option) {
-            return $option['id'] === null && ! $option['_delete'];
-        }, ARRAY_FILTER_USE_BOTH);
-
-        // create a model for each one and relate it to this product
-        foreach ($newOptions as $index => $newOption) {
-            $model = new Option;
-
-            $model->fill($newOption);
-
-            $model->sort_order = $index;
-
-            $model->product_id = $this->id;
-
-            $model->pending_values = $newOption['values'];
-
-            $model->save();
-        }
-    }
-
     protected function deleteFlaggedOptions($options)
     {
         $flaggedOptions = array_filter($options, function ($option) {
@@ -277,50 +254,6 @@ class Product extends Model
         $this->categories()->sync($sync);
     }
 
-    // /**
-    //  * Save related inventories.
-    //  *
-    //  * @param  array $inventories
-    //  * @return void
-    //  */
-    // protected function saveInventories($inventories)
-    // {
-    //     foreach ($inventories as $inventory) {
-    //         if ($model = Inventory::find($inventory['id'])) {
-    //             if (array_key_exists('_deleted', $inventory) && $inventory['_deleted']) {
-    //                 $model->delete();
-    //             } else {
-    //                 $model->fill($inventory);
-    //                 $model->product_id = $this->id;
-    //                 $model->save();
-    //             }
-    //         }
-    //     }
-    // }
-
-    // /**
-    //  * Save related options.
-    //  *
-    //  * @param  array $options
-    //  * @return void
-    //  */
-    // protected function saveOptions($options)
-    // {
-    //     foreach ($options as $index => $option) {
-    //         if ($model = Option::find($option['id'])) {
-    //             if (array_key_exists('_deleted', $option) && $option['_deleted']) {
-    //                 $model->delete();
-    //             } else {
-    //                 $model->fill($option);
-    //                 $model->product_id = $this->id;
-    //                 $model->sort_order = $index;
-    //                 $model->save();
-    //             }
-    //         }
-    //     }
-    // }
-    //
-
     /**
      * Save related options and inventories.
      *
@@ -339,8 +272,7 @@ class Product extends Model
             // options
             if ($options) {
                 $this->deleteFlaggedOptions($options);
-                $this->createNewOptions($options);
-                $this->updateExistingOptions($options);
+                $this->saveOptions($options);
             }
         }
     }
@@ -467,66 +399,28 @@ class Product extends Model
         DB::table('bedard_shop_category_product')->insert($insert);
     }
 
-    protected function updateExistingOptions($options)
-    {
-        $existingOptions = array_filter($options, function ($option) {
-            return $option['id'] !== null && ! $option['_delete'];
-        }, ARRAY_FILTER_USE_BOTH);
-
-        foreach ($existingOptions as $index => $data) {
-            $option = Option::find($data['id']);
-
-            $option->fill($data);
-
-            $option->pending_values = $data['values'];
-
-            $option->sort_order = $index;
-
-            $option->save();
-        }
-    }
-
     /**
-     * Validate inventories.
-     *
-     * @param  array $inventories
-     * @return void
-     */
-    protected function validateInventories($inventories)
-    {
-        // @todo
-    }
-
-    /**
-     * Validate a product's options.
+     * Save related options.
      *
      * @param  array $options
      * @return void
      */
-    protected function validateOptions($options)
+    protected function saveOptions($options)
     {
-        // validate each option individually
-        // foreach ($options as $option) {
-        //     $model = new Option($option);
-        //     $model->validate();
-        // }
+        $savedOptions = array_filter($options, function ($option) {
+            return !$option['_delete'];
+        }, ARRAY_FILTER_USE_BOTH);
 
-        // @todo: prevent duplicate options
-    }
+        foreach ($savedOptions as $index => $data) {
+            $option = $data['id']
+                ? Option::findOrNew($data['id'])
+                : new Option;
 
-    /**
-     * Call validate for options and inventories.
-     *
-     * @return void
-     */
-    protected function validateOptionsAndInventories()
-    {
-        // if (! $data = $this->getOriginalPurgeValue('options_inventories')) {
-        //     return;
-        // }
-        //
-        // $data = json_decode($data, true);
-        // $this->validateOptions($data['options']);
-        // $this->validateInventories($data['inventories']);
+            $option->fill($data);
+            $option->pending_values = $data['values'];
+            $option->sort_order = $index;
+            $option->product_id = $this->id;
+            $option->save();
+        }
     }
 }
