@@ -46,15 +46,201 @@ class ProductTest extends ShopTestCase
     public function test_creating_an_option()
     {
         $product = Factory::create(new Product, [
-            'inventories' => [
-                'inventories' => [],
-                'options' => [
-                    [
-
-                    ],
-                ],
-            ],
+            'options_inventories' => '{
+                "inventories": [],
+                "options": [
+                    {
+                        "_delete": false,
+                        "_key": 2,
+                        "id": null,
+                        "name": "size",
+                        "placeholder": "select size",
+                        "sort_order": 1,
+                        "values": [
+                            {
+                                "_delete": false,
+                                "_key": 3,
+                                "id": null,
+                                "name": "small",
+                                "sort_order": 2
+                            }
+                        ]
+                    }
+                ]
+            }',
         ]);
+
+        $product->load('options.values');
+
+        // make sure the option exists
+        $this->assertEquals('size', $product->options[0]['name']);
+        $this->assertEquals('select size', $product->options[0]['placeholder']);
+        $this->assertEquals(1, $product->options[0]['sort_order']);
+
+        // make sure the values exist
+        $this->assertEquals('small', $product->options[0]['values'][0]['name']);
+        $this->assertEquals(2, $product->options[0]['values'][0]['sort_order']);
+    }
+
+    public function test_saving_an_option()
+    {
+        $product = Factory::create(new Product, [
+            'options_inventories' => '{
+                "inventories": [],
+                "options": [
+                    {
+                        "_delete": false,
+                        "_key": 2,
+                        "id": null,
+                        "name": "size",
+                        "placeholder": "select size",
+                        "sort_order": 1,
+                        "values": [
+                            {
+                                "_delete": false,
+                                "_key": 3,
+                                "id": null,
+                                "name": "small",
+                                "sort_order": 2
+                            }
+                        ]
+                    }
+                ]
+            }',
+        ]);
+
+        $product->options_inventories = '{
+            "inventories": [],
+            "options": [
+                {
+                    "_delete": false,
+                    "_key": 2,
+                    "id": 1,
+                    "name": "updated size",
+                    "placeholder": "updated select size",
+                    "sort_order": 2,
+                    "values": [
+                        {
+                            "_delete": false,
+                            "_key": 3,
+                            "id": 1,
+                            "name": "updated small",
+                            "sort_order": 3
+                        }
+                    ]
+                }
+            ]
+        }';
+
+        $product->save();
+        $product->load('options.values');
+
+        // check the updated option
+        $this->assertEquals(1, $product->options[0]['id']);
+        $this->assertEquals('updated size', $product->options[0]['name']);
+        $this->assertEquals('updated select size', $product->options[0]['placeholder']);
+        $this->assertEquals(2, $product->options[0]['sort_order']);
+
+        // check the updated option value
+        $this->assertEquals(1, $product->options[0]['values'][0]['id']);
+        $this->assertEquals('updated small', $product->options[0]['values'][0]['name']);
+        $this->assertEquals(3, $product->options[0]['values'][0]['sort_order']);
+    }
+
+    public function test_deleting_an_option()
+    {
+        $product = Factory::create(new Product, [
+            'options_inventories' => '{
+                "inventories": [],
+                "options": [
+                    {
+                        "_delete": false,
+                        "_key": 2,
+                        "id": null,
+                        "name": "size",
+                        "placeholder": "select size",
+                        "sort_order": 1,
+                        "values": []
+                    }
+                ]
+            }',
+        ]);
+
+        $product->options_inventories = '{
+            "inventories": [],
+            "options": [
+                {
+                    "_delete": true,
+                    "_key": 2,
+                    "id": 1,
+                    "name": "size",
+                    "placeholder": "select size",
+                    "sort_order": 1,
+                    "values": []
+                }
+            ]
+        }';
+
+        $product->save();
+        $product->load('options');
+
+        $this->assertEquals(0, count($product->options));
+    }
+
+    public function test_deleting_an_option_value()
+    {
+        $product = Factory::create(new Product, [
+            'options_inventories' => '{
+                "inventories": [],
+                "options": [
+                    {
+                        "_delete": false,
+                        "_key": 2,
+                        "id": null,
+                        "name": "size",
+                        "placeholder": "select size",
+                        "sort_order": 1,
+                        "values": [
+                            {
+                                "_delete": false,
+                                "_key": 3,
+                                "id": null,
+                                "name": "small",
+                                "sort_order": 2
+                            }
+                        ]
+                    }
+                ]
+            }'
+        ]);
+
+        $product->options_inventories = '{
+            "inventories": [],
+            "options": [
+                {
+                    "_delete": false,
+                    "_key": 2,
+                    "id": 1,
+                    "name": "size",
+                    "placeholder": "select size",
+                    "sort_order": 1,
+                    "values": [
+                        {
+                            "_delete": true,
+                            "_key": 3,
+                            "id": 1,
+                            "name": "small",
+                            "sort_order": 2
+                        }
+                    ]
+                }
+            ]
+        }';
+
+        $product->save();
+        $product->load('options.values');
+
+        $this->assertEquals(0, count($product->options[0]['values']));
     }
 
     // public function test_saving_options()

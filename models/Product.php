@@ -52,7 +52,7 @@ class Product extends Model
         'description_plain',
         'is_enabled',
         'name',
-        // 'options_inventories',
+        'options_inventories',
         'inventory',
         'slug',
     ];
@@ -62,7 +62,7 @@ class Product extends Model
      */
     public $purgeable = [
         'categories_field',
-        // 'options_inventories',
+        'options_inventories',
         'inventory',
     ];
 
@@ -118,7 +118,7 @@ class Product extends Model
     public function afterSave()
     {
         $this->saveCategories();
-        // $this->saveOptionsAndInventories();
+        $this->saveOptionsAndInventories();
     }
 
     /**
@@ -153,6 +153,45 @@ class Product extends Model
         sort($new);
 
         return ! count($old) || ! count($new) || $old != $new;
+    }
+
+    /**
+     * Create new options.
+     *
+     * @return
+     */
+    protected function createNewOptions($options)
+    {
+        // extract our new options from the options being updated
+        $newOptions = array_filter($options, function($option) {
+            return $option['id'] === null && !$option['_delete'];
+        }, ARRAY_FILTER_USE_BOTH);
+
+        // create a model for each one and relate it to this product
+        foreach ($newOptions as $id => $newOption) {
+            $model = new Option;
+            $model->product_id = $this->id;
+            $model->pending_values = $newOption['values'];
+            $model->fill($newOption);
+
+            $model->save();
+        }
+    }
+
+    protected function deleteFlaggedOptions($options)
+    {
+        $flaggedOptions = array_filter($options, function($option) {
+            return $option['_delete'];
+        }, ARRAY_FILTER_USE_BOTH);
+
+        foreach ($flaggedOptions as $id => $data) {
+            // @todo: figure out why destroy() is throwing errors here
+            $option = Option::find($data['id']);
+
+            if ($option) {
+                $option->delete();
+            }
+        }
     }
 
     /**
@@ -276,21 +315,27 @@ class Product extends Model
     //     }
     // }
     //
-    // /**
-    //  * Save related options and inventories.
-    //  *
-    //  * @return void
-    //  */
-    // protected function saveOptionsAndInventories()
-    // {
-    //     if (! $data = $this->getOriginalPurgeValue('options_inventories')) {
-    //         return;
-    //     }
-    //
-    //     $data = json_decode($data, true);
-    //     $this->saveOptions($data['options']);
-    //     $this->saveInventories($data['inventories']);
-    // }
+    /**
+     * Save related options and inventories.
+     *
+     * @return void
+     */
+    protected function saveOptionsAndInventories()
+    {
+        $data = $this->getOriginalPurgeValue('options_inventories');
+
+        if ($data) {
+            // parse our related data from the json
+            $data = json_decode($data, true);
+            $options = $data['options'];
+            $inventories = $data['inventories'];
+
+            // options
+            $this->deleteFlaggedOptions($options);
+            $this->createNewOptions($options);
+            $this->updateExistingOptions($options);
+        }
+    }
 
     /**
      * Fetch products in particular categories.
@@ -414,6 +459,20 @@ class Product extends Model
         DB::table('bedard_shop_category_product')->insert($insert);
     }
 
+    protected function updateExistingOptions($options)
+    {
+        $existingOptions = array_filter($options, function($option) {
+            return $option['id'] !== null && !$option['_delete'];
+        }, ARRAY_FILTER_USE_BOTH);
+
+        foreach ($existingOptions as $id => $data) {
+            $option = Option::find($data['id']);
+            $option->pending_values = $data['values'];
+            $option->fill($data);
+            $option->save();
+        }
+    }
+
     /**
      * Validate inventories.
      *
@@ -434,10 +493,10 @@ class Product extends Model
     protected function validateOptions($options)
     {
         // validate each option individually
-        foreach ($options as $option) {
-            $model = new Option($option);
-            $model->validate();
-        }
+        // foreach ($options as $option) {
+        //     $model = new Option($option);
+        //     $model->validate();
+        // }
 
         // @todo: prevent duplicate options
     }
@@ -449,12 +508,12 @@ class Product extends Model
      */
     protected function validateOptionsAndInventories()
     {
-        if (! $data = $this->getOriginalPurgeValue('options_inventories')) {
-            return;
-        }
-
-        $data = json_decode($data, true);
-        $this->validateOptions($data['options']);
-        $this->validateInventories($data['inventories']);
+        // if (! $data = $this->getOriginalPurgeValue('options_inventories')) {
+        //     return;
+        // }
+        //
+        // $data = json_decode($data, true);
+        // $this->validateOptions($data['options']);
+        // $this->validateInventories($data['inventories']);
     }
 }

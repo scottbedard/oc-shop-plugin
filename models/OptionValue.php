@@ -24,7 +24,6 @@ class OptionValue extends Model
      * @var array Fillable fields
      */
     protected $fillable = [
-        '_key',
         'name',
         'sort_order',
     ];
@@ -33,7 +32,6 @@ class OptionValue extends Model
      * @var array Purgeable fields
      */
     public $purgeable = [
-        '_key',
     ];
 
     /**

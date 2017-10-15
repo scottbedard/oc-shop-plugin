@@ -45,14 +45,14 @@ class Option extends Model
         'name',
         'placeholder',
         'sort_order',
-        'value_data',
+        'pending_values',
     ];
 
     /**
      * @var array Purgeable fields
      */
     public $purgeable = [
-        'value_data',
+        'pending_values',
     ];
 
     /**
@@ -86,17 +86,53 @@ class Option extends Model
      */
     public function afterSave()
     {
-        $this->saveValues();
+        $this->savePendingValues();
     }
 
     /**
-     * After validate.
+     * Create new values.
      *
+     * @param  array|null $values
      * @return void
      */
-    public function afterValidate()
+    protected function createNewValues(array $values = null)
     {
-        $this->validateValues();
+        if ($values === null) {
+            return;
+        }
+
+        // extract our new options from the options being updated
+        $newValues = array_filter($values, function($value) {
+            return $value['id'] === null && !$value['_delete'];
+        }, ARRAY_FILTER_USE_BOTH);
+
+        // create a model for each one and relate it to this option
+        foreach ($newValues as $id => $newValue) {
+            $value = new OptionValue;
+            $value->option_id = $this->id;
+            $value->fill($newValue);
+            $value->save();
+        }
+    }
+
+    protected function deleteFlaggedValues(array $values = null)
+    {
+        if ($values === null) {
+            return;
+        }
+
+        // extract our new options from the options being updated
+        $flaggedValues = array_filter($values, function($value) {
+            return $value['_delete'];
+        }, ARRAY_FILTER_USE_BOTH);
+
+        foreach ($flaggedValues as $id => $data) {
+            $value = OptionValue::find($data['id']);
+
+            if ($value) {
+                $value->delete();
+            }
+        }
     }
 
     /**
@@ -104,61 +140,29 @@ class Option extends Model
      *
      * @return void
      */
-    protected function saveValues()
+    public function savePendingValues()
     {
-        $values = $this->getOriginalPurgeValue('value_data') ?: [];
+        $values = $this->getOriginalPurgeValue('pending_values');
 
-        if (count($values)) {
-            foreach ($values as $value) {
-                $model = $value['id'] !== null
-                        ? OptionValue::findOrNew($value['id'])
-                        : new OptionValue;
-
-                if (array_key_exists('_deleted', $value) && $value['_deleted'] && $model->exists()) {
-                    // delete the model if it has the _deleted flag
-                    $model->delete();
-                } else {
-                    // otherwise update the model's values
-                    $model->name = $value['name'];
-                    $model->option_id = $this->id;
-                    $model->sort_order = $value['sort_order'];
-                    $model->save();
-                }
-            }
-        }
+        $this->deleteFlaggedValues($values);
+        $this->createNewValues($values);
+        $this->updateExistingValues($values);
     }
 
-    /**
-     * Validate option values.
-     *
-     * @return void
-     */
-    protected function validateValues()
+    protected function updateExistingValues(array $values = null)
     {
-        $names = [];
-        $values = $this->value_data ?: [];
-
-        // don't validate deleted values
-        $nonDeletedValues = array_filter($values, function ($value) {
-            return ! array_key_exists('_deleted', $value) || ! $value['_deleted'];
-        });
-
-        foreach ($nonDeletedValues as $value) {
-            // validate each value individually
-            $model = new OptionValue($value);
-            $model->validate();
-
-            // ensure that the name is unique to this option
-            if (in_array($value['name'], $names)) {
-                throw new Exception(Lang::get('bedard.shop::lang.options.form.values_unique'));
-            }
-
-            $names[] = $value['name'];
+        if ($values === null) {
+            return;
         }
 
-        // ensure that at least one value was provided
-        if (count($names) < 1) {
-            throw new Exception(Lang::get('bedard.shop::lang.options.form.values_required'));
+        $existingValues = array_filter($values, function($value) {
+            return $value['id'] !== null && !$value['_delete'];
+        }, ARRAY_FILTER_USE_BOTH);
+
+        foreach ($existingValues as $id => $data) {
+            $value = OptionValue::find($data['id']);
+            $value->fill($data);
+            $value->save();
         }
     }
 }
