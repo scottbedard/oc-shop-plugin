@@ -163,8 +163,8 @@ class Product extends Model
     protected function createNewOptions($options)
     {
         // extract our new options from the options being updated
-        $newOptions = array_filter($options, function($option) {
-            return $option['id'] === null && !$option['_delete'];
+        $newOptions = array_filter($options, function ($option) {
+            return $option['id'] === null && ! $option['_delete'];
         }, ARRAY_FILTER_USE_BOTH);
 
         // create a model for each one and relate it to this product
@@ -180,7 +180,7 @@ class Product extends Model
 
     protected function deleteFlaggedOptions($options)
     {
-        $flaggedOptions = array_filter($options, function($option) {
+        $flaggedOptions = array_filter($options, function ($option) {
             return $option['_delete'];
         }, ARRAY_FILTER_USE_BOTH);
 
@@ -315,6 +315,7 @@ class Product extends Model
     //     }
     // }
     //
+
     /**
      * Save related options and inventories.
      *
@@ -461,8 +462,8 @@ class Product extends Model
 
     protected function updateExistingOptions($options)
     {
-        $existingOptions = array_filter($options, function($option) {
-            return $option['id'] !== null && !$option['_delete'];
+        $existingOptions = array_filter($options, function ($option) {
+            return $option['id'] !== null && ! $option['_delete'];
         }, ARRAY_FILTER_USE_BOTH);
 
         foreach ($existingOptions as $id => $data) {

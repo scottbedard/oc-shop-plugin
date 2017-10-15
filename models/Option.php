@@ -1,7 +1,5 @@
 <?php namespace Bedard\Shop\Models;
 
-use Exception;
-use Lang;
 use Model;
 
 /**
@@ -102,8 +100,8 @@ class Option extends Model
         }
 
         // extract our new options from the options being updated
-        $newValues = array_filter($values, function($value) {
-            return $value['id'] === null && !$value['_delete'];
+        $newValues = array_filter($values, function ($value) {
+            return $value['id'] === null && ! $value['_delete'];
         }, ARRAY_FILTER_USE_BOTH);
 
         // create a model for each one and relate it to this option
@@ -122,7 +120,7 @@ class Option extends Model
         }
 
         // extract our new options from the options being updated
-        $flaggedValues = array_filter($values, function($value) {
+        $flaggedValues = array_filter($values, function ($value) {
             return $value['_delete'];
         }, ARRAY_FILTER_USE_BOTH);
 
@@ -155,8 +153,8 @@ class Option extends Model
             return;
         }
 
-        $existingValues = array_filter($values, function($value) {
-            return $value['id'] !== null && !$value['_delete'];
+        $existingValues = array_filter($values, function ($value) {
+            return $value['id'] !== null && ! $value['_delete'];
         }, ARRAY_FILTER_USE_BOTH);
 
         foreach ($existingValues as $id => $data) {

@@ -211,7 +211,7 @@ class ProductTest extends ShopTestCase
                         ]
                     }
                 ]
-            }'
+            }',
         ]);
 
         $product->options_inventories = '{
