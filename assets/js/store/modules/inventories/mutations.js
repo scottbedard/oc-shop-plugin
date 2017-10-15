@@ -1,6 +1,7 @@
 import { simpleSetters } from 'spyfu-vuex-helpers';
 import { createOption, createOptionValue } from './factories';
 import { clone, uniqueId } from 'assets/js/utilities/helpers';
+import Vue from 'vue';
 
 //
 // mutations
@@ -49,12 +50,12 @@ export default {
 
         // prep and add options
         state.options = model.options.map(option => {
-            option['_key'] = uniqueId();
-            option['_delete'] = false;
+            Vue.set(option, '_delete', false);
+            Vue.set(option, '_key', uniqueId());
 
             option.values = option.values.map(value => {
-                value['_key'] = uniqueId();
-                value['_delete'] = false;
+                Vue.set(value, '_delete', false);
+                Vue.set(value, '_key', uniqueId());
 
                 return value;
             });
