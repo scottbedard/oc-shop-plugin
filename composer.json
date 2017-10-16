@@ -4,7 +4,7 @@
     "type": "project",
     "license": "MIT",
     "require-dev": {
-        "phpunit/phpunit": "4.8.*@dev",
+        "phpunit/phpunit": "~6.0",
         "fzaninotto/faker": "1.5.*",
         "satooshi/php-coveralls": "~1.0"
     },

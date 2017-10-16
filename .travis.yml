@@ -3,12 +3,11 @@ language: php
 php:
   - 7.0
   - 7.1
-  - hhvm
+  - 7.2
   - nightly
 
 matrix:
   allow_failures:
-    - php: hhvm
     - php: nightly
 
 before_script:
