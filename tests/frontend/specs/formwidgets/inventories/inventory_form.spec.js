@@ -1,9 +1,10 @@
+import { createInventory } from 'assets/js/store/modules/inventories/factories';
+import { uniqueId } from 'assets/js/utilities/helpers';
 import inventoriesComponent from 'formwidgets/inventory/components/inventories/inventories';
 import inventoriesModule from 'assets/js/store/modules/inventories';
 import inventoryFormComponent from 'formwidgets/inventory/components/inventories/form/form';
 import optionFormComponent from 'formwidgets/inventory/components/options/form/form';
 import optionsComponent from 'formwidgets/inventory/components/options/options';
-import { uniqueId } from 'assets/js/utilities/helpers';
 
 //
 // factory
@@ -55,34 +56,6 @@ describe('inventory form', () => {
         expect(vm.$store.state.inventories.inventoryForm.isVisible).to.be.false;
     });
 
-    it('creates in the create context', () => {
-        vm = mount({
-            template: '<v-inventory-form />',
-        }, {
-            inventories: {
-                inventoryForm: { context: 'create' },
-            },
-        });
-
-        const dispatch = sinon.stub(vm.$store, 'dispatch');
-        click(vm.$el.querySelector('[data-action="confirm"]'));
-        expect(dispatch).to.have.been.calledWith('inventories/createInventory');
-    });
-
-    it('updates in the update context', () => {
-        vm = mount({
-            template: '<v-inventory-form />',
-        }, {
-            inventories: {
-                inventoryForm: { context: 'update' },
-            },
-        });
-
-        const dispatch = sinon.stub(vm.$store, 'dispatch');
-        click(vm.$el.querySelector('[data-action="confirm"]'));
-        expect(dispatch).to.have.been.calledWith('inventories/updateInventory');
-    });
-
     it('tracks form data', (done) => {
         vm = mount({
             template: '<v-inventory-form />',
@@ -96,5 +69,66 @@ describe('inventory form', () => {
             expect(vm.$store.state.inventories.inventoryForm.data.quantity).to.equal(5);
             done();
         });
+    });
+
+    it('create a new inventory', () => {
+        vm = mount({
+            template: '<v-inventory-form />',
+        });
+
+        input('ABC123', vm.$el.querySelector('[data-input=sku]'));
+        input('10', vm.$el.querySelector('[data-input=quantity]'));
+        click(vm.$el.querySelector('[data-action=confirm]'));
+
+        expect(vm.$store.state.inventories.inventories).to.deep.equal([
+            createInventory({
+                _delete: false,
+                _key: 0,
+                id: null,
+                quantity: 10,
+                sku: 'ABC123',
+                values: [],
+            }),
+        ]);
+    });
+
+    it('updates an existing inventory', () => {
+        vm = mount({
+            template: '<v-inventory-form />',
+        }, {
+            inventories: {
+                inventoryForm: {
+                    data: createInventory({
+                        _key: 123,
+                        id: 1,
+                        sku: 'ABC123',
+                        quantity: 10,
+                    }),
+                },
+                inventories: [
+                    createInventory({
+                        _key: 123,
+                        id: 1,
+                        sku: 'ABC123',
+                        quantity: 10,
+                    }),
+                ],
+            },
+        });
+
+        input('DEF456', vm.$el.querySelector('[data-input=sku]'));
+        input('123', vm.$el.querySelector('[data-input=quantity]'));
+        click(vm.$el.querySelector('[data-action=confirm]'));
+
+        expect(vm.$store.state.inventories.inventories).to.deep.equal([
+            createInventory({
+                _delete: false,
+                _key: 123,
+                id: 1,
+                quantity: 123,
+                sku: 'DEF456',
+                values: [],
+            }),
+        ]);
     });
 });

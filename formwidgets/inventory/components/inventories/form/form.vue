@@ -1,6 +1,6 @@
 <template>
     <v-modal :visible="isVisible" @close="close">
-        <form @submit.prevent="confirm">
+        <form @submit.prevent="save">
             <!-- header -->
             <v-modal-header @close="close">
                 {{ title | trans(lang, { name: 'bedard.shop.inventories.singular' }) }}
@@ -12,7 +12,8 @@
                 <!-- sku -->
                 <v-form-input
                     v-model="sku"
-                    data-input="sku">
+                    data-input="sku"
+                    ref="sku">
                     {{ 'bedard.shop.inventories.form.sku' | trans(lang) }}
                 </v-form-input>
 
@@ -76,12 +77,16 @@
         methods: {
             ...mapActions('inventories', {
                 close: 'hideInventoryForm',
+                save: 'saveInventory',
             }),
-            confirm() {
-                if (this.context === 'create') {
-                    this.$store.dispatch('inventories/createInventory');
-                } else {
-                    this.$store.dispatch('inventories/updateInventory');
+            focusSku() {
+                this.$refs.sku.focus();
+            },
+        },
+        watch: {
+            isVisible(isVisible) {
+                if (isVisible) {
+                    setTimeout(this.focusSku, 100);
                 }
             },
         },

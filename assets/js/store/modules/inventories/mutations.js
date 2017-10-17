@@ -1,5 +1,5 @@
 import { simpleSetters } from 'spyfu-vuex-helpers';
-import { createOption, createOptionValue } from './factories';
+import { createInventory, createOption, createOptionValue } from './factories';
 import { clone, uniqueId } from 'assets/js/utilities/helpers';
 import Vue from 'vue';
 
@@ -44,6 +44,28 @@ export default {
         state.optionForm.data.values.splice(newIndex, 0, movedValue);
     },
 
+    // update an existing inventory, or create a new one
+    saveInventory(state) {
+        const index = state.inventories.findIndex(obj => obj._key === state.inventoryForm.data._key);
+
+        if (index > -1) {
+            state.inventories.splice(index, 1, clone(state.inventoryForm.data));
+        } else {
+            state.inventories.push(createInventory(state.inventoryForm.data));
+        }
+    },
+
+    // update an existing option, or create a new one
+    saveOption(state) {
+        const index = state.options.findIndex(obj => obj._key === state.optionForm.data._key);
+
+        if (index > -1) {
+            state.options.splice(index, 1, clone(state.optionForm.data));
+        } else {
+            state.options.push(createOption(state.optionForm.data));
+        }
+    },
+
     // set the parent product model
     setModel(state, model) {
         state.model = model;
@@ -82,17 +104,6 @@ export default {
             const { values } = state.optionForm.data;
 
             values.splice(values.indexOf(value), 1);
-        }
-    },
-
-    // update an existing option, or create a new one
-    saveOption(state) {
-        const optionIndex = state.options.findIndex(obj => obj._key === state.optionForm.data._key);
-
-        if (optionIndex > -1) {
-            state.options.splice(optionIndex, 1, clone(state.optionForm.data));
-        } else {
-            state.options.push(createOption(state.optionForm.data));
         }
     },
 

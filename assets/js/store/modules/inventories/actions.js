@@ -53,14 +53,17 @@ export default {
         commit('reorderOptionValue', indices);
     },
 
+    // validate and save an inventory
+    saveInventory({ commit, dispatch }) {
+        // @todo: validate inventory
+        commit('saveInventory');
+        dispatch('hideInventoryForm');
+    },
+
     // validate and save an option
-    saveOption({ commit, dispatch, state }) {
+    saveOption({ commit, dispatch }) {
         // @todo: validate option
-
-        // update or create the option
         commit('saveOption');
-
-        // close the option modal
         dispatch('hideOptionForm');
     },
 

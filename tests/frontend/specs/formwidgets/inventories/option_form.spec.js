@@ -1,7 +1,7 @@
-import inventoriesModule from 'assets/js/store/modules/inventories';
-import optionFormComponent from 'formwidgets/inventory/components/options/form/form';
 import { createOption, createOptionValue } from 'assets/js/store/modules/inventories/factories';
 import { uniqueId } from 'assets/js/utilities/helpers';
+import inventoriesModule from 'assets/js/store/modules/inventories';
+import optionFormComponent from 'formwidgets/inventory/components/options/form/form';
 
 //
 // factory
