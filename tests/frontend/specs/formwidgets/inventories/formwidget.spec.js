@@ -1,11 +1,17 @@
-import inventoriesModule from 'assets/js/store/modules/inventories';
 import { createOption, createOptionValue } from 'assets/js/store/modules/inventories/factories';
 import { uniqueId } from 'assets/js/utilities/helpers';
+import inventoriesComponent from 'formwidgets/inventory/components/inventories/inventories';
+import inventoriesModule from 'assets/js/store/modules/inventories';
+import optionsComponent from 'formwidgets/inventory/components/options/options';
 
 //
 // factory
 //
 const mount = factory({
+    components: {
+        'v-inventories': inventoriesComponent,
+        'v-options': optionsComponent,
+    },
     modules: {
         inventories: inventoriesModule,
     },
@@ -45,5 +51,66 @@ describe('options inventories form widget', () => {
         expect(vm.$store.state.inventories.options[0]['values'][0]['_key']).to.equal(3);
         expect(vm.$store.state.inventories.options[0]['values'][0]['name']).to.equal('small');
         expect(vm.$store.state.inventories.options[0]['values'][0]['sort_order']).to.equal(1);
+    });
+
+    it('clicking create option displays a fresh form', (done) => {
+        vm = mount({
+            template: '<v-options />',
+        });
+
+        click(vm.$el.querySelector('[data-action="create"]'));
+
+        vm.$nextTick(() => {
+            expect(vm.$store.state.inventories.optionForm.context).to.equal('create');
+            expect(vm.$el.querySelector('[data-input=name]').value).to.equal('');
+            expect(vm.$el.querySelector('[data-input=placeholder]').value).to.equal('');
+            expect(vm.$el.querySelectorAll('[data-input=option-value]').length).to.equal(0);
+
+            done();
+        });
+    });
+
+    it('opens an option on click', (done) => {
+        vm = mount({
+            template: '<v-options />',
+        }, {
+            inventories: {
+                options: [
+                    createOption({
+                        name: 'foo',
+                        placeholder: 'bar',
+                        values: [
+                            createOptionValue({ name: 'baz' }),
+                        ],
+                    }),
+                ],
+            },
+        });
+
+        click(vm.$el.querySelector('.list-item'));
+
+        vm.$nextTick(() => {
+            expect(vm.$store.state.inventories.optionForm.context).to.equal('update');
+            expect(vm.$el.querySelector('[data-input=name]').value).to.equal('foo');
+            expect(vm.$el.querySelector('[data-input=placeholder]').value).to.equal('bar');
+            expect(vm.$el.querySelector('[data-input=option-value]').value).to.equal('baz');
+            expect(vm.$el.querySelectorAll('[data-input=option-value]').length).to.equal(1);
+
+            done();
+        });
+    });
+
+    it('clicking create inventory displays a fresh form', (done) => {
+        vm = mount({
+            template: '<v-inventories />',
+        });
+
+        click(vm.$el.querySelector('[data-action="create"]'));
+
+        vm.$nextTick(() => {
+            expect(vm.$store.state.inventories.inventoryForm.isVisible).to.be.true;
+            expect(vm.$store.state.inventories.inventoryForm.context).to.equal('create');
+            done();
+        });
     });
 });
