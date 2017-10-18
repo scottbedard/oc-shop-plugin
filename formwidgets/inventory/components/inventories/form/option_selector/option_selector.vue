@@ -16,7 +16,7 @@
                     v-for="value in option.values"
                     :key="value._key"
                     :value="value._key"
-                    :selected="false">
+                    :selected="isSelected(value._key)">
                     {{ value.name }}
                 </option>
             </v-select>
@@ -32,12 +32,12 @@
             ...mapState('inventories', {
                 isVisible: state => state.inventoryForm.isVisible,
                 options: state => state.options,
-                selectedKeys: state => state.inventoryForm.data.valueIds,
+                selectedKeys: state => state.inventoryForm.data.valueKeys,
             }),
         },
         methods: {
-            isSelected(inventory, key) {
-                return inventory.valueKeys.includes(key);
+            isSelected(key) {
+                return this.selectedKeys.includes(key);
             },
             select(values, selectedKey) {
                 this.$store.commit('inventories/selectInventoryValue', { values, selectedKey });
