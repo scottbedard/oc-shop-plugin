@@ -66,6 +66,18 @@ export default {
         }
     },
 
+    // select an inventory value
+    selectInventoryValue(state, { values, selectedKey }) {
+        const removedKeys = values.map(v => v._key);
+        const selectedKeys = state.inventoryForm.data.valueKeys
+            .filter(key => !removedKeys.includes(key))
+            .concat(selectedKey)
+            .map(Number)
+            .sort((a, b) => a > b);
+
+        state.inventoryForm.data.valueKeys = [...new Set(selectedKeys)];
+    },
+
     // set the parent product model
     setModel(state, model) {
         // attach our _delete and _key properties
@@ -86,12 +98,12 @@ export default {
 
     // set the inventory form data
     setInventoryFormData(state, data) {
-        state.inventoryForm.data = JSON.parse(JSON.stringify(data));
+        state.inventoryForm.data = clone(data);
     },
 
     // set the option form data
     setOptionFormData(state, data) {
-        state.optionForm.data = JSON.parse(JSON.stringify(data));
+        state.optionForm.data = clone(data);
     },
 
     // toggle the delete flag of an option

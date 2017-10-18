@@ -67,6 +67,11 @@ export default {
         dispatch('hideOptionForm');
     },
 
+    // select an inventory value
+    selectInventoryValue({ commit }, data) {
+        commit('selectInventoryValue', data);
+    },
+
     // show a fresh inventory form
     showCreateInventoryForm({ commit }) {
         commit('setInventoryFormIsVisible', true);

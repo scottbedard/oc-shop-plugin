@@ -29,6 +29,8 @@
 
                 <!-- option selector -->
                 <v-option-selector />
+
+                <pre>{{ $store.state.inventories.inventoryForm.data }}</pre>
             </v-modal-body>
 
             <!-- footer -->

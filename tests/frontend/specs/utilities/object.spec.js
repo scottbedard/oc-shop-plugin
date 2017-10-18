@@ -8,6 +8,7 @@ describe('object utilities', () => {
             camelCase: true,
             snake_case: true,
         }],
+        arrayOfPrimitives: ['foo', 1, true, null],
         child: {
             camelCase: true,
             snake_case: true,
@@ -24,6 +25,7 @@ describe('object utilities', () => {
                 camelCase: true,
                 snakeCase: true,
             }],
+            arrayOfPrimitives: ['foo', 1, true, null],
             child: {
                 camelCase: true,
                 snakeCase: true,
@@ -41,6 +43,7 @@ describe('object utilities', () => {
                 camel_case: true,
                 snake_case: true,
             }],
+            array_of_primitives: ['foo', 1, true, null],
             child: {
                 camel_case: true,
                 snake_case: true,

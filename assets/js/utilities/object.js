@@ -12,7 +12,11 @@ export function camelCaseKeys(obj) {
         if (key[0] === '_') {
             newObj[key] = obj[key];
         } else if (Array.isArray(obj[key])) {
-            newObj[camel(key)] = obj[key].map(camelCaseKeys);
+            newObj[camel(key)] = obj[key].map((value) => {
+                return typeof value === 'object' && value !== null
+                    ? camelCaseKeys(value)
+                    : value;
+            });
         } else if (typeof obj[key] === 'object' && obj[key] !== null) {
             newObj[camel(key)] = camelCaseKeys(obj[key]);
         } else {
@@ -34,7 +38,11 @@ export function snakeCaseKeys(obj) {
         if (key[0] === '_') {
             newObj[key] = obj[key];
         } else if (Array.isArray(obj[key])) {
-            newObj[snake(key)] = obj[key].map(snakeCaseKeys);
+            newObj[snake(key)] = obj[key].map((value) => {
+                return typeof value === 'object' && value !== null
+                    ? snakeCaseKeys(value)
+                    : value;
+            });
         } else if (typeof obj[key] === 'object' && obj[key] !== null) {
             newObj[snake(key)] = snakeCaseKeys(obj[key]);
         } else {

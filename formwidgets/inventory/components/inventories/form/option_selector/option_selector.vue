@@ -11,11 +11,12 @@
             <v-select
                 :clearable="true"
                 :placeholder="option.placeholder"
-                @input="selectValue">
+                @input="select(option.values, $event)">
                 <option
                     v-for="value in option.values"
                     :key="value._key"
-                    :value="value._key">
+                    :value="value._key"
+                    :selected="false">
                     {{ value.name }}
                 </option>
             </v-select>
@@ -29,13 +30,17 @@
     export default {
         computed: {
             ...mapState('inventories', {
-                options: state => state.options,
                 isVisible: state => state.inventoryForm.isVisible,
+                options: state => state.options,
+                selectedKeys: state => state.inventoryForm.data.valueIds,
             }),
         },
         methods: {
-            selectValue(value) {
-                console.log ('selecting', value);
+            isSelected(inventory, key) {
+                return inventory.valueKeys.includes(key);
+            },
+            select(values, selectedKey) {
+                this.$store.commit('inventories/selectInventoryValue', { values, selectedKey });
             },
         },
     };
