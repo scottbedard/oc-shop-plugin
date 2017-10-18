@@ -68,22 +68,20 @@ export default {
 
     // set the parent product model
     setModel(state, model) {
-        state.model = model;
-
-        // prep and add options
-        state.options = model.options.map(option => {
+        // attach our _delete and _key properties
+        model.options.forEach(option => {
             Vue.set(option, '_delete', false);
             Vue.set(option, '_key', uniqueId());
 
-            option.values = option.values.map(value => {
+            option.values.forEach(value => {
                 Vue.set(value, '_delete', false);
                 Vue.set(value, '_key', uniqueId());
-
-                return value;
             });
-
-            return option;
         });
+
+        // and set our model data
+        state.model = model;
+        state.options = model.options;
     },
 
     // set the inventory form data
