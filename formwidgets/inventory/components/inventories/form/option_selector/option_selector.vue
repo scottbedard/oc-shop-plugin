@@ -32,15 +32,14 @@
             ...mapState('inventories', {
                 isVisible: state => state.inventoryForm.isVisible,
                 options: state => state.options,
-                selectedKeys: state => state.inventoryForm.data.valueKeys,
             }),
         },
         methods: {
             isSelected(key) {
-                return this.selectedKeys.includes(key);
+                return this.$store.state.inventories.inventoryForm.data.valueKeys.includes(key);
             },
             select(values, selectedKey) {
-                this.$store.commit('inventories/selectInventoryValue', { values, selectedKey });
+                this.$store.dispatch('inventories/selectInventoryValue', { values, selectedKey });
             },
         },
     };

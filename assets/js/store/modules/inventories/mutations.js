@@ -73,7 +73,8 @@ export default {
             .filter(key => !removedKeys.includes(key))
             .concat(selectedKey)
             .map(Number)
-            .sort((a, b) => a > b);
+            .sort((a, b) => a > b)
+            .filter(key => key);
 
         state.inventoryForm.data.valueKeys = [...new Set(selectedKeys)];
     },
