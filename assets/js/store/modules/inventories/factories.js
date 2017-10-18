@@ -13,7 +13,7 @@ export function createInventory(options = {}) {
         id: null,
         quantity: 0,
         sku: null,
-        values: [],
+        valueIds: [],
         ...options,
     };
 }

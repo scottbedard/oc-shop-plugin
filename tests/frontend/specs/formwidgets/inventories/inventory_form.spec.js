@@ -87,7 +87,7 @@ describe('inventory form', () => {
                 id: null,
                 quantity: 10,
                 sku: 'ABC123',
-                values: [],
+                valueIds: [],
             }),
         ]);
     });
@@ -127,7 +127,7 @@ describe('inventory form', () => {
                 id: 1,
                 quantity: 123,
                 sku: 'DEF456',
-                values: [],
+                valueIds: [],
             }),
         ]);
     });

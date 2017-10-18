@@ -81,19 +81,31 @@ export default {
         commit('setOptionFormNewValue', '');
     },
 
-    // show the form of an existing option
+    // show the form for an existing inventory
+    showEditInventoryForm({ commit }, inventory) {
+        commit('setInventoryFormIsVisible', true);
+        commit('setInventoryFormContext', 'update');
+        commit('setInventoryFormData', inventory);
+    },
+
+    // show the form for an existing option
     showEditOptionForm({ commit }, option) {
         commit('setOptionFormIsVisible', true);
         commit('setOptionFormContext', 'update');
         commit('setOptionFormData', option);
     },
 
-    // toggle the delete flag of an option
+    // toggle the delete flag for an inventory
+    toggleInventoryDelete() {
+        console.log ('toggling inventory delete');
+    },
+
+    // toggle the delete flag for an option
     toggleOptionDelete({ commit }, option) {
         commit('toggleOptionDelete', option);
     },
 
-    // toggle the delete flag of an option value
+    // toggle the delete flag for an option value
     toggleOptionValueDelete({ commit }, value) {
         commit('toggleOptionValueDelete', value);
     },

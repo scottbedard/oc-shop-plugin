@@ -60,8 +60,8 @@
                 lang: state => state.lang,
             }),
             ...mapTwoWayState('inventories', {
-                sku: 'setInventoryFormSku',
-                quantity: 'setInventoryFormQuantity',
+                'inventoryForm.data.sku': 'setInventoryFormSku',
+                'inventoryForm.data.quantity': 'setInventoryFormQuantity',
             }),
             createOrSave() {
                 return this.context === 'create'

@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- list -->
-        <v-option-list />
+        <v-options-list />
 
         <!-- create button -->
         <v-create-button @click="create" data-action="create">
@@ -20,7 +20,7 @@
         components: {
             'v-create-button': require('../shared/create_button').default,
             'v-option-form': require('./form/form').default,
-            'v-option-list': require('./list/list').default,
+            'v-options-list': require('./list/list').default,
         },
         computed: {
             ...mapState('inventories', [

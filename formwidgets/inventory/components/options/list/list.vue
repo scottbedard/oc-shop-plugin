@@ -57,7 +57,7 @@
                 <div class="square handle" :title="reorderTitle">
                     <i class="icon-bars"></i>
                 </div>
-                <div class="square delete" :title="deleteTitle(option)" @click="toggleOptionDelete(option)">
+                <div class="square delete" :title="deleteTitle(option)" @click="toggleDelete(option)">
                     <i v-if="option._delete" class="icon-undo"></i>
                     <i v-else class="icon-trash-o"></i>
                 </div>
@@ -95,7 +95,7 @@
         methods: {
             ...mapActions('inventories', {
                 edit: 'showEditOptionForm',
-                toggleOptionDelete: 'toggleOptionDelete',
+                toggleDelete: 'toggleOptionDelete',
             }),
             deleteTitle(option) {
                 return option._delete

@@ -1,9 +1,22 @@
 import factory from 'spyfu-vue-factory';
 
-// create a global container for our vue instances
+import {
+    hasClassStub,
+    onStub,
+    select2Stub,
+} from './jquery_stubs';
+
 beforeEach(() => {
-    window.uniqueIdCount = 0;
+    // clean up our container
     window.vm = undefined;
+
+    // reset the unique id counter
+    window.uniqueIdCount = 0;
+
+    // and reset any jquery stubs
+    hasClassStub.reset();
+    onStub.reset();
+    select2Stub.reset();
 });
 
 afterEach(() => {
@@ -49,4 +62,13 @@ window.simulate = function(name, el, eventSetupFn) {
     }
 
     return el.dispatchEvent(e);
+};
+
+// jquery fake
+window.$ = function() {
+    return {
+        hasClass: hasClassStub,
+        on: onStub,
+        select2: select2Stub,
+    };
 };

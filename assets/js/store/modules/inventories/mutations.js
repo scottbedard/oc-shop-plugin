@@ -86,6 +86,11 @@ export default {
         });
     },
 
+    // set the inventory form data
+    setInventoryFormData(state, data) {
+        state.inventoryForm.data = JSON.parse(JSON.stringify(data));
+    },
+
     // set the option form data
     setOptionFormData(state, data) {
         state.optionForm.data = JSON.parse(JSON.stringify(data));
