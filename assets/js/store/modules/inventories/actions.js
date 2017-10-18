@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { createOption } from './factories';
+import { createInventory, createOption } from './factories';
 
 //
 // actions
@@ -69,30 +69,31 @@ export default {
 
     // show a fresh inventory form
     showCreateInventoryForm({ commit }) {
-        commit('setInventoryFormContext', 'create');
         commit('setInventoryFormIsVisible', true);
+        commit('setInventoryFormContext', 'create');
+        commit('setInventoryFormData', createInventory());
     },
 
     // show a fresh option form
     showCreateOptionForm({ commit }) {
+        commit('setOptionFormNewValue', '');
+        commit('setOptionFormIsVisible', true);
         commit('setOptionFormContext', 'create');
         commit('setOptionFormData', createOption());
-        commit('setOptionFormIsVisible', true);
-        commit('setOptionFormNewValue', '');
     },
 
     // show the form for an existing inventory
-    showEditInventoryForm({ commit }, inventory) {
+    showEditInventoryForm({ commit }, data) {
+        commit('setInventoryFormData', data);
         commit('setInventoryFormIsVisible', true);
         commit('setInventoryFormContext', 'update');
-        commit('setInventoryFormData', inventory);
     },
 
     // show the form for an existing option
-    showEditOptionForm({ commit }, option) {
+    showEditOptionForm({ commit }, data) {
+        commit('setOptionFormData', data);
         commit('setOptionFormIsVisible', true);
         commit('setOptionFormContext', 'update');
-        commit('setOptionFormData', option);
     },
 
     // toggle the delete flag for an inventory
