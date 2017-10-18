@@ -97,7 +97,7 @@ describe('option form', () => {
 
         // a new value should have been added to the form data
         expect(vm.$store.state.inventories.optionForm.data.values).to.deep.equal([
-            createOptionValue({ _key: 2, name: 'whatever', sortOrder: 0 }),
+            createOptionValue({ _key: 3, name: 'whatever', sortOrder: 0 }),
         ]);
 
         // and the input should be cleared
@@ -189,12 +189,12 @@ describe('option form', () => {
 
         expect(vm.$store.state.inventories.options).to.deep.equal([
             createOption({
-                _key: 1,
+                _key: 2,
                 name: 'foo',
                 placeholder: 'bar',
                 values: [
                     createOptionValue({
-                        _key: 2,
+                        _key: 3,
                         name: 'baz',
                     }),
                 ],

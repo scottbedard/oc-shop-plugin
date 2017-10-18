@@ -101,10 +101,11 @@ export function snakeCaseKeysDeep(obj) {
  * @type {Number}
  */
 let uniqueIdCount = 0;
+
 export const uniqueId = () => {
     if (process.env.NODE_ENV === 'test') {
-        return window.uniqueIdCount++;
+        return ++window.uniqueIdCount;
     }
 
-    return uniqueIdCount++;
+    return ++uniqueIdCount;
 };

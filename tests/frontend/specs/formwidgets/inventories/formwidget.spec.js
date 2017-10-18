@@ -41,14 +41,14 @@ describe('options inventories form widget', () => {
 
         // check the option
         expect(vm.$store.state.inventories.options[0]['_delete']).to.be.false;
-        expect(vm.$store.state.inventories.options[0]['_key']).to.equal(2);
+        expect(vm.$store.state.inventories.options[0]['_key']).to.equal(3);
         expect(vm.$store.state.inventories.options[0]['name']).to.equal('size');
         expect(vm.$store.state.inventories.options[0]['placeholder']).to.equal('select size');
         expect(vm.$store.state.inventories.options[0]['sort_order']).to.equal(0);
 
         // check the option value
         expect(vm.$store.state.inventories.options[0]['values'][0]['_delete']).to.be.false;
-        expect(vm.$store.state.inventories.options[0]['values'][0]['_key']).to.equal(3);
+        expect(vm.$store.state.inventories.options[0]['values'][0]['_key']).to.equal(4);
         expect(vm.$store.state.inventories.options[0]['values'][0]['name']).to.equal('small');
         expect(vm.$store.state.inventories.options[0]['values'][0]['sort_order']).to.equal(1);
     });

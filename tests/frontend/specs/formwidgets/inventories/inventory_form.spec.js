@@ -83,7 +83,7 @@ describe('inventory form', () => {
         expect(vm.$store.state.inventories.inventories).to.deep.equal([
             createInventory({
                 _delete: false,
-                _key: 0,
+                _key: 1,
                 id: null,
                 quantity: 10,
                 sku: 'ABC123',
