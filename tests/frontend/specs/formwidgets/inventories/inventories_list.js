@@ -148,4 +148,10 @@ describe('inventories list', () => {
             done();
         });
     });
+
+    it('doesn\'t allow inventories to be opened if they are deleted');
+
+    it('doesn\'t allow inventories to be opened if an option is deleted');
+
+    it('doesn\'t allow inventories to be opened if a value is deleted');
 });
