@@ -38,7 +38,7 @@
             </div>
             <div slot="main">
                 <div class="name">{{ option.name }}</div>
-                <div class="values">{{ valuesString(option.values) }}</div>
+                <div class="values" v-html="valuesString(option.values)"></div>
             </div>
             <template slot="actions">
                 <div class="square handle" :title="reorderTitle">
@@ -54,6 +54,7 @@
 </template>
 
 <script>
+    import escapeHtml from 'escape-html';
     import { mapActions, mapState } from 'vuex';
     import trans from 'assets/js/filters/trans/trans';
 
@@ -106,7 +107,11 @@
                 this.$store.dispatch('inventories/reorderOption', indices);
             },
             valuesString(values) {
-                return values.map(value => value.name.trim()).join(', ');
+                return values.map(value => {
+                    const name = escapeHtml(value.name.trim());
+
+                    return value._delete ? `<s>${ name }</s>` : name;
+                }).join(', ');
             },
         },
     };

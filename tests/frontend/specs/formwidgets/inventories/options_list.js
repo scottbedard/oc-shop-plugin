@@ -91,4 +91,22 @@ describe('options list', () => {
             done();
         });
     });
+
+    it('draws a line through deleted values', () => {
+        vm = mount({
+            template: '<v-options />',
+        }, {
+            inventories: {
+                options: [
+                    createOption({
+                        values: [
+                            createOptionValue({ _delete: true, name: 'foo' }),
+                        ],
+                    }),
+                ],
+            },
+        });
+
+        expect(vm.$el.querySelector('s').textContent).to.equal('foo');
+    });
 });
