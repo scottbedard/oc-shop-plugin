@@ -44,6 +44,7 @@
         <v-list-item
             v-for="option in options"
             :class="{ 'is-deleted': option._delete }"
+            :data-option="option._key"
             :key="option._key"
             @click="edit(option)">
             <div class="square icon" slot="icon">
@@ -94,9 +95,18 @@
         },
         methods: {
             ...mapActions('inventories', {
-                edit: 'showEditOptionForm',
                 toggleDelete: 'toggleOptionDelete',
             }),
+            edit(option) {
+                if (option._delete) {
+                    $.oc.flashMsg({
+                        class: 'error',
+                        text: trans('bedard.shop.options.list.delete_warning', this.lang),
+                    });
+                } else {
+                    this.$store.dispatch('inventories/showEditOptionForm', option);
+                }
+            },
             deleteTitle(option) {
                 return option._delete
                     ? trans('bedard.shop.options.list.restore_title', this.lang)

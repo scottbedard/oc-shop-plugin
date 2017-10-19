@@ -119,7 +119,6 @@ return [
     //
     'options' => [
         'form' => [
-            'delete_warning' => 'This option and related inventories will be deleted when the product is saved.',
             'name' => 'Name',
             'placeholder' => 'Placeholder',
             'values' => 'Values',
@@ -132,9 +131,9 @@ return [
         ],
         'list' => [
             'delete_title' => 'Delete option',
+            'delete_warning' => 'Options flagged for deletion may not be edited.',
             'reorder_title' => 'Click and drag to reorder options',
             'restore_title' => 'Restore option',
-            'restore_warning' => 'Deleted options cannot be edited, it must first be restored.',
         ],
         'singular' => 'Option',
         'plural' => 'Options',

@@ -1,6 +1,7 @@
 import factory from 'spyfu-vue-factory';
 
 import {
+    flashMsgStub,
     hasClassStub,
     onStub,
     select2Stub,
@@ -14,6 +15,7 @@ beforeEach(() => {
     window.uniqueIdCount = 0;
 
     // and reset any jquery stubs
+    flashMsgStub.reset();
     hasClassStub.reset();
     onStub.reset();
     select2Stub.reset();
@@ -71,4 +73,8 @@ window.$ = function() {
         on: onStub,
         select2: select2Stub,
     };
+};
+
+window.$.oc = {
+    flashMsg: flashMsgStub,
 };

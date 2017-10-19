@@ -1,7 +1,7 @@
 import { createInventory, createOption, createOptionValue } from 'assets/js/store/modules/inventories/factories';
-import { uniqueId } from 'assets/js/utilities/helpers';
 import inventoriesModule from 'assets/js/store/modules/inventories';
 import optionsComponent from 'formwidgets/inventory/components/options/options';
+import {flashMsgStub} from 'tests/frontend/jquery_stubs';
 
 //
 // factory
@@ -43,6 +43,7 @@ describe('options list', () => {
             inventories: {
                 options: [
                     createOption({
+                        _key: 123,
                         name: 'foo',
                         placeholder: 'bar',
                         values: [
@@ -53,7 +54,7 @@ describe('options list', () => {
             },
         });
 
-        click(vm.$el.querySelector('.list-item'));
+        click(vm.$el.querySelector('[data-option="123"]'));
 
         vm.$nextTick(() => {
             expect(vm.$store.state.inventories.optionForm.context).to.equal('update');
@@ -61,6 +62,31 @@ describe('options list', () => {
             expect(vm.$el.querySelector('[data-input=placeholder]').value).to.equal('bar');
             expect(vm.$el.querySelector('[data-input=option-value]').value).to.equal('baz');
             expect(vm.$el.querySelectorAll('[data-input=option-value]').length).to.equal(1);
+
+            done();
+        });
+    });
+
+    it('doesn\'t allow deleted options to be opened', (done) => {
+        vm = mount({
+            template: '<v-options />',
+        }, {
+            inventories: {
+                options: [
+                    createOption({ _delete: true, _key: 123 }),
+                ],
+            },
+        });
+
+        click(vm.$el.querySelector('[data-option="123"]'));
+
+        vm.$nextTick(() => {
+            expect(vm.$store.state.inventories.optionForm.isVisible).to.be.false;
+
+            expect(flashMsgStub).to.have.been.calledWith({
+                class: 'error',
+                text: 'bedard.shop.options.list.delete_warning',
+            });
 
             done();
         });
