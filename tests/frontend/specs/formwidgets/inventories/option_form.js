@@ -159,23 +159,6 @@ describe('option form', () => {
 
     });
 
-    it('removes a value when delete is clicked and no id is present', () => {
-        vm = mount({
-            template: '<v-option-form ref="optionForm"/>',
-        }, {
-            inventories: {
-                optionForm: {
-                    data: {
-                        values: [{ _delete: false, _key: 0, id: null, name: 'foo' }],
-                    },
-                },
-            },
-        });
-
-        click(vm.$el.querySelector('[data-action=delete]'));
-        expect(vm.$store.state.inventories.optionForm.data.values.length).to.equal(0);
-    });
-
     it('creates a new option', () => {
         vm = mount({
             template: '<v-option-form />',
@@ -241,5 +224,30 @@ describe('option form', () => {
         expect(vm.$store.state.inventories.options[0].name).to.equal('one');
         expect(vm.$store.state.inventories.options[0].placeholder).to.equal('two');
         expect(vm.$store.state.inventories.options[0].values[0].name).to.equal('three');
+    });
+
+    it('disables the inputs for deleted values', (done) => {
+        vm = mount({
+            template: '<v-option-form />',
+        }, {
+            inventories: {
+                optionForm: {
+                    data: createOption({
+                        values: [
+                            createOptionValue({ _delete: false, _key: 100 }),
+                        ],
+                    }),
+                },
+            },
+        });
+
+        expect(vm.$el.querySelector('[data-value="100"] input').disabled).to.be.false;
+
+        click(vm.$el.querySelector('[data-value="100"] [data-action="delete"]'));
+
+        vm.$nextTick(() => {
+            expect(vm.$el.querySelector('[data-value="100"] input').disabled).to.be.true;
+            done();
+        });
     });
 });

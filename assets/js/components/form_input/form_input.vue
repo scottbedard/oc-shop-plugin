@@ -13,7 +13,9 @@
             class="form-control"
             ref="input"
             :data-input="dataInput"
+            :disabled="disabled"
             :placeholder="placeholder"
+            :title="title"
             :type="type"
             :value="value"
             @input="onInput"
@@ -56,6 +58,10 @@
             dataInput: {
                 default: null,
             },
+            disabled: {
+                default: false,
+                type: Boolean,
+            },
             placeholder: {
                 default: '',
                 type: String,
@@ -63,6 +69,10 @@
             required: {
                 default: false,
                 type: Boolean,
+            },
+            title: {
+                default: null,
+                type: [Number, String],
             },
             type: {
                 default: 'text',

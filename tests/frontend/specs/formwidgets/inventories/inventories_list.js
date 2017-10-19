@@ -66,4 +66,86 @@ describe('inventories list', () => {
             done();
         });
     });
+
+    it('flags inventories for deletion', (done) => {
+        vm = mount({
+            template: '<v-inventories />',
+        }, {
+            inventories: {
+                inventories: [
+                    createInventory({ _delete: false, _key: 100 }),
+                ],
+            },
+        });
+
+        click(vm.$el.querySelector('[data-inventory="100"] [data-action="toggle-delete"]'));
+
+        vm.$nextTick(() => {
+            expect(vm.$store.state.inventories.inventories[0]._delete).to.be.true;
+            expect(vm.$el.querySelector('[data-inventory="100"]').classList.contains('is-deleted')).to.be.true;
+            click(vm.$el.querySelector('[data-inventory="100"] [data-action="toggle-delete"]'));
+
+            vm.$nextTick(() => {
+                expect(vm.$store.state.inventories.inventories[0]._delete).to.be.false;
+                expect(vm.$el.querySelector('[data-inventory="100"]').classList.contains('is-deleted')).to.be.false;
+                done();
+            });
+        });
+    });
+
+    it('appears as deleted if an option was deleted', (done) => {
+        const option = createOption({
+            _delete: false,
+            _key: 200,
+            values: [
+                createOptionValue({ _key: 300 }),
+            ],
+        });
+
+        vm = mount({
+            template: '<v-inventories />',
+        }, {
+            inventories: {
+                inventories: [
+                    createInventory({ _delete: false, _key: 100, valueKeys: [300] }),
+                ],
+                options: [option],
+            },
+        });
+
+        expect(vm.$el.querySelector('[data-inventory="100"]').classList.contains('is-deleted')).to.be.false;
+
+        vm.$store.commit('inventories/toggleOptionDelete', option);
+
+        vm.$nextTick(() => {
+            expect(vm.$el.querySelector('[data-inventory="100"]').classList.contains('is-deleted')).to.be.true;
+            done();
+        });
+    });
+
+    it('appears as deleted if a value was deleted', (done) => {
+        const value = createOptionValue({ _delete: false, _key: 200 });
+
+        vm = mount({
+            template: '<v-inventories />',
+        }, {
+            inventories: {
+                inventories: [
+                    createInventory({ _delete: false, _key: 100, valueKeys: [200] }),
+                ],
+                options: [
+                    createOption({ values: [value] }),
+                ],
+            },
+        });
+
+        expect(vm.$el.querySelector('[data-inventory="100"]').classList.contains('is-deleted')).to.be.false;
+
+        vm.$store.commit('inventories/toggleOptionValueDelete', value);
+
+        vm.$nextTick(() => {
+            expect(vm.$el.querySelector('[data-inventory="100"]').classList.contains('is-deleted')).to.be.true;
+            done();
+        });
+    });
 });

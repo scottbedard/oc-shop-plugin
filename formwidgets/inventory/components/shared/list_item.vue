@@ -16,6 +16,28 @@
     }
 
     //
+    // deleted state
+    //
+    .list-item.is-deleted {
+        color: #bbb !important;
+
+        .square {
+            color: #bbb !important;
+        }
+
+        .square.delete:hover {
+            background-color: transparent;
+            color: $green !important;
+        }
+
+        &:hover,
+        &:hover .square {
+            background-color: transparent;
+            color: #333;
+        }
+    }
+
+    //
     // square icons
     //
     .square {

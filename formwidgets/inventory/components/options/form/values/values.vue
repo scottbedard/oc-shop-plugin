@@ -77,7 +77,9 @@
             <div
                 v-for="value in values"
                 class="value"
+                :class="{ 'is-deleted': value._delete }"
                 :data-key="value._key"
+                :data-value="value._key"
                 :key="value._key">
                 <a
                     class="oc-icon-bars"
@@ -89,6 +91,8 @@
                 <v-form-input
                     data-input="option-value"
                     ref="value"
+                    :disabled="value._delete"
+                    :title="deleteValueTitle(value)"
                     :value="value.name"
                     @input="updateValue({ key: value._key, value: $event })"
                 />
@@ -154,6 +158,11 @@
                 toggleValueDelete: 'toggleOptionValueDelete',
                 updateValue: 'updateOptionValue',
             }),
+            deleteValueTitle(value) {
+                return value._delete
+                    ? trans('bedard.shop.options.form.delete_value_warning', this.lang)
+                    : null;
+            },
             focusNewValue() {
                 this.$refs.newValue.focus();
             },

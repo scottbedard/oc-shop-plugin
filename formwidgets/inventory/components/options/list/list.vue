@@ -1,18 +1,4 @@
 <style lang="scss" scoped>@import 'core';
-    .list-item.is-deleted {
-        color: #bbb !important;
-
-        .square {
-            color: #bbb !important;
-        }
-
-        .square.delete:hover {
-            background-color: transparent;
-            color: $green !important;
-        }
-    }
-
-    .list-item.is-deleted,
     .is-reordering /deep/ .list-item {
         &:hover,
         &:hover .square {

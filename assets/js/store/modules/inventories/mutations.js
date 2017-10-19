@@ -107,6 +107,11 @@ export default {
         state.optionForm.data = clone(data);
     },
 
+    // toggle the delete flag of an inventory
+    toggleInventoryDelete(state, inventory) {
+        inventory._delete = !inventory._delete;
+    },
+
     // toggle the delete flag of an option
     toggleOptionDelete(state, option) {
         option._delete = !option._delete;
@@ -114,13 +119,7 @@ export default {
 
     // delete an option value, or toggle it's delete flag
     toggleOptionValueDelete(state, value) {
-        if (value.id) {
-            value._delete = ! value._delete;
-        } else {
-            const { values } = state.optionForm.data;
-
-            values.splice(values.indexOf(value), 1);
-        }
+        value._delete = !value._delete;
     },
 
     // update an option value

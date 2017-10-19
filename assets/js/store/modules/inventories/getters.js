@@ -5,6 +5,15 @@ import { snakeCaseKeys } from 'assets/js/utilities/object';
 //
 export default {
 
+    // create an array of all deleted value keys
+    allDeletedValueKeys(state) {
+        return state.options.reduce((keys, option) => {
+            return option._delete
+                ? keys.concat(option.values.map(v => v._key))
+                : keys.concat(option.values.filter(v => v._delete).map(v => v._key));
+        }, []);
+    },
+
     // create an array of every value key and name
     allValueNames(state) {
         return state.options

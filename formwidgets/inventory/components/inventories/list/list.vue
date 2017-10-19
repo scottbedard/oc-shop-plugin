@@ -6,7 +6,7 @@
     <div>
         <v-list-item
             v-for="inventory in inventories"
-            :class="{ 'is-deleted': inventory._delete }"
+            :class="{ 'is-deleted': inventory._delete || relationshipIsDeleted(inventory) }"
             :data-inventory="inventory._key"
             :key="inventory._key"
             @click="edit(inventory)">
@@ -17,7 +17,11 @@
                 {{ selectedOptionValues(inventory) }}
             </div>
             <template slot="actions">
-                <div class="square delete" :title="deleteTitle(inventory)" @click="toggleDelete(inventory)">
+                <div
+                    class="square delete"
+                    data-action="toggle-delete"
+                    :title="deleteTitle(inventory)"
+                    @click="toggleDelete(inventory)">
                     <i v-if="inventory._delete" class="icon-undo"></i>
                     <i v-else class="icon-trash-o"></i>
                 </div>
@@ -28,6 +32,7 @@
 
 <script>
     import { mapActions, mapGetters, mapState } from 'vuex';
+    import { intersection } from 'assets/js/utilities/array';
     import trans from 'assets/js/filters/trans/trans';
 
     export default {
@@ -41,6 +46,7 @@
                 options: state => state.options,
             }),
             ...mapGetters('inventories', [
+                'allDeletedValueKeys',
                 'allValueNames',
             ]),
         },
@@ -54,13 +60,14 @@
                     ? trans('bedard.shop.inventories.list.restore_title', this.lang)
                     : trans('bedard.shop.inventories.list.delete_title', this.lang);
             },
+            relationshipIsDeleted(inventory) {
+                return inventory.valueKeys.length > 0
+                    && intersection(inventory.valueKeys, this.allDeletedValueKeys).length > 0;
+            },
             selectedOptionValues(inventory) {
                 return inventory.valueKeys.length
                     ? inventory.valueKeys.map(key => this.allValueNames[key]).join(', ')
                     : trans('bedard.shop.inventories.list.default_name', this.lang);
-            },
-            toggleDelete(inventory) {
-
             },
         },
     };

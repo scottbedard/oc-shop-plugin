@@ -119,15 +119,16 @@ return [
     //
     'options' => [
         'form' => [
+            'delete_value_warning' => 'Values flagged for deletion may not be edited.',
             'name' => 'Name',
             'placeholder' => 'Placeholder',
-            'values' => 'Values',
             'values_delete_title' => 'Delete value',
             'values_placeholder' => 'Type a value and press "enter" or "tab"',
-            'values_required' => 'Options must have at least one value.',
             'values_reorder_title' => 'Click and drag to reorder values',
+            'values_required' => 'Options must have at least one value.',
             'values_restore_title' => 'Restore value',
             'values_unique' => 'Value names must be unique.',
+            'values' => 'Values',
         ],
         'list' => [
             'delete_title' => 'Delete option',

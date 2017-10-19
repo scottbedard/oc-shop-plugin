@@ -1,7 +1,7 @@
 import { createInventory, createOption, createOptionValue } from 'assets/js/store/modules/inventories/factories';
 import inventoriesModule from 'assets/js/store/modules/inventories';
 import optionsComponent from 'formwidgets/inventory/components/options/options';
-import {flashMsgStub} from 'tests/frontend/jquery_stubs';
+import { flashMsgStub } from 'tests/frontend/jquery_stubs';
 
 //
 // factory

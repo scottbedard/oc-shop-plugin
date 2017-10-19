@@ -102,8 +102,8 @@ export default {
     },
 
     // toggle the delete flag for an inventory
-    toggleInventoryDelete() {
-        console.log ('toggling inventory delete');
+    toggleInventoryDelete({ commit }, inventory) {
+        commit('toggleInventoryDelete', inventory);
     },
 
     // toggle the delete flag for an option
