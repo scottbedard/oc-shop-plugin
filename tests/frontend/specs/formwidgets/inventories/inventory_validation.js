@@ -40,6 +40,7 @@ describe('inventory validation', () => {
         submit(vm.$el.querySelector('form'));
 
         setTimeout(() => {
+            // console.log (flashMsgStub.lastCall.args[0]);
             expect(flashMsgStub).not.to.have.been.called;
             done();
         }, 10);
@@ -64,7 +65,7 @@ describe('inventory validation', () => {
         setTimeout(() => {
             expect(flashMsgStub).to.have.been.calledWith({
                 class: 'error',
-                text: 'bedard.shop.inventories.form.sku_unique_error',
+                text: 'bedard.shop.inventories.form.sku_unique_local_error',
             });
 
             done();

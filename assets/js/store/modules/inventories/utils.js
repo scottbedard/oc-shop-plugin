@@ -15,6 +15,11 @@ export function skuIsTakenLocally(newInventory, state) {
     });
 }
 
+// test if a sku is taken on the server
+export function skuIsTakenOnServer(newInventory, state) {
+
+}
+
 // test that value ids are unique
 export function valuesAreTaken(newInventory, state) {
     return !!state.inventories.find(inventory => {
@@ -26,10 +31,9 @@ export function valuesAreTaken(newInventory, state) {
 // validate an inventory
 export function validateInventory(inventory, state) {
     return new Promise((resolve, reject) => {
-
         // skus must be locally unique
         if (skuIsTakenLocally(inventory, state)) {
-            return reject('bedard.shop.inventories.form.sku_unique_error');
+            return reject('bedard.shop.inventories.form.sku_unique_local_error');
         }
 
         // the quantity must be at least zero
@@ -47,9 +51,10 @@ export function validateInventory(inventory, state) {
             return reject('bedard.shop.inventories.form.value_collision_error');
         }
 
-        // store: no other inventories with same value keys
-        // store: quantity >= 0
-        // backend: no other inventories with same sku
+        // make sure the sku isn't taken by a different product
+        if (skuIsTakenOnServer(inventory, state)) {
+            return reject('bedard.shop.inventories.form.sku_unique_server_error');
+        }
 
         resolve();
     });
