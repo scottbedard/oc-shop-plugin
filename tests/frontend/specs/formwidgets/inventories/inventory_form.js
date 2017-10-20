@@ -67,7 +67,7 @@ describe('inventory form', () => {
         });
     });
 
-    it('create a new inventory', () => {
+    it('create a new inventory', (done) => {
         vm = mount({
             template: '<v-inventory-form />',
         });
@@ -76,19 +76,23 @@ describe('inventory form', () => {
         input('10', vm.$el.querySelector('[data-input=quantity]'));
         click(vm.$el.querySelector('[data-action=confirm]'));
 
-        expect(vm.$store.state.inventories.inventories).to.deep.equal([
-            createInventory({
-                _delete: false,
-                _key: 1,
-                id: null,
-                quantity: 10,
-                sku: 'ABC123',
-                valueKeys: [],
-            }),
-        ]);
+        setTimeout(() => {
+            expect(vm.$store.state.inventories.inventories).to.deep.equal([
+                createInventory({
+                    _delete: false,
+                    _key: 1,
+                    id: null,
+                    quantity: 10,
+                    sku: 'ABC123',
+                    valueKeys: [],
+                }),
+            ]);
+
+            done();
+        }, 10);
     });
 
-    it('updates an existing inventory', () => {
+    it('updates an existing inventory', (done) => {
         vm = mount({
             template: '<v-inventory-form />',
         }, {
@@ -116,16 +120,20 @@ describe('inventory form', () => {
         input('123', vm.$el.querySelector('[data-input=quantity]'));
         click(vm.$el.querySelector('[data-action=confirm]'));
 
-        expect(vm.$store.state.inventories.inventories).to.deep.equal([
-            createInventory({
-                _delete: false,
-                _key: 123,
-                id: 1,
-                quantity: 123,
-                sku: 'DEF456',
-                valueKeys: [],
-            }),
-        ]);
+        setTimeout(() => {
+            expect(vm.$store.state.inventories.inventories).to.deep.equal([
+                createInventory({
+                    _delete: false,
+                    _key: 123,
+                    id: 1,
+                    quantity: 123,
+                    sku: 'DEF456',
+                    valueKeys: [],
+                }),
+            ]);
+
+            done();
+        }, 10);
     });
 
     it('doesn\'t show select boxes for deleted options', () => {

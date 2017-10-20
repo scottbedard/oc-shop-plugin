@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { createInventory, createOption } from './factories';
+import { validateInventory } from './utils';
 
 //
 // actions
@@ -54,10 +55,14 @@ export default {
     },
 
     // validate and save an inventory
-    saveInventory({ commit, dispatch }) {
-        // @todo: validate inventory
-        commit('saveInventory');
-        dispatch('hideInventoryForm');
+    saveInventory({ commit, dispatch, state }) {
+        return new Promise((resolve, reject) => {
+            validateInventory(state.inventoryForm.data, state).then(() => {
+                commit('saveInventory');
+                dispatch('hideInventoryForm');
+                resolve();
+            }, reject);
+        });
     },
 
     // validate and save an option
