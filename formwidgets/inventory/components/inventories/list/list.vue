@@ -52,13 +52,27 @@
         },
         methods: {
             ...mapActions('inventories', {
-                edit: 'showEditInventoryForm',
                 toggleDelete: 'toggleInventoryDelete',
             }),
             deleteTitle(inventory) {
                 return inventory._delete
                     ? trans('bedard.shop.inventories.list.restore_title', this.lang)
                     : trans('bedard.shop.inventories.list.delete_title', this.lang);
+            },
+            edit(inventory) {
+                if (inventory._delete) {
+                    $.oc.flashMsg({
+                        class: 'error',
+                        text: trans('bedard.shop.inventories.list.delete_warning', this.lang),
+                    });
+                } else if (this.relationshipIsDeleted(inventory)) {
+                    $.oc.flashMsg({
+                        class: 'error',
+                        text: trans('bedard.shop.inventories.list.delete_option_warning', this.lang),
+                    });
+                } else {
+                    this.$store.dispatch('inventories/showEditInventoryForm', inventory);
+                }
             },
             relationshipIsDeleted(inventory) {
                 return inventory.valueKeys.length > 0

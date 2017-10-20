@@ -1,4 +1,5 @@
 import { createInventory, createOption, createOptionValue } from 'assets/js/store/modules/inventories/factories';
+import { flashMsgStub } from 'tests/frontend/jquery_stubs';
 import { uniqueId } from 'assets/js/utilities/helpers';
 import inventoriesComponent from 'formwidgets/inventory/components/inventories/inventories';
 import inventoriesModule from 'assets/js/store/modules/inventories';
@@ -149,9 +150,96 @@ describe('inventories list', () => {
         });
     });
 
-    it('doesn\'t allow inventories to be opened if they are deleted');
+    it('doesn\'t allow inventories to be opened if they are deleted', (done) => {
+        vm = mount({
+            template: '<v-inventories />',
+        }, {
+            inventories: {
+                inventories: [
+                    createInventory({ _delete: true, _key: 100 }),
+                ],
+            },
+        });
 
-    it('doesn\'t allow inventories to be opened if an option is deleted');
+        click(vm.$el.querySelector('[data-inventory="100"]'));
 
-    it('doesn\'t allow inventories to be opened if a value is deleted');
+        vm.$nextTick(() => {
+            expect(vm.$store.state.inventories.inventoryForm.isVisible).to.be.false;
+
+            expect(flashMsgStub).to.have.been.calledWith({
+                class: 'error',
+                text: 'bedard.shop.inventories.list.delete_warning',
+            });
+
+            done();
+        });
+    });
+
+    it('doesn\'t allow inventories to be opened if an option is deleted', (done) => {
+        vm = mount({
+            template: '<v-inventories />',
+        }, {
+            inventories: {
+                inventories: [
+                    createInventory({
+                        _key: 100,
+                        valueKeys: [300],
+                    }),
+                ],
+                options: [
+                    createOption({
+                        _delete: true,
+                        values: [
+                            createOptionValue({ _key: 300 }),
+                        ],
+                    }),
+                ],
+            },
+        });
+
+        click(vm.$el.querySelector('[data-inventory="100"]'));
+
+        vm.$nextTick(() => {
+            expect(vm.$store.state.inventories.inventoryForm.isVisible).to.be.false;
+
+            expect(flashMsgStub).to.have.been.calledWith({
+                class: 'error',
+                text: 'bedard.shop.inventories.list.delete_option_warning',
+            });
+
+            done();
+        });
+    });
+
+    it('doesn\'t allow inventories to be opened if a value is deleted', (done) => {
+        vm = mount({
+            template: '<v-inventories />',
+        }, {
+            inventories: {
+                inventories: [
+                    createInventory({  _key: 100, valueKeys: [300] }),
+                ],
+                options: [
+                    createOption({
+                        values: [
+                            createOptionValue({ _delete: true, _key: 300 }),
+                        ],
+                    }),
+                ],
+            },
+        });
+
+        click(vm.$el.querySelector('[data-inventory="100"]'));
+
+        vm.$nextTick(() => {
+            expect(vm.$store.state.inventories.inventoryForm.isVisible).to.be.false;
+
+            expect(flashMsgStub).to.have.been.calledWith({
+                class: 'error',
+                text: 'bedard.shop.inventories.list.delete_option_warning',
+            });
+
+            done();
+        });
+    });
 });
