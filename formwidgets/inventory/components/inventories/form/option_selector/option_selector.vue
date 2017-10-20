@@ -6,7 +6,12 @@
 
 <template>
     <div v-if="isVisible">
-        <div v-for="option in options" class="form-group option" :key="option._key">
+        <div
+            v-for="option in options"
+            v-if="!option._delete"
+            class="form-group option"
+            :data-option="option._key"
+            :key="option._key">
             <label>{{ option.name }}</label>
             <v-select
                 :clearable="true"

@@ -1,10 +1,6 @@
-import { createInventory } from 'assets/js/store/modules/inventories/factories';
-import { uniqueId } from 'assets/js/utilities/helpers';
-import inventoriesComponent from 'formwidgets/inventory/components/inventories/inventories';
+import { createInventory, createOption, createOptionValue } from 'assets/js/store/modules/inventories/factories';
 import inventoriesModule from 'assets/js/store/modules/inventories';
 import inventoryFormComponent from 'formwidgets/inventory/components/inventories/form/form';
-import optionFormComponent from 'formwidgets/inventory/components/options/form/form';
-import optionsComponent from 'formwidgets/inventory/components/options/options';
 
 //
 // factory
@@ -130,5 +126,24 @@ describe('inventory form', () => {
                 valueKeys: [],
             }),
         ]);
+    });
+
+    it('doesn\'t show select boxes for deleted options', () => {
+        vm = mount({
+            template: '<v-inventory-form />',
+        }, {
+            inventories: {
+                inventoryForm: {
+                    isVisible: true,
+                },
+                options: [
+                    createOption({ _delete: true, _key: 100, name: 'size' }),
+                    createOption({ _delete: false, _key: 200, name: 'color' }),
+                ],
+            },
+        });
+
+        expect(vm.$el.querySelector('[data-option="100"]')).to.be.null;
+        expect(vm.$el.querySelector('[data-option="200"]')).not.to.be.null;
     });
 });
