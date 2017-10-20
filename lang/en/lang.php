@@ -92,12 +92,13 @@ return [
     //
     'inventories' => [
         'form' => [
-            'collision_default' => 'A default inventory already exists for this product.',
-            'collision_values' => 'An inventory with those options already exists.',
+            'default_exists_error' => 'A default inventory already exists for this product.',
             'delete_value_title' => 'This option is flagged for deletion.',
+            'quantity_negative_error' => 'Quantities must be zero or greater.', // <- @todo: match october error messaging
             'quantity' => 'Quantity',
-            'sku' => 'Stock keeping unit',
             'sku_unique_error' => 'An inventory with that sku already exists.',
+            'sku' => 'Stock keeping unit',
+            'value_collision_error' => 'An inventory with those options already exists.',
         ],
         'list' => [
             'default_name' => 'Default inventory',
