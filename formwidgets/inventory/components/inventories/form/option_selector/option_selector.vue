@@ -19,6 +19,8 @@
                 @input="select(option.values, $event)">
                 <option
                     v-for="value in option.values"
+                    :data-value="value._key"
+                    :disabled="value._delete"
                     :key="value._key"
                     :value="value._key"
                     :selected="isSelected(value._key)">

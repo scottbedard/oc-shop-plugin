@@ -146,4 +146,27 @@ describe('inventory form', () => {
         expect(vm.$el.querySelector('[data-option="100"]')).to.be.null;
         expect(vm.$el.querySelector('[data-option="200"]')).not.to.be.null;
     });
+
+    it('disables deleted values', () => {
+        vm = mount({
+            template: '<v-inventory-form />',
+        }, {
+            inventories: {
+                inventoryForm: {
+                    isVisible: true,
+                },
+                options: [
+                    createOption({
+                        values: [
+                            createOptionValue({ _delete: true, _key: 100 }),
+                            createOptionValue({ _delete: false, _key: 200 }),
+                        ],
+                    }),
+                ],
+            },
+        });
+
+        expect(vm.$el.querySelector('[data-value="100"]').disabled).to.be.true;
+        expect(vm.$el.querySelector('[data-value="200"]').disabled).to.be.false;
+    });
 });
