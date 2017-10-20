@@ -97,7 +97,7 @@ return [
             'delete_value_title' => 'This option is flagged for deletion.',
             'quantity' => 'Quantity',
             'sku' => 'Stock keeping unit',
-            'sku_unique' => 'An inventory with that sku already exists.',
+            'sku_unique_error' => 'An inventory with that sku already exists.',
         ],
         'list' => [
             'default_name' => 'Default inventory',

@@ -77,10 +77,16 @@
         methods: {
             ...mapActions('inventories', {
                 close: 'hideInventoryForm',
-                save: 'saveInventory',
             }),
             focusSku() {
                 this.$refs.sku.focus();
+            },
+            save() {
+                this.$store.dispatch('inventories/saveInventory').then(() => {
+
+                }, (err) => {
+                    this.$flashError(err);
+                });
             },
         },
         watch: {

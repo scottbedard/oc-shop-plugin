@@ -66,6 +66,11 @@ window.simulate = function(name, el, eventSetupFn) {
     return el.dispatchEvent(e);
 };
 
+// submit a form
+window.submit = function(el, eventSetupFn) {
+    return window.simulate('submit', el, eventSetupFn);
+};
+
 // jquery fake
 window.$ = function() {
     return {
