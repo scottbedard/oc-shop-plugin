@@ -7,20 +7,11 @@
         }
     }
 
-    .name {
-        font-size: 16px;
-    }
-
-    .values {
-        font-size: 12px;
-    }
-
     .handle {
         cursor: move;
     }
 
     .sortable-ghost {
-        // border: 2px dashed #333;
         opacity: 0.2;
     }
 </style>
@@ -37,8 +28,8 @@
                 <i class="icon-plus"></i>
             </div>
             <div slot="main">
-                <div class="name">{{ option.name }}</div>
-                <div class="values" v-html="valuesString(option.values)"></div>
+                <div class="primary">{{ option.name }}</div>
+                <div class="secondary" v-html="valuesString(option.values)"></div>
             </div>
             <template slot="actions">
                 <div class="square handle" :title="reorderTitle">

@@ -94,7 +94,7 @@ export default {
 
         // and set our model data
         state.model = model;
-        state.options = model.options;
+        state.options = clone(model.options);
     },
 
     // set the inventory form data

@@ -242,4 +242,20 @@ describe('inventories list', () => {
             done();
         });
     });
+
+    it('displays an inventory\'s sku if there is one', () => {
+        vm = mount({
+            template: '<v-inventories />',
+        }, {
+            inventories: {
+                inventories: [
+                    createInventory({ _key: 100, sku: 'foo' }),
+                    createInventory({ _key: 200, sku: null }),
+                ],
+            },
+        });
+
+        expect(vm.$el.querySelector('[data-inventory="100"] [data-sku]').textContent.trim()).to.equal('foo');
+        expect(vm.$el.querySelector('[data-inventory="200"] [data-sku]')).to.be.null;
+    });
 });

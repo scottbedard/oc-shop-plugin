@@ -16,6 +16,19 @@
     }
 
     //
+    // text
+    //
+    .list-item /deep/ {
+        .primary {
+            font-size: 16px;
+        }
+
+        .secondary {
+            font-size: 12px;
+        }
+    }
+
+    //
     // deleted state
     //
     .list-item.is-deleted {

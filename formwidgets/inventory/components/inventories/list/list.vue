@@ -1,7 +1,3 @@
-<style lang="scss" scoped>@import 'core';
-
-</style>
-
 <template>
     <div>
         <v-list-item
@@ -14,7 +10,12 @@
                 <i class="icon-cubes"></i>
             </div>
             <div slot="main">
-                {{ selectedOptionValues(inventory) }}
+                <div class="primary">
+                    {{ selectedOptionValues(inventory) }}
+                </div>
+                <div v-if="hasSku(inventory)" class="secondary" data-sku>
+                    {{ inventory.sku }}
+                </div>
             </div>
             <template slot="actions">
                 <div
@@ -73,6 +74,11 @@
                 } else {
                     this.$store.dispatch('inventories/showEditInventoryForm', inventory);
                 }
+            },
+            hasSku(inventory) {
+                return typeof inventory.sku === 'string'
+                    ? inventory.sku.trim().length > 0
+                    : false;
             },
             relationshipIsDeleted(inventory) {
                 return inventory.valueKeys.length > 0
