@@ -21,6 +21,7 @@
                     v-for="value in option.values"
                     :data-value="value._key"
                     :disabled="value._delete"
+                    :title="deleteValueTitle"
                     :key="value._key"
                     :value="value._key"
                     :selected="isSelected(value._key)">
@@ -33,13 +34,18 @@
 
 <script>
     import { mapState } from 'vuex';
+    import trans from 'assets/js/filters/trans/trans';
 
     export default {
         computed: {
             ...mapState('inventories', {
                 isVisible: state => state.inventoryForm.isVisible,
+                lang: state => state.lang,
                 options: state => state.options,
             }),
+            deleteValueTitle() {
+                return trans('bedard.shop.inventories.form.delete_value_title', this.lang);
+            },
         },
         methods: {
             isSelected(key) {

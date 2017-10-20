@@ -94,15 +94,16 @@ return [
         'form' => [
             'collision_default' => 'A default inventory already exists for this product.',
             'collision_values' => 'An inventory with those options already exists.',
+            'delete_value_title' => 'This option is flagged for deletion.',
             'quantity' => 'Quantity',
             'sku' => 'Stock keeping unit',
             'sku_unique' => 'An inventory with that sku already exists.',
         ],
         'list' => [
             'default_name' => 'Default inventory',
+            'delete_option_warning' => 'The inventories of deleted options may not be edited.',
             'delete_title' => 'Delete inventory',
             'delete_warning' => 'Inventories flagged for deletion may not be edited.',
-            'delete_option_warning' => 'Inventories of deleted options may not be edited.',
             'multiple_in_stock' => ':quantity in stock',
             'out_of_stock' => 'Out of stock',
             'restore_collision_default' => 'This inventory cannot be restored because a default inventory already exists.',
