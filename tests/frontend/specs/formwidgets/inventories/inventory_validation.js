@@ -1,7 +1,8 @@
 import { createInventory, createOption, createOptionValue } from 'assets/js/store/modules/inventories/factories';
+import { flashMsgStub } from 'tests/frontend/jquery_stubs';
+import axios from 'axios';
 import inventoriesModule from 'assets/js/store/modules/inventories';
 import inventoryFormComponent from 'formwidgets/inventory/components/inventories/form/form';
-import { flashMsgStub } from 'tests/frontend/jquery_stubs';
 
 //
 // factory
@@ -16,6 +17,11 @@ const mount = factory({
 });
 
 describe('inventory validation', () => {
+    beforeEach(() => {
+        // assume a successful resonse from the server
+        axios.post.withArgs('http://validate/inventory').resolves({ data: 'Ok' });
+    });
+
     it('allows acceptable input', (done) => {
         vm = mount({
             template: '<v-inventory-form />',
@@ -141,6 +147,37 @@ describe('inventory validation', () => {
             expect(flashMsgStub).to.have.been.calledWith({
                 class: 'error',
                 text: 'bedard.shop.inventories.form.value_collision_error',
+            });
+
+            done();
+        }, 10);
+    });
+
+    it('alerts an error if the server throws an error', (done) => {
+        vm = mount({
+            template: '<v-inventory-form />',
+        }, {
+            inventories: {
+                inventoryForm: {
+                    data: createInventory({ sku: 'foo' }),
+                },
+            },
+        });
+
+        vm.$store.commit('inventories/setEndpoints', { validateInventory: 'http://validate/inventory' });
+
+        axios.post.withArgs('http://validate/inventory').rejects({
+            response: {
+                data: 'some.error.message',
+            },
+        });
+
+        submit(vm.$el.querySelector('form'));
+
+        setTimeout(() => {
+            expect(flashMsgStub).to.have.been.calledWith({
+                class: 'error',
+                text: 'some.error.message',
             });
 
             done();

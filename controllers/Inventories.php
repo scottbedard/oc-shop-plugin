@@ -39,15 +39,18 @@ class Inventories extends BackendController
      */
     public function validate()
     {
-        try {
-            $data = input('inventory');
-            $inventory = Inventory::findOrNew($data['id']);
-            $inventory->fill($data);
-            $inventory->validate();
+        $data = input();
 
-            return Response::make($inventory, 200);
+        $inventory = Inventory::findOrNew($data['id']);
+
+        $inventory->fill($data);
+
+        try {
+            $inventory->validate();
         } catch (Exception $e) {
-            return Response::make($e->getMessage(), 500);
+            return response($e->getMessage(), 422);
         }
+
+        return response('Ok');
     }
 }

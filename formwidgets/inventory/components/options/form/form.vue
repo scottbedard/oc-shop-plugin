@@ -54,7 +54,7 @@
         computed: {
             ...mapState('inventories', {
                 context: state => state.optionForm.context,
-                isSaving: state => state.optionForm.isSaving,
+                isLoading: state => state.optionForm.isLoading,
                 isVisible: state => state.optionForm.isVisible,
                 lang: state => state.lang,
             }),

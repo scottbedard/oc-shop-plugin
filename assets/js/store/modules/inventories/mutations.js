@@ -11,7 +11,7 @@ export default {
         setEndpoints: 'endpoints',
         setFieldName: 'fieldName',
         setInventoryFormContext: 'inventoryForm.context',
-        setInventoryFormIsSaving: 'inventoryForm.isSaving',
+        setInventoryFormIsLoading: 'inventoryForm.isLoading',
         setInventoryFormIsVisible: 'inventoryForm.isVisible',
         setInventoryFormQuantity: 'inventoryForm.data.quantity',
         setInventoryFormSku: 'inventoryForm.data.sku',

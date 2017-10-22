@@ -1,3 +1,5 @@
+import axios from 'axios';
+import { snakeCaseKeys } from 'assets/js/utilities/object';
 import { hasSameMembers } from 'assets/js/utilities/array';
 
 // test if a default inventory is already taken
@@ -16,8 +18,8 @@ export function skuIsTakenLocally(newInventory, state) {
 }
 
 // test if a sku is taken on the server
-export function skuIsTakenOnServer(newInventory, state) {
-
+export function validateInventoryOnServer(newInventory, state) {
+    return axios.post(state.endpoints.validateInventory, snakeCaseKeys(newInventory));
 }
 
 // test that value ids are unique
@@ -30,32 +32,37 @@ export function valuesAreTaken(newInventory, state) {
 
 // validate an inventory
 export function validateInventory(inventory, state) {
-    return new Promise((resolve, reject) => {
-        // skus must be locally unique
-        if (skuIsTakenLocally(inventory, state)) {
-            return reject('bedard.shop.inventories.form.sku_unique_local_error');
-        }
+    // skus must be locally unique
+    if (skuIsTakenLocally(inventory, state)) {
+        return Promise.reject({
+            response: { data: 'bedard.shop.inventories.form.sku_unique_local_error' },
+        });
+    }
 
-        // the quantity must be at least zero
-        if (inventory.quantity < 0) {
-            return reject('bedard.shop.inventories.form.quantity_negative_error');
-        }
+    // the quantity must be at least zero
+    if (inventory.quantity < 0) {
+        return Promise.reject({
+            response: { data: 'bedard.shop.inventories.form.quantity_negative_error' },
+        });
+    }
 
-        // there can only be one default inventory
-        if (defaultIsTaken(inventory, state)) {
-            return reject('bedard.shop.inventories.form.default_exists_error');
-        }
+    // there can only be one default inventory
+    if (defaultIsTaken(inventory, state)) {
+        return Promise.reject({
+            response: { data: 'bedard.shop.inventories.form.default_exists_error' },
+        });
+    }
 
-        // the value ids must be unique
-        if (valuesAreTaken(inventory, state)) {
-            return reject('bedard.shop.inventories.form.value_collision_error');
-        }
+    // the value ids must be unique
+    if (valuesAreTaken(inventory, state)) {
+        return Promise.reject({
+            response: { data: 'bedard.shop.inventories.form.value_collision_error' },
+        });
+    }
 
-        // make sure the sku isn't taken by a different product
-        if (skuIsTakenOnServer(inventory, state)) {
-            return reject('bedard.shop.inventories.form.sku_unique_server_error');
-        }
+    // fun any async validations neccessary
+    const asyncValidators = [];
+    asyncValidators.push(validateInventoryOnServer(inventory, state));
 
-        resolve();
-    });
+    return Promise.all(asyncValidators);
 }

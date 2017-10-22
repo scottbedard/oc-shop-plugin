@@ -1,3 +1,4 @@
+import axios from './axios_mock';
 import factory from 'spyfu-vue-factory';
 
 import {
@@ -13,6 +14,12 @@ beforeEach(() => {
 
     // reset the unique id counter
     window.uniqueIdCount = 0;
+
+    // reset our axios stubs
+    axios.delete.reset();
+    axios.get.reset();
+    axios.post.reset();
+    axios.put.reset();
 
     // and reset any jquery stubs
     flashMsgStub.reset();

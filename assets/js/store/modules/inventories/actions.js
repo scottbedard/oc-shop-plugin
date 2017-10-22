@@ -17,25 +17,9 @@ export default {
         }
     },
 
-    // create an inventory
-    createInventory({ commit, state }) {
-        commit('setInventoryFormIsSaving', true);
-
-        const inventory = {};
-
-        axios.post(state.endpoints.createInventory, { inventory }).then(() => {
-            // success
-            commit('setInventoryFormIsSaving', false);
-        }, (error) => {
-            // failure
-            commit('setInventoryFormIsSaving', false);
-            $.oc.flashMsg({ text: error.response.data, class: 'error' });
-        });
-    },
-
     // hide the inventory form
-    hideInventoryForm({ commit, dispatch }) {
-        commit('setInventoryFormIsSaving', false);
+    hideInventoryForm({ commit }) {
+        commit('setInventoryFormIsLoading', false);
         commit('setInventoryFormIsVisible', false);
     },
 
@@ -56,12 +40,20 @@ export default {
 
     // validate and save an inventory
     saveInventory({ commit, dispatch, state }) {
+        commit('setInventoryFormIsLoading', true);
+
         return new Promise((resolve, reject) => {
             validateInventory(state.inventoryForm.data, state).then(() => {
+                // success
                 commit('saveInventory');
-                dispatch('hideInventoryForm');
                 resolve();
-            }, reject);
+            }, (err) => {
+                // failure
+                reject(err.response.data);
+            }).then(() => {
+                // close the modal
+                dispatch('hideInventoryForm');
+            });
         });
     },
 

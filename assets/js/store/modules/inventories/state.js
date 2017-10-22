@@ -10,7 +10,7 @@ export default function() {
         inventoryForm: {
             context: 'create',
             data: createInventory(),
-            isSaving: false,
+            isLoading: false,
             isVisible: false,
         },
         inventories: [],

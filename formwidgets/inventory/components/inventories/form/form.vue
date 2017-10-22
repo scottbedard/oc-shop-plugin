@@ -33,12 +33,19 @@
 
             <!-- footer -->
             <v-modal-footer>
-                <v-button data-action="confirm" primary type="submit">
-                    {{ createOrSave | trans(lang) }}
-                </v-button>
-                <v-button data-action="cancel" type="button" @click="close">
-                    {{ 'backend.form.cancel' | trans(lang) }}
-                </v-button>
+                <transition name="fade" mode="out-in">
+                    <v-spinner v-if="isLoading" key="loading">
+                        {{ 'backend.form.saving' | trans(lang) }}
+                    </v-spinner>
+                    <div v-else key="actions">
+                        <v-button data-action="confirm" primary type="submit">
+                            {{ createOrSave | trans(lang) }}
+                        </v-button>
+                        <v-button data-action="cancel" type="button" @click="close">
+                            {{ 'backend.form.cancel' | trans(lang) }}
+                        </v-button>
+                    </div>
+                </transition>
             </v-modal-footer>
         </form>
     </v-modal>
@@ -47,6 +54,7 @@
 <script>
     import { mapActions, mapState } from 'vuex';
     import { mapTwoWayState } from 'spyfu-vuex-helpers';
+    import trans from 'assets/js/filters/trans/trans';
 
     export default {
         components: {
@@ -55,7 +63,7 @@
         computed: {
             ...mapState('inventories', {
                 context: state => state.inventoryForm.context,
-                isSaving: state => state.inventoryForm.isSaving,
+                isLoading: state => state.inventoryForm.isLoading,
                 isVisible: state => state.inventoryForm.isVisible,
                 lang: state => state.lang,
             }),
@@ -82,10 +90,9 @@
                 this.$refs.sku.focus();
             },
             save() {
-                this.$store.dispatch('inventories/saveInventory').then(() => {
-
-                }, (err) => {
-                    this.$flashError(err);
+                // save the inventory, and flash an error if anything goes wrong
+                this.$store.dispatch('inventories/saveInventory').catch((err) => {
+                    this.$flashError(trans(err, this.lang));
                 });
             },
         },

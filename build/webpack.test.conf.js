@@ -15,6 +15,9 @@ var webpackConfig = merge(baseConfig, {
     ],
     resolve: {
         alias: {
+            // globally mock the axios object
+            'axios$': 'tests/frontend/axios_mock',
+
             // include the template compiler in our test environment
             'vue$': 'vue/dist/vue.common.js',
         },
