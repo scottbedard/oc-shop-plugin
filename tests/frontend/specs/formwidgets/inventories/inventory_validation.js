@@ -180,6 +180,8 @@ describe('inventory validation', () => {
                 text: 'some.error.message',
             });
 
+            expect(vm.$store.state.inventories.inventoryForm.isLoading).to.be.false;
+
             done();
         }, 10);
     });

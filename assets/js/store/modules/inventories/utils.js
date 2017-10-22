@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { snakeCaseKeys } from 'assets/js/utilities/object';
+import { clone, snakeCaseKeys } from 'assets/js/utilities/object';
 import { hasSameMembers } from 'assets/js/utilities/array';
 
 // test if a default inventory is already taken
@@ -7,6 +7,21 @@ export function defaultIsTaken(newInventory, state) {
     return newInventory.valueKeys.length === 0 && !!state.inventories.find(inventory => {
         return inventory.valueKeys.length === 0 && inventory._key !== newInventory._key;
     });
+}
+
+// format inventory form data before validating it
+export function formatInventoryForm(data) {
+    const formattedData = clone(data);
+
+    if (typeof formattedData.sku === 'string') {
+        formattedData.sku === formattedData.sku.trim();
+
+        if (!formattedData.sku.length) {
+            formattedData.sku = null;
+        }
+    }
+
+    return formattedData;
 }
 
 // test if a sku already exists within our inventories array

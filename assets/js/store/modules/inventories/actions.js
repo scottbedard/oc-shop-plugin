@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { createInventory, createOption } from './factories';
-import { validateInventory } from './utils';
+import { formatInventoryForm, validateInventory } from './utils';
 
 //
 // actions
@@ -43,16 +43,16 @@ export default {
         commit('setInventoryFormIsLoading', true);
 
         return new Promise((resolve, reject) => {
-            validateInventory(state.inventoryForm.data, state).then(() => {
-                // success
+            // format inventory form data
+            const formData = formatInventoryForm(state.inventoryForm.data);
+
+            validateInventory(formData, state).then(() => {
                 commit('saveInventory');
+                dispatch('hideInventoryForm');
                 resolve();
             }, (err) => {
-                // failure
+                commit('setInventoryFormIsLoading', false);
                 reject(err.response.data);
-            }).then(() => {
-                // close the modal
-                dispatch('hideInventoryForm');
             });
         });
     },

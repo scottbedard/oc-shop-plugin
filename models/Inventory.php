@@ -115,7 +115,9 @@ class Inventory extends Model
      */
     protected function defineSkuValidationRule()
     {
-        if ($this->id) {
+        if ($this->sku === null) {
+            unset($this->rules['sku']);
+        } elseif ($this->id) {
             $this->rules['sku'] = 'unique:bedard_shop_inventories,sku,'.$this->id;
         }
     }

@@ -1,16 +1,7 @@
 import snakeCase from 'snake-case';
 
-/**
- * Clone an object,
- *
- * @param  {Mixed}  obj
- * @return {Object}
- */
-export function clone(obj) {
-    return typeof obj === 'object'
-        ? JSON.parse(JSON.stringify(obj))
-        : obj;
-};
+// @todo: update old impor references to this function
+export const clone = require('./object').clone;
 
 /**
  * Determine if a variable is a standard object. A "standard"

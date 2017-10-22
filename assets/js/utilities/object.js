@@ -2,6 +2,18 @@ import camel from 'camel-case';
 import snake from 'snake-case';
 
 /**
+ * Clone an object,
+ *
+ * @param  {Mixed}  obj
+ * @return {Object}
+ */
+export function clone(obj) {
+    return typeof obj === 'object'
+        ? JSON.parse(JSON.stringify(obj))
+        : obj;
+};
+
+/**
  * Camel case all the keys of an object.
  *
  * @param  {Object} obj     the object being camel cased

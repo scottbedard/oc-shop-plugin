@@ -23,6 +23,7 @@
                     data-input="quantity"
                     min="0"
                     placeholder="0"
+                    ref="quantity"
                     required>
                     {{ 'bedard.shop.inventories.form.quantity' | trans(lang) }}
                 </v-form-input>
@@ -86,12 +87,20 @@
             ...mapActions('inventories', {
                 close: 'hideInventoryForm',
             }),
-            focusSku() {
-                this.$refs.sku.focus();
+            focusInvalidField(err) {
+                // focus the field that is invalid
+                if (
+                    err === 'bedard.shop.inventories.form.default_exists_error' ||
+                    err === 'bedard.shop.inventories.form.sku_unique_local_error'
+                ) {
+                    this.$refs.sku.focus();
+                } else if (err === 'bedard.shop.inventories.form.quantity_negative_error') {
+                    this.$refs.quantity.focus();
+                }
             },
             save() {
-                // save the inventory, and flash an error if anything goes wrong
                 this.$store.dispatch('inventories/saveInventory').catch((err) => {
+                    this.focusInvalidField(err);
                     this.$flashError(trans(err, this.lang));
                 });
             },
@@ -99,7 +108,7 @@
         watch: {
             isVisible(isVisible) {
                 if (isVisible) {
-                    setTimeout(this.focusSku, 100);
+                    setTimeout(this.$refs.sku.focus, 100);
                 }
             },
         },
