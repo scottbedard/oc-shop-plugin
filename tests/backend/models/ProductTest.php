@@ -375,7 +375,10 @@ class ProductTest extends ShopTestCase
         $this->assertEquals('one', $product->options[0]['values'][1]['name']);
     }
 
-    public function test_saving_an_inventory()
+    //
+    // inventories
+    //
+    public function test_creating_an_inventory()
     {
         $product = Factory::create(new Product, [
             'options_inventories' => '{
@@ -398,6 +401,46 @@ class ProductTest extends ShopTestCase
         $this->assertEquals(1, count($product->inventories));
         $this->assertEquals('abc123', $product->inventories[0]['sku']);
         $this->assertEquals(321, $product->inventories[0]['quantity']);
+    }
+
+    public function test_saving_an_inventory()
+    {
+        $product = Factory::create(new Product, [
+            'options_inventories' => '{
+              "inventories": [
+                {
+                  "_delete": false,
+                  "_key": 12,
+                  "id": null,
+                  "quantity": 321,
+                  "sku": "abc123",
+                  "value_keys": []
+                }
+              ],
+              "options": []
+            }',
+        ]);
+
+        $product->options_inventories = '{
+          "inventories": [
+            {
+              "_delete": false,
+              "_key": 12,
+              "id": 1,
+              "quantity": 4,
+              "sku": "foobar",
+              "value_keys": []
+            }
+          ],
+          "options": []
+        }';
+
+        $product->save();
+        $product->load('options.values', 'inventories.values');
+
+        $this->assertEquals(1, count($product->inventories));
+        $this->assertEquals('foobar', $product->inventories[0]['sku']);
+        $this->assertEquals(4, $product->inventories[0]['quantity']);
     }
 
     // public function test_saving_options()
