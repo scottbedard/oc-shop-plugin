@@ -7,14 +7,20 @@
             :key="inventory._key"
             @click="edit(inventory)">
             <div class="square icon" slot="icon">
-                <i class="icon-cubes"></i>
+                <i v-if="inventory.quantity" class="icon-cubes"></i>
+                <i v-else class="icon-exclamation-circle"></i>
             </div>
             <div slot="main">
                 <div class="primary">
                     {{ selectedOptionValues(inventory) }}
                 </div>
-                <div v-if="hasSku(inventory)" class="secondary" data-sku>
-                    {{ inventory.sku }}
+                <div class="secondary">
+                    <span v-if="hasSku(inventory)" data-sku>
+                        {{ inventory.sku }},
+                    </span>
+                    <span data-quantity>
+                        {{ quantitySentence(inventory.quantity) }}
+                    </span>
                 </div>
             </div>
             <template slot="actions">
@@ -79,6 +85,15 @@
                 return typeof inventory.sku === 'string'
                     ? inventory.sku.trim().length > 0
                     : false;
+            },
+            quantitySentence(quantity) {
+                if (quantity <= 0) {
+                    return trans('bedard.shop.inventories.list.out_of_stock', this.lang);
+                } else if (quantity === 1) {
+                    return trans('bedard.shop.inventories.list.single_in_stock', this.lang, { quantity });
+                } else {
+                    return trans('bedard.shop.inventories.list.multiple_in_stock', this.lang, { quantity });
+                }
             },
             relationshipIsDeleted(inventory) {
                 return inventory.valueKeys.length > 0

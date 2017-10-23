@@ -255,7 +255,52 @@ describe('inventories list', () => {
             },
         });
 
-        expect(vm.$el.querySelector('[data-inventory="100"] [data-sku]').textContent.trim()).to.equal('foo');
+        expect(vm.$el.querySelector('[data-inventory="100"] [data-sku]').textContent.trim()).to.equal('foo,');
         expect(vm.$el.querySelector('[data-inventory="200"] [data-sku]')).to.be.null;
+    });
+
+    it('displays an out of stock message', () => {
+        vm = mount({
+            template: '<v-inventories />',
+        }, {
+            inventories: {
+                inventories: [
+                    createInventory({ _key: 100, quantity: 0 }),
+                ],
+            },
+        });
+
+        expect(vm.$el.querySelector('[data-inventory="100"] [data-quantity]').textContent.trim()).to
+            .equal('bedard.shop.inventories.list.out_of_stock');
+    });
+
+    it('displays a singular in stock message', () => {
+        vm = mount({
+            template: '<v-inventories />',
+        }, {
+            inventories: {
+                inventories: [
+                    createInventory({ _key: 100, quantity: 1 }),
+                ],
+            },
+        });
+
+        expect(vm.$el.querySelector('[data-inventory="100"] [data-quantity]').textContent.trim()).to
+            .equal('bedard.shop.inventories.list.single_in_stock');
+    });
+
+    it('displays a multiple in stock message', () => {
+        vm = mount({
+            template: '<v-inventories />',
+        }, {
+            inventories: {
+                inventories: [
+                    createInventory({ _key: 100, quantity: 2 }),
+                ],
+            },
+        });
+
+        expect(vm.$el.querySelector('[data-inventory="100"] [data-quantity]').textContent.trim()).to
+            .equal('bedard.shop.inventories.list.multiple_in_stock');
     });
 });
