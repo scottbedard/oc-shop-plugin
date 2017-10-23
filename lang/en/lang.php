@@ -96,6 +96,7 @@ return [
             'delete_value_title' => 'This option is flagged for deletion.',
             'quantity_negative_error' => 'Quantities must be zero or greater.', // <- @todo: match october error messaging
             'quantity' => 'Quantity',
+            'sku_placeholder' => 'None',
             'sku_unique_error' => 'An inventory with that sku already exists.',
             'sku' => 'Stock keeping unit',
             'value_collision_error' => 'An inventory with those options already exists.',

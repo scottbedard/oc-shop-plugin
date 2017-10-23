@@ -13,7 +13,8 @@
                 <v-form-input
                     v-model="sku"
                     data-input="sku"
-                    ref="sku">
+                    ref="sku"
+                    :placeholder="skuPlaceholder">
                     {{ 'bedard.shop.inventories.form.sku' | trans(lang) }}
                 </v-form-input>
 
@@ -77,6 +78,9 @@
                     ? 'backend.form.create'
                     : 'backend.form.save';
             },
+            skuPlaceholder() {
+                return trans('bedard.shop.inventories.form.sku_placeholder', this.lang);
+            },
             title() {
                 return this.context === 'create'
                     ? 'backend.relation.create_name'
@@ -88,11 +92,7 @@
                 close: 'hideInventoryForm',
             }),
             focusInvalidField(err) {
-                // focus the field that is invalid
-                if (
-                    err === 'bedard.shop.inventories.form.default_exists_error' ||
-                    err === 'bedard.shop.inventories.form.sku_unique_local_error'
-                ) {
+                if (err === 'bedard.shop.inventories.form.sku_unique_local_error') {
                     this.$refs.sku.focus();
                 } else if (err === 'bedard.shop.inventories.form.quantity_negative_error') {
                     this.$refs.quantity.focus();
