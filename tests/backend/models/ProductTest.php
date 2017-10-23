@@ -41,7 +41,7 @@ class ProductTest extends ShopTestCase
     }
 
     //
-    // new options inventories
+    // options
     //
     public function test_creating_an_option()
     {
@@ -373,6 +373,31 @@ class ProductTest extends ShopTestCase
         $product->load('options.values');
         $this->assertEquals('two', $product->options[0]['values'][0]['name']);
         $this->assertEquals('one', $product->options[0]['values'][1]['name']);
+    }
+
+    public function test_saving_an_inventory()
+    {
+        $product = Factory::create(new Product, [
+            'options_inventories' => '{
+              "inventories": [
+                {
+                  "_delete": false,
+                  "_key": 12,
+                  "id": null,
+                  "quantity": 321,
+                  "sku": "abc123",
+                  "value_keys": []
+                }
+              ],
+              "options": []
+            }',
+        ]);
+
+        $product->load('options.values', 'inventories.values');
+
+        $this->assertEquals(1, count($product->inventories));
+        $this->assertEquals('abc123', $product->inventories[0]['sku']);
+        $this->assertEquals(321, $product->inventories[0]['quantity']);
     }
 
     // public function test_saving_options()

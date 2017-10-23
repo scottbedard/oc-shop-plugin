@@ -9,10 +9,11 @@ export function defaultIsTaken(newInventory, state) {
     });
 }
 
-// format inventory form data before validating it
-export function formatInventoryForm(data) {
+// normalize an inventory model
+export function normalizeInventory(data) {
     const formattedData = clone(data);
 
+    // trim skus and convert empty ones to null
     if (typeof formattedData.sku === 'string') {
         formattedData.sku === formattedData.sku.trim();
 

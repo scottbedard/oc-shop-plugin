@@ -177,4 +177,8 @@ describe('inventory form', () => {
         expect(vm.$el.querySelector('[data-value="100"]').disabled).to.be.true;
         expect(vm.$el.querySelector('[data-value="200"]').disabled).to.be.false;
     });
+
+    it('converts empty skus to null', () => {
+
+    });
 });

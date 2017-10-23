@@ -254,6 +254,48 @@ class Product extends Model
         $this->categories()->sync($sync);
     }
 
+    protected function saveInventories($inventories)
+    {
+        $savedInventories = array_filter($inventories, function ($inventory) {
+            return ! $inventory['_delete'];
+        }, ARRAY_FILTER_USE_BOTH);
+
+        foreach ($savedInventories as $index => $data) {
+            $inventory = $data['id']
+                ? Inventory::findOrNew($data['id'])
+                : new Inventory;
+
+            $inventory->fill($data);
+            $inventory->product_id = $this->id;
+            $inventory->save();
+        }
+    }
+
+    /**
+     * Save related options.
+     *
+     * @param  array $options
+     * @return void
+     */
+    protected function saveOptions($options)
+    {
+        $savedOptions = array_filter($options, function ($option) {
+            return ! $option['_delete'];
+        }, ARRAY_FILTER_USE_BOTH);
+
+        foreach ($savedOptions as $index => $data) {
+            $option = $data['id']
+                ? Option::findOrNew($data['id'])
+                : new Option;
+
+            $option->fill($data);
+            $option->pending_values = $data['values'];
+            $option->sort_order = $index;
+            $option->product_id = $this->id;
+            $option->save();
+        }
+    }
+
     /**
      * Save related options and inventories.
      *
@@ -273,6 +315,12 @@ class Product extends Model
             if ($options) {
                 $this->deleteFlaggedOptions($options);
                 $this->saveOptions($options);
+            }
+
+            // inventories
+            if ($inventories) {
+                // @todo: delete flagged inventories
+                $this->saveInventories($inventories);
             }
         }
     }
@@ -397,30 +445,5 @@ class Product extends Model
 
         // insert the new inherited categories
         DB::table('bedard_shop_category_product')->insert($insert);
-    }
-
-    /**
-     * Save related options.
-     *
-     * @param  array $options
-     * @return void
-     */
-    protected function saveOptions($options)
-    {
-        $savedOptions = array_filter($options, function ($option) {
-            return ! $option['_delete'];
-        }, ARRAY_FILTER_USE_BOTH);
-
-        foreach ($savedOptions as $index => $data) {
-            $option = $data['id']
-                ? Option::findOrNew($data['id'])
-                : new Option;
-
-            $option->fill($data);
-            $option->pending_values = $data['values'];
-            $option->sort_order = $index;
-            $option->product_id = $this->id;
-            $option->save();
-        }
     }
 }

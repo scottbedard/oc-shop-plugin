@@ -1,4 +1,5 @@
 import { snakeCaseKeys } from 'assets/js/utilities/object';
+import { normalizeInventory } from './utils';
 
 //
 // getters
@@ -28,7 +29,7 @@ export default {
     // final value to send back to the server
     fieldData(state) {
         return snakeCaseKeys({
-            inventories: state.inventories,
+            inventories: state.inventories.map(normalizeInventory),
             options: state.options,
         });
     },

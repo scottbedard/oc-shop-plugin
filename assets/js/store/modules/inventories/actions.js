@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { createInventory, createOption } from './factories';
-import { formatInventoryForm, validateInventory } from './utils';
+import { normalizeInventory, validateInventory } from './utils';
 
 //
 // actions
@@ -44,7 +44,7 @@ export default {
 
         return new Promise((resolve, reject) => {
             // format inventory form data
-            const formData = formatInventoryForm(state.inventoryForm.data);
+            const formData = normalizeInventory(state.inventoryForm.data);
 
             validateInventory(formData, state).then(() => {
                 commit('saveInventory');
