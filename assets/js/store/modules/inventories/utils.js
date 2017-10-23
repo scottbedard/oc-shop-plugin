@@ -9,6 +9,17 @@ export function defaultIsTaken(newInventory, state) {
     });
 }
 
+// find an option value key by id
+export function findOptionValueKey(options, id) {
+    for (let option of options) {
+        for (let value of option.values) {
+            if (value.id === id) {
+                return value._key;
+            }
+        }
+    }
+}
+
 // normalize an inventory model
 export function normalizeInventory(data) {
     const formattedData = clone(data);
@@ -23,6 +34,18 @@ export function normalizeInventory(data) {
     }
 
     return formattedData;
+}
+
+// convert an inventory's values into a value_keys array
+export function setInventoryValues({ inventories, options }) {
+    inventories.forEach(inventory => {
+        inventory.valueKeys = inventory.values.map(value => {
+            console.log (value);
+            return findOptionValueKey(options, value.id);
+        });
+
+        delete inventory.values;
+    });
 }
 
 // test if a sku already exists within our inventories array

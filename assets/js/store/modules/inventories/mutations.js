@@ -1,6 +1,7 @@
-import { simpleSetters } from 'spyfu-vuex-helpers';
-import { createInventory, createOption, createOptionValue } from './factories';
 import { clone, uniqueId } from 'assets/js/utilities/helpers';
+import { createInventory, createOption, createOptionValue } from './factories';
+import { setInventoryValues } from './utils';
+import { simpleSetters } from 'spyfu-vuex-helpers';
 import Vue from 'vue';
 
 //
@@ -82,18 +83,24 @@ export default {
     // set the parent product model
     setModel(state, model) {
         // attach our _delete and _key properties
-        model.options.forEach(option => {
-            Vue.set(option, '_delete', false);
-            Vue.set(option, '_key', uniqueId());
+        const attachMetaData = obj => {
+            Vue.set(obj, '_delete', false);
+            Vue.set(obj, '_key', uniqueId());
+        };
 
-            option.values.forEach(value => {
-                Vue.set(value, '_delete', false);
-                Vue.set(value, '_key', uniqueId());
-            });
+        model.inventories.forEach(attachMetaData);
+
+        model.options.forEach(option => {
+            attachMetaData(option);
+            option.values.forEach(attachMetaData);
         });
+
+        // do a bit of prep work on our inventories
+        setInventoryValues(model);
 
         // and set our model data
         state.model = model;
+        state.inventories = clone(model.inventories);
         state.options = clone(model.options);
     },
 
